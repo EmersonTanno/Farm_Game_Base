@@ -260,9 +260,11 @@ public class Player_Controller : MonoBehaviour
 
         float tileSize = 1f;
 
+        yield return new WaitForSeconds(.5f);
+
         foreach (Vector3 offset in offsets)
         {
-            Vector3 plantPos = movePoint.position + offset;
+            Vector3 plantPos = transform.position + offset;
 
             plantPos = new Vector3(
                 Mathf.Floor(plantPos.x) + tileSize / 2f,
@@ -282,7 +284,7 @@ public class Player_Controller : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         myAnimator.SetBool("planting", false);
         isPlanting = false;
     }
