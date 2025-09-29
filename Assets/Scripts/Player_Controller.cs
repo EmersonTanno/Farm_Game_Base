@@ -60,31 +60,29 @@ public class Player_Controller : MonoBehaviour
 
     public void SetWater(InputAction.CallbackContext value)
     {
+        if (!value.performed) return;
         if (isMoving) return;
 
         AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
 
         if (stateInfo.IsName("Player_Idle_Front"))
         {
-            StartCoroutine(Water("water_front"));
+            StartCoroutine(Water("water_front", "front"));
         }
         else if (stateInfo.IsName("Player_Idle_Back"))
         {
-            StartCoroutine(Water("water_back"));
+            StartCoroutine(Water("water_back", "back"));
         }
         else if (stateInfo.IsName("Player_Idle_Left"))
         {
-            StartCoroutine(Water("water_left"));
+            StartCoroutine(Water("water_left", "left"));
         }
         else if (stateInfo.IsName("Player_Idle_Right"))
         {
-           StartCoroutine(Water("water_right"));
-        }
-        else
-        {
-            return;
+            StartCoroutine(Water("water_right", "right"));
         }
     }
+
 
     public void SetPlant(InputAction.CallbackContext value)
     {
@@ -192,10 +190,47 @@ public class Player_Controller : MonoBehaviour
     #endregion
 
     #region Actions
-    private IEnumerator Water(string animation)
+    private IEnumerator Water(string animation, string direction)
     {
         isWatering = true;
         myAnimator.SetBool(animation, true);
+
+        Vector3 waterPos = movePoint.position;
+
+        if (direction == "front")
+        {
+            waterPos += Vector3.down;
+        }
+        else if (direction == "back")
+        {
+            waterPos += Vector3.up;
+        }
+        else if (direction == "left")
+        {
+            waterPos += Vector3.left;
+        }
+        else if (direction == "right")
+        {
+            waterPos += Vector3.right;
+        }
+
+        float tileSize = 1f;
+        waterPos = new Vector3(
+            Mathf.Floor(waterPos.x) + tileSize / 2f,
+            Mathf.Floor(waterPos.y) + tileSize / 2f,
+            0f
+        );
+
+        Collider2D hit = Physics2D.OverlapCircle(waterPos, 0.1f, soilCollision);
+        if (hit != null)
+        {
+            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
+            if (soil != null)
+            {
+                soil.setWater(true);
+                Debug.Log("Solo arado encontrado → Regado!");
+            }
+        }
 
         yield return new WaitForSeconds(1f);
         myAnimator.SetBool(animation, false);
