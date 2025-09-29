@@ -11,7 +11,9 @@ public class Player_Controller : MonoBehaviour
     public Transform movePoint;
     public LayerMask collision;
     private Animator myAnimator;
-    private Vector2 inputDirection; 
+    private Vector2 inputDirection;
+    private bool isMoving = false;
+    private bool isWatering = false;
     #endregion
 
     #region Core
@@ -27,7 +29,7 @@ public class Player_Controller : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+        MovePlayer();
 
         MovePointer();
 
@@ -53,6 +55,34 @@ public class Player_Controller : MonoBehaviour
             inputDirection = Vector2.zero;
         }
     }
+
+    public void SetWater(InputAction.CallbackContext value)
+    {
+        if (isMoving) return;
+
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Player_Idle_Front"))
+        {
+            StartCoroutine(Water("water_front"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Back"))
+        {
+            StartCoroutine(Water("water_back"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Left"))
+        {
+            StartCoroutine(Water("water_left"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Right"))
+        {
+           StartCoroutine(Water("water_right"));
+        }
+        else
+        {
+            return;
+        }
+    }
     #endregion
 
     #region Animation
@@ -74,11 +104,24 @@ public class Player_Controller : MonoBehaviour
             myAnimator.SetBool("walk_back", false);
             myAnimator.SetBool("walk_left", false);
             myAnimator.SetBool("walk_right", false);
+
+            isMoving = false;
+        }
+        else
+        {
+            isMoving = true;
         }
     }
     #endregion
 
     #region Movement
+    private void MovePlayer()
+    {
+        if (isWatering) return;
+
+        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+    }
+
     private void MovePointer()
     {
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
@@ -91,7 +134,6 @@ public class Player_Controller : MonoBehaviour
                 {
                     movePoint.position = targetPos;
 
-                    // Animações
                     if (inputDirection.x == 1) ActivateAnimation("walk_right");
                     if (inputDirection.x == -1) ActivateAnimation("walk_left");
                     if (inputDirection.y == 1) ActivateAnimation("walk_back");
@@ -99,6 +141,18 @@ public class Player_Controller : MonoBehaviour
                 }
             }
         }
+    }
+    #endregion
+
+    #region Actions
+    private IEnumerator Water(string animation)
+    {
+        isWatering = true;
+        myAnimator.SetBool(animation, true);
+
+        yield return new WaitForSeconds(1f);
+        myAnimator.SetBool(animation, false);
+        isWatering = false;
     }
     #endregion
 }
