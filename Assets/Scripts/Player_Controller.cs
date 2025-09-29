@@ -14,6 +14,7 @@ public class Player_Controller : MonoBehaviour
     private Vector2 inputDirection;
     private bool isMoving = false;
     private bool isWatering = false;
+    private bool isPlanting = false;
     [SerializeField] GameObject plowedSoil;
     public LayerMask soilCollision;
     #endregion
@@ -61,7 +62,7 @@ public class Player_Controller : MonoBehaviour
     public void SetWater(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving) return;
+        if (isMoving || isPlanting) return;
 
         AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
 
@@ -88,7 +89,7 @@ public class Player_Controller : MonoBehaviour
     {
         if (!value.performed) return;
 
-        if (isMoving || isWatering) return;
+        if (isMoving || isWatering || isPlanting) return;
 
         AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
 
@@ -117,7 +118,7 @@ public class Player_Controller : MonoBehaviour
             Mathf.Floor(spawnPos.y) + tileSize / 2f,
             0f
         );
- 
+
         Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
         if (hit != null)
         {
@@ -128,6 +129,31 @@ public class Player_Controller : MonoBehaviour
         Instantiate(plowedSoil, spawnPos, Quaternion.identity);
     }
 
+    public void SetSeed(InputAction.CallbackContext value)
+    {
+        if (isMoving || isWatering || isPlanting) return;
+
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Player_Idle_Front"))
+        {
+            StartCoroutine(Plant("front"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Back"))
+        {
+            StartCoroutine(Plant("back"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Left"))
+        {
+            StartCoroutine(Plant("left"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Right"))
+        {
+            StartCoroutine(Plant("right"));
+        }
+
+        //StartCoroutine(Plant());
+    }
     #endregion
 
     #region Animation
@@ -235,6 +261,49 @@ public class Player_Controller : MonoBehaviour
         yield return new WaitForSeconds(1f);
         myAnimator.SetBool(animation, false);
         isWatering = false;
+    }
+
+    private IEnumerator Plant(string direction)
+    {
+        isPlanting = true;
+        myAnimator.SetBool("planting", true);
+
+        Vector3[] offsets = new Vector3[]
+        {
+            Vector3.zero,
+            Vector3.down,
+            Vector3.up,
+            Vector3.left,
+            Vector3.right
+        };
+
+        float tileSize = 1f;
+
+        foreach (Vector3 offset in offsets)
+        {
+            Vector3 plantPos = movePoint.position + offset;
+
+            plantPos = new Vector3(
+                Mathf.Floor(plantPos.x) + tileSize / 2f,
+                Mathf.Floor(plantPos.y) + tileSize / 2f,
+                0f
+            );
+
+            Collider2D hit = Physics2D.OverlapCircle(plantPos, 0.1f, soilCollision);
+            if (hit != null)
+            {
+                Soil_Controller soil = hit.GetComponent<Soil_Controller>();
+                if (soil != null)
+                {
+                    soil.SetPlanted(true);
+                    Debug.Log($"Solo arado encontrado → Plantado em {plantPos}!");
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(1f);
+        isPlanting = false;
+        myAnimator.SetBool("planting", false);
     }
     #endregion
 }
