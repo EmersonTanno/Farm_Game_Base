@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player_Controller : MonoBehaviour
 {
-
     #region Variables
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
     public LayerMask collision;
     private Animator myAnimator;
+    private Vector2 inputDirection; 
     #endregion
 
     #region Core
@@ -33,6 +35,25 @@ public class Player_Controller : MonoBehaviour
     }
     #endregion
 
+    #region InputSystem
+    public void SetMove(InputAction.CallbackContext value)
+    {
+        inputDirection = value.ReadValue<Vector2>();
+
+        if (Mathf.Abs(inputDirection.x) > Mathf.Abs(inputDirection.y))
+        {
+            inputDirection = new Vector2(Mathf.Sign(inputDirection.x), 0);
+        }
+        else if (Mathf.Abs(inputDirection.y) > Mathf.Abs(inputDirection.x))
+        {
+            inputDirection = new Vector2(0, Mathf.Sign(inputDirection.y));
+        }
+        else
+        {
+            inputDirection = Vector2.zero;
+        }
+    }
+    #endregion
 
     #region Animation
     private void ActivateAnimation(string animation)
@@ -62,39 +83,21 @@ public class Player_Controller : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
-
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            if (inputDirection != Vector2.zero)
             {
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f), .2f, collision))
+                Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
+
+                if (!Physics2D.OverlapCircle(targetPos, .2f, collision))
                 {
-                    movePoint.position += new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-                    if (Input.GetAxisRaw("Horizontal") == 1)
-                    {
-                        ActivateAnimation("walk_right");
-                    }
-                    if (Input.GetAxisRaw("Horizontal") == -1)
-                    {
-                        ActivateAnimation("walk_left");
-                    }
+                    movePoint.position = targetPos;
+
+                    // Animações
+                    if (inputDirection.x == 1) ActivateAnimation("walk_right");
+                    if (inputDirection.x == -1) ActivateAnimation("walk_left");
+                    if (inputDirection.y == 1) ActivateAnimation("walk_back");
+                    if (inputDirection.y == -1) ActivateAnimation("walk_front");
                 }
             }
-            else if (Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-            {
-                if (!Physics2D.OverlapCircle(movePoint.position + new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f), .2f, collision))
-                {
-                    movePoint.position += new Vector3(0f, Input.GetAxisRaw("Vertical"), 0f);
-                    if (Input.GetAxisRaw("Vertical") == 1)
-                    {
-                        ActivateAnimation("walk_back");
-                    }
-                    if (Input.GetAxisRaw("Vertical") == -1)
-                    {
-                        ActivateAnimation("walk_front");
-                    }
-                }
-            }
-
-
         }
     }
     #endregion
