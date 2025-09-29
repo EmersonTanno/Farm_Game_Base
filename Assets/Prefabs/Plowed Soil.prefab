@@ -124,3 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1855edac5ef2a1241852269736c77b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  withWater: {fileID: -1850540066, guid: dea1090824537af469e7fce31316d420, type: 3}
+  withPlant: {fileID: -1864233933, guid: dea1090824537af469e7fce31316d420, type: 3}
+  withPlantWater: {fileID: -152874143, guid: dea1090824537af469e7fce31316d420, type: 3}
+  without: {fileID: -1733139015, guid: 07ed90570826a6544a6a2c10f6d32799, type: 3}

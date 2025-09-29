@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class Soil_Controller : MonoBehaviour
 {
+    [SerializeField] Sprite withWater;
+    [SerializeField] Sprite withPlant;
+    [SerializeField] Sprite withPlantWater;
+    [SerializeField] Sprite without;
 
-    private bool planted = false;
-    private bool water = false;
+    private bool isPlanted = false;
+    private bool isWater = false;
+    private SpriteRenderer mySprite;
+
+    void Awake()
+    {
+        mySprite = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
@@ -18,9 +28,35 @@ public class Soil_Controller : MonoBehaviour
 
     }
 
-    public void setWater(bool state)
+    public void SetSprite()
     {
-        water = state;
-        Debug.Log("com água");
+        if (isWater && isPlanted)
+        {
+            mySprite.sprite = withPlantWater;
+        }
+        else if (isWater)
+        {
+            mySprite.sprite = withWater;
+        }
+        else if (isPlanted)
+        {
+            mySprite.sprite = withPlant;
+        }
+        else
+        {
+            mySprite.sprite = without;
+        }
+    }
+
+    public void SetWater(bool state)
+    {
+        isWater = state;
+        SetSprite();
+    }
+
+    public void SetPlanted(bool state)
+    {
+        isPlanted = state;
+        SetSprite();
     }
 }

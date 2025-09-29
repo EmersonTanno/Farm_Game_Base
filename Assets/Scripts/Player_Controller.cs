@@ -227,7 +227,7 @@ public class Player_Controller : MonoBehaviour
             Soil_Controller soil = hit.GetComponent<Soil_Controller>();
             if (soil != null)
             {
-                soil.setWater(true);
+                soil.SetWater(true);
                 Debug.Log("Solo arado encontrado → Regado!");
             }
         }
