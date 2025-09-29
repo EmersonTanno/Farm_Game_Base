@@ -133,26 +133,7 @@ public class Player_Controller : MonoBehaviour
     {
         if (isMoving || isWatering || isPlanting) return;
 
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName("Player_Idle_Front"))
-        {
-            StartCoroutine(Plant("front"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Back"))
-        {
-            StartCoroutine(Plant("back"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Left"))
-        {
-            StartCoroutine(Plant("left"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Right"))
-        {
-            StartCoroutine(Plant("right"));
-        }
-
-        //StartCoroutine(Plant());
+        StartCoroutine(Plant());
     }
     #endregion
 
@@ -263,7 +244,7 @@ public class Player_Controller : MonoBehaviour
         isWatering = false;
     }
 
-    private IEnumerator Plant(string direction)
+    private IEnumerator Plant()
     {
         isPlanting = true;
         myAnimator.SetBool("planting", true);
