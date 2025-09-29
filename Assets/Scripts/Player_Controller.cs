@@ -169,7 +169,7 @@ public class Player_Controller : MonoBehaviour
     #region Movement
     private void MovePlayer()
     {
-        if (isWatering) return;
+        if (isWatering || isPlanting) return;
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
@@ -283,8 +283,8 @@ public class Player_Controller : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        isPlanting = false;
         myAnimator.SetBool("planting", false);
+        isPlanting = false;
     }
     #endregion
 }
