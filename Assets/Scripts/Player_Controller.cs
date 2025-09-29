@@ -14,6 +14,8 @@ public class Player_Controller : MonoBehaviour
     private Vector2 inputDirection;
     private bool isMoving = false;
     private bool isWatering = false;
+    [SerializeField] GameObject plowedSoil;
+    public LayerMask soilCollision;
     #endregion
 
     #region Core
@@ -83,6 +85,51 @@ public class Player_Controller : MonoBehaviour
             return;
         }
     }
+
+    public void SetPlant(InputAction.CallbackContext value)
+    {
+        if (!value.performed) return;
+
+        if (isMoving || isWatering) return;
+
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        Vector3 spawnPos = movePoint.position;
+
+        if (stateInfo.IsName("Player_Idle_Front"))
+        {
+            spawnPos += Vector3.down;
+        }
+        else if (stateInfo.IsName("Player_Idle_Back"))
+        {
+            spawnPos += Vector3.up;
+        }
+        else if (stateInfo.IsName("Player_Idle_Left"))
+        {
+            spawnPos += Vector3.left;
+        }
+        else if (stateInfo.IsName("Player_Idle_Right"))
+        {
+            spawnPos += Vector3.right;
+        }
+
+        float tileSize = 1f;
+        spawnPos = new Vector3(
+            Mathf.Floor(spawnPos.x) + tileSize / 2f,
+            Mathf.Floor(spawnPos.y) + tileSize / 2f,
+            0f
+        );
+ 
+        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
+        if (hit != null)
+        {
+            Debug.Log("Já existe algo nesse tile, não pode plantar!");
+            return;
+        }
+
+        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
+    }
+
     #endregion
 
     #region Animation

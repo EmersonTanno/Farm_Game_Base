@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Collisions
-  - 
+  - Soil
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Floor
     uniqueID: 3462996875
+    locked: 0
+  - name: Soil
+    uniqueID: 3522455215
     locked: 0
   - name: Player
     uniqueID: 512995861

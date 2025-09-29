@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 0000000015b2931e8b2369ce
+  m_ApplyToSortingLayers: 000000008b2369ceaf66f4d115b2931e
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -379,8 +379,8 @@ GameObject:
   - component: {fileID: 1250544520}
   - component: {fileID: 1250544519}
   - component: {fileID: 1250544518}
-  - component: {fileID: 1250544521}
   - component: {fileID: 1250544522}
+  - component: {fileID: 1250544521}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -448,7 +448,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 512995861
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 2141466018, guid: d42266f36e739e8478f996d31b064d9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -494,6 +494,10 @@ MonoBehaviour:
   collision:
     serializedVersion: 2
     m_Bits: 64
+  plowedSoil: {fileID: 3890623402486806417, guid: a6d16087840da224fa38102eb3d934f2, type: 3}
+  soilCollision:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &1250544522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,6 +599,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e6c3dc62-de93-4cea-92e0-b7eda49fb215
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1250544521}
+        m_TargetAssemblyTypeName: Player_Controller, Assembly-CSharp
+        m_MethodName: SetPlant
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3f42765b-d38d-4c16-a7fc-10981029e08d
+    m_ActionName: Player/Plant[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
