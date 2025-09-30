@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Calendar_Controller : MonoBehaviour
 {
+    #region Variables
+    //Day and Month
     public int day = 0;
     public int month = 0;
-    public static event Action OnDayChange;
+
+    //Canvas
     [SerializeField] TextMeshProUGUI daysText;
+
+    //Event
+    public static event Action OnDayChange;
+    #endregion
 
     void Awake()
     {

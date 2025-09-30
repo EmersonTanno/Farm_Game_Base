@@ -6,14 +6,18 @@ using UnityEngine;
 public class Time_Controll : MonoBehaviour
 {
     #region Variables
+
+    //Min and Hr count
     public int minutes = 0;
     public int hours = 0;
+
+    //Controll Variable
     private bool canChangeTime = true;
 
     //Canvas
     [SerializeField] TextMeshProUGUI timerText;
 
-    // Evento público que outros scripts podem escutar
+    //Event
     public static event Action OnMidNightChange;
     #endregion
 

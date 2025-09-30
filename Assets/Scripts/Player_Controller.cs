@@ -7,20 +7,26 @@ using UnityEngine.InputSystem;
 public class Player_Controller : MonoBehaviour
 {
     #region Variables
+    //Movement
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
     public LayerMask collision;
-    private Animator myAnimator;
     private Vector2 inputDirection;
-    private bool isMoving = false;
-    private bool isWatering = false;
-    private bool isPlanting = false;
-    [SerializeField] GameObject plowedSoil;
-    [SerializeField] private PlantType plantToPlant;
-    public LayerMask soilCollision;
     private Vector2 facingDirection = Vector2.down;
     private bool justTurned = false;
 
+    //Animation
+    private Animator myAnimator;
+  
+    //Conditions
+    private bool isMoving = false;
+    private bool isWatering = false;
+    private bool isPlanting = false;
+
+    //Plants & Soil
+    [SerializeField] GameObject plowedSoil;
+    [SerializeField] private PlantType plantToPlant;
+    public LayerMask soilCollision;
     #endregion
 
     #region Core

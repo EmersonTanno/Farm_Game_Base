@@ -4,16 +4,22 @@ using UnityEngine;
 public class Soil_Controller : MonoBehaviour
 {
     #region Variables
+
+    //Sprites
     [SerializeField] private Sprite without;
     [SerializeField] Sprite withWater;
-
     private SpriteRenderer mySprite;
+
+    //Conditions
     private bool isPlanted = false;
     private bool isWater = false;
-    private int days = 0;
-    private int daysWithoutWater = 0;
     private bool dead = false;
 
+    //Days Count
+    private int days = 0;
+    private int daysWithoutWater = 0;
+
+    //Plant
     private PlantType currentPlant;
     #endregion
 
