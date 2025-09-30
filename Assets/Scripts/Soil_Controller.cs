@@ -17,6 +17,16 @@ public class Soil_Controller : MonoBehaviour
     private SpriteRenderer mySprite;
     #endregion
 
+    void OnEnable()
+    {
+        Calendar_Controller.OnDayChange += GrowPlant;
+    }
+
+    void OnDisable()
+    {
+        Calendar_Controller.OnDayChange -= GrowPlant;
+    }
+
     #region Core
     void Awake()
     {

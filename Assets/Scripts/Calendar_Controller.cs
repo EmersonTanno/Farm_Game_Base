@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Calendar_Controller : MonoBehaviour
 {
     public int day = 0;
     public int month = 0;
+    public static event Action OnDayChange;
     void OnEnable()
     {
         Time_Controll.OnMidNightChange += ChangeDay;
@@ -18,5 +20,6 @@ public class Calendar_Controller : MonoBehaviour
     {
         Debug.Log($"Dia: {day}");
         day++;
+        OnDayChange?.Invoke();
     }
 }
