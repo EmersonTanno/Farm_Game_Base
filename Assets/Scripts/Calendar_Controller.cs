@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class Calendar_Controller : MonoBehaviour
 {
+    public int day = 0;
+    public int month = 0;
     void OnEnable()
     {
-        Time_Controll.OnTimeChanged += UpdateCalendar;
+        Time_Controll.OnMidNightChange += ChangeDay;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnTimeChanged -= UpdateCalendar;
+        Time_Controll.OnMidNightChange -= ChangeDay;
     }
 
-    private void UpdateCalendar(int hours, int minutes)
+    private void ChangeDay()
     {
-        Debug.Log($"Calendário recebeu: {hours:D2}:{minutes:D2}");
+        Debug.Log($"Dia: {day}");
+        day++;
     }
 }

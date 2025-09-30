@@ -15,6 +15,7 @@ public class Time_Controll : MonoBehaviour
 
     // Evento público que outros scripts podem escutar
     public static event Action<int, int> OnTimeChanged;
+    public static event Action OnMidNightChange;
     #endregion
 
     #region Core
@@ -34,7 +35,7 @@ public class Time_Controll : MonoBehaviour
     private IEnumerator UpdateTime()
     {
         canChangeTime = false;
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
 
         if (minutes < 50)
         {
@@ -44,11 +45,15 @@ public class Time_Controll : MonoBehaviour
         {
             hours += 1;
             minutes = 0;
+
+            if (hours > 23)
+            {
+                OnMidNightChange?.Invoke();
+                hours = 0;
+            }
         }
 
         UpdateCanvas();
-        // Dispara o evento passando horas e minutos
-        OnTimeChanged?.Invoke(hours, minutes);
 
         canChangeTime = true;
     }
