@@ -16,6 +16,7 @@ public class Player_Controller : MonoBehaviour
     private bool isWatering = false;
     private bool isPlanting = false;
     [SerializeField] GameObject plowedSoil;
+    [SerializeField] private PlantType plantToPlant;
     public LayerMask soilCollision;
     #endregion
 
@@ -278,7 +279,7 @@ public class Player_Controller : MonoBehaviour
                 Soil_Controller soil = hit.GetComponent<Soil_Controller>();
                 if (soil != null)
                 {
-                    soil.SetPlanted(true);
+                    soil.PlantSeed(plantToPlant);
                     Debug.Log($"Solo arado encontrado → Plantado em {plantPos}!");
                 }
             }

@@ -1,20 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Soil_Controller : MonoBehaviour
 {
     #region Variables
+    [SerializeField] private Sprite without;
     [SerializeField] Sprite withWater;
-    [SerializeField] Sprite withPlant;
-    [SerializeField] Sprite withPlantWater;
-    [SerializeField] Sprite without;
 
+    private SpriteRenderer mySprite;
     private bool isPlanted = false;
     private bool isWater = false;
     private int days = 0;
-    private int daysWhithoutWater = 0;
-    private SpriteRenderer mySprite;
+    private int daysWithoutWater = 0;
+
+    private PlantType currentPlant;
     #endregion
 
     void OnEnable()
@@ -27,71 +25,76 @@ public class Soil_Controller : MonoBehaviour
         Calendar_Controller.OnDayChange -= GrowPlant;
     }
 
-    #region Core
     void Awake()
     {
         mySprite = GetComponent<SpriteRenderer>();
+        mySprite.sprite = without;
     }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-    #endregion
-
-    #region Animation
-    public void SetSprite()
-    {
-        if (isWater && isPlanted)
-        {
-            mySprite.sprite = withPlantWater;
-        }
-        else if (isWater)
-        {
-            mySprite.sprite = withWater;
-        }
-        else if (isPlanted)
-        {
-            mySprite.sprite = withPlant;
-        }
-        else
-        {
-            mySprite.sprite = without;
-        }
-    }
-    #endregion
 
     #region Soil State
     public void SetWater(bool state)
     {
         isWater = state;
-        SetSprite();
+        UpdateSprite();
     }
 
-    public void SetPlanted(bool state)
+    public void PlantSeed(PlantType plant)
     {
-        isPlanted = state;
-        SetSprite();
+        if (isPlanted) return; 
+
+        currentPlant = plant;
+        isPlanted = true;
+        days = 0;
+        daysWithoutWater = 0;
+        UpdateSprite();
     }
     #endregion
 
     #region Grow 
-    public void GrowPlant()
+    private void GrowPlant()
     {
-        if (isPlanted && isWater)
+        if (!isPlanted || currentPlant == null) return;
+
+        if (isWater)
         {
             days++;
-            daysWhithoutWater = 0;
+            daysWithoutWater = 0;
+            isWater = false;
         }
-        else if (isPlanted)
+        else
         {
-            daysWhithoutWater++;
+            daysWithoutWater++;
         }
+
+        UpdateSprite();
+    }
+    #endregion
+
+    #region Visual
+    private void UpdateSprite()
+    {
+        if (!isPlanted && !isWater)
+        {
+            mySprite.sprite = without;
+            return;
+        }
+        else if (isWater && !isPlanted)
+        {
+            mySprite.sprite = withWater;
+            return;
+        }
+
+        int stageIndex = -1;
+
+        if (!isWater)
+        {
+            stageIndex = 0;
+        }
+        else if (isWater)
+        {
+            stageIndex = 1;
+        }
+        mySprite.sprite = currentPlant.growthStages[stageIndex];
     }
     #endregion
 }

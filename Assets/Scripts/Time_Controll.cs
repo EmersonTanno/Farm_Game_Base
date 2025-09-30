@@ -14,7 +14,6 @@ public class Time_Controll : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
 
     // Evento público que outros scripts podem escutar
-    public static event Action<int, int> OnTimeChanged;
     public static event Action OnMidNightChange;
     #endregion
 
