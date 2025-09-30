@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
   m_Name: Plant1
   m_EditorClassIdentifier: 
-  plantName: 
-  growthTimeInDays: 0
-  season: 
-  growthStages: []
+  plantName: 1
+  growthTimeInDays: 5
+  maxDaysWWithoutWater: 4
+  season: 1
+  growthStages:
+  - {fileID: -1864233933, guid: dea1090824537af469e7fce31316d420, type: 3}
+  - {fileID: -152874143, guid: dea1090824537af469e7fce31316d420, type: 3}
