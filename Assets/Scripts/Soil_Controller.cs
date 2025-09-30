@@ -125,7 +125,6 @@ public class Soil_Controller : MonoBehaviour
         {
             stageIndex = 5;
         }
-        Debug.Log(stageIndex);
         mySprite.sprite = currentPlant.growthStages[stageIndex];
     }
     #endregion
