@@ -112,11 +112,11 @@ public class Soil_Controller : MonoBehaviour
             {
                 stageIndex = 1;
             }
-            else if (!isWater && days > currentPlant.growthTimeInDays / 2)
+            else if (!isWater && days >= currentPlant.growthTimeInDays / 2)
             {
                 stageIndex = 2;
             }
-            else if (isWater && days > currentPlant.growthTimeInDays / 2)
+            else if (isWater && days >= currentPlant.growthTimeInDays / 2)
             {
                 stageIndex = 3;
             }
@@ -125,6 +125,7 @@ public class Soil_Controller : MonoBehaviour
         {
             stageIndex = 5;
         }
+        Debug.Log(stageIndex);
         mySprite.sprite = currentPlant.growthStages[stageIndex];
     }
     #endregion

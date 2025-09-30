@@ -17,5 +17,9 @@ MonoBehaviour:
   maxDaysWWithoutWater: 4
   season: 1
   growthStages:
-  - {fileID: -1864233933, guid: dea1090824537af469e7fce31316d420, type: 3}
-  - {fileID: -152874143, guid: dea1090824537af469e7fce31316d420, type: 3}
+  - {fileID: -2128418480, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}
+  - {fileID: 385877770, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}
+  - {fileID: -289976273, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}
+  - {fileID: 144352046, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}
+  - {fileID: -1665662183, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}
+  - {fileID: 1655282650, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}

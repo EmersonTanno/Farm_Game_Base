@@ -33,7 +33,6 @@ public class Calendar_Controller : MonoBehaviour
 
     private void ChangeDay()
     {
-        Debug.Log($"Dia: {day}");
         day++;
         OnDayChange?.Invoke();
         UpdateCanvas();
