@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Soil_Controller : MonoBehaviour
@@ -11,6 +12,7 @@ public class Soil_Controller : MonoBehaviour
     private bool isWater = false;
     private int days = 0;
     private int daysWithoutWater = 0;
+    private bool dead = false;
 
     private PlantType currentPlant;
     #endregion
@@ -55,7 +57,7 @@ public class Soil_Controller : MonoBehaviour
     {
         if (!isPlanted || currentPlant == null) return;
 
-        if (isWater)
+        if (isWater && !dead)
         {
             days++;
             daysWithoutWater = 0;
@@ -63,6 +65,10 @@ public class Soil_Controller : MonoBehaviour
         }
         else
         {
+            if (daysWithoutWater > currentPlant.maxDaysWWithoutWater)
+            {
+                dead = true;
+            }
             daysWithoutWater++;
         }
 
@@ -86,13 +92,32 @@ public class Soil_Controller : MonoBehaviour
 
         int stageIndex = -1;
 
-        if (!isWater)
+        if (!dead)
         {
-            stageIndex = 0;
+            if (days == currentPlant.growthTimeInDays)
+            {
+                stageIndex = 4;
+            }
+            else if (!isWater && days < currentPlant.growthTimeInDays / 2)
+            {
+                stageIndex = 0;
+            }
+            else if (isWater && days < currentPlant.growthTimeInDays / 2)
+            {
+                stageIndex = 1;
+            }
+            else if (!isWater && days > currentPlant.growthTimeInDays / 2)
+            {
+                stageIndex = 2;
+            }
+            else if (isWater && days > currentPlant.growthTimeInDays / 2)
+            {
+                stageIndex = 3;
+            }
         }
-        else if (isWater)
+        else
         {
-            stageIndex = 1;
+            stageIndex = 5;
         }
         mySprite.sprite = currentPlant.growthStages[stageIndex];
     }
