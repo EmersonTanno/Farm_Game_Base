@@ -18,6 +18,9 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] GameObject plowedSoil;
     [SerializeField] private PlantType plantToPlant;
     public LayerMask soilCollision;
+    private Vector2 facingDirection = Vector2.down;
+    private bool justTurned = false;
+
     #endregion
 
     #region Core
@@ -145,6 +148,10 @@ public class Player_Controller : MonoBehaviour
         myAnimator.SetBool("walk_back", false);
         myAnimator.SetBool("walk_left", false);
         myAnimator.SetBool("walk_right", false);
+        myAnimator.SetBool("idle_f", false);
+        myAnimator.SetBool("idle_b", false);
+        myAnimator.SetBool("idle_r", false);
+        myAnimator.SetBool("idle_l", false);
 
         myAnimator.SetBool(animation, true);
     }
@@ -181,20 +188,43 @@ public class Player_Controller : MonoBehaviour
         {
             if (inputDirection != Vector2.zero)
             {
-                Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
-
-                if (!Physics2D.OverlapCircle(targetPos, .2f, collision))
+                if (inputDirection == facingDirection && !justTurned)
                 {
-                    movePoint.position = targetPos;
+                    Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
 
-                    if (inputDirection.x == 1) ActivateAnimation("walk_right");
-                    if (inputDirection.x == -1) ActivateAnimation("walk_left");
-                    if (inputDirection.y == 1) ActivateAnimation("walk_back");
-                    if (inputDirection.y == -1) ActivateAnimation("walk_front");
+                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision))
+                    {
+                        movePoint.position = targetPos;
+
+                        if (inputDirection.x == 1) ActivateAnimation("walk_right");
+                        if (inputDirection.x == -1) ActivateAnimation("walk_left");
+                        if (inputDirection.y == 1) ActivateAnimation("walk_back");
+                        if (inputDirection.y == -1) ActivateAnimation("walk_front");
+                    }
+                }
+                else
+                {
+                    facingDirection = inputDirection;
+                    justTurned = true;
+
+                    if (inputDirection.x == 1) ActivateAnimation("idle_r");
+                    if (inputDirection.x == -1) ActivateAnimation("idle_l");
+                    if (inputDirection.y == 1) ActivateAnimation("idle_b");
+                    if (inputDirection.y == -1) ActivateAnimation("idle_f");
+
+                    if(justTurned == true)
+                        StartCoroutine(ResetTurned());
                 }
             }
         }
     }
+
+    private IEnumerator ResetTurned()
+    {
+        yield return new WaitForSeconds(0.2f);
+        justTurned = false;
+    }
+
     #endregion
 
     #region Actions
