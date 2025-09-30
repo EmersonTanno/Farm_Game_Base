@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Soil_Controller : MonoBehaviour
 {
+    #region Variables
     [SerializeField] Sprite withWater;
     [SerializeField] Sprite withPlant;
     [SerializeField] Sprite withPlantWater;
@@ -11,8 +12,12 @@ public class Soil_Controller : MonoBehaviour
 
     private bool isPlanted = false;
     private bool isWater = false;
+    private int days = 0;
+    private int daysWhithoutWater = 0;
     private SpriteRenderer mySprite;
+    #endregion
 
+    #region Core
     void Awake()
     {
         mySprite = GetComponent<SpriteRenderer>();
@@ -27,7 +32,9 @@ public class Soil_Controller : MonoBehaviour
     {
 
     }
+    #endregion
 
+    #region Animation
     public void SetSprite()
     {
         if (isWater && isPlanted)
@@ -47,7 +54,9 @@ public class Soil_Controller : MonoBehaviour
             mySprite.sprite = without;
         }
     }
+    #endregion
 
+    #region Soil State
     public void SetWater(bool state)
     {
         isWater = state;
@@ -59,4 +68,20 @@ public class Soil_Controller : MonoBehaviour
         isPlanted = state;
         SetSprite();
     }
+    #endregion
+
+    #region Grow 
+    public void GrowPlant()
+    {
+        if (isPlanted && isWater)
+        {
+            days++;
+            daysWhithoutWater = 0;
+        }
+        else if (isPlanted)
+        {
+            daysWhithoutWater++;
+        }
+    }
+    #endregion
 }
