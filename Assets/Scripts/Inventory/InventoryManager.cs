@@ -8,6 +8,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public InventorySlot[] inventorySlots;
     int selectedSlot = -1;
+    [SerializeField] GameObject inventoryCanvas;
+    [SerializeField] GameObject inventoryButton;
+    private bool inventoryActive = false;
 
     void Start()
     {
@@ -31,6 +34,20 @@ public class InventoryManager : MonoBehaviour
             int nextSlot = (selectedSlot - 1 + 6) % 6;
             ChangeSelectedSlot(nextSlot);
         }
+    }
+
+    public void SetInventory(InputAction.CallbackContext value)
+    {
+        inventoryActive = !inventoryActive;
+        inventoryCanvas.SetActive(inventoryActive);
+        inventoryButton.SetActive(!inventoryActive);
+    }
+
+    public void SetInventoryButton()
+    {
+        inventoryActive = !inventoryActive;
+        inventoryCanvas.SetActive(inventoryActive);
+        inventoryButton.SetActive(!inventoryActive);
     }
     #endregion
 
