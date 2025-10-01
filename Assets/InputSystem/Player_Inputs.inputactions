@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollInventory",
+                    "type": "PassThrough",
+                    "id": "0aaaceb8-17b9-4013-81ee-163f49331748",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -291,6 +300,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Seed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f03cad7f-453f-48e2-85b2-2e9228c80c1e",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "787f5430-2f51-46c1-8eb7-61dc6c0f1c18",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "Scale(factor=-1)",
+                    "groups": "",
+                    "action": "ScrollInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b4462b7-9885-49d2-bd1a-69111d92f89b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": "",
+                    "action": "ScrollInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

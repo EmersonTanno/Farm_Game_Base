@@ -4,12 +4,31 @@ using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Item item;
-    public UnityEngine.UI.Image image;
+    [HideInInspector] public Item item = null;
+    public TextMeshProUGUI countText;
+
+    [HideInInspector] public UnityEngine.UI.Image image;
+    [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
+
+    public void InitializeItem(Item newItem)
+    {
+        item = newItem;
+        image.sprite = newItem.image;
+        RefreshCount();
+    }
+
+    public void RefreshCount()
+    {
+        countText.text = count.ToString();
+        bool textActive = count > 1;
+        countText.gameObject.SetActive(textActive);
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
