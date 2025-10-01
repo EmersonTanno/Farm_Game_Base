@@ -16,6 +16,7 @@ public class Item : ScriptableObject
     [Header("Both")]
     public string itemName;
     public ActionType action;
+    public bool consume;
 }
 
 public enum ItemType {

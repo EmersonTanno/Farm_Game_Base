@@ -18,3 +18,4 @@ MonoBehaviour:
   stackable: 1
   itemName: Seed
   action: 0
+  consume: 1

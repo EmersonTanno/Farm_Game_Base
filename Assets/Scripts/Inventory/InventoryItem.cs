@@ -22,6 +22,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RefreshCount();
     }
 
+    public void RemoveItem()
+    {
+        image.sprite = null;
+        item = null;
+    }
+
     public void RefreshCount()
     {
         countText.text = count.ToString();
