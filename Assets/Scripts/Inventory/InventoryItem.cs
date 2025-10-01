@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public Item item;
     public UnityEngine.UI.Image image;
     [HideInInspector] public Transform parentAfterDrag;
     public void OnBeginDrag(PointerEventData eventData)
