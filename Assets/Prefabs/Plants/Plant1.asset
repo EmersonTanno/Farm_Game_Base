@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Plant1
   m_EditorClassIdentifier: 
   plantName: 1
-  growthTimeInDays: 5
+  growthTimeInDays: 4
   maxDaysWWithoutWater: 4
   season: 1
   growthStages:
