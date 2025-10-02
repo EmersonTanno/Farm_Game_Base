@@ -24,27 +24,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Water",
+                    "name": "ActivateItem",
                     "type": "Button",
-                    "id": "b40e86c6-ec28-48d8-bc0c-8e54877b864b",
+                    "id": "0745187c-0d03-4084-a241-d75213df9da1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Plant",
+                    "name": "Inventory",
                     "type": "Button",
-                    "id": "3f42765b-d38d-4c16-a7fc-10981029e08d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Seed",
-                    "type": "Button",
-                    "id": "0f757484-5d88-463e-a95c-c89aaa916005",
+                    "id": "2ca520d0-567c-453d-bbe2-6c914b971e6f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -55,15 +46,6 @@
                     "type": "PassThrough",
                     "id": "0aaaceb8-17b9-4013-81ee-163f49331748",
                     "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Inventory",
-                    "type": "Button",
-                    "id": "2ca520d0-567c-453d-bbe2-6c914b971e6f",
-                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -237,78 +219,23 @@
                 },
                 {
                     "name": "",
-                    "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
-                    "path": "<Gamepad>/rightTrigger",
+                    "id": "4db6b6f8-51cd-4d41-9343-c92a10649245",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Water",
+                    "groups": "",
+                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
+                    "id": "635986ec-c8e6-4b29-bf16-2d27b6802d5b",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Water",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "886e731e-7071-4ae4-95c0-e61739dad6fd",
-                    "path": "<Touchscreen>/primaryTouch/tap",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Touch",
-                    "action": "Water",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ee3d0cd2-254e-47a7-a8cb-bc94d9658c54",
-                    "path": "<Joystick>/trigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Water",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8255d333-5683-4943-a58a-ccb207ff1dce",
-                    "path": "<XRController>/{PrimaryAction}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "XR",
-                    "action": "Water",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a99a0a3a-7511-49bf-bf6b-cbfab9c96a90",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
                     "groups": "",
-                    "action": "Plant",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9865c5c6-4707-475f-ba30-d618b3b46364",
-                    "path": "<Mouse>/middleButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Seed",
+                    "action": "ActivateItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -328,7 +255,7 @@
                     "id": "787f5430-2f51-46c1-8eb7-61dc6c0f1c18",
                     "path": "<Keyboard>/q",
                     "interactions": "",
-                    "processors": "Scale(factor=-1)",
+                    "processors": "Scale",
                     "groups": "",
                     "action": "ScrollInventory",
                     "isComposite": false,
@@ -339,20 +266,9 @@
                     "id": "9b4462b7-9885-49d2-bd1a-69111d92f89b",
                     "path": "<Keyboard>/e",
                     "interactions": "",
-                    "processors": "Scale",
+                    "processors": "Scale(factor=-1)",
                     "groups": "",
                     "action": "ScrollInventory",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4db6b6f8-51cd-4d41-9343-c92a10649245",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Inventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

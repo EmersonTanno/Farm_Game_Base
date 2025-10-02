@@ -5,12 +5,19 @@ using UnityEngine.InputSystem;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance;
+
     public GameObject inventoryItemPrefab;
     public InventorySlot[] inventorySlots;
     int selectedSlot = -1;
     [SerializeField] GameObject inventoryCanvas;
     [SerializeField] GameObject inventoryButton;
     private bool inventoryActive = false;
+
+    void Awake()
+    {
+        Instance = this;    
+    }
 
     void Start()
     {
@@ -26,12 +33,12 @@ public class InventoryManager : MonoBehaviour
 
         if (input > 0)
         {
-            int nextSlot = (selectedSlot + 1) % 6;
+            int nextSlot = (selectedSlot - 1 + 6) % 6;
             ChangeSelectedSlot(nextSlot);
         }
         else if (input < 0)
         {
-            int nextSlot = (selectedSlot - 1 + 6) % 6;
+            int nextSlot = (selectedSlot + 1) % 6;
             ChangeSelectedSlot(nextSlot);
         }
     }
@@ -107,7 +114,6 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot.item != null)
         {
             Item item = itemInSlot.item;
-            Debug.Log(item.consume);
             if (item.consume == true)
             {
                 itemInSlot.count--;
@@ -120,7 +126,7 @@ public class InventoryManager : MonoBehaviour
                     itemInSlot.RefreshCount();
                 }
             }
-            return itemInSlot.item;
+            return item;
         }
 
         return null;
