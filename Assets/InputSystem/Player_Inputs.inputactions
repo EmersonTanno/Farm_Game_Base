@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Harvest",
+                    "type": "Button",
+                    "id": "b614d130-a427-4c7e-aff2-5eb424d62a7e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -269,6 +278,17 @@
                     "processors": "Scale(factor=-1)",
                     "groups": "",
                     "action": "ScrollInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6f0ac23-2406-4164-9b91-85c4274d0916",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Harvest",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

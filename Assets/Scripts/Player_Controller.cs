@@ -17,7 +17,7 @@ public class Player_Controller : MonoBehaviour
 
     //Animation
     private Animator myAnimator;
-  
+
     //Conditions
     private bool isMoving = false;
     private bool isWatering = false;
@@ -53,6 +53,7 @@ public class Player_Controller : MonoBehaviour
     #region InputSystem
     public void SetMove(InputAction.CallbackContext value)
     {
+        if (isMoving || isWatering || isPlanting) return;
         inputDirection = value.ReadValue<Vector2>();
 
         if (Mathf.Abs(inputDirection.x) > Mathf.Abs(inputDirection.y))
@@ -99,6 +100,14 @@ public class Player_Controller : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void SetHarvest(InputAction.CallbackContext value)
+    {
+        if (!value.performed) return;
+        if (isMoving || isWatering || isPlanting) return;
+
+        Harvest();
     }
     #endregion
 
@@ -173,7 +182,7 @@ public class Player_Controller : MonoBehaviour
                     if (inputDirection.y == 1) ActivateAnimation("idle_b");
                     if (inputDirection.y == -1) ActivateAnimation("idle_f");
 
-                    if(justTurned == true)
+                    if (justTurned == true)
                         StartCoroutine(ResetTurned());
                 }
             }
@@ -346,6 +355,50 @@ public class Player_Controller : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         myAnimator.SetBool("planting", false);
         isPlanting = false;
+    }
+    
+    private void Harvest()
+    {
+        if (isMoving || isWatering || isPlanting) return;
+
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        Vector3 harvestPos = movePoint.position;
+
+        if (stateInfo.IsName("Player_Idle_Front"))
+        {
+            harvestPos += Vector3.down;
+        }
+        else if (stateInfo.IsName("Player_Idle_Back"))
+        {
+            harvestPos += Vector3.up;
+        }
+        else if (stateInfo.IsName("Player_Idle_Left"))
+        {
+            harvestPos += Vector3.left;
+        }
+        else if (stateInfo.IsName("Player_Idle_Right"))
+        {
+            harvestPos += Vector3.right;
+        }
+
+        float tileSize = 1f;
+        harvestPos = new Vector3(
+            Mathf.Floor(harvestPos.x) + tileSize / 2f,
+            Mathf.Floor(harvestPos.y) + tileSize / 2f,
+            0f
+        );
+
+        Collider2D hit = Physics2D.OverlapCircle(harvestPos, 0.1f, soilCollision);
+        if (hit != null)
+        {
+            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
+            if (!soil.currentPlant)
+            {
+                return;
+            }
+            soil.Harvest();
+        }
     }
     #endregion
 }

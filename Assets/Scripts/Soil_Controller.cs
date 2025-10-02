@@ -20,7 +20,7 @@ public class Soil_Controller : MonoBehaviour
     private int daysWithoutWater = 0;
 
     //Plant
-    private PlantType currentPlant;
+    [HideInInspector] public PlantType currentPlant;
     #endregion
 
     void OnEnable()
@@ -48,7 +48,7 @@ public class Soil_Controller : MonoBehaviour
 
     public void PlantSeed(PlantType plant)
     {
-        if (isPlanted) return; 
+        if (isPlanted) return;
 
         currentPlant = plant;
         isPlanted = true;
@@ -126,6 +126,13 @@ public class Soil_Controller : MonoBehaviour
             stageIndex = 5;
         }
         mySprite.sprite = currentPlant.growthStages[stageIndex];
+    }
+    #endregion
+
+    #region Harvest
+    public void Harvest()
+    {
+        Debug.Log($"Harvest: {currentPlant.name}");
     }
     #endregion
 }

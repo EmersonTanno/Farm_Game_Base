@@ -3475,6 +3475,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0745187c-0d03-4084-a241-d75213df9da1
     m_ActionName: Player/ActivateItem[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1250544521}
+        m_TargetAssemblyTypeName: Player_Controller, Assembly-CSharp
+        m_MethodName: SetHarvest
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b614d130-a427-4c7e-aff2-5eb424d62a7e
+    m_ActionName: Player/Harvest[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
