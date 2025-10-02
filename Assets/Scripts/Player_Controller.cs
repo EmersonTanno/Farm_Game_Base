@@ -53,22 +53,25 @@ public class Player_Controller : MonoBehaviour
     #region InputSystem
     public void SetMove(InputAction.CallbackContext value)
     {
-        if (isMoving || isWatering || isPlanting) return;
-        inputDirection = value.ReadValue<Vector2>();
+        if (isWatering || isPlanting) return;
 
-        if (Mathf.Abs(inputDirection.x) > Mathf.Abs(inputDirection.y))
+        if (value.performed)
         {
-            inputDirection = new Vector2(Mathf.Sign(inputDirection.x), 0);
+            inputDirection = value.ReadValue<Vector2>();
+
+            if (Mathf.Abs(inputDirection.x) > Mathf.Abs(inputDirection.y))
+                inputDirection = new Vector2(Mathf.Sign(inputDirection.x), 0);
+            else if (Mathf.Abs(inputDirection.y) > Mathf.Abs(inputDirection.x))
+                inputDirection = new Vector2(0, Mathf.Sign(inputDirection.y));
+            else
+                inputDirection = Vector2.zero;
         }
-        else if (Mathf.Abs(inputDirection.y) > Mathf.Abs(inputDirection.x))
-        {
-            inputDirection = new Vector2(0, Mathf.Sign(inputDirection.y));
-        }
-        else
+        else if (value.canceled)
         {
             inputDirection = Vector2.zero;
         }
     }
+
 
     public void SetAction(InputAction.CallbackContext value)
     {
