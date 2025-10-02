@@ -61,7 +61,16 @@ public class Soil_Controller : MonoBehaviour
     #region Grow 
     private void GrowPlant()
     {
-        if (!isPlanted || currentPlant == null) return;
+        if (!isPlanted || currentPlant == null)
+        {
+            if (isWater)
+            {
+                isWater = false;
+                UpdateSprite();
+            }
+
+            return;
+        }
 
         if (isWater && !dead)
         {
