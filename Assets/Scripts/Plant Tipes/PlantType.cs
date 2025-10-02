@@ -9,5 +9,8 @@ public class PlantType : ScriptableObject
     public int growthTimeInDays;
     public int maxDaysWWithoutWater;
     public string season;
+    public Harvest_Type harvest;
+    public int harvestMin;
+    public int harvestMax;
     public Sprite[] growthStages;
 }

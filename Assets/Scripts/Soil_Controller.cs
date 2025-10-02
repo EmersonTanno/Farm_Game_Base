@@ -132,7 +132,7 @@ public class Soil_Controller : MonoBehaviour
     #region Harvest
     public void Harvest()
     {
-        Debug.Log($"Harvest: {currentPlant.name}");
+        Debug.Log($"Harvest: {currentPlant.harvest.harvestName}");
     }
     #endregion
 }
