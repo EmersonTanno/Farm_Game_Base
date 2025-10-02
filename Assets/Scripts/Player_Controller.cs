@@ -69,81 +69,36 @@ public class Player_Controller : MonoBehaviour
         }
     }
 
-    public void SetWater(InputAction.CallbackContext value)
+    public void SetAction(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isPlanting) return;
-
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName("Player_Idle_Front"))
-        {
-            StartCoroutine(Water("water_front", "front"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Back"))
-        {
-            StartCoroutine(Water("water_back", "back"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Left"))
-        {
-            StartCoroutine(Water("water_left", "left"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Right"))
-        {
-            StartCoroutine(Water("water_right", "right"));
-        }
-    }
-
-
-    public void SetPlant(InputAction.CallbackContext value)
-    {
-        if (!value.performed) return;
-
         if (isMoving || isWatering || isPlanting) return;
 
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+        Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
-        Vector3 spawnPos = movePoint.position;
-
-        if (stateInfo.IsName("Player_Idle_Front"))
+        if (receivedItem == null)
         {
-            spawnPos += Vector3.down;
-        }
-        else if (stateInfo.IsName("Player_Idle_Back"))
-        {
-            spawnPos += Vector3.up;
-        }
-        else if (stateInfo.IsName("Player_Idle_Left"))
-        {
-            spawnPos += Vector3.left;
-        }
-        else if (stateInfo.IsName("Player_Idle_Right"))
-        {
-            spawnPos += Vector3.right;
-        }
-
-        float tileSize = 1f;
-        spawnPos = new Vector3(
-            Mathf.Floor(spawnPos.x) + tileSize / 2f,
-            Mathf.Floor(spawnPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Debug.Log("Já existe algo nesse tile, não pode plantar!");
             return;
         }
 
-        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
-    }
-
-    public void SetSeed(InputAction.CallbackContext value)
-    {
-        if (isMoving || isWatering || isPlanting) return;
-
-        StartCoroutine(Plant());
+        if (receivedItem.type == ItemType.Seed)
+        {
+            StartCoroutine(Plant(receivedItem.plant));
+            return;
+        }
+        else if (receivedItem.type == ItemType.Tool)
+        {
+            if (receivedItem.action == ActionType.Plowing)
+            {
+                PlowSoil();
+                return;
+            }
+            else if (receivedItem.action == ActionType.Water)
+            {
+                PutWater();
+                return;
+            }
+        }
     }
     #endregion
 
@@ -234,6 +189,31 @@ public class Player_Controller : MonoBehaviour
     #endregion
 
     #region Actions
+
+    private void PutWater()
+    {
+        if (isMoving || isPlanting) return;
+
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("Player_Idle_Front"))
+        {
+            StartCoroutine(Water("water_front", "front"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Back"))
+        {
+            StartCoroutine(Water("water_back", "back"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Left"))
+        {
+            StartCoroutine(Water("water_left", "left"));
+        }
+        else if (stateInfo.IsName("Player_Idle_Right"))
+        {
+            StartCoroutine(Water("water_right", "right"));
+        }
+    }
+
     private IEnumerator Water(string animation, string direction)
     {
         isWatering = true;
@@ -281,7 +261,49 @@ public class Player_Controller : MonoBehaviour
         isWatering = false;
     }
 
-    private IEnumerator Plant()
+    private void PlowSoil()
+    {
+        if (isMoving || isWatering || isPlanting) return;
+
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        Vector3 spawnPos = movePoint.position;
+
+        if (stateInfo.IsName("Player_Idle_Front"))
+        {
+            spawnPos += Vector3.down;
+        }
+        else if (stateInfo.IsName("Player_Idle_Back"))
+        {
+            spawnPos += Vector3.up;
+        }
+        else if (stateInfo.IsName("Player_Idle_Left"))
+        {
+            spawnPos += Vector3.left;
+        }
+        else if (stateInfo.IsName("Player_Idle_Right"))
+        {
+            spawnPos += Vector3.right;
+        }
+
+        float tileSize = 1f;
+        spawnPos = new Vector3(
+            Mathf.Floor(spawnPos.x) + tileSize / 2f,
+            Mathf.Floor(spawnPos.y) + tileSize / 2f,
+            0f
+        );
+
+        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
+        if (hit != null)
+        {
+            Debug.Log("Já existe algo nesse tile, não pode plantar!");
+            return;
+        }
+
+        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
+    }
+
+    private IEnumerator Plant(PlantType plant)
     {
         isPlanting = true;
         myAnimator.SetBool("planting", true);
@@ -315,7 +337,7 @@ public class Player_Controller : MonoBehaviour
                 Soil_Controller soil = hit.GetComponent<Soil_Controller>();
                 if (soil != null)
                 {
-                    soil.PlantSeed(plantToPlant);
+                    soil.PlantSeed(plant);
                     Debug.Log($"Solo arado encontrado → Plantado em {plantPos}!");
                 }
             }

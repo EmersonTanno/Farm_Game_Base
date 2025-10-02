@@ -5,18 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewItem", menuName = "Farming/Item")]
 public class Item : ScriptableObject
 {
-    [Header("Gameplay")]
-    public Sprite image;
-    public ItemType type;
-    public int maxStack;
-
-    [Header("UI")]
-    public bool stackable = true;
-
-    [Header("Both")]
     public string itemName;
+    public ItemType type;
+    public Sprite image;
+    public bool stackable = true;
+    public int maxStack;
     public ActionType action;
     public bool consume;
+    public PlantType plant;
 }
 
 public enum ItemType {

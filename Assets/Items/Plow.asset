@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
-  m_Name: Seed1
+  m_Name: Plow
   m_EditorClassIdentifier: 
-  itemName: Seed
-  type: 0
-  image: {fileID: 21300000, guid: 4aae2b3a55eb48247888c7051fb8c79e, type: 3}
-  stackable: 1
-  maxStack: 24
-  action: 0
-  consume: 1
-  plant: {fileID: 11400000, guid: f785ffeb722137b4f87394547f9a37fb, type: 2}
+  itemName: Enxada
+  type: 1
+  image: {fileID: 21300000, guid: aa43da3c1f329264590a0c58089a172e, type: 3}
+  stackable: 0
+  maxStack: 0
+  action: 2
+  consume: 0
+  plant: {fileID: 0}

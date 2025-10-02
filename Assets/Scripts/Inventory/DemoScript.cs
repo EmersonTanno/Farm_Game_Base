@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DemoScript : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
+    //public InventoryManager inventoryManager;
     public Item[] itemsToPick;
 
     public void PickupItem(int id)
     {
-        bool result = inventoryManager.AddItem(itemsToPick[id]);
+        bool result = InventoryManager.Instance.AddItem(itemsToPick[id]);
         if (result)
         {
             Debug.Log("Item added");
@@ -22,7 +22,7 @@ public class DemoScript : MonoBehaviour
 
     public void GetSelectedItem()
     {
-        Item receivedItem = inventoryManager.UseSelectedItem();
+        Item receivedItem = InventoryManager.Instance.UseSelectedItem();
         if (receivedItem)
         {
             Debug.Log(receivedItem.itemName);
