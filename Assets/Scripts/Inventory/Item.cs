@@ -15,13 +15,17 @@ public class Item : ScriptableObject
     public PlantType plant;
 }
 
-public enum ItemType {
+public enum ItemType
+{
     Seed,
-    Tool
+    Tool,
+    Harvest
 }
 
-public enum ActionType {
+public enum ActionType
+{
     Plant, //Plantar
     Water, //Regar
-    Plowing //Arar
+    Plowing, //Arar
+    Consume, //Consumir
 }

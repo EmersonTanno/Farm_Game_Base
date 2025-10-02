@@ -4,6 +4,7 @@ using UnityEngine;
 public class Soil_Controller : MonoBehaviour
 {
     #region Variables
+    [SerializeField] Item_Dropped item_Dropped;
 
     //Sprites
     [SerializeField] private Sprite without;
@@ -141,7 +142,18 @@ public class Soil_Controller : MonoBehaviour
     #region Harvest
     public void Harvest()
     {
-        Debug.Log($"Harvest: {currentPlant.harvest.harvestName}");
+        if (dead) return;
+        if (currentPlant.growthTimeInDays > days)
+        {
+            Debug.Log($"Faltam: {currentPlant.growthTimeInDays - days} dias");
+            return;
+        }
+        Item_Dropped instance = Instantiate(item_Dropped, transform);
+        instance.SetItem(currentPlant.harvest.harvestItem);
+
+        isPlanted = false;
+        currentPlant = null;
+        UpdateSprite();
     }
     #endregion
 }

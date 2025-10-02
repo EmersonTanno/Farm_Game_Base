@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cenoura
   m_EditorClassIdentifier: 
   plantName: 1
-  growthTimeInDays: 4
+  growthTimeInDays: 1
   maxDaysWWithoutWater: 4
   season: 1
   harvest: {fileID: 11400000, guid: 367cf01b0e8fb1843af4180a50f49709, type: 2}
