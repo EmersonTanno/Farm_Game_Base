@@ -103,7 +103,6 @@ public class InventoryManager : MonoBehaviour
     private void SpawnNewItem(Item item, InventorySlot slot)
     {
         InventoryItem inventoryItem = slot.GetComponentInChildren<InventoryItem>();
-        Debug.Log(inventoryItem.name);
         inventoryItem.InitializeItem(item);
     }
 

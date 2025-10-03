@@ -264,7 +264,6 @@ public class Player_Controller : MonoBehaviour
             if (soil != null)
             {
                 soil.SetWater(true);
-                Debug.Log("Solo arado encontrado → Regado!");
             }
         }
 
@@ -308,7 +307,6 @@ public class Player_Controller : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
         if (hit != null)
         {
-            Debug.Log("Já existe algo nesse tile, não pode plantar!");
             return;
         }
 
@@ -350,7 +348,6 @@ public class Player_Controller : MonoBehaviour
                 if (soil != null)
                 {
                     soil.PlantSeed(plant);
-                    Debug.Log($"Solo arado encontrado → Plantado em {plantPos}!");
                 }
             }
         }

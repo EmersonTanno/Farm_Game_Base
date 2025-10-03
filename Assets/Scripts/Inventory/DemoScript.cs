@@ -10,22 +10,10 @@ public class DemoScript : MonoBehaviour
     public void PickupItem(int id)
     {
         bool result = InventoryManager.Instance.AddItem(itemsToPick[id]);
-        if (result)
-        {
-            Debug.Log("Item added");
-        }
-        else
-        {
-            Debug.Log("ITEM NOT ADDED");
-        }
     }
 
     public void GetSelectedItem()
     {
         Item receivedItem = InventoryManager.Instance.UseSelectedItem();
-        if (receivedItem)
-        {
-            Debug.Log(receivedItem.itemName);
-        }
     }
 }
