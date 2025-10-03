@@ -18,4 +18,15 @@ public class Item_Dropped : MonoBehaviour
         itemDrop = item;
         mySprite.sprite = itemDrop.image;
     }
+
+    public void CollectItem()
+    {
+        InventoryManager.Instance.AddItem(itemDrop);
+        Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        CollectItem();
+    }
 }
