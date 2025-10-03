@@ -23,14 +23,12 @@ public class Harvest_Controller : MonoBehaviour
     {
         int spawnedHarvest = 0;
         int quantity = Random.Range(itemHarvest.harvestMin, itemHarvest.harvestMax + 1);
-        Debug.Log(quantity);
 
         while (quantity > spawnedHarvest)
         {
             Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
             Vector3 finalPos = spawnPosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
 
-            Debug.Log(finalPos);
             GameObject drop = ObjectPool.Instance.GetObject(item_Dropped);
             drop.transform.position = finalPos;
             Item_Dropped harvest = drop.GetComponent<Item_Dropped>();

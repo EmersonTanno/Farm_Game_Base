@@ -279,6 +279,7 @@ Transform:
   - {fileID: 1694484681}
   - {fileID: 1287601176}
   - {fileID: 1733546351}
+  - {fileID: 561484141}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1801,6 +1802,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}
+--- !u!1 &561484140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 561484141}
+  - component: {fileID: 561484142}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &561484141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561484140}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 87253215}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &561484142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561484140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3552e540f18a443923dc824503a71a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &563621386 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3541627306254851896, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}
@@ -5238,7 +5283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9531398f74267448a2b00fe9fea569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_Dropped: {fileID: 8626153407911092165, guid: 03b179fc3a02c7741b767cd684f4b97b, type: 3}
+  item_Dropped: {fileID: 4656045303545761929, guid: 03b179fc3a02c7741b767cd684f4b97b, type: 3}
 --- !u!114 &1738328054 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5411767102854692407, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}
@@ -6986,6 +7031,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1287601175}
+    - target: {fileID: 2048634262080933915, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: item4
+      value: 
+      objectReference: {fileID: 11400000, guid: ada67f805e7da5b4faf7c7a295d9441f, type: 2}
     - target: {fileID: 8156407660779406799, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_IsTrigger
       value: 1

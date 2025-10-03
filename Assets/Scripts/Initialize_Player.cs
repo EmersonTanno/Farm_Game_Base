@@ -7,6 +7,7 @@ public class Initialize_Player : MonoBehaviour
     public Item item1;
     public Item item2;
     public Item item3;
+    public Item item4;
 
     void Start()
     {
@@ -15,5 +16,8 @@ public class Initialize_Player : MonoBehaviour
         InventoryManager.Instance.AddItem(item3);
         InventoryManager.Instance.AddItem(item3);
         InventoryManager.Instance.AddItem(item3);
+        InventoryManager.Instance.AddItem(item4);
+        InventoryManager.Instance.AddItem(item4);
+        InventoryManager.Instance.AddItem(item4);
     }
 }
