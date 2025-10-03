@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Dustopia.RewardSystem;
 using UnityEngine;
 
 public class Harvest_Controller : MonoBehaviour
 {
     public static Harvest_Controller Instance { get; private set; }
 
-    [SerializeField] Item_Dropped item_Dropped;
+    [SerializeField] GameObject item_Dropped;
 
     void Awake()
     {
         Instance = this;
     }
 
+    void Start()
+    {
+        ObjectPool.Instance.InstantiatePool(item_Dropped, 10);
+    }
+
     public void SpawnHarvest(PlantType itemHarvest, Vector3 spawnPosition)
     {
         int spawnedHarvest = 0;
-        int quantity = Random.Range(itemHarvest.harvestMin, itemHarvest.harvestMax + 1); 
+        int quantity = Random.Range(itemHarvest.harvestMin, itemHarvest.harvestMax + 1);
         Debug.Log(quantity);
 
         while (quantity > spawnedHarvest)
@@ -24,9 +30,12 @@ public class Harvest_Controller : MonoBehaviour
             Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
             Vector3 finalPos = spawnPosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
 
-            Item_Dropped harvest = Instantiate(item_Dropped, finalPos, Quaternion.identity);
+            Debug.Log(finalPos);
+            GameObject drop = ObjectPool.Instance.GetObject(item_Dropped);
+            drop.transform.position = finalPos;
+            Item_Dropped harvest = drop.GetComponent<Item_Dropped>();
             harvest.SetItem(itemHarvest.harvest.harvestItem);
-            
+
             spawnedHarvest++;
         }
     }

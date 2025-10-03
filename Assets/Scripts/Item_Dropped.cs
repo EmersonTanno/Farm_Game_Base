@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Dustopia.RewardSystem;
 using UnityEngine;
 
 public class Item_Dropped : MonoBehaviour
@@ -22,7 +23,8 @@ public class Item_Dropped : MonoBehaviour
     public void CollectItem()
     {
         InventoryManager.Instance.AddItem(itemDrop);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        ObjectPool.Instance.ReturnObject(gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
