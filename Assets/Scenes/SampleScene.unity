@@ -278,6 +278,7 @@ Transform:
   m_Children:
   - {fileID: 1694484681}
   - {fileID: 1287601176}
+  - {fileID: 1733546351}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5193,6 +5194,51 @@ MonoBehaviour:
   day: 1
   month: 1
   daysText: {fileID: 1402944253}
+--- !u!1 &1733546350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1733546351}
+  - component: {fileID: 1733546352}
+  m_Layer: 0
+  m_Name: HarvestController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1733546351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733546350}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 87253215}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1733546352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733546350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9531398f74267448a2b00fe9fea569c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item_Dropped: {fileID: 8626153407911092165, guid: 03b179fc3a02c7741b767cd684f4b97b, type: 3}
 --- !u!114 &1738328054 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5411767102854692407, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}

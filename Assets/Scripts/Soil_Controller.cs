@@ -155,10 +155,8 @@ public class Soil_Controller : MonoBehaviour
             Mathf.Floor(spawnPos.y) + tileSize / 2f,
             0f
         );
-        Item_Dropped instance = Instantiate(item_Dropped, spawnPos, Quaternion.identity);
-
         
-        instance.SetItem(currentPlant.harvest.harvestItem);
+        Harvest_Controller.Instance.SpawnHarvest(currentPlant, spawnPos);
 
         isPlanted = false;
         currentPlant = null;

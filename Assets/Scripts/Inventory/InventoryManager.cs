@@ -7,22 +7,26 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
+    #region Variables
     public GameObject inventoryItemPrefab;
     public InventorySlot[] inventorySlots;
     int selectedSlot = -1;
     [SerializeField] GameObject inventoryCanvas;
     [SerializeField] GameObject inventoryButton;
     private bool inventoryActive = false;
+    #endregion
 
+    #region Core
     void Awake()
     {
-        Instance = this;    
+        Instance = this;
     }
 
     void Start()
     {
         ChangeSelectedSlot(0);
     }
+    #endregion
 
     #region InputSystem
     public void SetSlot(InputAction.CallbackContext value)
@@ -58,6 +62,7 @@ public class InventoryManager : MonoBehaviour
     }
     #endregion
 
+    #region Actions
     void ChangeSelectedSlot(int newValue)
     {
         if (selectedSlot >= 0)
@@ -130,4 +135,5 @@ public class InventoryManager : MonoBehaviour
 
         return null;
     }
+    #endregion
 }

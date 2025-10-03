@@ -6,7 +6,7 @@ public class Item_Dropped : MonoBehaviour
 {
     private SpriteRenderer mySprite;
 
-    private Item itemDrop;
+    [HideInInspector] public Item itemDrop;
 
     void Awake()
     {
@@ -27,6 +27,7 @@ public class Item_Dropped : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        CollectItem();
+        if(collision.tag == "Player")
+            CollectItem();
     }
 }
