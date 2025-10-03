@@ -148,7 +148,16 @@ public class Soil_Controller : MonoBehaviour
             Debug.Log($"Faltam: {currentPlant.growthTimeInDays - days} dias");
             return;
         }
-        Item_Dropped instance = Instantiate(item_Dropped, transform);
+        Vector3 spawnPos = transform.position;
+        float tileSize = 1f;
+        spawnPos = new Vector3(
+            Mathf.Floor(spawnPos.x) + tileSize / 2f,
+            Mathf.Floor(spawnPos.y) + tileSize / 2f,
+            0f
+        );
+        Item_Dropped instance = Instantiate(item_Dropped, spawnPos, Quaternion.identity);
+
+        
         instance.SetItem(currentPlant.harvest.harvestItem);
 
         isPlanted = false;
