@@ -19,6 +19,7 @@ public class Time_Controll : MonoBehaviour
 
     //Event
     public static event Action OnMidNightChange;
+    public static event Action OnHourChange;
     #endregion
 
     #region Core
@@ -48,6 +49,7 @@ public class Time_Controll : MonoBehaviour
         {
             hours += 1;
             minutes = 0;
+            OnHourChange?.Invoke();
 
             if (hours > 23)
             {
@@ -59,6 +61,18 @@ public class Time_Controll : MonoBehaviour
         UpdateCanvas();
 
         canChangeTime = true;
+    }
+
+    public void ChangeDay()
+    {
+        if (hours < 23)
+        {
+            OnMidNightChange?.Invoke();
+        }
+        OnHourChange?.Invoke();
+        hours = 8;
+        minutes = 0;
+        UpdateCanvas();
     }
 
     private void UpdateCanvas()
