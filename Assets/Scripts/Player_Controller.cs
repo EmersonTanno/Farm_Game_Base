@@ -151,7 +151,7 @@ public class Player_Controller : MonoBehaviour
     #region Movement
     private void MovePlayer()
     {
-        if (isWatering || isPlanting) return;
+        if (isWatering || isPlanting || isHarvesting) return;
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
