@@ -22,6 +22,7 @@ public class Player_Controller : MonoBehaviour
     private bool isMoving = false;
     private bool isWatering = false;
     private bool isPlanting = false;
+    private bool isHarvesting = false;
 
     //Plants & Soil
     [SerializeField] GameObject plowedSoil;
@@ -53,7 +54,7 @@ public class Player_Controller : MonoBehaviour
     #region InputSystem
     public void SetMove(InputAction.CallbackContext value)
     {
-        if (isWatering || isPlanting) return;
+        if (isWatering || isPlanting || isHarvesting) return;
 
         if (value.performed)
         {
@@ -76,7 +77,7 @@ public class Player_Controller : MonoBehaviour
     public void SetAction(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting) return;
 
         Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
@@ -108,7 +109,7 @@ public class Player_Controller : MonoBehaviour
     public void SetHarvest(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting) return;
 
         Harvest();
     }
@@ -356,7 +357,7 @@ public class Player_Controller : MonoBehaviour
         myAnimator.SetBool("planting", false);
         isPlanting = false;
     }
-    
+
     private void Harvest()
     {
         if (isMoving || isWatering || isPlanting) return;
@@ -397,8 +398,18 @@ public class Player_Controller : MonoBehaviour
             {
                 return;
             }
-            soil.Harvest();
+            StartCoroutine(HarvestConclusion(soil));
         }
+    }
+
+    private IEnumerator HarvestConclusion(Soil_Controller soil)
+    {
+        isHarvesting = true;
+        myAnimator.SetBool("harvest", true);
+        yield return new WaitForSeconds(0.75f);
+        myAnimator.SetBool("harvest", false);
+        isHarvesting = false;
+        soil.Harvest();
     }
     #endregion
 }
