@@ -9,11 +9,17 @@ using TMPro;
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [HideInInspector] public Item item = null;
+    public UnityEngine.UI.Image countBackground;
     public TextMeshProUGUI countText;
 
     [HideInInspector] public UnityEngine.UI.Image image;
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
+
+    void Awake()
+    {
+        RefreshCount();
+    }
 
     public void InitializeItem(Item newItem)
     {
@@ -32,6 +38,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         countText.text = count.ToString();
         bool textActive = count > 1;
+        countBackground.gameObject.SetActive(textActive);
         countText.gameObject.SetActive(textActive);
     }
 
