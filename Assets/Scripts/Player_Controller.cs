@@ -22,7 +22,7 @@ public class Player_Controller : MonoBehaviour
     private bool isMoving = false;
     private bool isWatering = false;
     private bool isPlanting = false;
-    private bool isHarvesting = false;
+    [HideInInspector] public bool isHarvesting = false;
 
     //Plants & Soil
     [SerializeField] GameObject plowedSoil;
@@ -398,18 +398,8 @@ public class Player_Controller : MonoBehaviour
             {
                 return;
             }
-            StartCoroutine(HarvestConclusion(soil));
+            soil.Harvest(myAnimator, this);
         }
-    }
-
-    private IEnumerator HarvestConclusion(Soil_Controller soil)
-    {
-        isHarvesting = true;
-        myAnimator.SetBool("harvest", true);
-        yield return new WaitForSeconds(0.75f);
-        myAnimator.SetBool("harvest", false);
-        isHarvesting = false;
-        soil.Harvest();
     }
     #endregion
 }

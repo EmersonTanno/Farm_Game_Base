@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -140,7 +141,7 @@ public class Soil_Controller : MonoBehaviour
     #endregion
 
     #region Harvest
-    public void Harvest()
+    public void Harvest(Animator animator, Player_Controller player)
     {
         if (dead) return;
         if (currentPlant.growthTimeInDays > days)
@@ -148,6 +149,14 @@ public class Soil_Controller : MonoBehaviour
             Debug.Log($"Faltam: {currentPlant.growthTimeInDays - days} dias");
             return;
         }
+        StartCoroutine(HarvestConclusion(animator, player));
+    }
+
+    public IEnumerator HarvestConclusion(Animator animator, Player_Controller player)
+    {
+        player.isHarvesting = true;
+        animator.SetBool("harvest", true);
+        yield return new WaitForSeconds(0.75f);
         Vector3 spawnPos = transform.position;
         float tileSize = 1f;
         spawnPos = new Vector3(
@@ -155,12 +164,14 @@ public class Soil_Controller : MonoBehaviour
             Mathf.Floor(spawnPos.y) + tileSize / 2f,
             0f
         );
-        
+
         Harvest_Controller.Instance.SpawnHarvest(currentPlant, spawnPos);
 
         isPlanted = false;
         currentPlant = null;
         UpdateSprite();
+        animator.SetBool("harvest", false);
+        player.isHarvesting = false;
     }
     #endregion
 }
