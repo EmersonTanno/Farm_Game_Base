@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantName: Batata
   growthTimeInDays: 1
-  maxDaysWWithoutWater: 0
+  maxDaysWithoutWater: 0
   season: 1
   harvest: {fileID: 11400000, guid: 830fbf88b0d34144296a649f236ffece, type: 2}
   harvestMin: 1

@@ -22,6 +22,7 @@ public class Player_Controller : MonoBehaviour
     private bool isMoving = false;
     private bool isWatering = false;
     private bool isPlanting = false;
+    private bool isPlowing = false;
     [HideInInspector] public bool isHarvesting = false;
 
     //Plants & Soil
@@ -54,7 +55,7 @@ public class Player_Controller : MonoBehaviour
     #region InputSystem
     public void SetMove(InputAction.CallbackContext value)
     {
-        if (isWatering || isPlanting || isHarvesting) return;
+        if (isWatering || isPlanting || isHarvesting || isPlowing) return;
 
         if (value.performed)
         {
@@ -77,7 +78,7 @@ public class Player_Controller : MonoBehaviour
     public void SetAction(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting || isHarvesting) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
 
         Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
@@ -109,7 +110,7 @@ public class Player_Controller : MonoBehaviour
     public void SetHarvest(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting || isHarvesting) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
 
         Harvest();
     }
@@ -151,13 +152,21 @@ public class Player_Controller : MonoBehaviour
     #region Movement
     private void MovePlayer()
     {
-        if (isWatering || isPlanting || isHarvesting) return;
+        if (isWatering || isPlanting || isHarvesting || isPlowing) return;
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     private void MovePointer()
     {
+        if (isPlanting || isWatering || isHarvesting || isPlowing)
+        {
+            if (Vector3.Distance(transform.position, movePoint.position) >= .05f)
+            {
+                movePoint.position = transform.position;
+                inputDirection = Vector2.zero;
+            }
+        }
         if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
         {
             if (inputDirection != Vector2.zero)
@@ -205,7 +214,7 @@ public class Player_Controller : MonoBehaviour
 
     private void PutWater()
     {
-        if (isMoving || isPlanting) return;
+        if (isMoving || isPlanting || isPlowing || isHarvesting || isWatering) return;
 
         AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
 
@@ -275,46 +284,10 @@ public class Player_Controller : MonoBehaviour
 
     private void PlowSoil()
     {
-        if (isMoving || isWatering || isPlanting) return;
+        if (isMoving || isWatering || isPlanting || isPlowing || isHarvesting) return;
 
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
-
-        Vector3 spawnPos = movePoint.position;
-
-        if (stateInfo.IsName("Player_Idle_Front"))
-        {
-            spawnPos += Vector3.down;
-        }
-        else if (stateInfo.IsName("Player_Idle_Back"))
-        {
-            spawnPos += Vector3.up;
-        }
-        else if (stateInfo.IsName("Player_Idle_Left"))
-        {
-            spawnPos += Vector3.left;
-        }
-        else if (stateInfo.IsName("Player_Idle_Right"))
-        {
-            spawnPos += Vector3.right;
-        }
-
-        float tileSize = 1f;
-        spawnPos = new Vector3(
-            Mathf.Floor(spawnPos.x) + tileSize / 2f,
-            Mathf.Floor(spawnPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            soil.ResetSoil();
-            
-            return;
-        }
-
-        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
+        isPlowing = true;
+        myAnimator.SetBool("plow", true);
     }
 
     private IEnumerator Plant(PlantType plant)
@@ -363,7 +336,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Harvest()
     {
-        if (isMoving || isWatering || isPlanting) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
 
         AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
 
@@ -403,6 +376,55 @@ public class Player_Controller : MonoBehaviour
             }
             soil.Harvest(myAnimator, this);
         }
+    }
+    #endregion
+
+    #region Animation Functions
+    public void PlowAnimation()
+    {
+        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+
+        Vector3 spawnPos = movePoint.position;
+
+        if (stateInfo.IsName("Player_Plow_Front"))
+        {
+            spawnPos += Vector3.down;
+        }
+        else if (stateInfo.IsName("Player_Plow_Back"))
+        {
+            spawnPos += Vector3.up;
+        }
+        else if (stateInfo.IsName("Player_Plow_Left"))
+        {
+            spawnPos += Vector3.left;
+        }
+        else if (stateInfo.IsName("Player_Plow_Right"))
+        {
+            spawnPos += Vector3.right;
+        }
+
+        float tileSize = 1f;
+        spawnPos = new Vector3(
+            Mathf.Floor(spawnPos.x) + tileSize / 2f,
+            Mathf.Floor(spawnPos.y) + tileSize / 2f,
+            0f
+        );
+
+        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
+        if (hit != null)
+        {
+            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
+            soil.ResetSoil();
+
+            myAnimator.SetBool("plow", false);
+            isPlowing = false;
+            return;
+        }
+
+        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
+
+        myAnimator.SetBool("plow", false);
+        isPlowing = false;
     }
     #endregion
 }
