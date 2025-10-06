@@ -174,4 +174,20 @@ public class Soil_Controller : MonoBehaviour
         player.isHarvesting = false;
     }
     #endregion
+
+    #region ResetSoil
+    public void ResetSoil()
+    {
+        if (!dead) return;
+
+        dead = false;
+        currentPlant = null;
+        isPlanted = false;
+        isWater = false;
+        days = 0;
+        daysWithoutWater = 0;
+
+        UpdateSprite();
+    }
+    #endregion
 }

@@ -308,6 +308,9 @@ public class Player_Controller : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
         if (hit != null)
         {
+            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
+            soil.ResetSoil();
+            
             return;
         }
 
