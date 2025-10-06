@@ -82,7 +82,7 @@ public class Soil_Controller : MonoBehaviour
         }
         else
         {
-            if (daysWithoutWater > currentPlant.maxDaysWWithoutWater)
+            if (daysWithoutWater > currentPlant.maxDaysWithoutWater)
             {
                 dead = true;
             }
