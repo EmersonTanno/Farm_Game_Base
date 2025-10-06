@@ -3397,6 +3397,11 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &1250544530 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2048634262080933910, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+  m_PrefabInstance: {fileID: 2048634260848286608}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1268330371
 GameObject:
   m_ObjectHideFlags: 0
@@ -7072,6 +7077,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933913, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: myAnimator
+      value: 
+      objectReference: {fileID: 1250544530}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

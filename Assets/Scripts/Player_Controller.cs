@@ -16,7 +16,7 @@ public class Player_Controller : MonoBehaviour
     private bool justTurned = false;
 
     //Animation
-    private Animator myAnimator;
+    [SerializeField] private Animator myAnimator;
 
     //Conditions
     private bool isMoving = false;
@@ -32,11 +32,6 @@ public class Player_Controller : MonoBehaviour
     #endregion
 
     #region Core
-    void Awake()
-    {
-        myAnimator = GetComponent<Animator>();
-    }
-
     void Start()
     {
         movePoint.parent = null;
@@ -216,49 +211,19 @@ public class Player_Controller : MonoBehaviour
     {
         if (isMoving || isPlanting || isPlowing || isHarvesting || isWatering) return;
 
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
-
-        if (stateInfo.IsName("Player_Idle_Front"))
-        {
-            StartCoroutine(Water("water_front", "front"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Back"))
-        {
-            StartCoroutine(Water("water_back", "back"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Left"))
-        {
-            StartCoroutine(Water("water_left", "left"));
-        }
-        else if (stateInfo.IsName("Player_Idle_Right"))
-        {
-            StartCoroutine(Water("water_right", "right"));
-        }
+        StartCoroutine(Water());
     }
 
-    private IEnumerator Water(string animation, string direction)
+    private IEnumerator Water()
     {
         isWatering = true;
-        myAnimator.SetBool(animation, true);
+        myAnimator.SetBool("water", true);
 
-        Vector3 waterPos = movePoint.position;
+        Vector2 waterPos = movePoint.position;
 
-        if (direction == "front")
-        {
-            waterPos += Vector3.down;
-        }
-        else if (direction == "back")
-        {
-            waterPos += Vector3.up;
-        }
-        else if (direction == "left")
-        {
-            waterPos += Vector3.left;
-        }
-        else if (direction == "right")
-        {
-            waterPos += Vector3.right;
-        }
+        Vector2 newWaterPos = GetSide();
+
+        waterPos += newWaterPos;
 
         float tileSize = 1f;
         waterPos = new Vector3(
@@ -278,7 +243,7 @@ public class Player_Controller : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1f);
-        myAnimator.SetBool(animation, false);
+        myAnimator.SetBool("water", false);
         isWatering = false;
     }
 
@@ -331,6 +296,7 @@ public class Player_Controller : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
         myAnimator.SetBool("planting", false);
+        yield return new WaitForSeconds(.1f);
         isPlanting = false;
     }
 
@@ -338,26 +304,11 @@ public class Player_Controller : MonoBehaviour
     {
         if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
 
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+        Vector2 harvestPos = movePoint.position;
 
-        Vector3 harvestPos = movePoint.position;
+        Vector2 newHarvestPos = GetSide();
 
-        if (stateInfo.IsName("Player_Idle_Front"))
-        {
-            harvestPos += Vector3.down;
-        }
-        else if (stateInfo.IsName("Player_Idle_Back"))
-        {
-            harvestPos += Vector3.up;
-        }
-        else if (stateInfo.IsName("Player_Idle_Left"))
-        {
-            harvestPos += Vector3.left;
-        }
-        else if (stateInfo.IsName("Player_Idle_Right"))
-        {
-            harvestPos += Vector3.right;
-        }
+        harvestPos += newHarvestPos;
 
         float tileSize = 1f;
         harvestPos = new Vector3(
@@ -382,26 +333,10 @@ public class Player_Controller : MonoBehaviour
     #region Animation Functions
     public void PlowAnimation()
     {
-        AnimatorStateInfo stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+        Vector2 spawnPos = movePoint.position;
+        Vector2 newSpawnPos = GetSide();
 
-        Vector3 spawnPos = movePoint.position;
-
-        if (stateInfo.IsName("Player_Plow_Front"))
-        {
-            spawnPos += Vector3.down;
-        }
-        else if (stateInfo.IsName("Player_Plow_Back"))
-        {
-            spawnPos += Vector3.up;
-        }
-        else if (stateInfo.IsName("Player_Plow_Left"))
-        {
-            spawnPos += Vector3.left;
-        }
-        else if (stateInfo.IsName("Player_Plow_Right"))
-        {
-            spawnPos += Vector3.right;
-        }
+        spawnPos += newSpawnPos;
 
         float tileSize = 1f;
         spawnPos = new Vector3(
@@ -425,6 +360,30 @@ public class Player_Controller : MonoBehaviour
 
         myAnimator.SetBool("plow", false);
         isPlowing = false;
+    }
+    #endregion
+
+    #region Axiliar Functions
+    private Vector2 GetSide()
+    {
+        if (facingDirection == Vector2.down)
+        {
+            return Vector2.down;
+        }
+        if (facingDirection == Vector2.up)
+        {
+            return Vector2.up;
+        }
+        if (facingDirection == Vector2.right)
+        {
+            return Vector2.right;
+        }
+        if (facingDirection == Vector2.left)
+        {
+            return Vector2.left;
+        }
+
+        return Vector2.zero;
     }
     #endregion
 }
