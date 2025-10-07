@@ -1422,7 +1422,7 @@ GameObject:
   - component: {fileID: 518559699}
   - component: {fileID: 518559698}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Change Day
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1446,8 +1446,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -239, y: 117.8}
-  m_SizeDelta: {x: 121.4457, y: 43.7644}
+  m_AnchoredPosition: {x: -283.2, y: 275.9}
+  m_SizeDelta: {x: 162.6769, y: 43.7644}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &518559698
 MonoBehaviour:
@@ -1493,10 +1493,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1968799286}
-        m_TargetAssemblyTypeName: DemoScript, Assembly-CSharp
-        m_MethodName: PickupItem
-        m_Mode: 3
+      - m_Target: {fileID: 1694484680}
+        m_TargetAssemblyTypeName: Time_Controll, Assembly-CSharp
+        m_MethodName: ChangeDay
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5060,7 +5060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1582764775
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5205,7 +5205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1662025909
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5383,8 +5383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8361fabd24b4e46877520d219b072d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 40
-  hours: 23
+  minutes: 0
+  hours: 8
   timerText: {fileID: 584031268}
 --- !u!4 &1694484681
 Transform:
@@ -5806,7 +5806,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.277, y: -5.3}
+  m_AnchoredPosition: {x: 23.6, y: -7.3}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1845339779
@@ -5829,7 +5829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AddPlow
+  m_text: Change Day
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b993c46cbb1ac4343bb913cecf950f72, type: 2}
   m_sharedMaterial: {fileID: 78345721444500917, guid: b993c46cbb1ac4343bb913cecf950f72, type: 2}
@@ -6084,7 +6084,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1903170139
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6369,7 +6369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1968799285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6389,9 +6389,9 @@ RectTransform:
   m_Father: {fileID: 2076624656}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 400, y: -320}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1968799286
