@@ -111,7 +111,7 @@ public class Soil_Controller : MonoBehaviour
 
         if (!dead)
         {
-            if (days == currentPlant.growthTimeInDays)
+            if (days >= currentPlant.growthTimeInDays)
             {
                 stageIndex = 4;
             }
