@@ -13,7 +13,7 @@ public class InventoryManager : MonoBehaviour
     int selectedSlot = -1;
     [SerializeField] GameObject inventoryCanvas;
     [SerializeField] GameObject inventoryButton;
-    private bool inventoryActive = false;
+    [HideInInspector] public bool inventoryActive = false;
     #endregion
 
     #region Core

@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Time_Controll : MonoBehaviour
 {
-    #region Variables
+    public static Time_Controll Instance { get; private set; }
 
+    #region Variables
     //Min and Hr count
     public int minutes = 0;
     public int hours = 0;
@@ -25,6 +26,7 @@ public class Time_Controll : MonoBehaviour
     #region Core
     void Awake()
     {
+        Instance = this;
         UpdateCanvas();
     }
     void Update()

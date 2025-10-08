@@ -14,7 +14,7 @@ TagManager:
   - Collisions
   - Soil
   - Collectibles
-  - 
+  - Bed
   - 
   - 
   - 
@@ -47,6 +47,12 @@ TagManager:
   - name: Soil
     uniqueID: 3522455215
     locked: 0
+  - name: Bed1
+    uniqueID: 184833423
+    locked: 0
   - name: Player
     uniqueID: 512995861
+    locked: 0
+  - name: Bed2
+    uniqueID: 378496137
     locked: 0

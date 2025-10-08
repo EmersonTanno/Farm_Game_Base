@@ -11,6 +11,7 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
     public LayerMask collision;
+    public LayerMask bedCollision;
     private Vector2 inputDirection;
     private Vector2 facingDirection = Vector2.down;
     private bool justTurned = false;
@@ -73,31 +74,39 @@ public class Player_Controller : MonoBehaviour
     public void SetAction(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
 
         Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
-        if (receivedItem == null)
+        Vector2 pos = transform.position;
+        if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, bedCollision))
         {
-            return;
+            Time_Controll.Instance.ChangeDay();
         }
-
-        if (receivedItem.type == ItemType.Seed)
+        else
         {
-            StartCoroutine(Plant(receivedItem.plant));
-            return;
-        }
-        else if (receivedItem.type == ItemType.Tool)
-        {
-            if (receivedItem.action == ActionType.Plowing)
+            if (receivedItem == null)
             {
-                PlowSoil();
                 return;
             }
-            else if (receivedItem.action == ActionType.Water)
+
+            if (receivedItem.type == ItemType.Seed)
             {
-                PutWater();
+                StartCoroutine(Plant(receivedItem.plant));
                 return;
+            }
+            else if (receivedItem.type == ItemType.Tool)
+            {
+                if (receivedItem.action == ActionType.Plowing)
+                {
+                    PlowSoil();
+                    return;
+                }
+                else if (receivedItem.action == ActionType.Water)
+                {
+                    PutWater();
+                    return;
+                }
             }
         }
     }
@@ -105,7 +114,7 @@ public class Player_Controller : MonoBehaviour
     public void SetHarvest(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
 
         Harvest();
     }
@@ -147,14 +156,14 @@ public class Player_Controller : MonoBehaviour
     #region Movement
     private void MovePlayer()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing) return;
+        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     private void MovePointer()
     {
-        if (isPlanting || isWatering || isHarvesting || isPlowing)
+        if (isPlanting || isWatering || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive)
         {
             if (Vector3.Distance(transform.position, movePoint.position) >= .05f)
             {
@@ -178,6 +187,24 @@ public class Player_Controller : MonoBehaviour
                         if (inputDirection.x == -1) ActivateAnimation("walk_left");
                         if (inputDirection.y == 1) ActivateAnimation("walk_back");
                         if (inputDirection.y == -1) ActivateAnimation("walk_front");
+                    }
+                    if (Physics2D.OverlapCircle(targetPos, .2f, bedCollision))
+                    {
+                        Vector2 side = GetSide();
+                        if (side == Vector2.down || side == Vector2.up)
+                        {
+                            movePoint.position = transform.position;
+                            return;
+                        }
+                    }
+                    if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision))
+                    {
+                        Vector2 side = GetSide();
+                        if (side == Vector2.down || side == Vector2.up)
+                        {
+                            movePoint.position = transform.position;
+                            return;
+                        }
                     }
                 }
                 else
@@ -209,7 +236,7 @@ public class Player_Controller : MonoBehaviour
 
     private void PutWater()
     {
-        if (isMoving || isPlanting || isPlowing || isHarvesting || isWatering) return;
+        if (isMoving || isPlanting || isPlowing || isHarvesting || isWatering || InventoryManager.Instance.inventoryActive) return;
 
         StartCoroutine(Water());
     }
@@ -249,7 +276,7 @@ public class Player_Controller : MonoBehaviour
 
     private void PlowSoil()
     {
-        if (isMoving || isWatering || isPlanting || isPlowing || isHarvesting) return;
+        if (isMoving || isWatering || isPlanting || isPlowing || isHarvesting || InventoryManager.Instance.inventoryActive) return;
 
         isPlowing = true;
         myAnimator.SetBool("plow", true);
@@ -302,7 +329,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Harvest()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing) return;
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
 
         Vector2 harvestPos = movePoint.position;
 
