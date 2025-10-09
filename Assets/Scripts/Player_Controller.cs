@@ -51,7 +51,7 @@ public class Player_Controller : MonoBehaviour
     #region InputSystem
     public void SetMove(InputAction.CallbackContext value)
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing) return;
+        if (CheckMove()) return;
 
         if (value.performed)
         {
@@ -74,7 +74,7 @@ public class Player_Controller : MonoBehaviour
     public void SetAction(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
+        if (CheckAction()) return;
 
         Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
@@ -114,7 +114,7 @@ public class Player_Controller : MonoBehaviour
     public void SetHarvest(InputAction.CallbackContext value)
     {
         if (!value.performed) return;
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
+        if (CheckAction()) return;
 
         Harvest();
     }
@@ -156,14 +156,14 @@ public class Player_Controller : MonoBehaviour
     #region Movement
     private void MovePlayer()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
+        if (CheckMove()) return;
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     private void MovePointer()
     {
-        if (isPlanting || isWatering || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive)
+        if (CheckMove())
         {
             if (Vector3.Distance(transform.position, movePoint.position) >= .05f)
             {
@@ -236,7 +236,7 @@ public class Player_Controller : MonoBehaviour
 
     private void PutWater()
     {
-        if (isMoving || isPlanting || isPlowing || isHarvesting || isWatering || InventoryManager.Instance.inventoryActive) return;
+        if (CheckAction()) return;
 
         StartCoroutine(Water());
     }
@@ -276,7 +276,7 @@ public class Player_Controller : MonoBehaviour
 
     private void PlowSoil()
     {
-        if (isMoving || isWatering || isPlanting || isPlowing || isHarvesting || InventoryManager.Instance.inventoryActive) return;
+        if (CheckAction()) return;
 
         isPlowing = true;
         myAnimator.SetBool("plow", true);
@@ -329,7 +329,7 @@ public class Player_Controller : MonoBehaviour
 
     private void Harvest()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive) return;
+        if (CheckAction()) return;
 
         Vector2 harvestPos = movePoint.position;
 
@@ -411,6 +411,26 @@ public class Player_Controller : MonoBehaviour
         }
 
         return Vector2.zero;
+    }
+
+    private bool CheckAction()
+    {
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool CheckMove()
+    {
+        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive)
+        {
+            return true;
+        }
+
+        return false;
     }
     #endregion
 }
