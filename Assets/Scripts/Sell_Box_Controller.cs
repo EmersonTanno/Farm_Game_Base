@@ -46,6 +46,8 @@ public class Sell_Box_Controller : MonoBehaviour
             valor += sellItemsList[i].sellValue;
         }
         sellItemsList.Clear();
+
+        Status_Controller.Instance.AddGold(valor);
         Debug.Log(valor);
     }
 }
