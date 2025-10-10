@@ -12,8 +12,8 @@ public class ItemEditor : Editor
         item.itemName = EditorGUILayout.TextField("Item Name", item.itemName);
         item.type = (ItemType)EditorGUILayout.EnumPopup("Type", item.type);
         item.image = (Sprite)EditorGUILayout.ObjectField("Image", item.image, typeof(Sprite), false);
-        item.stackable = EditorGUILayout.Toggle("Stackable", item.stackable);
         item.consume = EditorGUILayout.Toggle("Consume", item.consume);
+        item.stackable = EditorGUILayout.Toggle("Stackable", item.stackable);
 
         // --- Se stackable for true ---
         if (item.stackable)
@@ -31,16 +31,19 @@ public class ItemEditor : Editor
             case ItemType.Seed:
                 item.plant = (PlantType)EditorGUILayout.ObjectField("Plant", item.plant, typeof(PlantType), false);
                 item.sell = EditorGUILayout.Toggle("Can Sell", item.sell);
-                item.buyValue = EditorGUILayout.IntField("Buy Value", item.buyValue);
-                item.sellValue = EditorGUILayout.IntField("Sell Value", item.sellValue);
+
                 break;
 
 
             case ItemType.Harvest:
                 item.sell = EditorGUILayout.Toggle("Can Sell", item.sell);
-                item.buyValue = EditorGUILayout.IntField("Buy Value", item.buyValue);
-                item.sellValue = EditorGUILayout.IntField("Sell Value", item.sellValue);
                 break;
+        }
+        
+        if(item.sell)
+        {
+            item.buyValue = EditorGUILayout.IntField("Buy Value", item.buyValue);
+            item.sellValue = EditorGUILayout.IntField("Sell Value", item.sellValue);
         }
 
         // --- Atualizar caso algo mude ---
