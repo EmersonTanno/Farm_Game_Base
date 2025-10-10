@@ -20,3 +20,6 @@ MonoBehaviour:
   action: 3
   consume: 1
   plant: {fileID: 0}
+  sell: 1
+  buyValue: 0
+  sellValue: 50
