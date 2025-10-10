@@ -13,6 +13,9 @@ public class Item : ScriptableObject
     public ActionType action;
     public bool consume;
     public PlantType plant;
+    public bool sell;
+    public int buyValue;
+    public int sellValue;
 }
 
 public enum ItemType
