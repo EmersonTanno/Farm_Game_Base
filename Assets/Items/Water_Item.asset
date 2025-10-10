@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
-  m_Name: Plow
+  m_Name: Water_Item
   m_EditorClassIdentifier: 
-  itemName: Enxada
+  image: {fileID: 21300000, guid: 4e46ee7814d412d4ea36711f1b6bedd6, type: 3}
   type: 1
-  image: {fileID: 21300000, guid: aa43da3c1f329264590a0c58089a172e, type: 3}
-  stackable: 0
   maxStack: 0
-  action: 2
-  consume: 0
-  plant: {fileID: 0}
+  stackable: 0
+  itemName: Regador
+  action: 1

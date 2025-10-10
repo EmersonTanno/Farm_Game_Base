@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
-  m_Name: Cenoura
+  m_Name: Cenoura_Plant
   m_EditorClassIdentifier: 
   plantName: 1
   growthTimeInDays: 1
-  maxDaysWWithoutWater: 4
+  maxDaysWithoutWater: 0
   season: 1
-  harvest: {fileID: 11400000, guid: 367cf01b0e8fb1843af4180a50f49709, type: 2}
+  harvest: {fileID: 11400000, guid: 960e5ee2826f27b46b329e2669007518, type: 2}
   harvestMin: 2
   harvestMax: 4
   growthStages:

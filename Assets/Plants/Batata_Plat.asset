@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
-  m_Name: Batata
+  m_Name: Batata_Plat
   m_EditorClassIdentifier: 
   plantName: Batata
   growthTimeInDays: 1
   maxDaysWithoutWater: 0
   season: 1
-  harvest: {fileID: 11400000, guid: 830fbf88b0d34144296a649f236ffece, type: 2}
+  harvest: {fileID: 11400000, guid: e599f0a6bf6192545b2a759ce3db1b11, type: 2}
   harvestMin: 1
   harvestMax: 4
   growthStages:

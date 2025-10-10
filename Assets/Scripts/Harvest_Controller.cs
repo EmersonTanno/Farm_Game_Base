@@ -32,7 +32,7 @@ public class Harvest_Controller : MonoBehaviour
             GameObject drop = ObjectPool.Instance.GetObject(item_Dropped);
             drop.transform.position = finalPos;
             Item_Dropped harvest = drop.GetComponent<Item_Dropped>();
-            harvest.SetItem(itemHarvest.harvest.harvestItem);
+            harvest.SetItem(itemHarvest.harvest);
 
             spawnedHarvest++;
         }
