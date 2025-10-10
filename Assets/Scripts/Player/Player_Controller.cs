@@ -76,8 +76,6 @@ public class Player_Controller : MonoBehaviour
         if (!value.performed) return;
         if (CheckAction()) return;
 
-        Item receivedItem = InventoryManager.Instance.UseSelectedItem();
-
         Vector2 pos = transform.position;
         if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, bedCollision))
         {
@@ -85,6 +83,8 @@ public class Player_Controller : MonoBehaviour
         }
         else
         {
+            Item receivedItem = InventoryManager.Instance.UseSelectedItem();
+
             if (receivedItem == null)
             {
                 return;
