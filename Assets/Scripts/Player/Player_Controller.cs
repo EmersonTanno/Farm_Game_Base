@@ -12,6 +12,7 @@ public class Player_Controller : MonoBehaviour
     public Transform movePoint;
     public LayerMask collision;
     public LayerMask bedCollision;
+    public LayerMask sellBoxCollision;
     private Vector2 inputDirection;
     private Vector2 facingDirection = Vector2.down;
     private bool justTurned = false;
@@ -80,6 +81,10 @@ public class Player_Controller : MonoBehaviour
         if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, bedCollision))
         {
             Time_Controll.Instance.ChangeDay();
+        }
+        else if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, sellBoxCollision))
+        {
+            Sell_Box_Controller.Instance.AddItem(InventoryManager.Instance.SellSelectedItem());
         }
         else
         {

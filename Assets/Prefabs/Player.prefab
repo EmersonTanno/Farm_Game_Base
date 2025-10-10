@@ -108,7 +108,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 512995861
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 2141466018, guid: d42266f36e739e8478f996d31b064d9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -313,6 +313,14 @@ MonoBehaviour:
   collision:
     serializedVersion: 2
     m_Bits: 64
+  bedCollision:
+    serializedVersion: 2
+    m_Bits: 512
+  sellBoxCollision:
+    serializedVersion: 2
+    m_Bits: 1024
+  myAnimator: {fileID: 0}
+  isHarvesting: 0
   plowedSoil: {fileID: 3890623402486806417, guid: a6d16087840da224fa38102eb3d934f2, type: 3}
   plantToPlant: {fileID: 11400000, guid: f785ffeb722137b4f87394547f9a37fb, type: 2}
   soilCollision:
@@ -333,6 +341,7 @@ MonoBehaviour:
   item1: {fileID: 11400000, guid: c54a40d67cf34f64a9031f0c6e9f0d59, type: 2}
   item2: {fileID: 11400000, guid: f6705a039b025e24bacd10e5fd17ab6a, type: 2}
   item3: {fileID: 11400000, guid: 9cde7149f6dbdcf43a8d65430fcb0897, type: 2}
+  item4: {fileID: 0}
 --- !u!61 &8156407660779406799
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -135,5 +135,31 @@ public class InventoryManager : MonoBehaviour
 
         return null;
     }
+
+    public Item SellSelectedItem()
+    {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot.item != null)
+        {
+            Item item = itemInSlot.item;
+            if (item.sell == true)
+            {
+                itemInSlot.count--;
+                if (itemInSlot.count <= 0)
+                {
+                    itemInSlot.RemoveItem();
+                }
+                else
+                {
+                    itemInSlot.RefreshCount();
+                }
+                return item;
+            }
+            return null;
+        }
+
+        return null;
+    }
     #endregion
 }
