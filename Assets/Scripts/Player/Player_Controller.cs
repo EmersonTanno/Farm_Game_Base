@@ -184,7 +184,7 @@ public class Player_Controller : MonoBehaviour
                 {
                     Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
 
-                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision))
+                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && !Physics2D.OverlapCircle(targetPos, .2f, sellBoxCollision))
                     {
                         movePoint.position = targetPos;
 
@@ -192,6 +192,10 @@ public class Player_Controller : MonoBehaviour
                         if (inputDirection.x == -1) ActivateAnimation("walk_left");
                         if (inputDirection.y == 1) ActivateAnimation("walk_back");
                         if (inputDirection.y == -1) ActivateAnimation("walk_front");
+                    }
+                    else
+                    {
+                        return;
                     }
                     if (Physics2D.OverlapCircle(targetPos, .2f, bedCollision))
                     {
