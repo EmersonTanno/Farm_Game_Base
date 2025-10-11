@@ -6047,7 +6047,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   day: 1
   month: 1
+  year: 0
   daysText: {fileID: 1402944253}
+  globalLight: {fileID: 619394801}
 --- !u!1 &1733546350
 GameObject:
   m_ObjectHideFlags: 0

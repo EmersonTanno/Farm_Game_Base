@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Calendar_Controller : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class Calendar_Controller : MonoBehaviour
 
     //Canvas
     [SerializeField] TextMeshProUGUI daysText;
+
+    //Light
+    [SerializeField] Light2D globalLight;
 
     //Event
     public static event Action OnDayChange;
@@ -56,19 +60,36 @@ public class Calendar_Controller : MonoBehaviour
     private void UpdateCanvas()
     {
         string monthName = "";
+        Color newColor;
         switch (month)
         {
             case 1:
                 monthName = "Ver";
+                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFBFBF", out newColor))
+                {
+                    globalLight.color = newColor;
+                }
                 break;
             case 2:
                 monthName = "Out";
+                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFC899", out newColor))
+                {
+                    globalLight.color = newColor;
+                }
                 break;
             case 3:
                 monthName = "Inv";
+                if (UnityEngine.ColorUtility.TryParseHtmlString("#99DCFF", out newColor))
+                {
+                    globalLight.color = newColor;
+                }
                 break;
             case 4:
                 monthName = "Pri";
+                if (UnityEngine.ColorUtility.TryParseHtmlString("#C2FFCA", out newColor))
+                {
+                    globalLight.color = newColor;
+                }
                 break;
         }
         if (daysText != null)
