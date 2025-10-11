@@ -65,7 +65,7 @@ public class Calendar_Controller : MonoBehaviour
         {
             case 1:
                 monthName = "Ver";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFBFBF", out newColor))
+                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFCEBF", out newColor))
                 {
                     globalLight.color = newColor;
                 }
