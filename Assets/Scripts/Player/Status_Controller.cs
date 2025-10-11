@@ -8,12 +8,14 @@ public class Status_Controller : MonoBehaviour
 {
     public static Status_Controller Instance;
     int gold = 0;
-    int goldT = 0;
+    int goldT;
     [SerializeField] TextMeshProUGUI goldText;
 
     void Awake()
     {
         Instance = this;
+        goldT = gold;
+        UpdateGoldCanva();
     }
     public void AddGold(int quantity)
     {
