@@ -6,6 +6,8 @@ using UnityEngine.Rendering.Universal;
 
 public class Calendar_Controller : MonoBehaviour
 {
+    public static Calendar_Controller Instance { get; private set; }
+
     #region Variables
     //Day and Month
     public int day = 0;
@@ -26,6 +28,7 @@ public class Calendar_Controller : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         UpdateCanvas();
     }
 

@@ -63,6 +63,8 @@ public class Soil_Controller : MonoBehaviour
     #region Grow 
     private void GrowPlant()
     {
+        if (dead) return;
+
         if (!isPlanted || currentPlant == null)
         {
             if (isWater)
@@ -72,6 +74,11 @@ public class Soil_Controller : MonoBehaviour
             }
 
             return;
+        }
+
+        if(currentPlant.season != Calendar_Controller.Instance.month)
+        {
+            dead = true;
         }
 
         if (isWater && !dead)
