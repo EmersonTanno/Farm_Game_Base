@@ -27,8 +27,8 @@ public class Harvest_Controller : MonoBehaviour
         int lucky = Status_Controller.Instance.GetLucky();
 
         // Calcula chance de ganhar +1 item extra
-        // até 40% no máximo
-        float extraChance = lucky * 0.4f;
+        // até 50% no máximo
+        float extraChance = lucky * 0.5f;
 
         // Faz o sorteio
         bool add = true;

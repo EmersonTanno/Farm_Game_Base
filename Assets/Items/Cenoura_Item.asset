@@ -22,4 +22,4 @@ MonoBehaviour:
   plant: {fileID: 0}
   sell: 1
   buyValue: 0
-  sellValue: 50
+  sellValue: 10
