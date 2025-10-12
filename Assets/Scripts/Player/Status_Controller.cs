@@ -19,7 +19,7 @@ public class Status_Controller : MonoBehaviour
     private int dayLucky = 0;
 
     //Energy
-    private int maxEnergy = 10;
+    private int maxEnergy = 100;
     public int energy;
 
     #endregion
@@ -36,11 +36,13 @@ public class Status_Controller : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GetLuckyForDay;
+        Calendar_Controller.OnDayChange += ResetEnergy;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GetLuckyForDay;
+        Calendar_Controller.OnDayChange -= ResetEnergy;
     }
     #endregion
 
@@ -133,13 +135,18 @@ public class Status_Controller : MonoBehaviour
     #region Energy
     public bool UseEnergy(int usedEnergy)
     {
-        if(usedEnergy > energy)
+        if (usedEnergy > energy)
         {
             Debug.Log("Insuficiente");
             return false;
         }
         energy -= usedEnergy;
         return true;
+    }
+    
+    private void ResetEnergy()
+    {
+        energy = maxEnergy;
     }
     #endregion
 }
