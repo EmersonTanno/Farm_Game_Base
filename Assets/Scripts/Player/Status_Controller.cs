@@ -72,7 +72,7 @@ public class Status_Controller : MonoBehaviour
 
         if (gold > goldT)
         {
-            for (int i = goldT; i < gold; i++)
+            for (int i = goldT; i <= gold; i++)
             {
                 goldT = i;
                 UpdateGoldCanva();
@@ -88,7 +88,7 @@ public class Status_Controller : MonoBehaviour
         }
         else
         {
-            for (int i = goldT; i > gold; i--)
+            for (int i = goldT; i >= gold; i--)
             {
                 goldT = i;
                 UpdateGoldCanva();
