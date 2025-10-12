@@ -17,7 +17,7 @@ MonoBehaviour:
   maxDaysWithoutWater: 0
   season: 0
   harvest: {fileID: 11400000, guid: 960e5ee2826f27b46b329e2669007518, type: 2}
-  harvestMin: 2
+  harvestMin: 1
   harvestMax: 4
   growthStages:
   - {fileID: -2128418480, guid: 8a9a3f5ec4f4862458483f5b44f0cbb7, type: 3}

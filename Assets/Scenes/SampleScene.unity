@@ -1740,6 +1740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e885ffb141e6e9a45842c3b0e7555b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gold: 0
   goldText: {fileID: 1140827629}
 --- !u!224 &484721308 stripped
 RectTransform:

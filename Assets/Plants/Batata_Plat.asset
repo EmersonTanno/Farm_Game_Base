@@ -18,7 +18,7 @@ MonoBehaviour:
   season: 3
   harvest: {fileID: 11400000, guid: e599f0a6bf6192545b2a759ce3db1b11, type: 2}
   harvestMin: 1
-  harvestMax: 4
+  harvestMax: 3
   growthStages:
   - {fileID: -80762715, guid: 8fac25da5cb96c24d9a2db4e7824ea91, type: 3}
   - {fileID: -2030045926, guid: 8fac25da5cb96c24d9a2db4e7824ea91, type: 3}

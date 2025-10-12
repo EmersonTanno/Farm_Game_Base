@@ -22,7 +22,29 @@ public class Harvest_Controller : MonoBehaviour
     public void SpawnHarvest(PlantType itemHarvest, Vector3 spawnPosition)
     {
         int spawnedHarvest = 0;
-        int quantity = Random.Range(itemHarvest.harvestMin, itemHarvest.harvestMax + 1);
+        int quantity = itemHarvest.harvestMin;
+
+        int lucky = Status_Controller.Instance.GetLucky();
+
+        // Calcula chance de ganhar +1 item extra
+        // até 40% no máximo
+        float extraChance = lucky * 0.4f;
+
+        // Faz o sorteio
+        bool add = true;
+        while (add)
+        {
+            if (Random.Range(1, 11) < extraChance)
+            {
+                quantity += 1;
+            }
+            else
+            {
+                add = false;
+            }
+        }
+
+        quantity = Mathf.Clamp(quantity, itemHarvest.harvestMin, itemHarvest.harvestMax);
 
         while (quantity > spawnedHarvest)
         {
@@ -37,5 +59,6 @@ public class Harvest_Controller : MonoBehaviour
             spawnedHarvest++;
         }
     }
+
 
 }

@@ -120,7 +120,7 @@ public class Status_Controller : MonoBehaviour
         {
             lucky = 0;
         }
-        dayLucky = UnityEngine.Random.Range(0, 11);
+        dayLucky = UnityEngine.Random.Range(1, 11);
         lucky += dayLucky;
     }
     #endregion
