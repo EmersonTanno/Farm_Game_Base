@@ -13,6 +13,7 @@ public class Calendar_Controller : MonoBehaviour
     public int day = 0;
     public int month = 0;
     public int year = 0;
+    public Season season;
 
     //Canvas
     [SerializeField] TextMeshProUGUI daysText;
@@ -70,6 +71,7 @@ public class Calendar_Controller : MonoBehaviour
                 monthName = "Ver";
                 if (UnityEngine.ColorUtility.TryParseHtmlString("#FFCEBF", out newColor))
                 {
+                    season = Season.Verao;
                     globalLight.color = newColor;
                 }
                 break;
@@ -77,6 +79,7 @@ public class Calendar_Controller : MonoBehaviour
                 monthName = "Out";
                 if (UnityEngine.ColorUtility.TryParseHtmlString("#FFC899", out newColor))
                 {
+                    season = Season.Outono;
                     globalLight.color = newColor;
                 }
                 break;
@@ -84,6 +87,7 @@ public class Calendar_Controller : MonoBehaviour
                 monthName = "Inv";
                 if (UnityEngine.ColorUtility.TryParseHtmlString("#99DCFF", out newColor))
                 {
+                    season = Season.Inverno;
                     globalLight.color = newColor;
                 }
                 break;
@@ -91,6 +95,7 @@ public class Calendar_Controller : MonoBehaviour
                 monthName = "Pri";
                 if (UnityEngine.ColorUtility.TryParseHtmlString("#C2FFCA", out newColor))
                 {
+                    season = Season.Primavera;
                     globalLight.color = newColor;
                 }
                 break;

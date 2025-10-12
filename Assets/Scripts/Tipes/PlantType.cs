@@ -8,7 +8,7 @@ public class PlantType : ScriptableObject
     public string plantName;
     public int growthTimeInDays;
     public int maxDaysWithoutWater;
-    public int season;
+    public Season season;
     public Item harvest;
     public int harvestMin;
     public int harvestMax;

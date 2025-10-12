@@ -76,7 +76,7 @@ public class Soil_Controller : MonoBehaviour
             return;
         }
 
-        if(currentPlant.season != Calendar_Controller.Instance.month)
+        if(currentPlant.season != Calendar_Controller.Instance.season)
         {
             dead = true;
         }
