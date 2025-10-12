@@ -118,7 +118,7 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot.item != null)
         {
             Item item = itemInSlot.item;
-            if (item.consume == true)
+            if (item.consume == true && item.type != ItemType.Harvest)
             {
                 itemInSlot.count--;
                 if (itemInSlot.count <= 0)
