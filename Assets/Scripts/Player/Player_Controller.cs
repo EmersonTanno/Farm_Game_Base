@@ -97,7 +97,7 @@ public class Player_Controller : MonoBehaviour
 
             if (receivedItem.type == ItemType.Seed)
             {
-                StartCoroutine(Plant(receivedItem.plant));
+                StartPlant(receivedItem.plant);
                 return;
             }
             else if (receivedItem.type == ItemType.Tool)
@@ -260,6 +260,7 @@ public class Player_Controller : MonoBehaviour
     private void PutWater()
     {
         if (CheckAction()) return;
+        if (!Status_Controller.Instance.UseEnergy(2)) return;
 
         StartCoroutine(Water());
     }
@@ -300,11 +301,19 @@ public class Player_Controller : MonoBehaviour
     private void PlowSoil()
     {
         if (CheckAction()) return;
+        if (!Status_Controller.Instance.UseEnergy(5)) return;
 
         isPlowing = true;
         myAnimator.SetBool("plow", true);
     }
 
+    private void StartPlant(PlantType plant)
+    {
+        if (CheckAction()) return;
+        if (!Status_Controller.Instance.UseEnergy(3)) return;
+
+        StartCoroutine(Plant(plant));
+    }
     private IEnumerator Plant(PlantType plant)
     {
         isPlanting = true;

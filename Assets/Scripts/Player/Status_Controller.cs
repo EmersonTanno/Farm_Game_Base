@@ -18,6 +18,10 @@ public class Status_Controller : MonoBehaviour
     private int lucky = 0;
     private int dayLucky = 0;
 
+    //Energy
+    private int maxEnergy = 10;
+    public int energy;
+
     #endregion
 
     #region Core
@@ -25,6 +29,7 @@ public class Status_Controller : MonoBehaviour
     {
         Instance = this;
         goldT = gold;
+        energy = maxEnergy;
         UpdateGoldCanva();
     }
 
@@ -122,6 +127,19 @@ public class Status_Controller : MonoBehaviour
         }
         dayLucky = UnityEngine.Random.Range(1, 11);
         lucky += dayLucky;
+    }
+    #endregion
+
+    #region Energy
+    public bool UseEnergy(int usedEnergy)
+    {
+        if(usedEnergy > energy)
+        {
+            Debug.Log("Insuficiente");
+            return false;
+        }
+        energy -= usedEnergy;
+        return true;
     }
     #endregion
 }
