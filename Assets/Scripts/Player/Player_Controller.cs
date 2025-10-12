@@ -150,6 +150,21 @@ public class Player_Controller : MonoBehaviour
             myAnimator.SetBool("walk_right", false);
 
             isMoving = false;
+
+            myAnimator.SetBool("idle_f", false);
+            myAnimator.SetBool("idle_b", false);
+            myAnimator.SetBool("idle_r", false);
+            myAnimator.SetBool("idle_l", false);
+
+            Vector2 side = GetSide();
+            if (side == Vector2.down)
+                myAnimator.SetBool("idle_f", true);
+            if (side == Vector2.up)
+                myAnimator.SetBool("idle_b", true);
+            if (side == Vector2.right)
+                myAnimator.SetBool("idle_r", true);
+            if (side == Vector2.left)
+                myAnimator.SetBool("idle_l", true);
         }
         else
         {
@@ -242,7 +257,6 @@ public class Player_Controller : MonoBehaviour
     #endregion
 
     #region Actions
-
     private void PutWater()
     {
         if (CheckAction()) return;
