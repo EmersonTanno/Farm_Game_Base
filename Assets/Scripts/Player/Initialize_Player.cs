@@ -8,6 +8,7 @@ public class Initialize_Player : MonoBehaviour
     public Item item2;
     public Item item3;
     public Item item4;
+    public Item item5;
 
     void Start()
     {
@@ -19,5 +20,8 @@ public class Initialize_Player : MonoBehaviour
         InventoryManager.Instance.AddItem(item4);
         InventoryManager.Instance.AddItem(item4);
         InventoryManager.Instance.AddItem(item4);
+        InventoryManager.Instance.AddItem(item5);
+        InventoryManager.Instance.AddItem(item5);
+        InventoryManager.Instance.AddItem(item5);
     }
 }

@@ -1742,6 +1742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: 0
   goldText: {fileID: 1140827629}
+  energy: 0
 --- !u!224 &484721308 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3541627306254851896, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}
@@ -7967,6 +7968,10 @@ PrefabInstance:
       propertyPath: item4
       value: 
       objectReference: {fileID: 11400000, guid: ada67f805e7da5b4faf7c7a295d9441f, type: 2}
+    - target: {fileID: 2048634262080933915, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: item5
+      value: 
+      objectReference: {fileID: 11400000, guid: 4b6b4dc864da1fc46929815596c37dd0, type: 2}
     - target: {fileID: 8156407660779406799, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_IsTrigger
       value: 1

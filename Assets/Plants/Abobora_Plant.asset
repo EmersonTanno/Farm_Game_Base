@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
+  m_Name: Abobora_Plant
+  m_EditorClassIdentifier: 
+  plantName: "Ab\xF3bora"
+  growthTimeInDays: 12
+  maxDaysWithoutWater: 3
+  season: 1
+  harvest: {fileID: 0}
+  harvestMin: 1
+  harvestMax: 1
+  growthStages:
+  - {fileID: -799158322, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
+  - {fileID: 2101630707, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
+  - {fileID: -2031646691, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
+  - {fileID: -1029085900, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
+  - {fileID: -1049352180, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
+  - {fileID: -550972289, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
