@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantName: 1
   growthTimeInDays: 3
-  maxDaysWithoutWater: 0
+  maxDaysWithoutWater: 2
   season: 0
   harvest: {fileID: 11400000, guid: 960e5ee2826f27b46b329e2669007518, type: 2}
   harvestMin: 1
