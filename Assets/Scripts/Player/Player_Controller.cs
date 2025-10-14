@@ -80,7 +80,7 @@ public class Player_Controller : MonoBehaviour
         Vector2 pos = transform.position;
         if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, bedCollision))
         {
-            Time_Controll.Instance.ChangeDay();
+            Time_Controll.Instance.ActivateBedCanvas();
         }
         else if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, sellBoxCollision))
         {

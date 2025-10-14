@@ -18,6 +18,9 @@ public class Time_Controll : MonoBehaviour
     //Canvas
     [SerializeField] TextMeshProUGUI timerText;
 
+    //Bed
+    [SerializeField] GameObject bedCanva;
+
     //Event
     public static event Action OnMidNightChange;
     public static event Action OnHourChange;
@@ -84,4 +87,22 @@ public class Time_Controll : MonoBehaviour
             timerText.text = $"{hours:D2}:{minutes:D2}";
         }
     }
+
+        #region Bed
+    public void ActivateBedCanvas()
+    {
+        bedCanva.SetActive(true);
+    }
+
+    public void CancelBedCanvas()
+    {
+        bedCanva.SetActive(false);
+    }
+
+    public void Sleep()
+    {
+        Time_Controll.Instance.ChangeDay();
+        bedCanva.SetActive(false);
+    }
+    #endregion
 }
