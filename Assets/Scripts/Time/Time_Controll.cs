@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Time_Controll : MonoBehaviour
 {
@@ -20,6 +22,8 @@ public class Time_Controll : MonoBehaviour
 
     //Bed
     [SerializeField] GameObject bedCanva;
+    private bool canSelectOption = false;
+    public bool bedActive = false;
 
     //Event
     public static event Action OnMidNightChange;
@@ -88,21 +92,39 @@ public class Time_Controll : MonoBehaviour
         }
     }
 
-        #region Bed
+    #region Bed
     public void ActivateBedCanvas()
     {
-        bedCanva.SetActive(true);
+        bedActive = true;
+        bedCanva.SetActive(bedActive);
+        StartCoroutine(SetCanSelect());
     }
 
     public void CancelBedCanvas()
     {
-        bedCanva.SetActive(false);
+        if (canSelectOption)
+        {
+            bedActive = false;
+            bedCanva.SetActive(bedActive);
+            canSelectOption = false;
+        }
     }
 
     public void Sleep()
     {
-        Time_Controll.Instance.ChangeDay();
-        bedCanva.SetActive(false);
+        if (canSelectOption)
+        {
+            bedActive = false;
+            ChangeDay();
+            bedCanva.SetActive(bedActive);
+            canSelectOption = false;
+        }
+    }
+
+    private IEnumerator SetCanSelect()
+    {
+        yield return new WaitForSeconds(0.1f);
+        canSelectOption = true;
     }
     #endregion
 }
