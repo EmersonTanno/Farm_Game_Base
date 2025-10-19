@@ -98,7 +98,7 @@ public class Time_Controll : MonoBehaviour
     {
         bedActive = true;
         bedCanva.SetActive(bedActive);
-        Time.timeScale = 0f;
+        PauseTime();
         StartCoroutine(SetCanSelect());
     }
 
@@ -109,7 +109,7 @@ public class Time_Controll : MonoBehaviour
             bedActive = false;
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
-            Time.timeScale = 1f;
+            UnpauseTime();
         }
     }
 
@@ -121,7 +121,7 @@ public class Time_Controll : MonoBehaviour
             ChangeDay();
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
-            Time.timeScale = 1f;
+            UnpauseTime();
         }
     }
 
@@ -129,6 +129,16 @@ public class Time_Controll : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.1f);
         canSelectOption = true;
+    }
+
+    public void PauseTime()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void UnpauseTime()
+    {
+        Time.timeScale = 1f;
     }
     #endregion
 }

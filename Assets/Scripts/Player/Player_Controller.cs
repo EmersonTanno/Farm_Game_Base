@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class Player_Controller : MonoBehaviour
 {
     #region Variables
+
+        public static Player_Controller Instance { get; private set; }
     //Movement
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
@@ -34,6 +36,10 @@ public class Player_Controller : MonoBehaviour
     #endregion
 
     #region Core
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         movePoint.parent = null;
@@ -447,7 +453,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckAction()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive)
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive)
         {
             return true;
         }
@@ -457,7 +463,17 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckMove()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive)
+        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool CheckPlayerActions()
+    {
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing)
         {
             return true;
         }

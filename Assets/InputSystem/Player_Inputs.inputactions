@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Shop",
+                    "type": "Button",
+                    "id": "1aeba494-b347-43f7-ad40-c76a9c1241ca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -289,6 +298,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Harvest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1cfd97be-f161-4c79-96a2-50974f2cf36a",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

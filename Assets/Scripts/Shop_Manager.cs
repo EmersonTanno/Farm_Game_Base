@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Shop_Manager : MonoBehaviour
@@ -7,7 +8,7 @@ public class Shop_Manager : MonoBehaviour
     public static Shop_Manager Instance { get; private set; }
     public bool shopActive = false;
     private Item sellItem;
-    [SerializeField] Object itemCanvas;
+    [SerializeField] GameObject shopCanvas;
     [SerializeField] UnityEngine.UI.Image itemImage;
     [SerializeField] TextMeshProUGUI itemText;
     [SerializeField] TextMeshProUGUI itemPrice;
@@ -38,6 +39,23 @@ public class Shop_Manager : MonoBehaviour
         Calendar_Controller.OnMonthChange -= SetShopItens;
     }
     #endregion
+
+    public void ActivateDeactivateShop()
+    {
+        if (Time_Controll.Instance.bedActive || Player_Controller.Instance.CheckPlayerActions() || InventoryManager.Instance.inventoryActive) return;
+
+        shopActive = !shopActive;
+
+        if (shopActive)
+        {
+            Time_Controll.Instance.PauseTime();
+        }
+        else
+        {
+            Time_Controll.Instance.UnpauseTime();
+        }
+        shopCanvas.SetActive(shopActive);
+    }
 
     private void SetShopItens()
     {

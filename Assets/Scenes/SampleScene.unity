@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopActive: 0
-  itemCanvas: {fileID: 1500023055}
+  shopCanvas: {fileID: 1500023055}
   itemImage: {fileID: 4593724}
   itemText: {fileID: 708329039}
   itemPrice: {fileID: 1416691284}
@@ -5755,7 +5755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1500023056
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8321,7 +8321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_AnchorMin.x
@@ -8329,7 +8329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -8369,11 +8369,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 302.70566
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -249.3651
       objectReference: {fileID: 0}
     - target: {fileID: 7524581413237337465, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8848,7 +8848,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1280, y: 1024}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -9370,6 +9370,26 @@ PrefabInstance:
       value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionId
+      value: 1aeba494-b347-43f7-ad40-c76a9c1241ca
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionName
+      value: Player/Shop[/Keyboard/p]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1287601175}
@@ -9377,6 +9397,26 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1287601175}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 176429583}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActivateDeactivateShop
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Shop_Manager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933915, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: item4
       value: 
