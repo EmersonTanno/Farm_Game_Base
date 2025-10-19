@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
   m_Name: Cenoura_Seed
   m_EditorClassIdentifier: 
-  itemName: Cenoura_Seed
+  itemName: Semente de Cenoura
   type: 0
   image: {fileID: 21300000, guid: 4aae2b3a55eb48247888c7051fb8c79e, type: 3}
   stackable: 1

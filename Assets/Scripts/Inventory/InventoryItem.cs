@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -15,6 +16,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public UnityEngine.UI.Image image;
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
+    public static event Action OnItemDrop;
 
     void Awake()
     {
@@ -60,6 +62,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
         image.raycastTarget = true;
+        OnItemDrop?.Invoke();
     }
 
 

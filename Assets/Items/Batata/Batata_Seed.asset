@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
   m_Name: Batata_Seed
   m_EditorClassIdentifier: 
-  itemName: Batata_Seed
+  itemName: Semente de Batata
   type: 0
   image: {fileID: 21300000, guid: 21c4b2cfb85256543b63dd93bdc78242, type: 3}
   stackable: 1

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ public class InventoryManager : MonoBehaviour
     int selectedSlot = -1;
     [SerializeField] GameObject inventoryCanvas;
     [SerializeField] GameObject inventoryButton;
+    [SerializeField] TextMeshProUGUI itemNameText;
     [HideInInspector] public bool inventoryActive = false;
     #endregion
 
@@ -25,6 +27,16 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         ChangeSelectedSlot(0);
+    }
+
+        void OnEnable()
+    {
+        InventoryItem.OnItemDrop += ReloadSlot;
+    }
+
+    void OnDisable()
+    {
+        InventoryItem.OnItemDrop -= ReloadSlot;
     }
     #endregion
 
@@ -72,6 +84,33 @@ public class InventoryManager : MonoBehaviour
 
         inventorySlots[newValue].Select();
         selectedSlot = newValue;
+
+        InventorySlot slot = inventorySlots[newValue];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot.item != null)
+        {
+            Item item = itemInSlot.item;
+            itemNameText.text = item.itemName;
+        }
+        else
+        {
+            itemNameText.text = "";
+        }
+    }
+    
+    void ReloadSlot()
+    {
+        InventorySlot slot = inventorySlots[selectedSlot];
+        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+        if (itemInSlot.item != null)
+        {
+            Item item = itemInSlot.item;
+            itemNameText.text = item.itemName;
+        }
+        else
+        {
+            itemNameText.text = "";
+        }
     }
 
     public bool AddItem(Item item)

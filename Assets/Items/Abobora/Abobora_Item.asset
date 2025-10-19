@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
   m_Name: Abobora_Item
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: "Ab\xF3bora"
   type: 2
   image: {fileID: 21300000, guid: d6922ceee2b9c0d42a2649843bc3645b, type: 3}
   stackable: 1
