@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -38,7 +39,7 @@ public class Time_Controll : MonoBehaviour
     }
     void Update()
     {
-        if (canChangeTime)
+        if (canChangeTime && !bedActive)
         {
             StartCoroutine(UpdateTime());
         }
@@ -97,6 +98,7 @@ public class Time_Controll : MonoBehaviour
     {
         bedActive = true;
         bedCanva.SetActive(bedActive);
+        Time.timeScale = 0f;
         StartCoroutine(SetCanSelect());
     }
 
@@ -107,6 +109,7 @@ public class Time_Controll : MonoBehaviour
             bedActive = false;
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
+            Time.timeScale = 1f;
         }
     }
 
@@ -118,12 +121,13 @@ public class Time_Controll : MonoBehaviour
             ChangeDay();
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
+            Time.timeScale = 1f;
         }
     }
 
     private IEnumerator SetCanSelect()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
         canSelectOption = true;
     }
     #endregion
