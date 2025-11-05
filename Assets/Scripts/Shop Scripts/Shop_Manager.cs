@@ -13,9 +13,12 @@ public class Shop_Manager : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemText;
     [SerializeField] TextMeshProUGUI itemPrice;
 
-    [SerializeField] Item itemVerao;
-    [SerializeField] Item itemOutono;
-    [SerializeField] Item itemPrimavera;
+    [SerializeField] Item[] itemVerao;
+    [SerializeField] Item[] itemOutono;
+    [SerializeField] Item[] itemPrimavera;
+    [SerializeField] Item[] itemInverno;
+
+    [SerializeField] GameObject[] itemSlosts;
     #endregion
 
     #region Core
@@ -55,6 +58,34 @@ public class Shop_Manager : MonoBehaviour
             Time_Controll.Instance.UnpauseTime();
         }
         shopCanvas.SetActive(shopActive);
+        ActivateSlots(shopActive);
+    }
+
+    private void ActivateSlots(bool status)
+    {
+        if (status)
+        {
+            for (int i = 0; i < itemSlosts.Length; i++)
+            {
+                GameObject slot = itemSlosts[i];
+                ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
+                if (shopSlot.GetSellItem())
+                {
+                    itemSlosts[i].SetActive(true);
+                }
+                else
+                {
+                    itemSlosts[i].SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < itemSlosts.Length; i++)
+            {
+                itemSlosts[i].SetActive(false);
+            }
+        }
     }
 
     private void SetShopItens()
@@ -62,26 +93,41 @@ public class Shop_Manager : MonoBehaviour
         switch (Calendar_Controller.Instance.season)
         {
             case Season.Verao:
-                sellItem = itemVerao;
+                SetSeasonShop(itemVerao);
                 break;
             case Season.Outono:
-                sellItem = itemOutono;
+                SetSeasonShop(itemOutono);
                 break;
             case Season.Primavera:
-                sellItem = itemPrimavera;
+                SetSeasonShop(itemPrimavera);
+                break;
+            case Season.Inverno:
+                SetSeasonShop(itemInverno);
                 break;
         }
-        itemImage.sprite = sellItem.image;
-        itemText.text = sellItem.itemName;
-        itemPrice.text = $"$ {sellItem.buyValue}";
+    }
+
+    private void SetSeasonShop(Item[] items)
+    {
+        for(int i = 0; i < items.Length; i++)
+        {
+            ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
+            shopSlot.SetItem(items[i]);
+        }
     }
     
-    public void BuyItem()
+    public void BuyItem(ShopSlot slot)
     {
-        if (Status_Controller.Instance.gold < sellItem.buyValue) return;
+        Item buiyngItem = slot.GetSellItem();
 
-        Status_Controller.Instance.RemoveGold(sellItem.buyValue);
-        InventoryManager.Instance.AddItem(sellItem);
+        if (Status_Controller.Instance.gold < buiyngItem.buyValue)
+        {
+            Debug.Log("Deu merda");
+            return;
+        } 
+
+        Status_Controller.Instance.RemoveGold(buiyngItem.buyValue);
+        InventoryManager.Instance.AddItem(buiyngItem);
     }
 
 }

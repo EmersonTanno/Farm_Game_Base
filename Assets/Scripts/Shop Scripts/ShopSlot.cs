@@ -11,17 +11,26 @@ public class ShopSlot : MonoBehaviour
 
     private Item sellItem;
 
-    private void setSellItem(Item item)
+    public Item GetSellItem()
+    {
+        return sellItem;
+    }
+    private void SetSellItem(Item item)
     {
         sellItem = item;
     }
 
-    public void setItem(Item item)
+    public void SetItem(Item item)
     {
-        setSellItem(item);
+        SetSellItem(item);
 
         itemImage.sprite = sellItem.image;
         itemText.text = sellItem.itemName;
         itemPrice.text = $"$ {sellItem.buyValue}";
+    }
+
+    public void BuyItem()
+    {
+        Shop_Manager.Instance.BuyItem(this);
     }
 }
