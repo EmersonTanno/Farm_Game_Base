@@ -35,11 +35,6 @@ public class ShopSlot : MonoBehaviour
         itemQuantity.text = quantity.ToString();
     }
 
-    public void BuyItem()
-    {
-        Shop_Manager.Instance.BuyItem(this);
-    }
-
     public void AddItemToCart()
     {
         if (Shop_Manager.Instance.totalPrice + sellItem.buyValue > Status_Controller.Instance.gold)

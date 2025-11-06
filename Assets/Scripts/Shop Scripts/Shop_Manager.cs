@@ -117,20 +117,6 @@ public class Shop_Manager : MonoBehaviour
         }
     }
 
-    public void BuyItem(ShopSlot slot)
-    {
-        Item buiyngItem = slot.GetSellItem();
-
-        if (Status_Controller.Instance.gold < buiyngItem.buyValue)
-        {
-            Debug.Log("Deu merda");
-            return;
-        }
-
-        Status_Controller.Instance.RemoveGold(buiyngItem.buyValue);
-        InventoryManager.Instance.AddItem(buiyngItem);
-    }
-
     public void BuyItems()
     {
         Status_Controller.Instance.RemoveGold(totalPrice);
