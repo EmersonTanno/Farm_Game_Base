@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Shop_Manager : MonoBehaviour
@@ -19,6 +18,8 @@ public class Shop_Manager : MonoBehaviour
     [SerializeField] Item[] itemInverno;
 
     [SerializeField] GameObject[] itemSlosts;
+
+    public int totalPrice = 0;
     #endregion
 
     #region Core
@@ -35,11 +36,13 @@ public class Shop_Manager : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnMonthChange += SetShopItens;
+        ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnMonthChange -= SetShopItens;
+        ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
     }
     #endregion
 
@@ -115,7 +118,7 @@ public class Shop_Manager : MonoBehaviour
             shopSlot.SetItem(items[i]);
         }
     }
-    
+
     public void BuyItem(ShopSlot slot)
     {
         Item buiyngItem = slot.GetSellItem();
@@ -124,10 +127,28 @@ public class Shop_Manager : MonoBehaviour
         {
             Debug.Log("Deu merda");
             return;
-        } 
+        }
 
         Status_Controller.Instance.RemoveGold(buiyngItem.buyValue);
         InventoryManager.Instance.AddItem(buiyngItem);
+    }
+    
+    private void ReloadTotalPrice()
+    {
+        totalPrice = 0;
+        for (int i = 0; i < itemSlosts.Length; i++)
+        {
+            GameObject obj = itemSlosts[i];
+            if (obj == null) continue;
+
+            ShopSlot slot = obj.GetComponent<ShopSlot>();
+            if (slot == null) continue;
+
+            Item item = slot.GetSellItem();
+            if (item == null) continue;
+
+            totalPrice += slot.GetSellItem().buyValue * slot.GetQuantity();  
+        }
     }
 
 }
