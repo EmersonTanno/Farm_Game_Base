@@ -44,7 +44,6 @@ public class ShopSlot : MonoBehaviour
     {
         if (Shop_Manager.Instance.totalPrice + sellItem.buyValue > Status_Controller.Instance.gold)
         {
-            Debug.Log("Ouro insuficiente");
             return;
         }
         quantity++;
@@ -68,13 +67,12 @@ public class ShopSlot : MonoBehaviour
             newQuantity -= quantity;
             if (Shop_Manager.Instance.totalPrice + (sellItem.buyValue * newQuantity) > Status_Controller.Instance.gold)
             {
-                Debug.Log("Ouro insuficiente");
                 itemQuantity.text = quantity.ToString();
                 return;
             }
         }
 
         quantity = int.Parse(itemQuantity.text);
-        Debug.Log(quantity);
+        OnAddRemoveItem?.Invoke();
     }
 }
