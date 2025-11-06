@@ -130,6 +130,33 @@ public class Shop_Manager : MonoBehaviour
         Status_Controller.Instance.RemoveGold(buiyngItem.buyValue);
         InventoryManager.Instance.AddItem(buiyngItem);
     }
+
+    public void BuyItems()
+    {
+        Status_Controller.Instance.RemoveGold(totalPrice);
+
+        for (int i = 0; i < itemSlosts.Length; i++)
+        {
+            GameObject obj = itemSlosts[i];
+            if (obj == null) continue;
+
+            ShopSlot slot = obj.GetComponent<ShopSlot>();
+            if (slot == null) continue;
+
+            Item item = slot.GetSellItem();
+            if (item == null) continue;
+
+            if (slot.GetQuantity() > 0)
+            {
+                for (int x = 0; x < slot.GetQuantity(); x++)
+                {
+                    InventoryManager.Instance.AddItem(slot.GetSellItem());
+                }
+            }
+        }
+
+        ActivateDeactivateShop();
+    }
     
     private void ReloadTotalPrice()
     {

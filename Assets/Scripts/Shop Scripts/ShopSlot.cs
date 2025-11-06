@@ -31,7 +31,7 @@ public class ShopSlot : MonoBehaviour
         SetSellItem(item);
 
         itemImage.sprite = sellItem.image;
-        itemText.text = $"{sellItem.itemName} {sellItem.buyValue}";
+        itemText.text = $"{sellItem.itemName} ${sellItem.buyValue}";
         itemQuantity.text = quantity.ToString();
     }
 
@@ -84,5 +84,6 @@ public class ShopSlot : MonoBehaviour
     public void Reset()
     {
         quantity = 0;
+        SetQuantityText(quantity);
     }
 }
