@@ -6,11 +6,8 @@ public class Shop_Manager : MonoBehaviour
     #region Variables
     public static Shop_Manager Instance { get; private set; }
     public bool shopActive = false;
-    private Item sellItem;
     [SerializeField] GameObject shopCanvas;
-    [SerializeField] UnityEngine.UI.Image itemImage;
-    [SerializeField] TextMeshProUGUI itemText;
-    [SerializeField] TextMeshProUGUI itemPrice;
+    [SerializeField] TextMeshProUGUI totalPriceText;
 
     [SerializeField] Item[] itemVerao;
     [SerializeField] Item[] itemOutono;
@@ -62,6 +59,7 @@ public class Shop_Manager : MonoBehaviour
         }
         shopCanvas.SetActive(shopActive);
         ActivateSlots(shopActive);
+        ReloadTotalPrice();
     }
 
     private void ActivateSlots(bool status)
@@ -70,11 +68,11 @@ public class Shop_Manager : MonoBehaviour
         {
             for (int i = 0; i < itemSlosts.Length; i++)
             {
-                GameObject slot = itemSlosts[i];
                 ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
                 if (shopSlot.GetSellItem())
                 {
                     itemSlosts[i].SetActive(true);
+                    shopSlot.Reset();
                 }
                 else
                 {
@@ -147,8 +145,9 @@ public class Shop_Manager : MonoBehaviour
             Item item = slot.GetSellItem();
             if (item == null) continue;
 
-            totalPrice += slot.GetSellItem().buyValue * slot.GetQuantity();  
+            totalPrice += slot.GetSellItem().buyValue * slot.GetQuantity();
         }
+        totalPriceText.text = $"${totalPrice}";
     }
 
 }

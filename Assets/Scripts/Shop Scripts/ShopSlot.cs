@@ -47,7 +47,7 @@ public class ShopSlot : MonoBehaviour
             return;
         }
         quantity++;
-        itemQuantity.text = quantity.ToString();
+        SetQuantityText(quantity);
         OnAddRemoveItem?.Invoke();
     }
 
@@ -55,7 +55,7 @@ public class ShopSlot : MonoBehaviour
     {
         if (quantity <= 0) return;
         quantity--;
-        itemQuantity.text = quantity.ToString();
+        SetQuantityText(quantity);
         OnAddRemoveItem?.Invoke();
     }
 
@@ -67,12 +67,22 @@ public class ShopSlot : MonoBehaviour
             newQuantity -= quantity;
             if (Shop_Manager.Instance.totalPrice + (sellItem.buyValue * newQuantity) > Status_Controller.Instance.gold)
             {
-                itemQuantity.text = quantity.ToString();
+                SetQuantityText(quantity);
                 return;
             }
         }
 
         quantity = int.Parse(itemQuantity.text);
         OnAddRemoveItem?.Invoke();
+    }
+
+    private void SetQuantityText(int newQuantity)
+    {
+        itemQuantity.text = newQuantity.ToString(); 
+    }
+
+    public void Reset()
+    {
+        quantity = 0;
     }
 }
