@@ -46,6 +46,7 @@ public class Time_Controll : MonoBehaviour
     }
     #endregion
 
+    #region Time Functions
     private IEnumerator UpdateTime()
     {
         canChangeTime = false;
@@ -92,6 +93,7 @@ public class Time_Controll : MonoBehaviour
             timerText.text = $"{hours:D2}:{minutes:D2}";
         }
     }
+    #endregion
 
     #region Bed
     public void ActivateBedCanvas()

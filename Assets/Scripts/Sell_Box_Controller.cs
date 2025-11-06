@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class Sell_Box_Controller : MonoBehaviour
 {
-
     public static Sell_Box_Controller Instance { get; private set; }
-    private List<Item> sellItemsList = new List<Item>();
 
+    #region Variables
+    private List<Item> sellItemsList = new List<Item>();
+    #endregion
+
+    #region Events
     void OnEnable()
     {
         Time_Controll.OnMidNightChange += SellItems;
@@ -16,12 +19,16 @@ public class Sell_Box_Controller : MonoBehaviour
     {
         Time_Controll.OnMidNightChange -= SellItems;
     }
+    #endregion
 
+    #region Core
     void Awake()
     {
         Instance = this;
     }
+    #endregion
 
+    #region Sell Box Functions
     public void AddItem(Item newItem)
     {
         if (!newItem) return;
@@ -37,7 +44,7 @@ public class Sell_Box_Controller : MonoBehaviour
         if (index >= 0 && index < sellItemsList.Count)
             sellItemsList.RemoveAt(index);
     }
-    
+
     public void SellItems()
     {
         int valor = 0;
@@ -49,4 +56,5 @@ public class Sell_Box_Controller : MonoBehaviour
 
         Status_Controller.Instance.AddGold(valor);
     }
+    #endregion
 }

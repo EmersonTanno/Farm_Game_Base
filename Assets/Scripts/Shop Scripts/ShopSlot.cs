@@ -4,14 +4,19 @@ using System;
 
 public class ShopSlot : MonoBehaviour
 {
+    #region Variables
     [SerializeField] UnityEngine.UI.Image itemImage;
     [SerializeField] TextMeshProUGUI itemText;
     [SerializeField] TMP_InputField itemQuantity;
 
     private Item sellItem;
     private int quantity = 0;
-    public static event Action OnAddRemoveItem;
 
+    //Events
+    public static event Action OnAddRemoveItem;
+    #endregion
+
+    #region Shop Functions
     public Item GetSellItem()
     {
         return sellItem;
@@ -81,4 +86,5 @@ public class ShopSlot : MonoBehaviour
         quantity = 0;
         SetQuantityText(quantity);
     }
+    #endregion
 }

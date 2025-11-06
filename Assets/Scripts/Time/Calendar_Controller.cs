@@ -27,12 +27,15 @@ public class Calendar_Controller : MonoBehaviour
     public static event Action OnYearChange;
     #endregion
 
+    #region Core
     void Awake()
     {
         Instance = this;
         UpdateCanvas();
     }
+    #endregion
 
+    #region Events
     void OnEnable()
     {
         Time_Controll.OnMidNightChange += ChangeDay;
@@ -42,12 +45,14 @@ public class Calendar_Controller : MonoBehaviour
     {
         Time_Controll.OnMidNightChange -= ChangeDay;
     }
+    #endregion
 
+    #region Callendar Functions
     private void ChangeDay()
     {
         day++;
         OnDayChange?.Invoke();
-        if(day > 30)
+        if (day > 30)
         {
             month++;
             day = 1;
@@ -108,7 +113,7 @@ public class Calendar_Controller : MonoBehaviour
 
     private void SetSeason()
     {
-        switch(month)
+        switch (month)
         {
             case 1:
                 season = Season.Verao;
@@ -124,5 +129,6 @@ public class Calendar_Controller : MonoBehaviour
                 break;
         }
     }
+    #endregion
 }
 

@@ -7,10 +7,13 @@ namespace Dustopia.RewardSystem
 {
     public class ObjectPool : MonoBehaviour
     {
+        #region Variables
         public static ObjectPool Instance { get; private set; }
         private Dictionary<string, Queue<GameObject>> pool = new Dictionary<string, Queue<GameObject>>();
         private Dictionary<string, Transform> poolParents = new Dictionary<string, Transform>();
+        #endregion
 
+        #region Core
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -20,7 +23,9 @@ namespace Dustopia.RewardSystem
             }
             Instance = this;
         }
+        #endregion
 
+        #region Pool Functions
         public void InstantiatePool(GameObject prefab, int quantity)
         {
             string key = prefab.name;
@@ -70,5 +75,6 @@ namespace Dustopia.RewardSystem
             obj.transform.SetParent(poolParents[key]);
             pool[key].Enqueue(obj);
         }
+        #endregion
     }
 }

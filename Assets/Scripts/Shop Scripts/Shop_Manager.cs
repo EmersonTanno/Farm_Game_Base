@@ -43,6 +43,7 @@ public class Shop_Manager : MonoBehaviour
     }
     #endregion
 
+    #region Canvas
     public void ActivateDeactivateShop()
     {
         if (Time_Controll.Instance.bedActive || Player_Controller.Instance.CheckPlayerActions() || InventoryManager.Instance.inventoryActive) return;
@@ -110,13 +111,15 @@ public class Shop_Manager : MonoBehaviour
 
     private void SetSeasonShop(Item[] items)
     {
-        for(int i = 0; i < items.Length; i++)
+        for (int i = 0; i < items.Length; i++)
         {
             ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
             shopSlot.SetItem(items[i]);
         }
     }
+    #endregion
 
+    #region Shop
     public void BuyItems()
     {
         Status_Controller.Instance.RemoveGold(totalPrice);
@@ -162,5 +165,5 @@ public class Shop_Manager : MonoBehaviour
         }
         totalPriceText.text = $"${totalPrice}";
     }
-
+    #endregion
 }

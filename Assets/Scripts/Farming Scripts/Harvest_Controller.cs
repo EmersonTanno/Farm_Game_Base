@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Harvest_Controller : MonoBehaviour
 {
+    #region Variables
     public static Harvest_Controller Instance { get; private set; }
 
     [SerializeField] GameObject item_Dropped;
+    #endregion
 
+    #region Core
     void Awake()
     {
         Instance = this;
@@ -18,7 +21,9 @@ public class Harvest_Controller : MonoBehaviour
     {
         ObjectPool.Instance.InstantiatePool(item_Dropped, 10);
     }
+    #endregion
 
+    #region Harvest Functions
     public void SpawnHarvest(PlantType itemHarvest, Vector3 spawnPosition)
     {
         int spawnedHarvest = 0;
@@ -59,6 +64,7 @@ public class Harvest_Controller : MonoBehaviour
             spawnedHarvest++;
         }
     }
+    #endregion
 
 
 }
