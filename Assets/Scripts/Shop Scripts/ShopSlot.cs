@@ -8,6 +8,8 @@ public class ShopSlot : MonoBehaviour
     [SerializeField] UnityEngine.UI.Image itemImage;
     [SerializeField] TextMeshProUGUI itemText;
     [SerializeField] TMP_InputField itemQuantity;
+    [SerializeField] Transform itemQuantityPos;
+    private Vector2 itemQuantityStartPos;
 
     private Item sellItem;
     private int quantity = 0;
@@ -15,6 +17,11 @@ public class ShopSlot : MonoBehaviour
     //Events
     public static event Action OnAddRemoveItem;
     #endregion
+
+    void Start()
+    {
+        itemQuantityStartPos = itemQuantityPos.position;
+    }
 
     #region Shop Functions
     public Item GetSellItem()
@@ -67,12 +74,14 @@ public class ShopSlot : MonoBehaviour
             newQuantity -= quantity;
             if (Shop_Manager.Instance.totalPrice + (sellItem.buyValue * newQuantity) > Status_Controller.Instance.gold)
             {
+                itemQuantityPos.position = itemQuantityStartPos;
                 SetQuantityText(quantity);
                 return;
             }
         }
 
         quantity = int.Parse(itemQuantity.text);
+        itemQuantityPos.position = itemQuantityStartPos;
         OnAddRemoveItem?.Invoke();
     }
 

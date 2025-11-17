@@ -802,6 +802,7 @@ MonoBehaviour:
   itemImage: {fileID: 8187676508853644593}
   itemText: {fileID: 8034958770421461558}
   itemQuantity: {fileID: 3956455916557780666}
+  itemQuantityPos: {fileID: 8085558671819520869}
 --- !u!1 &4760813956674085515
 GameObject:
   m_ObjectHideFlags: 0
