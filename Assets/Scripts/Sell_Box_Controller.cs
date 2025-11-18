@@ -54,6 +54,8 @@ public class Sell_Box_Controller : MonoBehaviour
         }
         sellItemsList.Clear();
 
+        Tax_System.Instance.AddSellItemsValueToAnualSells(valor);
+
         Status_Controller.Instance.AddGold(valor);
     }
     #endregion
