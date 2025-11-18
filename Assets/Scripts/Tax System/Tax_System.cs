@@ -7,7 +7,7 @@ public class Tax_System : MonoBehaviour
     #region Variables
     public static Tax_System Instance { get; private set; }
 
-    public float taxRate = 0;
+    private float taxRate = 0.05f;
 
     //Anual Taxes
     private float anualTaxPercentage = 0.05f;
@@ -38,6 +38,14 @@ public class Tax_System : MonoBehaviour
     }
     #endregion
 
+    #region Sell Taxes
+    public int ApplySellTaxes(int value)
+    {
+        return (int)(value * taxRate);
+    }
+    #endregion
+
+    #region Anual Taxes
     public int CalculateAnualTax()
     {
         anualTaxFinal = (int)(anualTaxBase + (anualSells * anualTaxPercentage));
@@ -48,6 +56,7 @@ public class Tax_System : MonoBehaviour
     {
         anualSells += value;
     }
+    #endregion
 
 
 

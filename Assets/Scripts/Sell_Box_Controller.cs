@@ -48,6 +48,7 @@ public class Sell_Box_Controller : MonoBehaviour
     public void SellItems()
     {
         int valor = 0;
+        int tax = 0;
         for (int i = 0; i < sellItemsList.Count; i++)
         {
             valor += sellItemsList[i].sellValue;
@@ -55,6 +56,12 @@ public class Sell_Box_Controller : MonoBehaviour
         sellItemsList.Clear();
 
         Tax_System.Instance.AddSellItemsValueToAnualSells(valor);
+        Debug.Log($"valor: {valor}");
+        tax = Tax_System.Instance.ApplySellTaxes(valor);
+
+        valor -= tax; 
+        Debug.Log($"tax: {tax}");
+        Debug.Log($"valor final: {valor}");
 
         Status_Controller.Instance.AddGold(valor);
     }
