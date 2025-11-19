@@ -13,6 +13,7 @@ public class ShopSlot : MonoBehaviour
 
     private Item sellItem;
     private int quantity = 0;
+    private int buyValue = 0;
 
     //Events
     public static event Action OnAddRemoveItem;
@@ -29,6 +30,11 @@ public class ShopSlot : MonoBehaviour
         return sellItem;
     }
 
+    public int GetBuyValue()
+    {
+        return buyValue;
+    }
+
     public int GetQuantity()
     {
         return quantity;
@@ -43,13 +49,14 @@ public class ShopSlot : MonoBehaviour
         SetSellItem(item);
 
         itemImage.sprite = sellItem.image;
-        itemText.text = $"{sellItem.itemName} ${sellItem.buyValue}";
+        buyValue = sellItem.buyValue + Tax_System.Instance.ApplySellTaxes(sellItem.buyValue);
+        itemText.text = $"{sellItem.itemName} ${buyValue}";
         itemQuantity.text = quantity.ToString();
     }
 
     public void AddItemToCart()
     {
-        if (Shop_Manager.Instance.totalPrice + sellItem.buyValue > Status_Controller.Instance.gold)
+        if (Shop_Manager.Instance.totalPrice + buyValue > Status_Controller.Instance.gold)
         {
             return;
         }

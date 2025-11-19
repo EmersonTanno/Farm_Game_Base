@@ -161,7 +161,7 @@ public class Shop_Manager : MonoBehaviour
             Item item = slot.GetSellItem();
             if (item == null) continue;
 
-            totalPrice += slot.GetSellItem().buyValue * slot.GetQuantity();
+            totalPrice += slot.GetBuyValue() * slot.GetQuantity();
         }
         totalPriceText.text = $"${totalPrice}";
     }
