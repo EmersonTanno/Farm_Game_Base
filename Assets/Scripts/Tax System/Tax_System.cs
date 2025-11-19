@@ -38,6 +38,13 @@ public class Tax_System : MonoBehaviour
     }
     #endregion
 
+    #region Buy Taxes
+    public int ApplyBuyTaxes(int value)
+    {
+        return (int)(value + (value * taxRate));
+    }
+    #endregion
+
     #region Sell Taxes
     public int ApplySellTaxes(int value)
     {
