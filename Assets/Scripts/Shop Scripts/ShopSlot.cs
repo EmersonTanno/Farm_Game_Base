@@ -102,5 +102,12 @@ public class ShopSlot : MonoBehaviour
         quantity = 0;
         SetQuantityText(quantity);
     }
+
+    public void ResetAll()
+    {
+        quantity = 0;
+        sellItem = null;
+        buyValueTax = 0;
+    }
     #endregion
 }

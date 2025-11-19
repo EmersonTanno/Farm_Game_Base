@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class Tax_System : MonoBehaviour
     private int anualSells = 0;
     private int anualTaxBase = 500;
     private int anualTaxFinal = 0;
+
+
+    public static event Action OnTaxChange;
     #endregion
 
     #region Core
@@ -29,12 +33,13 @@ public class Tax_System : MonoBehaviour
 
     void OnEnable()
     {
-        //Calendar_Controller.OnDayChange += test;
+        Calendar_Controller.OnMonthChange += SetSellTaxes;
+         Calendar_Controller.OnDayChange += SetSellTaxes;
     }
 
     void OnDisable()
     {
-        //Calendar_Controller.OnDayChange += test;
+        Calendar_Controller.OnMonthChange += SetSellTaxes;
     }
     #endregion
 
@@ -49,6 +54,28 @@ public class Tax_System : MonoBehaviour
     public int ApplySellTaxes(int value)
     {
         return (int)(value * taxRate);
+    }
+
+    public void SetSellTaxes()
+    {
+        int lucky = Status_Controller.Instance.GetLucky();
+
+        int baseMin = 5;
+        int baseMax = 35;
+
+        int minPercent = baseMin + (10 - lucky);
+        int maxPercent = baseMax - lucky;
+
+        minPercent = Mathf.Clamp(minPercent, baseMin, baseMax);
+        maxPercent = Mathf.Clamp(maxPercent, minPercent, baseMax);
+
+        int taxPercent = UnityEngine.Random.Range(minPercent, maxPercent + 1);
+
+        taxRate = taxPercent / 100f;
+
+        Debug.Log($"Sorte: {lucky} | Faixa: {minPercent}% - {maxPercent}% | Imposto do dia: {taxPercent}%");
+
+        OnTaxChange?.Invoke();
     }
     #endregion
 

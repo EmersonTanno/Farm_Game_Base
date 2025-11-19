@@ -32,12 +32,14 @@ public class Shop_Manager : MonoBehaviour
 
     void OnEnable()
     {
+        Tax_System.OnTaxChange += SetShopItens;
         Calendar_Controller.OnMonthChange += SetShopItens;
         ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
     }
 
     void OnDisable()
     {
+        Tax_System.OnTaxChange -= SetShopItens;
         Calendar_Controller.OnMonthChange -= SetShopItens;
         ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
     }
@@ -111,7 +113,12 @@ public class Shop_Manager : MonoBehaviour
 
     private void SetSeasonShop(Item[] items)
     {
-        for (int i = 0; i < items.Length; i++)
+        for(int i = 0; i < itemSlosts.Length; i++)
+        {
+            ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
+            shopSlot.ResetAll();
+        }
+        for (int i  =0; i < items.Length; i++)
         {
             ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
             shopSlot.SetItem(items[i]);
