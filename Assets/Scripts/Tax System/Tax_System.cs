@@ -44,7 +44,7 @@ public class Tax_System : MonoBehaviour
     #region Buy Taxes
     public int ApplyBuyTaxes(int value)
     {
-        return (int)(value + (value * taxRate));
+        return (int)(value + (value * (taxRate/2)));
     }
     #endregion
 
