@@ -182,9 +182,18 @@ public class Player_Controller : MonoBehaviour
     #region Movement
     private void MovePlayer()
     {
-        if (CheckMove()) return;
+        if (CheckMove())
+        {
+            SnapPlayer();
+            return;
+        } 
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+    }
+
+    private void SnapPlayer()
+    {
+        transform.position = movePoint.position;
     }
 
     private void MovePointer()
