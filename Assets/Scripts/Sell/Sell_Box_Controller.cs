@@ -46,24 +46,10 @@ public class Sell_Box_Controller : MonoBehaviour
     }
 
     public void SellItems()
-    {
-        int receivedValor = 0;
-        int tax;
-        for (int i = 0; i < sellItemsList.Count; i++)
-        {
-            receivedValor += sellItemsList[i].sellValue;
-        }
-        sellItemsList.Clear();
-
-        Tax_System.Instance.AddSellItemsValueToAnualSells(receivedValor);
-
-        tax = Tax_System.Instance.ApplySellTaxes(receivedValor);
-
-        receivedValor -= tax; 
-
-        Status_Controller.Instance.AddGold(receivedValor);
+    {   
+        Sell_Controller.Instance.SellItems(sellItemsList);
         
-        Sell_Controller.Instance.UpdateSellUi(receivedValor, tax);
+        sellItemsList.Clear();
     }
     #endregion
 }

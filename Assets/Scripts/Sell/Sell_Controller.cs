@@ -13,9 +13,6 @@ public class Sell_Controller : MonoBehaviour
     [SerializeField] TextMeshProUGUI taxText;
     [SerializeField] TextMeshProUGUI gainText;
 
-    private int gainedValue = 0;
-    private int taxedValue = 0;
-    private int totalValue = 0;
     #endregion
 
     #region Core
@@ -26,11 +23,32 @@ public class Sell_Controller : MonoBehaviour
     #endregion
 
 
-    public void UpdateSellUi(int receivedValue, int taxValue)
+    public void SellItems(List<Item> sellItemsList)
     {
+        int gainedValue = 0;
+        int taxedValue = 0;
+        int totalValue = 0;
+
+        for (int i = 0; i < sellItemsList.Count; i++)
+        {
+            totalValue += sellItemsList[i].sellValue;
+            taxedValue += Tax_System.Instance.ApplySellTaxes(sellItemsList[i].sellValue);
+            gainedValue += sellItemsList[i].sellValue - Tax_System.Instance.ApplySellTaxes(sellItemsList[i].sellValue);
+        }
+
         sellUi.SetActive(true);
-        gainText.text = $"Recebido: ${receivedValue}";
-        taxText.text = $"Taxas: -${taxValue}";
+
+        gainText.text = $"Recebido: ${gainedValue}";
+        taxText.text = $"Taxas: -${taxedValue}";
         totalText.text = $"Total: ${totalValue}";
+
+        Tax_System.Instance.AddSellItemsValueToAnualSells(totalValue);
+        Status_Controller.Instance.AddGold(gainedValue);
+    }
+
+    private IEnumerator DeactivateUi()
+    {
+        yield return new WaitForSeconds(3f);
+        sellUi.SetActive(false);
     }
 }
