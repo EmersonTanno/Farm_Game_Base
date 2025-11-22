@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Sell_Controller : MonoBehaviour
@@ -12,6 +13,10 @@ public class Sell_Controller : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalText;
     [SerializeField] TextMeshProUGUI taxText;
     [SerializeField] TextMeshProUGUI gainText;
+    [SerializeField] GameObject sellContentContainer;
+    [SerializeField] GameObject sellContentSlot;
+
+    private Dictionary<Item, int> sellControlDict = new Dictionary<Item, int>();
 
     #endregion
 
@@ -22,21 +27,28 @@ public class Sell_Controller : MonoBehaviour
     }
     #endregion
 
-
     public void SellItems(List<Item> sellItemsList)
     {
         int gainedValue = 0;
         int taxedValue = 0;
         int totalValue = 0;
 
-        for (int i = 0; i < sellItemsList.Count; i++)
+        sellControlDict.Clear();
+
+        foreach (var item in sellItemsList)
         {
-            totalValue += sellItemsList[i].sellValue;
-            taxedValue += Tax_System.Instance.ApplySellTaxes(sellItemsList[i].sellValue);
-            gainedValue += sellItemsList[i].sellValue - Tax_System.Instance.ApplySellTaxes(sellItemsList[i].sellValue);
+            totalValue += item.sellValue;
+
+            int tax = Tax_System.Instance.ApplySellTaxes(item.sellValue);
+            taxedValue += tax;
+            gainedValue += item.sellValue - tax;
+
+            AddItem(item);
         }
 
         sellUi.SetActive(true);
+        
+        RefreshSellContentUI();
 
         gainText.text = $"Recebido: ${gainedValue}";
         taxText.text = $"Taxas: -${taxedValue}";
@@ -44,11 +56,57 @@ public class Sell_Controller : MonoBehaviour
 
         Tax_System.Instance.AddSellItemsValueToAnualSells(totalValue);
         Status_Controller.Instance.AddGold(gainedValue);
+
+        StartCoroutine(DeactivateUi());
     }
+
+
+    private void RefreshSellContentUI()
+    {
+        foreach (Transform child in sellContentContainer.transform)
+            Destroy(child.gameObject);
+
+        if (sellControlDict.Count == 0) return;
+
+        foreach (var kvp in sellControlDict)
+        {
+            Item item = kvp.Key;
+            int quantity = kvp.Value;
+
+            GameObject newSlot = Instantiate(
+                sellContentSlot,
+                sellContentContainer.transform
+            );
+
+            Sell_Content_Slot slot = newSlot.GetComponent<Sell_Content_Slot>();
+            slot.SetInfo(item, quantity);
+        }
+    }
+
 
     private IEnumerator DeactivateUi()
     {
         yield return new WaitForSeconds(3f);
         sellUi.SetActive(false);
+    }
+
+    public void AddItem(Item newItem)
+    {
+        if (!newItem) return;
+
+        if (sellControlDict.ContainsKey(newItem))
+            sellControlDict[newItem]++;
+        else
+            sellControlDict[newItem] = 1;
+    }
+
+    public void RemoveItem(Item item)
+    {
+        if (!sellControlDict.ContainsKey(item)) return;
+
+        sellControlDict[item]--;
+
+        if (sellControlDict[item] <= 0)
+            sellControlDict.Remove(item);
     }
 }
