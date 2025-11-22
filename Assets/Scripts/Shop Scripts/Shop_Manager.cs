@@ -1,21 +1,26 @@
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Shop_Manager : MonoBehaviour
 {
-    #region Variables
     public static Shop_Manager Instance { get; private set; }
-    public bool shopActive = false;
+
+    #region Variables
+    [Header("UI")]
     [SerializeField] GameObject shopCanvas;
     [SerializeField] TextMeshProUGUI totalPriceText;
+    [SerializeField] Transform slotContainer;
+    [SerializeField] GameObject slotPrefab;
 
+    [Header("Itens por Estação")]
     [SerializeField] Item[] itemVerao;
     [SerializeField] Item[] itemOutono;
     [SerializeField] Item[] itemPrimavera;
     [SerializeField] Item[] itemInverno;
 
-    [SerializeField] GameObject[] itemSlosts;
-
+    private List<ShopSlot> activeSlots = new List<ShopSlot>();
+    public bool shopActive = false;
     public int totalPrice = 0;
     #endregion
 
@@ -45,50 +50,46 @@ public class Shop_Manager : MonoBehaviour
     }
     #endregion
 
-    #region Canvas
+    #region Open / Close Shop
     public void ActivateDeactivateShop()
     {
-        if (Time_Controll.Instance.bedActive || Player_Controller.Instance.CheckPlayerActions() || InventoryManager.Instance.inventoryActive) return;
+        if (Time_Controll.Instance.bedActive ||
+            Player_Controller.Instance.CheckPlayerActions() ||
+            InventoryManager.Instance.inventoryActive)
+            return;
 
         shopActive = !shopActive;
 
         if (shopActive)
-        {
             Time_Controll.Instance.PauseTime();
-        }
         else
-        {
             Time_Controll.Instance.UnpauseTime();
-        }
+
         shopCanvas.SetActive(shopActive);
-        ActivateSlots(shopActive);
+
         ReloadTotalPrice();
     }
+    #endregion
 
-    private void ActivateSlots(bool status)
+    #region Creating Slots / Setting Ttens
+    private void ClearSlots()
     {
-        if (status)
+        foreach (Transform child in slotContainer)
+            Destroy(child.gameObject);
+
+        activeSlots.Clear();
+    }
+
+    private void CreateSlots(Item[] items)
+    {
+        ClearSlots();
+
+        for (int i = 0; i < items.Length; i++)
         {
-            for (int i = 0; i < itemSlosts.Length; i++)
-            {
-                ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
-                if (shopSlot.GetSellItem())
-                {
-                    itemSlosts[i].SetActive(true);
-                    shopSlot.Reset();
-                }
-                else
-                {
-                    itemSlosts[i].SetActive(false);
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < itemSlosts.Length; i++)
-            {
-                itemSlosts[i].SetActive(false);
-            }
+            GameObject obj = Instantiate(slotPrefab, slotContainer);
+            ShopSlot slot = obj.GetComponent<ShopSlot>();
+            slot.SetItem(items[i]);
+            activeSlots.Add(slot);
         }
     }
 
@@ -97,80 +98,61 @@ public class Shop_Manager : MonoBehaviour
         switch (Calendar_Controller.Instance.season)
         {
             case Season.Verao:
-                SetSeasonShop(itemVerao);
+                CreateSlots(itemVerao);
                 break;
             case Season.Outono:
-                SetSeasonShop(itemOutono);
+                CreateSlots(itemOutono);
                 break;
             case Season.Primavera:
-                SetSeasonShop(itemPrimavera);
+                CreateSlots(itemPrimavera);
                 break;
             case Season.Inverno:
-                SetSeasonShop(itemInverno);
+                CreateSlots(itemInverno);
                 break;
-        }
-    }
-
-    private void SetSeasonShop(Item[] items)
-    {
-        for(int i = 0; i < itemSlosts.Length; i++)
-        {
-            ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
-            shopSlot.ResetAll();
-        }
-        for (int i  =0; i < items.Length; i++)
-        {
-            ShopSlot shopSlot = itemSlosts[i].GetComponent<ShopSlot>();
-            shopSlot.SetItem(items[i]);
         }
     }
     #endregion
 
-    #region Shop
+    #region Buy
     public void BuyItems()
     {
         Status_Controller.Instance.RemoveGold(totalPrice);
 
-        for (int i = 0; i < itemSlosts.Length; i++)
+        foreach (var slot in activeSlots)
         {
-            GameObject obj = itemSlosts[i];
-            if (obj == null) continue;
+            if (slot.GetSellItem() == null) continue;
 
-            ShopSlot slot = obj.GetComponent<ShopSlot>();
-            if (slot == null) continue;
-
-            Item item = slot.GetSellItem();
-            if (item == null) continue;
-
-            if (slot.GetQuantity() > 0)
-            {
-                for (int x = 0; x < slot.GetQuantity(); x++)
-                {
-                    InventoryManager.Instance.AddItem(slot.GetSellItem());
-                }
-            }
+            for (int i = 0; i < slot.GetQuantity(); i++)
+                InventoryManager.Instance.AddItem(slot.GetSellItem());
         }
 
+        ResetQuantity();
         ActivateDeactivateShop();
     }
-    
+    #endregion
+
+    #region Total Controll
     private void ReloadTotalPrice()
     {
         totalPrice = 0;
-        for (int i = 0; i < itemSlosts.Length; i++)
+
+        foreach (var slot in activeSlots)
         {
-            GameObject obj = itemSlosts[i];
-            if (obj == null) continue;
-
-            ShopSlot slot = obj.GetComponent<ShopSlot>();
-            if (slot == null) continue;
-
-            Item item = slot.GetSellItem();
-            if (item == null) continue;
-
+            if (slot.GetSellItem() == null) continue;
             totalPrice += slot.GetBuyValue() * slot.GetQuantity();
         }
+
         totalPriceText.text = $"${totalPrice}";
+    }
+
+    private void ResetQuantity()
+    {
+        for(int i = 0; i < activeSlots.Count; i++)
+        {
+            ShopSlot slot = activeSlots[i].GetComponent<ShopSlot>();
+            slot.Reset();
+        }
+        ReloadTotalPrice();
     }
     #endregion
 }
