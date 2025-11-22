@@ -62,14 +62,8 @@ public class Sell_Box_Controller : MonoBehaviour
         receivedValor -= tax; 
 
         Status_Controller.Instance.AddGold(receivedValor);
-        SellUi(receivedValor, tax);
+        
+        Sell_Controller.Instance.UpdateSellUi(receivedValor, tax);
     }
-
-    public void SellUi(int receivedValue, int taxValue)
-    {
-        Debug.Log($"Recebido: {receivedValue} || Taxa: {taxValue}");
-    }
-
-
     #endregion
 }
