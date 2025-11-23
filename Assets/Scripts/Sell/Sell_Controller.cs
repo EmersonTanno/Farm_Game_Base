@@ -20,7 +20,10 @@ public class Sell_Controller : MonoBehaviour
     [SerializeField] GameObject sellContentContainer;
     [SerializeField] GameObject sellContentSlot;
 
-    private List<string> jokeList = new List<string>();
+    private List<string> jokeListLow = new List<string>();
+    private List<string> jokeListMedium = new List<string>();
+    private List<string> jokeListHigh = new List<string>();
+    private List<string> jokeListNoProfit = new List<string>();
 
     private Dictionary<Item, int> sellControlDict = new Dictionary<Item, int>();
 
@@ -33,21 +36,55 @@ public class Sell_Controller : MonoBehaviour
     {
         Instance = this;
 
-        jokeList = new List<string>()
+        jokeListLow = new List<string>()
         {
-            "O governo agradece a sua contribuição involuntária.",
-            "Seu lucro é nosso lucro também.",
-            "Não se preocupe, a taxa volta em benefício… para alguém.",
-            "Sorria: você está sendo tributado.",
-            "Impostos: porque nem no mundo pixelado dá pra fugir.",
-            "Contribuir é lindo… sobreviver também seria.",
-            "Obrigado por financiar o progresso. De alguém.",
-            "Taxas: porque até no mundo 2D existe sofrimento.",
-            "Parabéns! Você vendeu… e o governo também ganhou.",
-            "A vida é feita de escolhas. Menos os impostos.",
-            "Sua produtividade é inspiradora. Para o governo.",
-            "Aproveite seu lucro! Ao menos o que sobrou dele.",
-            "Contribuição obrigatória: a mecânica mais realista do jogo."
+            "A taxa de {tax}% hoje foi boazinha… quase dá para agradecer.",
+            "Relaxa, só tiraram um pedacinho. Bem pequeno. Micro. Invisível até.",
+            "Seu lucro foi de ${profit}. O governo pegou só um cafezinho.",
+            "Hoje o governo foi moderado. Isso deve ser bug.",
+            "Parabéns pela venda de ${total}! E parabéns ao governo pelo 'desconto'.",
+            "Taxa baixa? Aproveita, é evento raro.",
+            "Até o governo ficou com pena dessa taxa.",
+            "Com uma mordida tão pequena, dá até para trabalhar feliz.",
+            "Sua venda de {quantity} itens quase passou despercebida pelo governo.",
+            "Se toda taxa fosse assim, até dava vontade de pagar."
+        };
+
+        jokeListMedium = new List<string>()
+        {
+            "Você vendeu ${total}. O governo achou justo pegar sua parte… e um pouco da parte da sua parte.",
+            "Taxa de {tax}% aplicada com sucesso. Sucesso para quem?",
+            "O governo analisou seus ganhos e pensou: ‘posso pegar mais’.",
+            "${taxed} de imposto? Isso é o famoso 'toma aqui que é nosso'.",
+            "Seu lucro foi de ${profit}. O do governo foi melhor.",
+            "Parabéns! Hoje você trabalhou por duas pessoas: por você e pelo governo.",
+            "Imposto médio, dor média, tristeza média.",
+            "Seu esforço foi médio. A taxa também. Todo mundo perdeu um pouco.",
+            "O governo insiste que isso é 'contribuição'. Você insiste que isso dói.",
+            "Nem alto demais, nem baixo demais. A taxa perfeita para atrapalhar."
+        };
+
+        jokeListHigh = new List<string>()
+        {
+            "O governo viu sua venda de ${total} e imediatamente ficou animado. Muito animado.",
+            "Sua taxa foi de {tax}%. A partir desse valor, já é assalto sentimental.",
+            "${taxed} em impostos? O governo chama isso de ‘lanche da tarde’.",
+            "Quando virou dívida? Não virou. Só parece.",
+            "A economia agradece. Você não.",
+            "Você trabalha, o governo vibra. Grande parceria.",
+            "${profit} para você e ${taxed} para o governo. Parece justo? Para o governo, sim.",
+            "Isso não é taxa. Isso é DLC obrigatória.",
+            "Houve lucro? Sim. Para alguém.",
+            "Taxa alta detectada. Seus sentimentos foram automaticamente tributados."
+        };
+
+        jokeListNoProfit = new List<string>()
+        {
+            "Pouco lucro hoje… bom para você, ruim para o governo.",
+            "Nem o governo achou interessante te tributar hoje. Parabéns?",
+            "A venda foi tão baixa que o governo nem se deu ao trabalho.",
+            "Sem imposto hoje. O governo entrou em modo ‘leave me alone’.",
+            "Você ganhou pouco, mas pelo menos ninguém tentou tirar de você."
         };
     }
     #endregion
@@ -78,7 +115,7 @@ public class Sell_Controller : MonoBehaviour
         ActivateDeactivateUi();
         
         RefreshSellContentUI();
-        SetInfos(taxedValue);
+        SetInfos(taxedValue, totalValue, gainedValue);
 
         gainText.text = $"Recebido: ${gainedValue}";
         taxText.text = $"Taxas: -${taxedValue}";
@@ -126,27 +163,53 @@ public class Sell_Controller : MonoBehaviour
         sellUi.SetActive(active);
     }
 
-    private void SetInfos(int taxedValue)
+    private void SetInfos(int taxedValue, int totalValue, int gainedValue)
     {
         actualTaxText.text = $"Imposto atual: {Tax_System.Instance.GetTax()}%";
         taxPaidText.text = $"Total de impostos pagos: ${Tax_System.Instance.GetTaxPaidDuringYear()}";
         nextYearTaxText.text = $"Previsão do imposto anual: ${Tax_System.Instance.CalculateAnualTax()}";
         debtText.text = $"Débito: $0";
         
-        if(taxedValue > 0)
-        {
-            jokeText.text = GetRandomJoke();
-        } else
-        {
-            jokeText.text = "Pouco lucro hoje… bom para você, ruim para o governo.";
-        }
+        jokeText.text = ReplaceVars(GetRandomJoke(taxedValue), taxedValue, totalValue, gainedValue, sellControlDict.Count);
     }
 
-    private string GetRandomJoke()
+    private string ReplaceVars(string text, int taxedValue, int total, int profit, int quantity)
     {
-        if (jokeList.Count == 0) return "";
-        int index = Random.Range(0, jokeList.Count);
-        return jokeList[index];
+        return text
+            .Replace("{tax}", Tax_System.Instance.GetTax().ToString())
+            .Replace("{total}", total.ToString())
+            .Replace("{taxed}", taxedValue.ToString())
+            .Replace("{profit}", profit.ToString())
+            .Replace("{quantity}", quantity.ToString())
+            .Replace("{yearTax}", Tax_System.Instance.CalculateAnualTax().ToString());
+    }
+
+
+    private string GetRandomJoke(int taxedValue)
+    {
+        int index = 0;
+        if (taxedValue == 0)
+        {
+            if (jokeListNoProfit.Count == 0) return "";
+            index = Random.Range(0, jokeListNoProfit.Count);
+            return jokeListNoProfit[index];
+        }
+        if(taxedValue < 500)
+        {
+            if (jokeListLow.Count == 0) return "";
+            index = Random.Range(0, jokeListLow.Count);
+            return jokeListLow[index];
+        } else if(taxedValue > 1000)
+        {
+            if (jokeListMedium.Count == 0) return "";
+            index = Random.Range(0, jokeListMedium.Count);
+            return jokeListMedium[index];
+        } else
+        {
+            if (jokeListHigh.Count == 0) return "";
+            index = Random.Range(0, jokeListHigh.Count);
+            return jokeListHigh[index];
+        }
     }
     #endregion
 
