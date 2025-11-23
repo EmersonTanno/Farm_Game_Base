@@ -7,6 +7,7 @@ public class Tax_System : MonoBehaviour
     public static Tax_System Instance { get; private set; }
 
     private float taxRate = 0.05f;
+    private int taxPaidDuringYear = 0;
 
     //Anual Taxes
     private float anualTaxPercentage = 0.05f;
@@ -75,6 +76,11 @@ public class Tax_System : MonoBehaviour
 
         OnTaxChange?.Invoke();
     }
+
+    public void UpdateTaxPaidDuringYear(int value)
+    {
+        taxPaidDuringYear += value;
+    }
     #endregion
 
     #region Anual Taxes
@@ -90,6 +96,15 @@ public class Tax_System : MonoBehaviour
     }
     #endregion
 
+    #region Get
+    public int GetTax()
+    {
+        return (int)(taxRate * 100);
+    }
 
-
+    public int GetTaxPaidDuringYear()
+    {
+        return taxPaidDuringYear;
+    }
+    #endregion
 }
