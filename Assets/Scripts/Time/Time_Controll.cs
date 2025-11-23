@@ -123,7 +123,6 @@ public class Time_Controll : MonoBehaviour
             ChangeDay();
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
-            UnpauseTime();
         }
     }
 

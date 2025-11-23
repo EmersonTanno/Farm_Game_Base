@@ -459,7 +459,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckAction()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive)
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }
@@ -469,7 +469,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckMove()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive)
+        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }

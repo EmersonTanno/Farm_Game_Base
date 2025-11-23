@@ -10,6 +10,7 @@ public class Sell_Controller : MonoBehaviour
 
     #region Variables
     [SerializeField] GameObject sellUi;
+    public bool active = false;
     [SerializeField] TextMeshProUGUI totalText;
     [SerializeField] TextMeshProUGUI taxText;
     [SerializeField] TextMeshProUGUI gainText;
@@ -46,7 +47,7 @@ public class Sell_Controller : MonoBehaviour
             AddItem(item);
         }
 
-        sellUi.SetActive(true);
+        ActivateDeactivateUi();
         
         RefreshSellContentUI();
 
@@ -56,8 +57,6 @@ public class Sell_Controller : MonoBehaviour
 
         Tax_System.Instance.AddSellItemsValueToAnualSells(totalValue);
         Status_Controller.Instance.AddGold(gainedValue);
-
-        StartCoroutine(DeactivateUi());
     }
 
 
@@ -84,10 +83,18 @@ public class Sell_Controller : MonoBehaviour
     }
 
 
-    private IEnumerator DeactivateUi()
+    public void ActivateDeactivateUi()
     {
-        yield return new WaitForSeconds(3f);
-        sellUi.SetActive(false);
+        if(active == true)
+        {
+            active = false;
+            Time_Controll.Instance.UnpauseTime();
+        } else
+        {
+            active = true;
+        }
+        
+        sellUi.SetActive(active);
     }
 
     public void AddItem(Item newItem)
