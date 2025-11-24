@@ -21,6 +21,8 @@ public class Calendar_Controller : MonoBehaviour
     //Light
     [SerializeField] Light2D globalLight;
 
+    [SerializeField] GameObject timeGroup;
+
     //Event
     public static event Action OnDayChange;
     public static event Action OnMonthChange;
@@ -128,6 +130,13 @@ public class Calendar_Controller : MonoBehaviour
                 season = Season.Primavera;
                 break;
         }
+    }
+    #endregion
+
+        #region Ui
+    public void ControllTimeGroup(bool setActive)
+    {
+        timeGroup.SetActive(setActive);
     }
     #endregion
 }

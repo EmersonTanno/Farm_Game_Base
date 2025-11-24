@@ -155,16 +155,17 @@ public class Sell_Controller : MonoBehaviour
         if(active == true)
         {
             active = false;
-            InventoryManager.Instance.ControllInventoryGroup(true);
             Time_Controll.Instance.UnpauseTime();
         } else
         {
             active = true;
-            InventoryManager.Instance.ControllInventoryGroup(false);
         }
         
         darkBackground.SetActive(active);
         sellUi.SetActive(active);
+        InventoryManager.Instance.ControllInventoryGroup(!active);
+        Calendar_Controller.Instance.ControllTimeGroup(!active);
+        Status_Controller.Instance.ControllPlayerUiGroup(!active);
     }
 
     private void SetInfos(int taxedValue, int totalValue, int gainedValue)
