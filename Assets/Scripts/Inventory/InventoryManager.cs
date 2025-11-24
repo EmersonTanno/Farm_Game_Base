@@ -79,7 +79,7 @@ public class InventoryManager : MonoBehaviour
     #region Actions
     void ChangeSelectedSlot(int newValue)
     {
-        if(!active) return;
+        if(!active || Shop_Manager.Instance.shopActive) return;
         if (selectedSlot >= 0)
         {
             inventorySlots[selectedSlot].Deselect();
