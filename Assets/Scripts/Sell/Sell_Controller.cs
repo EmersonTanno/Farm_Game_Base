@@ -19,6 +19,7 @@ public class Sell_Controller : MonoBehaviour
     [SerializeField] TextMeshProUGUI jokeText;
     [SerializeField] GameObject sellContentContainer;
     [SerializeField] GameObject sellContentSlot;
+    [SerializeField] GameObject darkBackground;
 
     private List<string> jokeListLow = new List<string>();
     private List<string> jokeListMedium = new List<string>();
@@ -154,12 +155,15 @@ public class Sell_Controller : MonoBehaviour
         if(active == true)
         {
             active = false;
+            InventoryManager.Instance.ControllInventoryGroup(true);
             Time_Controll.Instance.UnpauseTime();
         } else
         {
             active = true;
+            InventoryManager.Instance.ControllInventoryGroup(false);
         }
         
+        darkBackground.SetActive(active);
         sellUi.SetActive(active);
     }
 
