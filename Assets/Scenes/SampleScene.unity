@@ -3055,9 +3055,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326360260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.73482, y: 0.73482, z: 0.73482}
+  m_LocalScale: {x: 0.7348199, y: 0.7348199, z: 0.7348199}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 503168779}
@@ -3066,7 +3066,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -40.30005, y: -113.8999}
+  m_AnchoredPosition: {x: -40.30005, y: -113.89984}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &329834319
@@ -3815,6 +3815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: 1000
   goldText: {fileID: 1140827629}
+  playerUiGroup: {fileID: 326360260}
   energy: 0
 --- !u!224 &484721308 stripped
 RectTransform:
@@ -5908,7 +5909,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726474671}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5626574, y: 1.5626574, z: 1.5626574}
   m_ConstrainProportionsScale: 0
@@ -5919,7 +5920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -549, y: -399}
+  m_AnchoredPosition: {x: -548.9999, y: -399}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &745381994 stripped
@@ -9916,6 +9917,7 @@ MonoBehaviour:
   season: 0
   daysText: {fileID: 1402944253}
   globalLight: {fileID: 619394801}
+  timeGroup: {fileID: 726474671}
 --- !u!1 &1733546350
 GameObject:
   m_ObjectHideFlags: 0
