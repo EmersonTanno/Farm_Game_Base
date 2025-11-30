@@ -5,11 +5,11 @@ using CodeMonkey.Utils;
 
 public class TestGrid : MonoBehaviour
 {
-    private Grid grid;
+    private Grid<int> grid;
 
     void Start()
     {
-        grid = new Grid(3, 4, 1f, new Vector3(0, 0));
+        grid = new Grid<int>(3, 4, 1f, new Vector3(0, 0));
     }
 
     private void Update()
@@ -21,7 +21,7 @@ public class TestGrid : MonoBehaviour
 
         if(Input.GetMouseButtonDown(1))
         {
-            Debug.Log(grid.GetValue(UtilsClass.GetMouseWorldPosition()));
+            Debug.Log(grid.GetGridObject(UtilsClass.GetMouseWorldPosition()));
         }
     }
 }
