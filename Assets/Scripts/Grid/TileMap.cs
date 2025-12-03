@@ -10,12 +10,6 @@ public class TileMap
         10 - Terra arada
         11 - Terra arada regada
         20 - Terra plantada
-    
-    plantGrid:
-        planta plantada
-
-    growthGrid:
-        quantidade de dias que a planta está plantada em desenvolvimento (talvez fazer um vetor para armazenar a quantidade de dias sem água tbm)
     */
     #endregion
 

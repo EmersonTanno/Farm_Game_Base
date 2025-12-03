@@ -21,7 +21,8 @@ public class TestGrid : MonoBehaviour
         tileMap = new TileMap(20, 10, 1f, Vector3.zero);
 
         //testando
-        tileMap.GetPlantGrid().SetValue(1, 1, new TileMapPlantData(plant, false));
+        tileMap.GetPlantGrid().SetValue(1, 1, new TileMapPlantData(plant, true));
+        tileMap.GetPlantGrid().GetGridObject(1, 1).PassDay();
         Debug.Log(tileMap.GetPlantGrid().GetGridObject(1, 1));
     }
 

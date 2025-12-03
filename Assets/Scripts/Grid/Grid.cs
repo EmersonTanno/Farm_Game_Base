@@ -20,17 +20,17 @@ public class Grid<TGridObject>
         gridArray = new TGridObject[width,height];
         debugTextArray = new TextMesh[width, height];
 
-        for(int x = 0; x < gridArray.GetLength(0); x++)
-        {
-            for(int y = 0; y < gridArray.GetLength(1); y++)
-            {
-                debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 10, Color.white, TextAnchor.MiddleCenter);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
-            }
-        }
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+        // for(int x = 0; x < gridArray.GetLength(0); x++)
+        // {
+        //     for(int y = 0; y < gridArray.GetLength(1); y++)
+        //     {
+        //         debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 10, Color.white, TextAnchor.MiddleCenter);
+        //         Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+        //         Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
+        //     }
+        // }
+        // Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
+        // Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
     }
 
     private Vector3 GetWorldPosition(int x, int y)
@@ -49,7 +49,7 @@ public class Grid<TGridObject>
         if(x >= 0 && y >= 0 && x < width && y < height)
         {
             gridArray[x, y] = value;
-            debugTextArray[x,y].text = gridArray[x, y].ToString();
+            //debugTextArray[x,y].text = gridArray[x, y].ToString();
         }
     }
 
@@ -85,5 +85,15 @@ public class Grid<TGridObject>
         y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
 
         return new Vector2(x, y);
+    }
+
+    public int GetHeight()
+    {
+        return height;
+    }
+
+    public int GetWidth()
+    {
+        return width;
     }
 }
