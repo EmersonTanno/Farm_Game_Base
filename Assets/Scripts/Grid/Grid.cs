@@ -77,4 +77,13 @@ public class Grid<TGridObject>
         GetXY(worldPosition, out x, out y);
         return GetGridObject(x, y);
     }
+
+    public Vector2 GetPositionOnGrid(Vector3 worldPosition)
+    {
+        int x, y;
+        x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
+        y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+
+        return new Vector2(x, y);
+    }
 }
