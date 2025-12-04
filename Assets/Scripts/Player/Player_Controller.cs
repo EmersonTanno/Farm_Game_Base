@@ -305,6 +305,8 @@ public class Player_Controller : MonoBehaviour
             }
         }
 
+        TileMapController.Instance.WaterSoil(new Vector2(transform.position.x, transform.position.y) + GetSide());
+
         yield return new WaitForSeconds(1f);
         myAnimator.SetBool("water", false);
         isWatering = false;
@@ -427,10 +429,12 @@ public class Player_Controller : MonoBehaviour
             return;
         }
 
-        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
+        //Instantiate(plowedSoil, spawnPos, Quaternion.identity);
 
         myAnimator.SetBool("plow", false);
         isPlowing = false;
+
+        TileMapController.Instance.PlowSoil(new Vector2(transform.position.x, transform.position.y) + GetSide());
     }
     #endregion
 
