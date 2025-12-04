@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "NewPlant", menuName = "Farming/Plant")]
 public class PlantType : ScriptableObject
@@ -13,4 +14,5 @@ public class PlantType : ScriptableObject
     public int harvestMin;
     public int harvestMax;
     public Sprite[] growthStages;
+    public TileBase[] plantStages;
 }

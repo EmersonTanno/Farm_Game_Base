@@ -282,29 +282,6 @@ public class Player_Controller : MonoBehaviour
         isWatering = true;
         myAnimator.SetBool("water", true);
 
-        Vector2 waterPos = movePoint.position;
-
-        Vector2 newWaterPos = GetSide();
-
-        waterPos += newWaterPos;
-
-        float tileSize = 1f;
-        waterPos = new Vector3(
-            Mathf.Floor(waterPos.x) + tileSize / 2f,
-            Mathf.Floor(waterPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(waterPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            if (soil != null)
-            {
-                soil.SetWater(true);
-            }
-        }
-
         TileMapController.Instance.WaterSoil(new Vector2(transform.position.x, transform.position.y) + GetSide());
 
         yield return new WaitForSeconds(1f);
@@ -341,6 +318,8 @@ public class Player_Controller : MonoBehaviour
             Vector3.left,
             Vector3.right
         };
+
+         TileMapController.Instance.PlantSoil(new Vector2(transform.position.x, transform.position.y), plant);
 
         float tileSize = 1f;
 
@@ -406,31 +385,6 @@ public class Player_Controller : MonoBehaviour
     #region Animation Functions
     public void PlowAnimation()
     {
-        Vector2 spawnPos = movePoint.position;
-        Vector2 newSpawnPos = GetSide();
-
-        spawnPos += newSpawnPos;
-
-        float tileSize = 1f;
-        spawnPos = new Vector3(
-            Mathf.Floor(spawnPos.x) + tileSize / 2f,
-            Mathf.Floor(spawnPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            soil.ResetSoil();
-
-            myAnimator.SetBool("plow", false);
-            isPlowing = false;
-            return;
-        }
-
-        //Instantiate(plowedSoil, spawnPos, Quaternion.identity);
-
         myAnimator.SetBool("plow", false);
         isPlowing = false;
 
@@ -438,7 +392,7 @@ public class Player_Controller : MonoBehaviour
     }
     #endregion
 
-    #region Axiliar Functions
+    #region Auxiliar Functions
     private Vector2 GetSide()
     {
         if (facingDirection == Vector2.down)

@@ -5,8 +5,8 @@ public class TileMap
     #region States
     /*
     originalGrid:
-        0 - Terra normal 1
-        1 - Terra normal 2
+        1 - Terra normal 1
+        2 - Terra normal 2
         10 - Terra arada
         11 - Terra arada regada
         20 - Terra plantada

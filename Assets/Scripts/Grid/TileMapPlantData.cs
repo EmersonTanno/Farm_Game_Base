@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TileMapPlantData
 {
@@ -67,6 +68,51 @@ public class TileMapPlantData
     private void Die()
     {
         isDead = true;
+    }
+    #endregion
+
+    #region
+    public TileBase GetStageTile()
+    {
+        int stageIndex = -1;
+
+        if (growthDays >= plant.growthTimeInDays)
+        {
+            stageIndex = 4;
+        }
+        else if (!isWater && growthDays < plant.growthTimeInDays / 2)
+        {
+            stageIndex = 0;
+        }
+        else if (isWater && growthDays < plant.growthTimeInDays / 2)
+        {
+            stageIndex = 1;
+        }
+        else if (!isWater && growthDays >= plant.growthTimeInDays / 2)
+        {
+            stageIndex = 2;
+        }
+        else if (isWater && growthDays >= plant.growthTimeInDays / 2)
+        {
+            stageIndex = 3;
+        }
+        else
+        {
+            stageIndex = 5;
+        }
+        
+        if(stageIndex != -1)
+            return plant.plantStages[stageIndex];
+
+        return null;
+    }
+    #endregion
+
+    #region Plant
+    public void SetPlant(PlantType plant, bool water)
+    {
+        this.plant = plant;
+        this.isWater = water;
     }
     #endregion
 

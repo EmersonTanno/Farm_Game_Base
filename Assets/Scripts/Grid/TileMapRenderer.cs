@@ -13,6 +13,7 @@ public class TileMapRenderer : MonoBehaviour
     public TileBase soilWatered;
 
     [Header("Plant Tiles (growth stages)")]
+    public TileBase deadPlant;
     public TileBase[] plantGrowthStages;
 
     private TileMap tileMap;
@@ -37,7 +38,6 @@ public class TileMapRenderer : MonoBehaviour
     public void RenderTile(int x, int y)
     {
         RenderSoil(x, y);
-        RenderPlant(x, y);
     }
 
     private void RenderSoil(int x, int y)
@@ -47,10 +47,11 @@ public class TileMapRenderer : MonoBehaviour
 
         switch(soilState)
         {
-            case 0: tileToUse = soilNormal1; break;
-            case 1: tileToUse = soilNormal2; break;
+            case 1: tileToUse = soilNormal1; break;
+            case 2: tileToUse = soilNormal2; break;
             case 10: tileToUse = soilPlowed; break;
             case 11: tileToUse = soilWatered; break;
+            case 20: RenderPlant(x, y); break;
         }
 
         soilTilemap.SetTile(new Vector3Int(x, y), tileToUse);
@@ -60,16 +61,14 @@ public class TileMapRenderer : MonoBehaviour
     {
         //Criar sistema para puxar automaticamente
 
-        var plantData = tileMap.GetPlantGrid().GetGridObject(x, y);
+        var plantTile = tileMap.GetPlantGrid().GetGridObject(x, y).GetStageTile();
 
-        if(plantData == null || plantData.plant == null)
+        if(plantTile == null)
         {
             plantTilemap.SetTile(new Vector3Int(x, y), null);
             return;
         }
 
-        int stage = Mathf.Clamp(plantData.growthDays, 0, plantGrowthStages.Length - 1);
-
-        plantTilemap.SetTile(new Vector3Int(x, y), plantGrowthStages[stage]);
+        plantTilemap.SetTile(new Vector3Int(x, y), plantTile);
     }
 }
