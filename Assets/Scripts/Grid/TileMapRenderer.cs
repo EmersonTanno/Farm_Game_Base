@@ -59,13 +59,18 @@ public class TileMapRenderer : MonoBehaviour
 
     private void RenderPlant(int x, int y)
     {
-        //Criar sistema para puxar automaticamente
-
-        var plantTile = tileMap.GetPlantGrid().GetGridObject(x, y).GetStageTile();
+        var plantObject = tileMap.GetPlantGrid().GetGridObject(x, y);
+        var plantTile = plantObject.GetStageTile();
 
         if(plantTile == null)
         {
             plantTilemap.SetTile(new Vector3Int(x, y), null);
+            return;
+        }
+
+        if(tileMap.GetPlantGrid().GetGridObject(x, y).isDead)
+        {
+            plantTilemap.SetTile(new Vector3Int(x, y), deadPlant);
             return;
         }
 

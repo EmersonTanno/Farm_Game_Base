@@ -24,7 +24,7 @@ public class TileMapController : MonoBehaviour
         {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2}
     };
 
-
+    #region Core
     void Awake()
     {
         Instance = this;
@@ -37,6 +37,19 @@ public class TileMapController : MonoBehaviour
         ApplyDefaultLayout();
         renderer.Init(tileMap);
     }
+
+    void OnEnable()
+    {
+        Calendar_Controller.OnDayChange += GrowPlant;
+    }
+
+    void OnDisable()
+    {
+        Calendar_Controller.OnDayChange -= GrowPlant;
+    }
+
+    #endregion
+
 
 
     private void ApplyDefaultLayout()
@@ -132,6 +145,29 @@ public class TileMapController : MonoBehaviour
         }
     }
 
-
+    private void GrowPlant()
+    {
+        for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+        {
+            for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+            {
+                var plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
+        
+                if (plantTile == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    if(plantTile.plant)
+                    {
+                        plantTile.PassDay();
+                        renderer.RenderTile(x, y);
+                    }
+                }
+            }
+        }
+       
+    }
 
 }

@@ -8,7 +8,7 @@ public class TileMapPlantData
     public bool isWater;
     public int growthDays;
     public int dryDays;
-    private bool isDead;
+    public bool isDead;
     #endregion
 
     #region Constructor
@@ -112,7 +112,15 @@ public class TileMapPlantData
     public void SetPlant(PlantType plant, bool water)
     {
         this.plant = plant;
-        this.isWater = water;
+        isWater = water;
+    }
+    #endregion
+
+    #region Harvest
+    public void Harvest()
+    {
+        ResetTile();
+
     }
     #endregion
 
