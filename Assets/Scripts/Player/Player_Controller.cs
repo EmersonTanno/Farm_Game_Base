@@ -8,7 +8,8 @@ public class Player_Controller : MonoBehaviour
 {
     #region Variables
 
-        public static Player_Controller Instance { get; private set; }
+    public static Player_Controller Instance { get; private set; }
+    
     //Movement
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
@@ -305,45 +306,30 @@ public class Player_Controller : MonoBehaviour
 
         StartCoroutine(Plant(plant));
     }
+
     private IEnumerator Plant(PlantType plant)
     {
         isPlanting = true;
         myAnimator.SetBool("planting", true);
 
-        Vector3[] offsets = new Vector3[]
+        Vector2[] offsets = new Vector2[]
         {
-            Vector3.zero,
-            Vector3.down,
-            Vector3.up,
-            Vector3.left,
-            Vector3.right
+            Vector2.zero,
+            Vector2.down,
+            Vector2.up,
+            Vector2.left,
+            Vector2.right,
+            new Vector2(1, 1),
+            new Vector2(-1, -1),
+            new Vector2(-1, 1),
+            new Vector2(1, -1),
         };
-
-         TileMapController.Instance.PlantSoil(new Vector2(transform.position.x, transform.position.y), plant);
-
-        float tileSize = 1f;
 
         yield return new WaitForSeconds(.5f);
 
-        foreach (Vector3 offset in offsets)
+        foreach (Vector2 offset in offsets)
         {
-            Vector3 plantPos = transform.position + offset;
-
-            plantPos = new Vector3(
-                Mathf.Floor(plantPos.x) + tileSize / 2f,
-                Mathf.Floor(plantPos.y) + tileSize / 2f,
-                0f
-            );
-
-            Collider2D hit = Physics2D.OverlapCircle(plantPos, 0.1f, soilCollision);
-            if (hit != null)
-            {
-                Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-                if (soil != null)
-                {
-                    soil.PlantSeed(plant);
-                }
-            }
+            TileMapController.Instance.PlantSoil(new Vector2(transform.position.x + offset.x, transform.position.y + offset.y), plant);
         }
 
         yield return new WaitForSeconds(.5f);

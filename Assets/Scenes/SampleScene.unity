@@ -8569,6 +8569,7 @@ MonoBehaviour:
   soilNormal2: {fileID: 11400000, guid: 9eecf9165935713489279c83db9b6b7e, type: 2}
   soilPlowed: {fileID: 11400000, guid: 2adb3b3ecab083041a0cb5ddc0c78306, type: 2}
   soilWatered: {fileID: 11400000, guid: 16f56b2a943098f48b73d2a701936f92, type: 2}
+  deadPlant: {fileID: 11400000, guid: 5a113906230fe694cbeced7a552682d2, type: 2}
   plantGrowthStages: []
 --- !u!114 &1473215689 stripped
 MonoBehaviour:
