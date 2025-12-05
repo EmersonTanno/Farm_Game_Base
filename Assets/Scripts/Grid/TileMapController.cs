@@ -181,4 +181,31 @@ public class TileMapController : MonoBehaviour
        
     }
 
+    #region Harvest
+    public void Harvest(Vector2 position)
+    {
+        var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
+
+        if(!plantTile.CanHarvest()) return;
+        
+        Harvest_Controller.Instance.SpawnHarvest(plantTile.plant, position);
+
+        plantTile.ResetTile();
+
+        tileMap.GetOriginalGrid().SetValue(position, 10);
+        renderer.RenderTile((int)position.x, (int)position.y);
+    }
+
+    public bool CanHarvest(Vector2 position)
+    {
+        var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
+        var globalTile = tileMap.GetOriginalGrid().GetGridObject(position);
+
+        Debug.Log(globalTile);
+        if(globalTile != 20 || !plantTile.CanHarvest()) return false;
+
+        return true;
+    }
+    #endregion
+
 }

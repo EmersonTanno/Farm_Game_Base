@@ -9,7 +9,7 @@ public class Player_Controller : MonoBehaviour
     #region Variables
 
     public static Player_Controller Instance { get; private set; }
-    
+
     //Movement
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
@@ -340,31 +340,9 @@ public class Player_Controller : MonoBehaviour
 
     private void Harvest()
     {
-        if (CheckAction()) return;
+        if (CheckAction() || !TileMapController.Instance.CanHarvest(new Vector2(transform.position.x, transform.position.y) + GetSide())) return;
 
-        Vector2 harvestPos = movePoint.position;
-
-        Vector2 newHarvestPos = GetSide();
-
-        harvestPos += newHarvestPos;
-
-        float tileSize = 1f;
-        harvestPos = new Vector3(
-            Mathf.Floor(harvestPos.x) + tileSize / 2f,
-            Mathf.Floor(harvestPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(harvestPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            if (!soil.currentPlant)
-            {
-                return;
-            }
-            soil.Harvest(myAnimator, this);
-        }
+        StartCoroutine(HarvestConclusion());
     }
     #endregion
 
@@ -375,6 +353,19 @@ public class Player_Controller : MonoBehaviour
         isPlowing = false;
 
         TileMapController.Instance.PlowSoil(new Vector2(transform.position.x, transform.position.y) + GetSide());
+    }
+
+
+    public IEnumerator HarvestConclusion()
+    {
+        isHarvesting = true;
+        myAnimator.SetBool("harvest", true);
+        yield return new WaitForSeconds(0.75f);
+
+        TileMapController.Instance.Harvest(new Vector2(transform.position.x, transform.position.y) + GetSide());
+
+        myAnimator.SetBool("harvest", false);
+        isHarvesting = false;
     }
     #endregion
 

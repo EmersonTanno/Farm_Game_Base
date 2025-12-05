@@ -117,13 +117,17 @@ public class TileMapPlantData
     #endregion
 
     #region Harvest
-    public void Harvest()
+    public bool CanHarvest()
     {
-        ResetTile();
+        if(plant == null) return false;
+        if(growthDays >= plant.growthTimeInDays)
+        {
+            return true;
+        }
 
+        return false;
     }
     #endregion
-
 
     #region Reset
     public void ResetTile()
