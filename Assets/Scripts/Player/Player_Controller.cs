@@ -207,7 +207,7 @@ public class Player_Controller : MonoBehaviour
                 {
                     Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
 
-                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && !Physics2D.OverlapCircle(targetPos, .2f, sellBoxCollision))
+                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && !Physics2D.OverlapCircle(targetPos, .2f, sellBoxCollision) && CheckPlayerMoveGrid(targetPos))
                     {
                         movePoint.position = targetPos;
 
@@ -415,6 +415,17 @@ public class Player_Controller : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool CheckPlayerMoveGrid(Vector2 pos)
+    {
+        int gridValue = TileMapController.Instance.GetGrid().GetOriginalGrid().GetGridObject(pos);
+        if(gridValue == 0)
+        {
+            return false;
+        }
+
+        return true;
     }
     #endregion
 }

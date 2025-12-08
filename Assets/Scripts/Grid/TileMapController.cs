@@ -50,6 +50,12 @@ public class TileMapController : MonoBehaviour
 
     #endregion
 
+    #region Get
+    public TileMap GetGrid()
+    {
+        return tileMap;
+    }
+    #endregion
 
 
     private void ApplyDefaultLayout()
