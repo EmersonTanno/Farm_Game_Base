@@ -201,7 +201,6 @@ public class TileMapController : MonoBehaviour
         var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
         var globalTile = tileMap.GetOriginalGrid().GetGridObject(position);
 
-        Debug.Log(globalTile);
         if(globalTile != 20 || !plantTile.CanHarvest()) return false;
 
         return true;
