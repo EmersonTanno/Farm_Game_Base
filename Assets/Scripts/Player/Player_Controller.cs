@@ -29,11 +29,6 @@ public class Player_Controller : MonoBehaviour
     private bool isPlanting = false;
     private bool isPlowing = false;
     [HideInInspector] public bool isHarvesting = false;
-
-    //Plants & Soil
-    [SerializeField] GameObject plowedSoil;
-    [SerializeField] private PlantType plantToPlant;
-    public LayerMask soilCollision;
     #endregion
 
     #region Core
