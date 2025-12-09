@@ -10,7 +10,7 @@ public class TileMapController : MonoBehaviour
 
     private TileMap tileMap;
 
-    private int[,] defaultLayout = new int[,]
+    private int[,] defaultLayoutOriginalGrid = new int[,]
     {
         {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
         {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2},
@@ -57,18 +57,20 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
-
+    #region Apply Layout
     private void ApplyDefaultLayout()
     {
-        for(int y = 0; y < defaultLayout.GetLength(0); y++)
+        for(int y = 0; y < defaultLayoutOriginalGrid.GetLength(0); y++)
         {
-            for(int x = 0; x < defaultLayout.GetLength(1); x++)
+            for(int x = 0; x < defaultLayoutOriginalGrid.GetLength(1); x++)
             {
-                tileMap.GetOriginalGrid().SetValue(x, y, defaultLayout[y, x]);
+                tileMap.GetOriginalGrid().SetValue(x, y, defaultLayoutOriginalGrid[y, x]);
             }
         }
     }
+    #endregion
 
+    #region Plow
     public void PlowSoil(Vector2 position)
     {
         Grid<int> farmGrid = tileMap.GetOriginalGrid();
@@ -89,7 +91,9 @@ public class TileMapController : MonoBehaviour
         farmGrid.SetValue(position, 10);
         renderer.RenderTile((int)position.x, (int)position.y);
     }
+    #endregion
 
+    #region Water
     public void WaterSoil(Vector2 position)
     {
         int tileValue = tileMap.GetOriginalGrid().GetGridObject(position);
@@ -112,7 +116,9 @@ public class TileMapController : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Plant
     public void PlantSoil(Vector2 position, PlantType plant)
     {
         int tileValue = tileMap.GetOriginalGrid().GetGridObject(position);
@@ -186,6 +192,7 @@ public class TileMapController : MonoBehaviour
         }
        
     }
+    #endregion
 
     #region Harvest
     public void Harvest(Vector2 position)

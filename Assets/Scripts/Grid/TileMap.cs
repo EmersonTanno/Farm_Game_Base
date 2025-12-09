@@ -10,12 +10,17 @@ public class TileMap
         10 - Terra arada
         11 - Terra arada regada
         20 - Terra plantada
+
+    objectGrid:
+        1 - Cama
+        2 - Caixa de Venda
     */
     #endregion
 
     #region Variables
     private Grid<int> originalGrid;
     private Grid<TileMapPlantData> plantGrid;
+    private Grid<int> objectGrid;
 
     #endregion
 
@@ -24,6 +29,7 @@ public class TileMap
     {
         originalGrid = new Grid<int>(width, height, cellSize, originPosition);
         plantGrid = new Grid<TileMapPlantData>(width, height, cellSize, originPosition);
+        objectGrid = new Grid<int>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -36,6 +42,11 @@ public class TileMap
     public Grid<TileMapPlantData> GetPlantGrid()
     {
         return plantGrid;
+    }
+
+    public Grid<int> GetObjectGrid()
+    {
+        return objectGrid;
     }
     #endregion
 
