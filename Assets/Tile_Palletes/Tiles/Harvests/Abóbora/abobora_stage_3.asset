@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: abobora_stage_2
+  m_Name: abobora_stage_3
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -1049352180, guid: 070e9ac067d6f2a4bb4ead9b92d4fa9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
