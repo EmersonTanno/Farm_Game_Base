@@ -20,7 +20,7 @@ public class TileMap
     #region Variables
     private Grid<int> originalGrid;
     private Grid<TileMapPlantData> plantGrid;
-    private Grid<int> objectGrid;
+    private Grid<GameObject> objectGrid;
 
     #endregion
 
@@ -29,7 +29,7 @@ public class TileMap
     {
         originalGrid = new Grid<int>(width, height, cellSize, originPosition);
         plantGrid = new Grid<TileMapPlantData>(width, height, cellSize, originPosition);
-        objectGrid = new Grid<int>(width, height, cellSize, originPosition);
+        objectGrid = new Grid<GameObject>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -44,7 +44,7 @@ public class TileMap
         return plantGrid;
     }
 
-    public Grid<int> GetObjectGrid()
+    public Grid<GameObject> GetObjectGrid()
     {
         return objectGrid;
     }
