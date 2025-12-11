@@ -7,8 +7,8 @@ public class TileMapController : MonoBehaviour
 
     public static TileMapController Instance;
     public new TileMapRenderer renderer;
-
     private TileMap tileMap;
+    [SerializeField] WorldObjectDatabase database;
 
     private int[,] defaultLayoutOriginalGrid = new int[,]
     {
@@ -24,6 +24,20 @@ public class TileMapController : MonoBehaviour
         {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2}
     };
 
+    private int[,] staticObjectLayoutGrid = new int[,]
+    {
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    };
+
     #region Core
     void Awake()
     {
@@ -36,6 +50,8 @@ public class TileMapController : MonoBehaviour
 
         ApplyDefaultLayout();
         renderer.Init(tileMap);
+
+        SpawnObjects(staticObjectLayoutGrid);
     }
 
     void OnEnable()
@@ -220,4 +236,24 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
+    #region  Spawn Objects
+    public void SpawnObjects(int[,] grid)
+    {
+        int height = grid.GetLength(0);
+        int width = grid.GetLength(1);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                WorldObjectID id = (WorldObjectID)grid[y, x];
+
+                if (id != WorldObjectID.None)
+                {
+                    Instantiate(database.GetPrefab(id), new Vector2(x, y), Quaternion.identity);
+                }
+            }
+        }
+    }
+    #endregion
 }
