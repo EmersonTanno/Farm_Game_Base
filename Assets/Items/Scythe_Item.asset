@@ -17,7 +17,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: cb5623b582a7f5a4a8cbfca069786b22, type: 3}
   stackable: 0
   maxStack: 0
-  action: 0
+  action: 4
   consume: 0
   plant: {fileID: 0}
   sell: 0
