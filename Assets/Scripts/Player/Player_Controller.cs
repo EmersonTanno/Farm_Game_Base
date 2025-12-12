@@ -14,8 +14,6 @@ public class Player_Controller : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
     public LayerMask collision;
-    public LayerMask bedCollision;
-    public LayerMask sellBoxCollision;
     private Vector2 inputDirection;
     private Vector2 facingDirection = Vector2.down;
     private bool justTurned = false;
