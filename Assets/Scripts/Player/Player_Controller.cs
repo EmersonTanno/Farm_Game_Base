@@ -299,7 +299,6 @@ public class Player_Controller : MonoBehaviour
     private void StartPlant(PlantType plant)
     {
         if (CheckAction()) return;
-        if (!Status_Controller.Instance.UseEnergy(3)) return;
 
         StartCoroutine(Plant(plant));
     }

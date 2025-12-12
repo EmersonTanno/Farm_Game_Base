@@ -20,7 +20,7 @@ public class Status_Controller : MonoBehaviour
     private int dayLucky = 0;
 
     //Energy
-    private int maxEnergy = 100;
+    private int maxEnergy = 200;
     public int energy;
 
     #endregion
