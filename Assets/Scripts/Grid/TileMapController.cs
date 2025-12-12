@@ -81,6 +81,7 @@ public class TileMapController : MonoBehaviour
             for(int x = 0; x < defaultLayoutOriginalGrid.GetLength(1); x++)
             {
                 tileMap.GetOriginalGrid().SetValue(x, y, defaultLayoutOriginalGrid[y, x]);
+                tileMap.GetObjectGrid().SetValue(x, y, staticObjectLayoutGrid[y, x]);
             }
         }
     }
