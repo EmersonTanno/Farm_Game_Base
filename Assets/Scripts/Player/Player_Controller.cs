@@ -80,44 +80,26 @@ public class Player_Controller : MonoBehaviour
         if (CheckAction()) return;
 
         Vector2 pos = transform.position;
+
         WorldObjectID obj1 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
         WorldObjectID obj2 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+
         if (obj1 == WorldObjectID.Bed || obj2 == WorldObjectID.Bed)
         {
             Time_Controll.Instance.ActivateBedCanvas();
+            return;
         }
-        else if (obj2 == WorldObjectID.ShippingBox)
+
+        if (obj2 == WorldObjectID.ShippingBox)
         {
             Sell_Box_Controller.Instance.AddItem(InventoryManager.Instance.SellSelectedItem());
+            return;
         }
-        else
-        {
-            Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
-            if (receivedItem == null)
-            {
-                return;
-            }
+        Item item = InventoryManager.Instance.UseSelectedItem();
+        if (item == null) return;
 
-            if (receivedItem.type == ItemType.Seed)
-            {
-                StartPlant(receivedItem.plant);
-                return;
-            }
-            else if (receivedItem.type == ItemType.Tool)
-            {
-                if (receivedItem.action == ActionType.Plowing)
-                {
-                    PlowSoil();
-                    return;
-                }
-                else if (receivedItem.action == ActionType.Water)
-                {
-                    PutWater();
-                    return;
-                }
-            }
-        }
+        HandleItem(item);
     }
 
     public void SetHarvest(InputAction.CallbackContext value)
@@ -246,6 +228,42 @@ public class Player_Controller : MonoBehaviour
         justTurned = false;
     }
 
+    #endregion
+
+    #region Action Handler
+    private void HandleItem(Item item)
+    {
+        switch (item.type)
+        {
+            case ItemType.Seed:
+                StartPlant(item.plant);
+                break;
+
+            case ItemType.Tool:
+                HandleTool(item);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void HandleTool(Item item)
+    {
+        switch (item.action)
+        {
+            case ActionType.Plowing:
+                PlowSoil();
+                break;
+
+            case ActionType.Water:
+                PutWater();
+                break;
+
+            default:
+                break;
+        }
+    }
     #endregion
 
     #region Actions
