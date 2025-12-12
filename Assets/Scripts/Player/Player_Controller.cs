@@ -80,11 +80,13 @@ public class Player_Controller : MonoBehaviour
         if (CheckAction()) return;
 
         Vector2 pos = transform.position;
-        if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, bedCollision))
+        WorldObjectID obj1 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+        WorldObjectID obj2 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+        if (obj1 == WorldObjectID.Bed || obj2 == WorldObjectID.Bed)
         {
             Time_Controll.Instance.ActivateBedCanvas();
         }
-        else if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, sellBoxCollision))
+        else if (obj2 == WorldObjectID.ShippingBox)
         {
             Sell_Box_Controller.Instance.AddItem(InventoryManager.Instance.SellSelectedItem());
         }
@@ -219,24 +221,6 @@ public class Player_Controller : MonoBehaviour
                     else
                     {
                         return;
-                    }
-                    if (Physics2D.OverlapCircle(targetPos, .2f, bedCollision))
-                    {
-                        Vector2 side = GetSide();
-                        if (side == Vector2.down || side == Vector2.up)
-                        {
-                            movePoint.position = transform.position;
-                            return;
-                        }
-                    }
-                    if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision))
-                    {
-                        Vector2 side = GetSide();
-                        if (side == Vector2.down || side == Vector2.up)
-                        {
-                            movePoint.position = transform.position;
-                            return;
-                        }
                     }
                 }
                 else
@@ -424,6 +408,24 @@ public class Player_Controller : MonoBehaviour
         if(gridValue == 0 || (objectGridValue != 0 && objectGridValue != 1))
         {
             return false;
+        }
+
+        if(objectGridValue == 1)
+        {
+            Vector2 side = GetSide();
+            if (side == Vector2.down || side == Vector2.up)
+            {
+                return false;
+            }
+        }
+
+        if(TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(transform.position) == 1)
+        {
+            Vector2 side = GetSide();
+            if (side == Vector2.down || side == Vector2.up)
+            {
+                return false;
+            }
         }
 
         return true;
