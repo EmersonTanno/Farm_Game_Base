@@ -3076,7 +3076,7 @@ GameObject:
   - component: {fileID: 329834321}
   - component: {fileID: 329834320}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Grid_Referencia
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8466,6 +8466,8 @@ MonoBehaviour:
     prefab: {fileID: 4052175598659023084, guid: 0f06884d77998c641aacf6e987ad35ff, type: 3}
   - id: 2
     prefab: {fileID: 2112654697601880981, guid: dbbf4fff6e3e35149b1fe3ceb3741df6, type: 3}
+  - id: 3
+    prefab: {fileID: 3503081967964072713, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
 --- !u!114 &1473215689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5411767102854692407, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}
@@ -8711,7 +8713,7 @@ TilemapRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.03333336, y: 0.03333336, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
