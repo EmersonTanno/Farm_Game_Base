@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class TileMapController : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class TileMapController : MonoBehaviour
     public new TileMapRenderer renderer;
     private TileMap tileMap;
     [SerializeField] WorldObjectDatabase database;
+
+    //TESTANDO
+    [SerializeField] private Tilemap groundTilemap;
+
 
     private int[,] defaultLayoutOriginalGrid = new int[,]
     {
@@ -46,12 +51,17 @@ public class TileMapController : MonoBehaviour
 
     void Start()
     {
-        tileMap = new TileMap(20, 10, 1f, Vector3.zero);
+        //tileMap = new TileMap(20, 10, 1f, Vector3.zero);
 
-        ApplyDefaultLayout();
+        CreateGridFromTilemap();
+        LoadGroundFromTilemap();
         renderer.Init(tileMap);
 
-        SpawnObjects(staticObjectLayoutGrid);
+
+        //ApplyDefaultLayout();
+        //renderer.Init(tileMap);
+
+        //SpawnObjects(staticObjectLayoutGrid);
     }
 
     void OnEnable()
@@ -256,5 +266,70 @@ public class TileMapController : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region TESTES
+    private void LoadGroundFromTilemap()
+    {
+        BoundsInt bounds = groundTilemap.cellBounds;
+
+        foreach (Vector3Int pos in bounds.allPositionsWithin)
+        {
+            TileBase tile = groundTilemap.GetTile(pos);
+            if (tile == null) continue;
+
+            WorldTile worldTile = tile as WorldTile;
+            if (worldTile == null) continue;
+
+            tileMap.GetOriginalGrid().SetValue(
+                pos.x,
+                pos.y,
+                worldTile.id
+            );
+        }
+    }
+
+
+    [ContextMenu("Debug/Print Ground Grid")]
+    public void PrintGroundGrid()
+    {
+        Grid<int> grid = tileMap.GetOriginalGrid();
+
+        int width = grid.GetWidth();
+        int height = grid.GetHeight();
+
+        string result = "";
+
+        for (int y = height - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int value = grid.GetGridObject(x, y);
+                result += value.ToString().PadLeft(3) + " ";
+            }
+            result += "\n";
+        }
+
+        Debug.Log(result);
+    }
+
+    private void CreateGridFromTilemap()
+    {
+        BoundsInt bounds = groundTilemap.cellBounds;
+        Debug.Log(bounds);
+        int width = bounds.size.x;
+        int height = bounds.size.y;
+
+        Vector3 origin = groundTilemap.CellToWorld(bounds.min);
+
+        tileMap = new TileMap(
+            width,
+            height,
+            groundTilemap.layoutGrid.cellSize.x,
+            Vector2.zero
+        );
+    }
+
+
     #endregion
 }
