@@ -31,7 +31,7 @@ public class TileMapController : MonoBehaviour
 
     private int[,] staticObjectLayoutGrid = new int[,]
     {
-        {2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {2,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -40,7 +40,7 @@ public class TileMapController : MonoBehaviour
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     };
 
     #region Core
@@ -261,6 +261,10 @@ public class TileMapController : MonoBehaviour
 
                 if (id != WorldObjectID.None)
                 {
+                    if(id == WorldObjectID.PlayerHouse)
+                    {
+                        Debug.Log($"House: {x} x {y}");
+                    }
                     Instantiate(database.GetPrefab(id), new Vector2(x, y), Quaternion.identity);
                 }
             }
@@ -289,7 +293,24 @@ public class TileMapController : MonoBehaviour
         }
     }
 
+    private void CreateGridFromTilemap()
+    {
+        groundTilemap.CompressBounds();
+        BoundsInt bounds = groundTilemap.cellBounds;
+        int width = bounds.size.x;
+        int height = bounds.size.y;
 
+        tileMap = new TileMap(
+            width,
+            height,
+            groundTilemap.layoutGrid.cellSize.x,
+            Vector2.zero
+        );
+    }
+
+    #endregion
+
+    #region Debug
     [ContextMenu("Debug/Print Ground Grid")]
     public void PrintGroundGrid()
     {
@@ -300,7 +321,8 @@ public class TileMapController : MonoBehaviour
 
         string result = "";
 
-        for (int y = height - 1; y >= 0; y--)
+        //for (int y = height - 1; y >= 0; y--)
+        for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
@@ -312,24 +334,5 @@ public class TileMapController : MonoBehaviour
 
         Debug.Log(result);
     }
-
-    private void CreateGridFromTilemap()
-    {
-        BoundsInt bounds = groundTilemap.cellBounds;
-        Debug.Log(bounds);
-        int width = bounds.size.x;
-        int height = bounds.size.y;
-
-        Vector3 origin = groundTilemap.CellToWorld(bounds.min);
-
-        tileMap = new TileMap(
-            width,
-            height,
-            groundTilemap.layoutGrid.cellSize.x,
-            Vector2.zero
-        );
-    }
-
-
     #endregion
 }
