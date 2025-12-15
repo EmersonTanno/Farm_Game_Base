@@ -418,12 +418,12 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckPlayerMoveGrid(Vector2 pos)
     {
-        int gridValue = TileMapController.Instance.GetGrid().GetOriginalGrid().GetGridObject(pos);
-        int objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
-        if(gridValue == 0 || (objectGridValue != 0 && objectGridValue != 1))
+        if(TileMapController.Instance.GetGrid().GetMovementGrid().GetGridObject(pos) == false)
         {
             return false;
         }
+
+        int objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
 
         if(objectGridValue == 1)
         {
