@@ -14,6 +14,9 @@ public class TileMap
     objectGrid:
         1 - Cama
         2 - Caixa de Venda
+    
+    constructionGrid:
+        1- Casa
     */
     #endregion
 
@@ -21,6 +24,7 @@ public class TileMap
     private Grid<int> originalGrid;
     private Grid<TileMapPlantData> plantGrid;
     private Grid<int> objectGrid;
+    private Grid<ConstructionsType> constructionGrid;
     private Grid<bool> movementGrid;
 
     #endregion
@@ -32,6 +36,7 @@ public class TileMap
         plantGrid = new Grid<TileMapPlantData>(width, height, cellSize, originPosition);
         objectGrid = new Grid<int>(width, height, cellSize, originPosition);
         movementGrid = new Grid<bool>(width, height, cellSize, originPosition);
+        constructionGrid = new Grid<ConstructionsType>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -49,6 +54,11 @@ public class TileMap
     public Grid<int> GetObjectGrid()
     {
         return objectGrid;
+    }
+
+    public Grid<ConstructionsType> GetConstructionGrid()
+    {
+        return constructionGrid;
     }
 
     public Grid<bool> GetMovementGrid()

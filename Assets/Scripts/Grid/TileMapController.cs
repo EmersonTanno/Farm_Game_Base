@@ -30,7 +30,7 @@ public class TileMapController : MonoBehaviour
         ApplyDefaultLayout();
         SpawnObjects(tileMap.GetObjectGrid());
 
-        SetMovementGrid(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
+        SetMovementGrid(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid(), tileMap.GetConstructionGrid());
     }
 
     void OnEnable()
@@ -283,11 +283,10 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region TEST MovementGrid
-    private void SetMovementGrid(Grid<int> originalGrid, Grid<int> objectGrid)
+    private void SetMovementGrid(Grid<int> originalGrid, Grid<int> objectGrid, Grid<ConstructionsType> constructionGrid)
     {
         int height = originalGrid.GetHeight();
         int width = originalGrid.GetWidth();
-        Vector2 construction = new Vector2(-100, -100);
 
         for (int y = 0; y < height; y++)
         {
@@ -326,25 +325,10 @@ public class TileMapController : MonoBehaviour
                     {
                         continue;
                     }
-                    if(objectGridPositionValue == WorldObjectID.PlayerHouse)
-                    {
-                        construction = new Vector2(x, y);
-                        continue;
-                    }
                 }
             }
         }
 
-        // if(construction != new Vector2(-100, -100))
-        //     {
-        //         tileMap.GetMovementGrid().SetValue(construction, false);
-        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 0), false);
-        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 0), false);
-        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(0, 1), false);
-        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 1), false);
-        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(2, 1), false);
-        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 1), false);
-        //     }
         SetConstructionsInScene();
     }
 
@@ -370,13 +354,13 @@ public class TileMapController : MonoBehaviour
         foreach(WorldConstruction construction in constructions)
         {
             List<ConstructionTile> constructionPositionData = construction.GetConstructionPositions();
-            Debug.Log(construction.transform.position);
+            Debug.Log(construction.GetWorldObjectType());
             foreach(ConstructionTile tile in constructionPositionData)
             {
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
                 tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
+                tileMap.GetConstructionGrid().SetValue(position, construction.GetWorldObjectType());
             }
-            
         }
     }
     #endregion
@@ -387,14 +371,16 @@ public class TileMapController : MonoBehaviour
     {
         Grid<int> grid = tileMap.GetOriginalGrid();
         Grid<int> objectgrid = tileMap.GetObjectGrid();
+        Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
         Grid<bool> movegrid = tileMap.GetMovementGrid();
 
         int width = grid.GetWidth();
         int height = grid.GetHeight();
 
-        string result = "";
-        string result2 = "";
-        string result3 = "";
+        string result = "Default \n";
+        string result2 = "Move \n";
+        string result3 = "Object \n";
+        string result4 = "Construction \n";
 
         for (int y = 0; y < height; y++)
         {
@@ -403,17 +389,21 @@ public class TileMapController : MonoBehaviour
                 int value = grid.GetGridObject(x, y);
                 int value3 = objectgrid.GetGridObject(x, y);
                 bool value2 = movegrid.GetGridObject(x, y);
+                ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
                 result2 += value2.ToString().PadLeft(3) + " ";
                 result3 += value3.ToString().PadLeft(3) + " ";
+                result4 += value4.ToString().PadLeft(3) + " ";
             }
             result += "\n";
             result2 += "\n";
             result3 += "\n";
+            result4 += "\n";
         }
 
         Debug.Log(result);
         Debug.Log(result3);
+        Debug.Log(result4);
         Debug.Log(result2);
     }
     #endregion
