@@ -12,6 +12,7 @@ public class TileMapController : MonoBehaviour
     [SerializeField] WorldObjectDatabase database;
 
     [SerializeField] private Tilemap groundTilemap;
+    [SerializeField] private GameObject constructionsMap;
 
     #region Core
     void Awake()
@@ -56,7 +57,7 @@ public class TileMapController : MonoBehaviour
     {
         tileMap.GetObjectGrid().SetValue(1, 1, 1);
         tileMap.GetObjectGrid().SetValue(2, 1, 2);
-        tileMap.GetObjectGrid().SetValue(4, 1, 3);
+        //tileMap.GetObjectGrid().SetValue(4, 1, 3);
     }
 
     //Implementação de load futuro
@@ -334,21 +335,49 @@ public class TileMapController : MonoBehaviour
             }
         }
 
-        if(construction != new Vector2(-100, -100))
-            {
-                tileMap.GetMovementGrid().SetValue(construction, false);
-                tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 0), false);
-                tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 0), false);
-                tileMap.GetMovementGrid().SetValue(construction + new Vector2(0, 1), false);
-                tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 1), false);
-                tileMap.GetMovementGrid().SetValue(construction + new Vector2(2, 1), false);
-                tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 1), false);
-            }
+        // if(construction != new Vector2(-100, -100))
+        //     {
+        //         tileMap.GetMovementGrid().SetValue(construction, false);
+        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 0), false);
+        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 0), false);
+        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(0, 1), false);
+        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 1), false);
+        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(2, 1), false);
+        //         tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 1), false);
+        //     }
+        SetConstructionsInScene();
     }
 
     public bool CanMoveInGrid(Vector2 position)
     {
         return tileMap.GetMovementGrid().GetGridObject(position);
+    }
+    #endregion
+
+
+    #region TEST OBJECT
+    private WorldConstruction[] GetConstructionsInScene()
+    {
+        WorldConstruction[] constructions = constructionsMap.GetComponentsInChildren<WorldConstruction>();
+
+        return constructions;
+    }
+
+    private void SetConstructionsInScene()
+    {
+        WorldConstruction[] constructions = GetConstructionsInScene();
+
+        foreach(WorldConstruction construction in constructions)
+        {
+            List<ConstructionTile> constructionPositionData = construction.GetConstructionPositions();
+            Debug.Log(construction.transform.position);
+            foreach(ConstructionTile tile in constructionPositionData)
+            {
+                Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
+                tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
+            }
+            
+        }
     }
     #endregion
 
