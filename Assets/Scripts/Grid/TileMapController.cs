@@ -11,37 +11,7 @@ public class TileMapController : MonoBehaviour
     private TileMap tileMap;
     [SerializeField] WorldObjectDatabase database;
 
-    //TESTANDO
     [SerializeField] private Tilemap groundTilemap;
-
-
-    private int[,] defaultLayoutOriginalGrid = new int[,]
-    {
-        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
-        {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2},
-        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
-        {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2},
-        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
-        {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2},
-        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
-        {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2},
-        {1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2},
-        {2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,2}
-    };
-
-    private int[,] staticObjectLayoutGrid = new int[,]
-    {
-        {2,1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    };
 
     #region Core
     void Awake()
@@ -51,17 +21,15 @@ public class TileMapController : MonoBehaviour
 
     void Start()
     {
-        //tileMap = new TileMap(20, 10, 1f, Vector3.zero);
 
         CreateGridFromTilemap();
         LoadGroundFromTilemap();
         renderer.Init(tileMap);
 
-
-        
-        //renderer.Init(tileMap);
         ApplyDefaultLayout();
-        SpawnObjects(staticObjectLayoutGrid);
+        SpawnObjects(tileMap.GetObjectGrid());
+
+        SetMovementGrid(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
     }
 
     void OnEnable()
@@ -86,15 +54,23 @@ public class TileMapController : MonoBehaviour
     #region Apply Layout
     private void ApplyDefaultLayout()
     {
-        for(int y = 0; y < defaultLayoutOriginalGrid.GetLength(0); y++)
-        {
-            for(int x = 0; x < defaultLayoutOriginalGrid.GetLength(1); x++)
-            {
-                //tileMap.GetOriginalGrid().SetValue(x, y, defaultLayoutOriginalGrid[y, x]);
-                tileMap.GetObjectGrid().SetValue(x, y, staticObjectLayoutGrid[y, x]);
-            }
-        }
+        tileMap.GetObjectGrid().SetValue(1, 1, 1);
+        tileMap.GetObjectGrid().SetValue(2, 1, 2);
+        tileMap.GetObjectGrid().SetValue(4, 1, 3);
     }
+
+    //Implementação de load futuro
+    // private void ApplyDefaultLayout()
+    // {
+    //     for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+    //     {
+    //         for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+    //         {
+    //             //tileMap.GetOriginalGrid().SetValue(x, y, defaultLayoutOriginalGrid[y, x]);
+    //             tileMap.GetObjectGrid().SetValue(x, y, staticObjectLayoutGrid[y, x]);
+    //         }
+    //     }
+    // }
     #endregion
 
     #region Plow
@@ -248,23 +224,19 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region  Spawn Objects
-    public void SpawnObjects(int[,] grid)
+    public void SpawnObjects(Grid<int> grid)
     {
-        int height = grid.GetLength(0);
-        int width = grid.GetLength(1);
+        int height = grid.GetHeight();
+        int width = grid.GetWidth();
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                WorldObjectID id = (WorldObjectID)grid[y, x];
+                WorldObjectID id = (WorldObjectID)grid.GetGridObject(x, y);
 
                 if (id != WorldObjectID.None)
                 {
-                    if(id == WorldObjectID.PlayerHouse)
-                    {
-                        Debug.Log($"House: {x} x {y}");
-                    }
                     Instantiate(database.GetPrefab(id), new Vector2(x, y), Quaternion.identity);
                 }
             }
@@ -272,7 +244,7 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
-    #region TESTES
+    #region Create and Load Grid from tilemap
     private void LoadGroundFromTilemap()
     {
         BoundsInt bounds = groundTilemap.cellBounds;
@@ -307,7 +279,77 @@ public class TileMapController : MonoBehaviour
             Vector2.zero
         );
     }
+    #endregion
 
+    #region TEST MovementGrid
+    private void SetMovementGrid(Grid<int> originalGrid, Grid<int> objectGrid)
+    {
+        int height = originalGrid.GetHeight();
+        int width = originalGrid.GetWidth();
+        Vector2 construction = new Vector2(-100, -100);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                int originalGridPositionValue = originalGrid.GetGridObject(x, y);
+                WorldObjectID objectGridPositionValue = (WorldObjectID)objectGrid.GetGridObject(x, y);
+
+                if(objectGridPositionValue == WorldObjectID.None)
+                {
+                    if(originalGridPositionValue == 0)
+                    {
+                        continue;
+                    }
+
+                    if
+                    (
+                        originalGridPositionValue == 1 || 
+                        originalGridPositionValue == 2 || 
+                        originalGridPositionValue == 10 || 
+                        originalGridPositionValue == 11 || 
+                        originalGridPositionValue == 20
+                    )
+                    {
+                        tileMap.GetMovementGrid().SetValue(x, y, true);
+                        continue;
+                    }
+                } else
+                {
+                    if(objectGridPositionValue == WorldObjectID.Bed)
+                    {
+                        tileMap.GetMovementGrid().SetValue(x, y, true);
+                        continue;
+                    }
+                    if(objectGridPositionValue == WorldObjectID.ShippingBox)
+                    {
+                        continue;
+                    }
+                    if(objectGridPositionValue == WorldObjectID.PlayerHouse)
+                    {
+                        construction = new Vector2(x, y);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        if(construction != new Vector2(-100, -100))
+            {
+                tileMap.GetMovementGrid().SetValue(construction, false);
+                tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 0), false);
+                tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 0), false);
+                tileMap.GetMovementGrid().SetValue(construction + new Vector2(0, 1), false);
+                tileMap.GetMovementGrid().SetValue(construction + new Vector2(1, 1), false);
+                tileMap.GetMovementGrid().SetValue(construction + new Vector2(2, 1), false);
+                tileMap.GetMovementGrid().SetValue(construction + new Vector2(3, 1), false);
+            }
+    }
+
+    public bool CanMoveInGrid(Vector2 position)
+    {
+        return tileMap.GetMovementGrid().GetGridObject(position);
+    }
     #endregion
 
     #region Debug
@@ -315,24 +357,35 @@ public class TileMapController : MonoBehaviour
     public void PrintGroundGrid()
     {
         Grid<int> grid = tileMap.GetOriginalGrid();
+        Grid<int> objectgrid = tileMap.GetObjectGrid();
+        Grid<bool> movegrid = tileMap.GetMovementGrid();
 
         int width = grid.GetWidth();
         int height = grid.GetHeight();
 
         string result = "";
+        string result2 = "";
+        string result3 = "";
 
-        //for (int y = height - 1; y >= 0; y--)
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
                 int value = grid.GetGridObject(x, y);
+                int value3 = objectgrid.GetGridObject(x, y);
+                bool value2 = movegrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
+                result2 += value2.ToString().PadLeft(3) + " ";
+                result3 += value3.ToString().PadLeft(3) + " ";
             }
             result += "\n";
+            result2 += "\n";
+            result3 += "\n";
         }
 
         Debug.Log(result);
+        Debug.Log(result3);
+        Debug.Log(result2);
     }
     #endregion
 }
