@@ -11,7 +11,7 @@ public class ConstructionTile
 
 public class WorldConstruction : MonoBehaviour
 {
-    [SerializeField] private WorldObjectID type;
+    [SerializeField] private ConstructionsType type;
     [SerializeField] private List<ConstructionTile> constructionPositions;
 
     public List<ConstructionTile> GetConstructionPositions()
@@ -19,7 +19,7 @@ public class WorldConstruction : MonoBehaviour
         return constructionPositions;
     }
 
-    public WorldObjectID GetWorldObjectType()
+    public ConstructionsType GetWorldObjectType()
     {
         return type;
     }
