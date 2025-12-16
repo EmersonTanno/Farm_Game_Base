@@ -354,7 +354,6 @@ public class TileMapController : MonoBehaviour
         foreach(WorldConstruction construction in constructions)
         {
             List<ConstructionTile> constructionPositionData = construction.GetConstructionPositions();
-            Debug.Log(construction.GetWorldObjectType());
             foreach(ConstructionTile tile in constructionPositionData)
             {
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);

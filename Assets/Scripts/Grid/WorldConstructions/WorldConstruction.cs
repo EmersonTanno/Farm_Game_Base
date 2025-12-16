@@ -11,8 +11,10 @@ public class ConstructionTile
 
 public class WorldConstruction : MonoBehaviour
 {
+    [SerializeField] private int id;
     [SerializeField] private ConstructionsType type;
     [SerializeField] private List<ConstructionTile> constructionPositions;
+    [SerializeField] private GameObject prefab;
 
     public List<ConstructionTile> GetConstructionPositions()
     {
@@ -27,6 +29,16 @@ public class WorldConstruction : MonoBehaviour
     public int GetTypeId()
     {
         return (int)type;
+    }
+
+    public int GetConstructionId()
+    {
+        return id;
+    }
+
+    public GameObject GetConstructionPrefab()
+    {
+        return prefab;
     }
 }
 

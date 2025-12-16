@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db99c59c262438d429d77233a0a6ea98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 1
   type: 1
   constructionPositions:
   - offset: {x: 0, y: 0}
@@ -63,6 +64,7 @@ MonoBehaviour:
     blocksMovement: 1
   - offset: {x: 3, y: 1}
     blocksMovement: 1
+  prefab: {fileID: 3503081967964072713}
 --- !u!1 &6201455146885127491
 GameObject:
   m_ObjectHideFlags: 0
