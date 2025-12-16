@@ -423,9 +423,9 @@ public class Player_Controller : MonoBehaviour
             return false;
         }
 
-        int objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+        WorldObjectID objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
 
-        if(objectGridValue == 1)
+        if(objectGridValue == WorldObjectID.Bed)
         {
             Vector2 side = GetSide();
             if (side == Vector2.down || side == Vector2.up)
@@ -434,7 +434,7 @@ public class Player_Controller : MonoBehaviour
             }
         }
 
-        if(TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(transform.position) == 1)
+        if(TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(transform.position) == WorldObjectID.Bed)
         {
             Vector2 side = GetSide();
             if (side == Vector2.down || side == Vector2.up)

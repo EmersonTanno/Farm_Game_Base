@@ -18,7 +18,7 @@ public class WorldObject : MonoBehaviour
     [SerializeField] private List<ObjectTile> objectPositions;
     [SerializeField] private GameObject prefab;
 
-    public List<ObjectTile> GetConstructionPositions()
+    public List<ObjectTile> GetObjectPositions()
     {
         return objectPositions;
     }

@@ -13,6 +13,7 @@ public class TileMapController : MonoBehaviour
 
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private GameObject constructionsMap;
+    [SerializeField] private GameObject objectsMap;
 
     #region Core
     void Awake()
@@ -28,7 +29,7 @@ public class TileMapController : MonoBehaviour
         renderer.Init(tileMap);
 
         ApplyDefaultLayout();
-        SpawnObjects(tileMap.GetObjectGrid());
+        //SpawnObjects(tileMap.GetObjectGrid());
 
         SetMovementGrid(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid(), tileMap.GetConstructionGrid());
     }
@@ -55,8 +56,8 @@ public class TileMapController : MonoBehaviour
     #region Apply Layout
     private void ApplyDefaultLayout()
     {
-        tileMap.GetObjectGrid().SetValue(1, 1, 1);
-        tileMap.GetObjectGrid().SetValue(2, 1, 2);
+        // tileMap.GetObjectGrid().SetValue(1, 1, 1);
+        // tileMap.GetObjectGrid().SetValue(2, 1, 2);
         //tileMap.GetObjectGrid().SetValue(4, 1, 3);
     }
 
@@ -243,6 +244,30 @@ public class TileMapController : MonoBehaviour
             }
         }
     }
+
+
+    private WorldObject[] GetObjectsInScene()
+    {
+        WorldObject[] objects = objectsMap.GetComponentsInChildren<WorldObject>();
+
+        return objects;
+    }
+
+    private void SetObjectsInScene()
+    {
+        WorldObject[] objects = GetObjectsInScene();
+
+        foreach(WorldObject worldObject in objects)
+        {
+            List<ObjectTile> objectPositionData = worldObject.GetObjectPositions();
+            foreach(ObjectTile tile in objectPositionData)
+            {
+                Vector2 position = new Vector2(worldObject.transform.position.x + tile.offset.x, worldObject.transform.position.y + tile.offset.y);
+                tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
+                tileMap.GetObjectGrid().SetValue(position, worldObject.GetWorldObjectType());
+            }
+        }
+    }
     #endregion
 
     #region Create and Load Grid from tilemap
@@ -283,7 +308,7 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region MovementGrid
-    private void SetMovementGrid(Grid<int> originalGrid, Grid<int> objectGrid, Grid<ConstructionsType> constructionGrid)
+    private void SetMovementGrid(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid, Grid<ConstructionsType> constructionGrid)
     {
         int height = originalGrid.GetHeight();
         int width = originalGrid.GetWidth();
@@ -330,6 +355,7 @@ public class TileMapController : MonoBehaviour
         }
 
         SetConstructionsInScene();
+        SetObjectsInScene();
     }
 
     public bool CanMoveInGrid(Vector2 position)
@@ -369,7 +395,7 @@ public class TileMapController : MonoBehaviour
     public void PrintGroundGrid()
     {
         Grid<int> grid = tileMap.GetOriginalGrid();
-        Grid<int> objectgrid = tileMap.GetObjectGrid();
+        Grid<WorldObjectID> objectgrid = tileMap.GetObjectGrid();
         Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
         Grid<bool> movegrid = tileMap.GetMovementGrid();
 
@@ -386,7 +412,7 @@ public class TileMapController : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int value = grid.GetGridObject(x, y);
-                int value3 = objectgrid.GetGridObject(x, y);
+                WorldObjectID value3 = objectgrid.GetGridObject(x, y);
                 bool value2 = movegrid.GetGridObject(x, y);
                 ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
