@@ -28,7 +28,7 @@ public class TileMapController : MonoBehaviour
         LoadGroundFromTilemap();
         renderer.Init(tileMap);
 
-        ApplyDefaultLayout();
+        //ApplyDefaultLayout();
         //SpawnObjects(tileMap.GetObjectGrid());
 
         SetMovementGrid(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid(), tileMap.GetConstructionGrid());
