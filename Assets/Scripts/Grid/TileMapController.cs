@@ -282,7 +282,7 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
-    #region TEST MovementGrid
+    #region MovementGrid
     private void SetMovementGrid(Grid<int> originalGrid, Grid<int> objectGrid, Grid<ConstructionsType> constructionGrid)
     {
         int height = originalGrid.GetHeight();
@@ -339,7 +339,7 @@ public class TileMapController : MonoBehaviour
     #endregion
 
 
-    #region TEST OBJECT
+    #region Construction
     private WorldConstruction[] GetConstructionsInScene()
     {
         WorldConstruction[] constructions = constructionsMap.GetComponentsInChildren<WorldConstruction>();
