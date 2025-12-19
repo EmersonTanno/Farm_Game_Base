@@ -28,10 +28,7 @@ public class TileMapController : MonoBehaviour
         LoadGroundFromTilemap();
         renderer.Init(tileMap);
 
-        //ApplyDefaultLayout();
-        //SpawnObjects(tileMap.GetObjectGrid());
-
-        SetMovementGrid(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid(), tileMap.GetConstructionGrid());
+        SetAllGrids(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
     }
 
     void OnEnable()
@@ -54,13 +51,6 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region Apply Layout
-    private void ApplyDefaultLayout()
-    {
-        // tileMap.GetObjectGrid().SetValue(1, 1, 1);
-        // tileMap.GetObjectGrid().SetValue(2, 1, 2);
-        //tileMap.GetObjectGrid().SetValue(4, 1, 3);
-    }
-
     //Implementação de load futuro
     // private void ApplyDefaultLayout()
     // {
@@ -225,7 +215,7 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
-    #region  Spawn Objects
+    #region Objects
     public void SpawnObjects(Grid<int> grid)
     {
         int height = grid.GetHeight();
@@ -307,8 +297,20 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
+
+    #region SetGrids
+
+    private void SetAllGrids(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
+    {
+        SetMovementGrid(originalGrid, objectGrid);
+        SetConstructionsInScene();
+        SetObjectsInScene();
+    }
+
+    #endregion
+
     #region MovementGrid
-    private void SetMovementGrid(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid, Grid<ConstructionsType> constructionGrid)
+    private void SetMovementGrid(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
     {
         int height = originalGrid.GetHeight();
         int width = originalGrid.GetWidth();
@@ -318,7 +320,7 @@ public class TileMapController : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int originalGridPositionValue = originalGrid.GetGridObject(x, y);
-                WorldObjectID objectGridPositionValue = (WorldObjectID)objectGrid.GetGridObject(x, y);
+                WorldObjectID objectGridPositionValue = objectGrid.GetGridObject(x, y);
 
                 if(objectGridPositionValue == WorldObjectID.None)
                 {
@@ -329,33 +331,17 @@ public class TileMapController : MonoBehaviour
 
                     if
                     (
-                        originalGridPositionValue == 1 || 
-                        originalGridPositionValue == 2 || 
-                        originalGridPositionValue == 10 || 
-                        originalGridPositionValue == 11 || 
+                        originalGridPositionValue <= 9 || 
+                        (originalGridPositionValue >= 10 && originalGridPositionValue <= 11) || 
                         originalGridPositionValue == 20
                     )
                     {
                         tileMap.GetMovementGrid().SetValue(x, y, true);
                         continue;
                     }
-                } else
-                {
-                    if(objectGridPositionValue == WorldObjectID.Bed)
-                    {
-                        tileMap.GetMovementGrid().SetValue(x, y, true);
-                        continue;
-                    }
-                    if(objectGridPositionValue == WorldObjectID.ShippingBox)
-                    {
-                        continue;
-                    }
-                }
+                } 
             }
         }
-
-        SetConstructionsInScene();
-        SetObjectsInScene();
     }
 
     public bool CanMoveInGrid(Vector2 position)
