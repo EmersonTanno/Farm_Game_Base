@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6139808161351050940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6139808161351050938}
+  - component: {fileID: 6139808161351050937}
+  - component: {fileID: 6139808161351050936}
+  - component: {fileID: 6139808161351050935}
+  m_Layer: 0
+  m_Name: Grid_Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6139808161351050938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139808161351050940}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 773.728, y: 350.11566, z: -1.6757917}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6139808161351050937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139808161351050940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c0e98a947188b4a9c2e25a5763c7c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 6139808161351050936}
+  database: {fileID: 6139808161351050935}
+  groundTilemap: {fileID: 0}
+  constructionsMap: {fileID: 0}
+  objectsMap: {fileID: 0}
+--- !u!114 &6139808161351050936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139808161351050940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7936cae9c1be44541ad6832685ce7fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soilTilemap: {fileID: 0}
+  plantTilemap: {fileID: 0}
+  soilNormal1: {fileID: 11400000, guid: efa000ec5ac7c29468e46b184ca81bb7, type: 2}
+  soilNormal2: {fileID: 11400000, guid: db8d5dda5b77d524f8c2ec6f02358056, type: 2}
+  soilPlowed: {fileID: 11400000, guid: f9cf8d0587807b54a9ca04ed7403ac47, type: 2}
+  soilWatered: {fileID: 11400000, guid: cd3fca60994cbba4b8579ce16413008c, type: 2}
+  deadPlant: {fileID: 11400000, guid: 74d7de4285750bc478196b323fdd1cd9, type: 2}
+  plantGrowthStages: []
+--- !u!114 &6139808161351050935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6139808161351050940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8589bc002b7d24084548705b5bb722, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - id: 1
+    prefab: {fileID: 4052175598659023084, guid: 0f06884d77998c641aacf6e987ad35ff, type: 3}
+  - id: 2
+    prefab: {fileID: 2112654697601880981, guid: dbbf4fff6e3e35149b1fe3ceb3741df6, type: 3}
+  - id: 3
+    prefab: {fileID: 3503081967964072713, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
