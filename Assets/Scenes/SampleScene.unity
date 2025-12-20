@@ -12645,6 +12645,10 @@ PrefabInstance:
       propertyPath: totalPriceText
       value: 
       objectReference: {fileID: 438670021}
+    - target: {fileID: 4868641704576069523, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: canva
+      value: 
+      objectReference: {fileID: 1795863403}
     - target: {fileID: 4868641704576069548, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: m_RootOrder
       value: 2
