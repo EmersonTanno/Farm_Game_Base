@@ -28,6 +28,8 @@ public class Sell_Controller : MonoBehaviour
 
     private Dictionary<Item, int> sellControlDict = new Dictionary<Item, int>();
 
+    private List<Item> sellItemsList = new List<Item>();
+
     public bool active = false;
 
     #endregion
@@ -90,8 +92,20 @@ public class Sell_Controller : MonoBehaviour
     }
     #endregion
 
+    #region Events
+    void OnEnable()
+    {
+        Time_Controll.OnMidNightChange += SellItems;
+    }
+
+    void OnDisable()
+    {
+        Time_Controll.OnMidNightChange -= SellItems;
+    }
+    #endregion
+
     #region Sell
-    public void SellItems(List<Item> sellItemsList)
+    public void SellItems()
     {
         int gainedValue = 0;
         int taxedValue = 0;
@@ -107,8 +121,11 @@ public class Sell_Controller : MonoBehaviour
             taxedValue += tax;
             gainedValue += item.sellValue - tax;
 
+            //problema aqui
             AddItem(item);
         }
+
+        sellItemsList.Clear();
 
         Tax_System.Instance.UpdateTaxPaidDuringYear(taxedValue);
         Tax_System.Instance.AddSellItemsValueToAnualSells(totalValue);
@@ -237,6 +254,21 @@ public class Sell_Controller : MonoBehaviour
 
         if (sellControlDict[item] <= 0)
             sellControlDict.Remove(item);
+    }
+
+
+    public void AddItemToList(Item newItem)
+    {
+        if (!newItem) return;
+
+        sellItemsList.Add(newItem);
+    }
+
+    public void RemoveItemFromList(Item item)
+    {
+        if (!sellControlDict.ContainsKey(item)) return;
+
+        sellItemsList.Remove(item);
     }
     #endregion
 }

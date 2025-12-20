@@ -5,22 +5,6 @@ public class Sell_Box_Controller : MonoBehaviour
 {
     public static Sell_Box_Controller Instance { get; private set; }
 
-    #region Variables
-    private List<Item> sellItemsList = new List<Item>();
-    #endregion
-
-    #region Events
-    void OnEnable()
-    {
-        Time_Controll.OnMidNightChange += SellItems;
-    }
-
-    void OnDisable()
-    {
-        Time_Controll.OnMidNightChange -= SellItems;
-    }
-    #endregion
-
     #region Core
     void Awake()
     {
@@ -32,24 +16,13 @@ public class Sell_Box_Controller : MonoBehaviour
     public void AddItem(Item newItem)
     {
         if (!newItem) return;
-        sellItemsList.Add(newItem);
+        Sell_Controller.Instance.AddItemToList(newItem);
     }
     public void RemoveItem(Item itemToRemove)
     {
-        sellItemsList.Remove(itemToRemove);
+        if (!itemToRemove) return;
+        Sell_Controller.Instance.RemoveItemFromList(itemToRemove);
     }
 
-    public void RemoveItemAt(int index)
-    {
-        if (index >= 0 && index < sellItemsList.Count)
-            sellItemsList.RemoveAt(index);
-    }
-
-    public void SellItems()
-    {   
-        Sell_Controller.Instance.SellItems(sellItemsList);
-        
-        sellItemsList.Clear();
-    }
     #endregion
 }
