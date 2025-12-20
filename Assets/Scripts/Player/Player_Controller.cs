@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -169,6 +167,11 @@ public class Player_Controller : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
+
+        if(TileMapController.Instance.GetGrid().GetConstructionGrid().GetGridObject(transform.position) == ConstructionsType.PlayerHouse)
+        {
+            SceneController.Instance.LoadScene("House", new Vector2(1, 1));
+        }
     }
 
     private void MovePointer()
