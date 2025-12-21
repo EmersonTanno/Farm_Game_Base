@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -6,22 +7,32 @@ public class TileMapRenderer : MonoBehaviour
     public Tilemap soilTilemap;
     public Tilemap plantTilemap;
 
-    [Header("Soil Tiles")]
-    public TileBase soilNormal1;
-    public TileBase soilNormal2;
-    public TileBase soilPlowed;
-    public TileBase soilWatered;
+    [SerializeField] WorldTile[] worldTiles;
+    private Dictionary<int, TileBase> tileLookup;
 
     [Header("Plant Tiles (growth stages)")]
     public TileBase deadPlant;
-    public TileBase[] plantGrowthStages;
 
     private TileMap tileMap;
 
     public void Init(TileMap tileMap)
     {
         this.tileMap = tileMap;
+        BuildTileLookup();
         RenderAll();
+    }
+
+    private void BuildTileLookup()
+    {
+        tileLookup = new Dictionary<int, TileBase>();
+
+        foreach (var worldTile in worldTiles)
+        {
+            if (!tileLookup.ContainsKey(worldTile.id))
+                tileLookup.Add(worldTile.id, worldTile);
+            else
+                Debug.LogWarning($"Tile duplicado com id {worldTile.id}");
+        }
     }
 
     public void RenderAll()
@@ -35,6 +46,18 @@ public class TileMapRenderer : MonoBehaviour
         }
     }
 
+    private TileBase GetTile(int soilState)
+    {
+        if(soilState == 0)
+            return null;
+
+        if (tileLookup.TryGetValue(soilState, out var tile))
+            return tile;
+        
+        Debug.LogWarning($"Nenhum tile encontrado para soilState {soilState}");
+        return null;
+    }
+
     public void RenderTile(int x, int y)
     {
         RenderSoil(x, y);
@@ -45,13 +68,12 @@ public class TileMapRenderer : MonoBehaviour
         int soilState = tileMap.GetOriginalGrid().GetGridObject(x, y);
         TileBase tileToUse = null;
 
-        switch(soilState)
+        if(soilState == 20)
         {
-            case 1: tileToUse = soilNormal1; break;
-            case 2: tileToUse = soilNormal2; break;
-            case 10: tileToUse = soilPlowed; break;
-            case 11: tileToUse = soilWatered; break;
-            case 20: RenderPlant(x, y); break;
+            RenderPlant(x, y);
+        } else
+        {
+            tileToUse = GetTile(soilState);
         }
 
         soilTilemap.SetTile(new Vector3Int(x, y), tileToUse);

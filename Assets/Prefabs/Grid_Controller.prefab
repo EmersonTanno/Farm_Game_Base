@@ -65,12 +65,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soilTilemap: {fileID: 0}
   plantTilemap: {fileID: 0}
-  soilNormal1: {fileID: 11400000, guid: efa000ec5ac7c29468e46b184ca81bb7, type: 2}
-  soilNormal2: {fileID: 11400000, guid: db8d5dda5b77d524f8c2ec6f02358056, type: 2}
-  soilPlowed: {fileID: 11400000, guid: f9cf8d0587807b54a9ca04ed7403ac47, type: 2}
-  soilWatered: {fileID: 11400000, guid: cd3fca60994cbba4b8579ce16413008c, type: 2}
+  worldTiles:
+  - {fileID: 11400000, guid: 82d2d0b900efdab44ac4a8b3421b71ca, type: 2}
+  - {fileID: 11400000, guid: 29722948e4673ab439c8fd16e754185b, type: 2}
+  - {fileID: 11400000, guid: efa000ec5ac7c29468e46b184ca81bb7, type: 2}
+  - {fileID: 11400000, guid: db8d5dda5b77d524f8c2ec6f02358056, type: 2}
+  - {fileID: 11400000, guid: f9cf8d0587807b54a9ca04ed7403ac47, type: 2}
+  - {fileID: 11400000, guid: cd3fca60994cbba4b8579ce16413008c, type: 2}
   deadPlant: {fileID: 11400000, guid: 74d7de4285750bc478196b323fdd1cd9, type: 2}
-  plantGrowthStages: []
 --- !u!114 &6139808161351050935
 MonoBehaviour:
   m_ObjectHideFlags: 0
