@@ -7,4 +7,6 @@ using UnityEngine.Tilemaps;
 public class WorldTile : Tile
 {
     public int id;
+    public bool isWarp;
+    public WarpTile warp;
 }
