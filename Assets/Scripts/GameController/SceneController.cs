@@ -22,12 +22,12 @@ public class SceneController : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void LoadScene(string sceneName, Vector2 spawnPosition)
+    public void LoadScene(WarpTile warp, Vector2 spawnPosition)
     {
         targetPlayerPosition = spawnPosition;
         hasPendingTeleport = true;
 
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(warp.scene);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

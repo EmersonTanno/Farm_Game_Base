@@ -38,6 +38,6 @@ MonoBehaviour:
   isWarp: 1
   warp:
     scene: SampleScene
-    x: 0
-    y: 0
+    x: 3
+    y: 5
     transitionType: 1

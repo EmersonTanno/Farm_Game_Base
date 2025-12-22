@@ -50,20 +50,68 @@ MonoBehaviour:
   constructionPositions:
   - offset: {x: 0, y: 0}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   - offset: {x: 1, y: 0}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   - offset: {x: 2, y: 0}
     blocksMovement: 0
+    isWarp: 1
+    warp:
+      scene: House
+      x: 3
+      y: 1
+      transitionType: 1
   - offset: {x: 3, y: 0}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   - offset: {x: 0, y: 1}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   - offset: {x: 1, y: 1}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   - offset: {x: 2, y: 1}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   - offset: {x: 3, y: 1}
     blocksMovement: 1
+    isWarp: 0
+    warp:
+      scene: 
+      x: 0
+      y: 0
+      transitionType: 0
   prefab: {fileID: 3503081967964072713}
 --- !u!1 &6201455146885127491
 GameObject:

@@ -24,7 +24,7 @@ public class WarpController : MonoBehaviour
         isWarping = true;
 
         SceneController.Instance.LoadScene(
-            warp.scene,
+            warp,
             new Vector2(warp.x, warp.y)
         );
     }
