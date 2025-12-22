@@ -18,8 +18,15 @@ public class TileMapController : MonoBehaviour
     #region Core
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
     }
+
 
     void Start()
     {
