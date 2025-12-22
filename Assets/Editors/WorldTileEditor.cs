@@ -8,10 +8,19 @@ public class WorldTileEditor : Editor
     {
         serializedObject.Update();
 
+        DrawPropertiesExcluding(
+            serializedObject,
+            "m_Script",
+            "id",
+            "isWarp",
+            "warp"
+        );
+
         SerializedProperty id = serializedObject.FindProperty("id");
         SerializedProperty isWarp = serializedObject.FindProperty("isWarp");
         SerializedProperty warp = serializedObject.FindProperty("warp");
 
+        EditorGUILayout.Space();
         EditorGUILayout.PropertyField(id);
         EditorGUILayout.PropertyField(isWarp);
 
