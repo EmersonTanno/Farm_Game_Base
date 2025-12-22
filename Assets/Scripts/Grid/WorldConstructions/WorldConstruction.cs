@@ -7,6 +7,8 @@ public class ConstructionTile
 {
     public Vector2Int offset;
     public bool blocksMovement;
+    public bool isWarp;
+    public WarpTile warp;
 }
 
 public class WorldConstruction : MonoBehaviour

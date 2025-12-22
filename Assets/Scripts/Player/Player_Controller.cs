@@ -168,9 +168,10 @@ public class Player_Controller : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if(TileMapController.Instance.GetGrid().GetConstructionGrid().GetGridObject(transform.position) == ConstructionsType.PlayerHouse)
+        WarpTile warp = TileMapController.Instance.GetGrid().GetWarpGrid().GetGridObject(transform.position);
+        if(warp != null)
         {
-            SceneController.Instance.LoadScene("House", new Vector2(1, 1));
+            SceneController.Instance.LoadScene(warp.scene, new Vector2(warp.x, warp.y));
         }
     }
 

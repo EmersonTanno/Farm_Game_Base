@@ -25,7 +25,7 @@ public class TileMapController : MonoBehaviour
     {
 
         CreateGridFromTilemap();
-        LoadGroundFromTilemap();
+        LoadGroundAndWarpFromTilemap();
         renderer.Init(tileMap);
 
         SetAllGrids(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
@@ -260,8 +260,8 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
-    #region Create and Load Grid from tilemap
-    private void LoadGroundFromTilemap()
+    #region Create and Load Grid/Warp from tilemap
+    private void LoadGroundAndWarpFromTilemap()
     {
         BoundsInt bounds = groundTilemap.cellBounds;
 
@@ -278,6 +278,11 @@ public class TileMapController : MonoBehaviour
                 pos.y,
                 worldTile.id
             );
+
+            if(worldTile.isWarp)
+            {
+                SetWarpGrid(pos.x, pos.y, worldTile.warp);
+            }
         }
     }
 
@@ -303,7 +308,7 @@ public class TileMapController : MonoBehaviour
     private void SetAllGrids(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
     {
         SetMovementGrid(originalGrid, objectGrid);
-        SetConstructionsInScene();
+        SetConstructionsInSceneAndConstructionsWarps();
         SetObjectsInScene();
     }
 
@@ -350,6 +355,14 @@ public class TileMapController : MonoBehaviour
     }
     #endregion
 
+    #region Warp Grid
+    private void SetWarpGrid(int x, int y, WarpTile warpData)
+    {
+        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
+
+        warpGrid.SetValue(x, y, warpData);
+    }
+    #endregion
 
     #region Construction
     private WorldConstruction[] GetConstructionsInScene()
@@ -359,7 +372,7 @@ public class TileMapController : MonoBehaviour
         return constructions;
     }
 
-    private void SetConstructionsInScene()
+    private void SetConstructionsInSceneAndConstructionsWarps()
     {
         WorldConstruction[] constructions = GetConstructionsInScene();
 
@@ -371,6 +384,10 @@ public class TileMapController : MonoBehaviour
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
                 tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
                 tileMap.GetConstructionGrid().SetValue(position, construction.GetWorldObjectType());
+                if(tile.isWarp)
+                {
+                    SetWarpGrid((int)construction.transform.position.x + tile.offset.x, (int)construction.transform.position.y + tile.offset.y, tile.warp);
+                }
             }
         }
     }

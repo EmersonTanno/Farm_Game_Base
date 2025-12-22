@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2550aa4ecec27249b33b5ae7a054fb5, type: 3}
-  m_Name: SoilWatered
+  m_Name: HouseWarpTile
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1850540066, guid: dea1090824537af469e7fce31316d420, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1575720653, guid: ca557d8399365194bbabea9f0d202db6, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Transform:
     e00: 1
     e01: 0
@@ -34,10 +34,10 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  id: 11
-  isWarp: 0
+  id: 5
+  isWarp: 1
   warp:
-    scene: 
+    scene: SampleScene
     x: 0
     y: 0
-    transitionType: 0
+    transitionType: 1

@@ -5441,6 +5441,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8130724043617832468, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: constructionPositions.Array.data[2].isWarp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130724043617832468, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: constructionPositions.Array.data[2].warp.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130724043617832468, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: constructionPositions.Array.data[2].warp.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130724043617832468, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: constructionPositions.Array.data[2].warp.scene
+      value: House
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130724043617832468, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: constructionPositions.Array.data[2].warp.transitionType
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
 --- !u!4 &1070517530 stripped
