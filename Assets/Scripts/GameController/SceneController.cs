@@ -43,5 +43,6 @@ public class SceneController : MonoBehaviour
         }
 
         hasPendingTeleport = false;
+        WarpController.Instance.EndWarp();
     }
 }

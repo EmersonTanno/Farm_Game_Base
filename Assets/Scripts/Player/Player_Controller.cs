@@ -45,6 +45,11 @@ public class Player_Controller : MonoBehaviour
 
         IdleAnimation();
     }
+
+    void LateUpdate()
+    {
+        CheckWarp();
+    }
     #endregion
 
     #region InputSystem
@@ -167,12 +172,6 @@ public class Player_Controller : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
-
-        WarpTile warp = TileMapController.Instance.GetGrid().GetWarpGrid().GetGridObject(transform.position);
-        if(warp != null)
-        {
-            SceneController.Instance.LoadScene(warp.scene, new Vector2(warp.x, warp.y));
-        }
     }
 
     private void MovePointer()
@@ -228,6 +227,19 @@ public class Player_Controller : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         justTurned = false;
+    }
+
+    private void CheckWarp()
+    {
+        if (Vector3.Distance(transform.position, movePoint.position) > 0.01f)
+            return;
+
+        
+        WarpTile warp = TileMapController.Instance.GetGrid().GetWarpGrid().GetGridObject(transform.position);
+        if(warp != null)
+        {
+            WarpController.Instance.ExecuteWarp(warp);
+        }
     }
 
     #endregion
