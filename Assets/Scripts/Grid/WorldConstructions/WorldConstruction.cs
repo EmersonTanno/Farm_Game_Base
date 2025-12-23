@@ -30,7 +30,7 @@ public class WorldConstruction : MonoBehaviour
     {
         if (Mathf.Abs(player.transform.position.y) < Mathf.Abs(transform.position.y)+1)
         {
-            Debug.Log(sprite.sortingLayerName);
+            sprite.sortingLayerName = "ConstructionBelow";
         }
         else
         {
