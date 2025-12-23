@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,13 +7,28 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
 
-    public Animator animator;
+    [Header("Transitions")]
+    [SerializeField] private List<TransitionType> loadingList;
+    [SerializeField] private List<GameObject> loadingListCanvas;
 
     private Vector3 targetPlayerPosition;
     private bool hasPendingTeleport;
 
+    private GameObject currentTransitionCanvas;
+
     private void Awake()
     {
+        if (loadingList.Count != loadingListCanvas.Count)
+        {
+            Debug.LogError("loadingList e loadingListCanvas têm tamanhos diferentes!");
+        }
+
+        foreach (var canvas in loadingListCanvas)
+        {
+            if (canvas != null)
+                canvas.SetActive(false);
+        }
+
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -25,23 +41,33 @@ public class SceneController : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     public void LoadScene(WarpTile warp, Vector2 spawnPosition)
     {
         if (hasPendingTeleport) return;
 
-        targetPlayerPosition = spawnPosition;
         hasPendingTeleport = true;
+        targetPlayerPosition = spawnPosition;
 
-        StartCoroutine(LoadLevelAsync(warp.scene));
+        StartCoroutine(LoadLevelAsync(warp));
     }
 
-    private IEnumerator LoadLevelAsync(string sceneName)
+    private IEnumerator LoadLevelAsync(WarpTile warp)
     {
-        animator.SetTrigger("Start");
+        currentTransitionCanvas = GetTransitionCanvas(warp.transitionType);
+        currentTransitionCanvas.SetActive(true);
+
+        Animator anim = currentTransitionCanvas.GetComponent<Animator>();
+        Debug.Log("Start");
+        anim.SetTrigger("Start");
 
         yield return new WaitForSeconds(1f);
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(warp.scene);
         asyncLoad.allowSceneActivation = false;
 
         while (asyncLoad.progress < 0.9f)
@@ -60,13 +86,41 @@ public class SceneController : MonoBehaviour
 
         if (player != null)
         {
-            player.transform.position = targetPlayerPosition + new Vector3(0.5f, 0.7f, 0);
-            player.movePoint.position = player.transform.position;
+            Vector3 spawn = targetPlayerPosition + new Vector3(0.5f, 0.7f, 0);
+            player.transform.position = spawn;
+            player.movePoint.position = spawn;
         }
 
-        animator.SetTrigger("End");
+        if (currentTransitionCanvas != null)
+        {
+            Animator anim = currentTransitionCanvas.GetComponent<Animator>();
+            anim.SetTrigger("End");
+            StartCoroutine(DisableTransitionAfterAnim(currentTransitionCanvas, anim));
+        }
 
         hasPendingTeleport = false;
         WarpController.Instance.EndWarp();
+    }
+
+    private IEnumerator DisableTransitionAfterAnim(GameObject canvas, Animator anim)
+    {
+        yield return new WaitForSeconds(
+            anim.GetCurrentAnimatorStateInfo(0).length
+        );
+
+        canvas.SetActive(false);
+        currentTransitionCanvas = null;
+    }
+
+    private GameObject GetTransitionCanvas(TransitionType type)
+    {
+        for (int i = 0; i < loadingList.Count; i++)
+        {
+            if (loadingList[i] == type)
+                return loadingListCanvas[i];
+        }
+
+        Debug.LogError("TransitionType não encontrado: " + type);
+        return loadingListCanvas[0];
     }
 }
