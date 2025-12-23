@@ -3237,7 +3237,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000008b2369ceaf66f4d18f55040b15b2931e89648f16
+  m_ApplyToSortingLayers: 000000008b2369ceaf66f4d18f55040b15b2931e89648f163d9d3f178f59e0b9
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -5377,9 +5377,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 442130156}
     m_Modifications:
+    - target: {fileID: 62100698099087267, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 62100698099087267, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 390044989
+      objectReference: {fileID: 0}
     - target: {fileID: 3503081967964072713, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
       propertyPath: m_Name
       value: Player_House
+      objectReference: {fileID: 0}
+    - target: {fileID: 3503081967964072713, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4862610819808964916, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
       propertyPath: m_RootOrder
@@ -5425,6 +5437,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8130724043617832468, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 1795290817}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
 --- !u!4 &1070517530 stripped
@@ -8839,6 +8855,11 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3541627306254851896, guid: e7bd07c7b19fa7c44966c88df17ece08, type: 3}
   m_PrefabInstance: {fileID: 1761709382}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1795290817 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 62100698099087267, guid: 68ca5efd0e8b02243a5a9c128b86e506, type: 3}
+  m_PrefabInstance: {fileID: 1070517529}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1795863403
 GameObject:

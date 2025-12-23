@@ -50,8 +50,14 @@ TagManager:
   - name: Bed1
     uniqueID: 184833423
     locked: 0
+  - name: ConstructionBelow
+    uniqueID: 390044989
+    locked: 0
   - name: Player
     uniqueID: 512995861
+    locked: 0
+  - name: ConstructionAbove
+    uniqueID: 3118487951
     locked: 0
   - name: Bed2
     uniqueID: 378496137

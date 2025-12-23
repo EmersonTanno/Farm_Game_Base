@@ -18,6 +18,26 @@ public class WorldConstruction : MonoBehaviour
     [SerializeField] private List<ConstructionTile> constructionPositions;
     [SerializeField] private GameObject prefab;
 
+    [SerializeField] private SpriteRenderer sprite;
+    private Player_Controller player;
+
+    void Awake()
+    {
+        player = FindObjectOfType<Player_Controller>();
+    }
+
+    void Update()
+    {
+        if (Mathf.Abs(player.transform.position.y) < Mathf.Abs(transform.position.y)+1)
+        {
+            Debug.Log(sprite.sortingLayerName);
+        }
+        else
+        {
+            sprite.sortingLayerName = "ConstructionAbove";
+        }
+    }
+
     public List<ConstructionTile> GetConstructionPositions()
     {
         return constructionPositions;
