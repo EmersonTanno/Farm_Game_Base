@@ -62,7 +62,6 @@ public class SceneController : MonoBehaviour
         currentTransitionCanvas.SetActive(true);
 
         Animator anim = currentTransitionCanvas.GetComponent<Animator>();
-        Debug.Log("Start");
         anim.SetTrigger("Start");
 
         yield return new WaitForSeconds(1f);
