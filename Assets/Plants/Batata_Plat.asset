@@ -26,3 +26,9 @@ MonoBehaviour:
   - {fileID: 2254717, guid: 8fac25da5cb96c24d9a2db4e7824ea91, type: 3}
   - {fileID: -1380236295, guid: 8fac25da5cb96c24d9a2db4e7824ea91, type: 3}
   - {fileID: -1853259164, guid: 8fac25da5cb96c24d9a2db4e7824ea91, type: 3}
+  plantStages:
+  - {fileID: 11400000, guid: 316675d9a444e514da6953c3bcea2208, type: 2}
+  - {fileID: 11400000, guid: 34160cdb9b866644c971b54cf3e4d53f, type: 2}
+  - {fileID: 11400000, guid: 8a3018773345556478e8391d8bd586a0, type: 2}
+  - {fileID: 11400000, guid: 576200aed932eac429ae062eb64f1b8c, type: 2}
+  - {fileID: 11400000, guid: 0ff50cf42d54e7743a2f8bd07794b082, type: 2}

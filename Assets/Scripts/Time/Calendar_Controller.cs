@@ -18,8 +18,7 @@ public class Calendar_Controller : MonoBehaviour
     //Canvas
     [SerializeField] TextMeshProUGUI daysText;
 
-    //Light
-    [SerializeField] Light2D globalLight;
+    [SerializeField] GameObject timeGroup;
 
     //Event
     public static event Action OnDayChange;
@@ -27,12 +26,18 @@ public class Calendar_Controller : MonoBehaviour
     public static event Action OnYearChange;
     #endregion
 
+    #region Core
     void Awake()
     {
         Instance = this;
+    }
+    
+    private void Start() {
         UpdateCanvas();
     }
+    #endregion
 
+    #region Events
     void OnEnable()
     {
         Time_Controll.OnMidNightChange += ChangeDay;
@@ -42,12 +47,14 @@ public class Calendar_Controller : MonoBehaviour
     {
         Time_Controll.OnMidNightChange -= ChangeDay;
     }
+    #endregion
 
+    #region Callendar Functions
     private void ChangeDay()
     {
         day++;
         OnDayChange?.Invoke();
-        if(day > 30)
+        if (day > 30)
         {
             month++;
             day = 1;
@@ -65,39 +72,19 @@ public class Calendar_Controller : MonoBehaviour
     private void UpdateCanvas()
     {
         string monthName = "";
-        Color newColor;
         switch (month)
         {
             case 1:
                 monthName = "Ver";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFCEBF", out newColor))
-                {
-                    globalLight.color = newColor;
-                }
                 break;
             case 2:
                 monthName = "Out";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFC899", out newColor))
-                {
-                    season = Season.Outono;
-                    globalLight.color = newColor;
-                }
                 break;
             case 3:
                 monthName = "Inv";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#99DCFF", out newColor))
-                {
-                    season = Season.Inverno;
-                    globalLight.color = newColor;
-                }
                 break;
             case 4:
                 monthName = "Pri";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#C2FFCA", out newColor))
-                {
-                    season = Season.Primavera;
-                    globalLight.color = newColor;
-                }
                 break;
         }
         if (daysText != null)
@@ -108,7 +95,7 @@ public class Calendar_Controller : MonoBehaviour
 
     private void SetSeason()
     {
-        switch(month)
+        switch (month)
         {
             case 1:
                 season = Season.Verao;
@@ -124,5 +111,13 @@ public class Calendar_Controller : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+    #region Ui
+    public void ControllTimeGroup(bool setActive)
+    {
+        timeGroup.SetActive(setActive);
+    }
+    #endregion
 }
 

@@ -30,5 +30,7 @@ public enum ActionType
     Plant, //Plantar
     Water, //Regar
     Plowing, //Arar
+    Pickaxe, //Picaretar
+    Scythe, //Foice
     Consume, //Consumir
 }

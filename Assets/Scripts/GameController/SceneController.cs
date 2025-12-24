@@ -1,0 +1,125 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class SceneController : MonoBehaviour
+{
+    public static SceneController Instance;
+
+    [Header("Transitions")]
+    [SerializeField] private List<TransitionType> loadingList;
+    [SerializeField] private List<GameObject> loadingListCanvas;
+
+    private Vector3 targetPlayerPosition;
+    private bool hasPendingTeleport;
+
+    private GameObject currentTransitionCanvas;
+
+    private void Awake()
+    {
+        if (loadingList.Count != loadingListCanvas.Count)
+        {
+            Debug.LogError("loadingList e loadingListCanvas têm tamanhos diferentes!");
+        }
+
+        foreach (var canvas in loadingListCanvas)
+        {
+            if (canvas != null)
+                canvas.SetActive(false);
+        }
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    public void LoadScene(WarpTile warp, Vector2 spawnPosition)
+    {
+        if (hasPendingTeleport) return;
+
+        hasPendingTeleport = true;
+        targetPlayerPosition = spawnPosition;
+
+        StartCoroutine(LoadLevelAsync(warp));
+    }
+
+    private IEnumerator LoadLevelAsync(WarpTile warp)
+    {
+        currentTransitionCanvas = GetTransitionCanvas(warp.transitionType);
+        currentTransitionCanvas.SetActive(true);
+
+        Animator anim = currentTransitionCanvas.GetComponent<Animator>();
+        anim.SetTrigger("Start");
+
+        yield return new WaitForSeconds(1f);
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(warp.scene);
+        asyncLoad.allowSceneActivation = false;
+
+        while (asyncLoad.progress < 0.9f)
+        {
+            yield return null;
+        }
+
+        asyncLoad.allowSceneActivation = true;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!hasPendingTeleport) return;
+
+        Player_Controller player = FindObjectOfType<Player_Controller>();
+
+        if (player != null)
+        {
+            Vector3 spawn = targetPlayerPosition + new Vector3(0.5f, 0.7f, 0);
+            player.transform.position = spawn;
+            player.movePoint.position = spawn;
+        }
+
+        if (currentTransitionCanvas != null)
+        {
+            Animator anim = currentTransitionCanvas.GetComponent<Animator>();
+            anim.SetTrigger("End");
+            StartCoroutine(DisableTransitionAfterAnim(currentTransitionCanvas, anim));
+        }
+
+        hasPendingTeleport = false;
+        WarpController.Instance.EndWarp();
+    }
+
+    private IEnumerator DisableTransitionAfterAnim(GameObject canvas, Animator anim)
+    {
+        yield return new WaitForSeconds(
+            anim.GetCurrentAnimatorStateInfo(0).length
+        );
+
+        canvas.SetActive(false);
+        currentTransitionCanvas = null;
+    }
+
+    private GameObject GetTransitionCanvas(TransitionType type)
+    {
+        for (int i = 0; i < loadingList.Count; i++)
+        {
+            if (loadingList[i] == type)
+                return loadingListCanvas[i];
+        }
+
+        Debug.LogError("TransitionType não encontrado: " + type);
+        return loadingListCanvas[0];
+    }
+}

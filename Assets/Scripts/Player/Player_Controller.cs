@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,13 +6,12 @@ public class Player_Controller : MonoBehaviour
 {
     #region Variables
 
-        public static Player_Controller Instance { get; private set; }
+    public static Player_Controller Instance { get; private set; }
+
     //Movement
     [SerializeField] float moveSpeed = 5f;
     public Transform movePoint;
     public LayerMask collision;
-    public LayerMask bedCollision;
-    public LayerMask sellBoxCollision;
     private Vector2 inputDirection;
     private Vector2 facingDirection = Vector2.down;
     private bool justTurned = false;
@@ -28,11 +25,6 @@ public class Player_Controller : MonoBehaviour
     private bool isPlanting = false;
     private bool isPlowing = false;
     [HideInInspector] public bool isHarvesting = false;
-
-    //Plants & Soil
-    [SerializeField] GameObject plowedSoil;
-    [SerializeField] private PlantType plantToPlant;
-    public LayerMask soilCollision;
     #endregion
 
     #region Core
@@ -52,6 +44,11 @@ public class Player_Controller : MonoBehaviour
         MovePointer();
 
         IdleAnimation();
+    }
+
+    void LateUpdate()
+    {
+        CheckWarp();
     }
     #endregion
 
@@ -84,42 +81,26 @@ public class Player_Controller : MonoBehaviour
         if (CheckAction()) return;
 
         Vector2 pos = transform.position;
-        if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, bedCollision))
+
+        WorldObjectID obj1 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+        WorldObjectID obj2 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+
+        if (obj1 == WorldObjectID.Bed || obj2 == WorldObjectID.Bed)
         {
             Time_Controll.Instance.ActivateBedCanvas();
+            return;
         }
-        else if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision) || Physics2D.OverlapCircle(pos + GetSide(), .2f, sellBoxCollision))
+
+        if (obj2 == WorldObjectID.ShippingBox)
         {
             Sell_Box_Controller.Instance.AddItem(InventoryManager.Instance.SellSelectedItem());
+            return;
         }
-        else
-        {
-            Item receivedItem = InventoryManager.Instance.UseSelectedItem();
 
-            if (receivedItem == null)
-            {
-                return;
-            }
+        Item item = InventoryManager.Instance.UseSelectedItem();
+        if (item == null) return;
 
-            if (receivedItem.type == ItemType.Seed)
-            {
-                StartPlant(receivedItem.plant);
-                return;
-            }
-            else if (receivedItem.type == ItemType.Tool)
-            {
-                if (receivedItem.action == ActionType.Plowing)
-                {
-                    PlowSoil();
-                    return;
-                }
-                else if (receivedItem.action == ActionType.Water)
-                {
-                    PutWater();
-                    return;
-                }
-            }
-        }
+        HandleItem(item);
     }
 
     public void SetHarvest(InputAction.CallbackContext value)
@@ -184,6 +165,12 @@ public class Player_Controller : MonoBehaviour
     {
         if (CheckMove()) return;
 
+        if (Vector3.Distance(transform.position, movePoint.position) <= 0.01f)
+        {
+            transform.position = movePoint.position;
+            return;
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
@@ -205,7 +192,7 @@ public class Player_Controller : MonoBehaviour
                 {
                     Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
 
-                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && !Physics2D.OverlapCircle(targetPos, .2f, sellBoxCollision))
+                    if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && CheckPlayerMoveGrid(targetPos))
                     {
                         movePoint.position = targetPos;
 
@@ -217,24 +204,6 @@ public class Player_Controller : MonoBehaviour
                     else
                     {
                         return;
-                    }
-                    if (Physics2D.OverlapCircle(targetPos, .2f, bedCollision))
-                    {
-                        Vector2 side = GetSide();
-                        if (side == Vector2.down || side == Vector2.up)
-                        {
-                            movePoint.position = transform.position;
-                            return;
-                        }
-                    }
-                    if (Physics2D.OverlapCircle(transform.position, .2f, bedCollision))
-                    {
-                        Vector2 side = GetSide();
-                        if (side == Vector2.down || side == Vector2.up)
-                        {
-                            movePoint.position = transform.position;
-                            return;
-                        }
                     }
                 }
                 else
@@ -260,6 +229,55 @@ public class Player_Controller : MonoBehaviour
         justTurned = false;
     }
 
+    private void CheckWarp()
+    {
+        if (Vector3.Distance(transform.position, movePoint.position) > 0.01f)
+            return;
+
+        
+        WarpTile warp = TileMapController.Instance.GetGrid().GetWarpGrid().GetGridObject(transform.position);
+        if(warp != null)
+        {
+            WarpController.Instance.ExecuteWarp(warp);
+        }
+    }
+
+    #endregion
+
+    #region Action Handler
+    private void HandleItem(Item item)
+    {
+        switch (item.type)
+        {
+            case ItemType.Seed:
+                StartPlant(item.plant);
+                break;
+
+            case ItemType.Tool:
+                HandleTool(item);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void HandleTool(Item item)
+    {
+        switch (item.action)
+        {
+            case ActionType.Plowing:
+                PlowSoil();
+                break;
+
+            case ActionType.Water:
+                PutWater();
+                break;
+
+            default:
+                break;
+        }
+    }
     #endregion
 
     #region Actions
@@ -276,28 +294,7 @@ public class Player_Controller : MonoBehaviour
         isWatering = true;
         myAnimator.SetBool("water", true);
 
-        Vector2 waterPos = movePoint.position;
-
-        Vector2 newWaterPos = GetSide();
-
-        waterPos += newWaterPos;
-
-        float tileSize = 1f;
-        waterPos = new Vector3(
-            Mathf.Floor(waterPos.x) + tileSize / 2f,
-            Mathf.Floor(waterPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(waterPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            if (soil != null)
-            {
-                soil.SetWater(true);
-            }
-        }
+        TileMapController.Instance.WaterSoil(new Vector2(transform.position.x, transform.position.y) + GetSide());
 
         yield return new WaitForSeconds(1f);
         myAnimator.SetBool("water", false);
@@ -316,47 +313,33 @@ public class Player_Controller : MonoBehaviour
     private void StartPlant(PlantType plant)
     {
         if (CheckAction()) return;
-        if (!Status_Controller.Instance.UseEnergy(3)) return;
 
         StartCoroutine(Plant(plant));
     }
+
     private IEnumerator Plant(PlantType plant)
     {
         isPlanting = true;
         myAnimator.SetBool("planting", true);
 
-        Vector3[] offsets = new Vector3[]
+        Vector2[] offsets = new Vector2[]
         {
-            Vector3.zero,
-            Vector3.down,
-            Vector3.up,
-            Vector3.left,
-            Vector3.right
+            Vector2.zero,
+            Vector2.down,
+            Vector2.up,
+            Vector2.left,
+            Vector2.right,
+            new Vector2(1, 1),
+            new Vector2(-1, -1),
+            new Vector2(-1, 1),
+            new Vector2(1, -1),
         };
-
-        float tileSize = 1f;
 
         yield return new WaitForSeconds(.5f);
 
-        foreach (Vector3 offset in offsets)
+        foreach (Vector2 offset in offsets)
         {
-            Vector3 plantPos = transform.position + offset;
-
-            plantPos = new Vector3(
-                Mathf.Floor(plantPos.x) + tileSize / 2f,
-                Mathf.Floor(plantPos.y) + tileSize / 2f,
-                0f
-            );
-
-            Collider2D hit = Physics2D.OverlapCircle(plantPos, 0.1f, soilCollision);
-            if (hit != null)
-            {
-                Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-                if (soil != null)
-                {
-                    soil.PlantSeed(plant);
-                }
-            }
+            TileMapController.Instance.PlantSoil(new Vector2(transform.position.x + offset.x, transform.position.y + offset.y), plant);
         }
 
         yield return new WaitForSeconds(.5f);
@@ -367,68 +350,36 @@ public class Player_Controller : MonoBehaviour
 
     private void Harvest()
     {
-        if (CheckAction()) return;
+        if (CheckAction() || !TileMapController.Instance.CanHarvest(new Vector2(transform.position.x, transform.position.y) + GetSide())) return;
 
-        Vector2 harvestPos = movePoint.position;
-
-        Vector2 newHarvestPos = GetSide();
-
-        harvestPos += newHarvestPos;
-
-        float tileSize = 1f;
-        harvestPos = new Vector3(
-            Mathf.Floor(harvestPos.x) + tileSize / 2f,
-            Mathf.Floor(harvestPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(harvestPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            if (!soil.currentPlant)
-            {
-                return;
-            }
-            soil.Harvest(myAnimator, this);
-        }
+        StartCoroutine(HarvestConclusion());
     }
     #endregion
 
     #region Animation Functions
     public void PlowAnimation()
     {
-        Vector2 spawnPos = movePoint.position;
-        Vector2 newSpawnPos = GetSide();
-
-        spawnPos += newSpawnPos;
-
-        float tileSize = 1f;
-        spawnPos = new Vector3(
-            Mathf.Floor(spawnPos.x) + tileSize / 2f,
-            Mathf.Floor(spawnPos.y) + tileSize / 2f,
-            0f
-        );
-
-        Collider2D hit = Physics2D.OverlapCircle(spawnPos, 0.1f, soilCollision);
-        if (hit != null)
-        {
-            Soil_Controller soil = hit.GetComponent<Soil_Controller>();
-            soil.ResetSoil();
-
-            myAnimator.SetBool("plow", false);
-            isPlowing = false;
-            return;
-        }
-
-        Instantiate(plowedSoil, spawnPos, Quaternion.identity);
-
         myAnimator.SetBool("plow", false);
         isPlowing = false;
+
+        TileMapController.Instance.PlowSoil(new Vector2(transform.position.x, transform.position.y) + GetSide());
+    }
+
+
+    public IEnumerator HarvestConclusion()
+    {
+        isHarvesting = true;
+        myAnimator.SetBool("harvest", true);
+        yield return new WaitForSeconds(0.75f);
+
+        TileMapController.Instance.Harvest(new Vector2(transform.position.x, transform.position.y) + GetSide());
+
+        myAnimator.SetBool("harvest", false);
+        isHarvesting = false;
     }
     #endregion
 
-    #region Axiliar Functions
+    #region Auxiliar Functions
     private Vector2 GetSide()
     {
         if (facingDirection == Vector2.down)
@@ -453,7 +404,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckAction()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive)
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }
@@ -463,7 +414,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckMove()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive)
+        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }
@@ -479,6 +430,36 @@ public class Player_Controller : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool CheckPlayerMoveGrid(Vector2 pos)
+    {
+        if(TileMapController.Instance.GetGrid().GetMovementGrid().GetGridObject(pos) == false)
+        {
+            return false;
+        }
+
+        WorldObjectID objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+
+        if(objectGridValue == WorldObjectID.Bed)
+        {
+            Vector2 side = GetSide();
+            if (side == Vector2.down || side == Vector2.up)
+            {
+                return false;
+            }
+        }
+
+        if(TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(transform.position) == WorldObjectID.Bed)
+        {
+            Vector2 side = GetSide();
+            if (side == Vector2.down || side == Vector2.up)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
     #endregion
 }

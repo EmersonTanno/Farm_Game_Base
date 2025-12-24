@@ -12,10 +12,12 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public InventorySlot[] inventorySlots;
     int selectedSlot = -1;
+    [SerializeField] GameObject inventoryGroup;
     [SerializeField] GameObject inventoryCanvas;
     [SerializeField] GameObject inventoryButton;
     [SerializeField] TextMeshProUGUI itemNameText;
     [HideInInspector] public bool inventoryActive = false;
+    private bool active = true;
     #endregion
 
     #region Core
@@ -77,6 +79,7 @@ public class InventoryManager : MonoBehaviour
     #region Actions
     void ChangeSelectedSlot(int newValue)
     {
+        if(!active || Shop_Manager.Instance.shopActive) return;
         if (selectedSlot >= 0)
         {
             inventorySlots[selectedSlot].Deselect();
@@ -199,6 +202,14 @@ public class InventoryManager : MonoBehaviour
         }
 
         return null;
+    }
+    #endregion
+
+    #region Ui
+    public void ControllInventoryGroup(bool setActive)
+    {
+        inventoryGroup.SetActive(setActive);
+        active = setActive;
     }
     #endregion
 }

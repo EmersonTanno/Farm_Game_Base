@@ -13,13 +13,14 @@ public class Status_Controller : MonoBehaviour
     public int gold = 0;
     private int goldT;
     [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] GameObject playerUiGroup;
 
     //Lucky
     private int lucky = 0;
     private int dayLucky = 0;
 
     //Energy
-    private int maxEnergy = 100;
+    private int maxEnergy = 200;
     public int energy;
 
     #endregion
@@ -147,6 +148,13 @@ public class Status_Controller : MonoBehaviour
     private void ResetEnergy()
     {
         energy = maxEnergy;
+    }
+    #endregion
+
+    #region Ui
+    public void ControllPlayerUiGroup(bool setActive)
+    {
+        playerUiGroup.SetActive(setActive);
     }
     #endregion
 }
