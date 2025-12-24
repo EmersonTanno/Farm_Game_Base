@@ -18,9 +18,6 @@ public class Calendar_Controller : MonoBehaviour
     //Canvas
     [SerializeField] TextMeshProUGUI daysText;
 
-    //Light
-    [SerializeField] Light2D globalLight;
-
     [SerializeField] GameObject timeGroup;
 
     //Event
@@ -33,6 +30,9 @@ public class Calendar_Controller : MonoBehaviour
     void Awake()
     {
         Instance = this;
+    }
+    
+    private void Start() {
         UpdateCanvas();
     }
     #endregion
@@ -72,39 +72,23 @@ public class Calendar_Controller : MonoBehaviour
     private void UpdateCanvas()
     {
         string monthName = "";
-        Color newColor;
         switch (month)
         {
             case 1:
                 monthName = "Ver";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFCEBF", out newColor))
-                {
-                    globalLight.color = newColor;
-                }
+                season = Season.Verao;
                 break;
             case 2:
                 monthName = "Out";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#FFC899", out newColor))
-                {
-                    season = Season.Outono;
-                    globalLight.color = newColor;
-                }
+                season = Season.Outono;
                 break;
             case 3:
                 monthName = "Inv";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#99DCFF", out newColor))
-                {
-                    season = Season.Inverno;
-                    globalLight.color = newColor;
-                }
+                season = Season.Inverno;
                 break;
             case 4:
                 monthName = "Pri";
-                if (UnityEngine.ColorUtility.TryParseHtmlString("#C2FFCA", out newColor))
-                {
-                    season = Season.Primavera;
-                    globalLight.color = newColor;
-                }
+                season = Season.Primavera;
                 break;
         }
         if (daysText != null)
@@ -133,7 +117,7 @@ public class Calendar_Controller : MonoBehaviour
     }
     #endregion
 
-        #region Ui
+    #region Ui
     public void ControllTimeGroup(bool setActive)
     {
         timeGroup.SetActive(setActive);
