@@ -67,11 +67,26 @@ public class Time_Controll : MonoBehaviour
                 OnMidNightChange?.Invoke();
                 hours = 0;
             }
+
+            UpdateDayLight();
         }
 
         UpdateCanvas();
 
         canChangeTime = true;
+    }
+
+    private void UpdateDayLight()
+    {
+        if(hours < 16) return;
+
+        float intensity = (24 - hours) / 10f;
+        if(intensity < 0.2f)
+        {
+            intensity = 0.15f;
+        }
+        Debug.Log(intensity);
+        IlluminationController.Instance.ChangeIlluminationIntensitySmooth(intensity, 5);
     }
 
     public void ChangeDay()

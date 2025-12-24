@@ -8,6 +8,8 @@ public class IlluminationController : MonoBehaviour
 {
     public static IlluminationController Instance;
     [SerializeField] Light2D globalLight;
+    private Coroutine illuminationRoutine;
+
 
     #region Core
     private void Awake()
@@ -31,14 +33,17 @@ public class IlluminationController : MonoBehaviour
     void OnEnable()
     {
         WarpController.OnWarpEnd += SetIllumination;
+        Calendar_Controller.OnDayChange += ResetIlluminationIntensity;
         Calendar_Controller.OnMonthChange += SetIllumination;
     }
 
     void OnDisable()
     {
-        WarpController.OnWarpEnd += SetIllumination;
-        Calendar_Controller.OnMonthChange += SetIllumination;
+        WarpController.OnWarpEnd -= SetIllumination;
+        Calendar_Controller.OnDayChange -= ResetIlluminationIntensity;
+        Calendar_Controller.OnMonthChange -= SetIllumination;
     }
+
     #endregion
 
     private void SetIllumination()
@@ -99,5 +104,42 @@ public class IlluminationController : MonoBehaviour
         }
         ChangeIllumination(newColor);
     }
+
+    public void SetIlluminationIntensity(float intensity)
+    {
+        globalLight.intensity = intensity;
+    }
+
+    private void ResetIlluminationIntensity()
+    {
+        SetIlluminationIntensity(1);
+    }
+
+    public void ChangeIlluminationIntensitySmooth(float targetIntensity, float duration = 1f)
+    {
+        if (illuminationRoutine != null)
+            StopCoroutine(illuminationRoutine);
+
+        illuminationRoutine = StartCoroutine(ChangeIlluminationIntensityRoutine(targetIntensity, duration));
+    }
+
+    private IEnumerator ChangeIlluminationIntensityRoutine(float targetIntensity, float duration)
+    {
+        float startIntensity = globalLight.intensity;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            globalLight.intensity = Mathf.Lerp(startIntensity, targetIntensity, t);
+            yield return null;
+        }
+
+        globalLight.intensity = targetIntensity;
+        illuminationRoutine = null;
+    }
+
 
 }
