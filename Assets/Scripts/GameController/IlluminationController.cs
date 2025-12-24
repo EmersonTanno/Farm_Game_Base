@@ -31,11 +31,13 @@ public class IlluminationController : MonoBehaviour
     void OnEnable()
     {
         WarpController.OnWarpEnd += SetIllumination;
+        Calendar_Controller.OnMonthChange += SetIllumination;
     }
 
     void OnDisable()
     {
         WarpController.OnWarpEnd += SetIllumination;
+        Calendar_Controller.OnMonthChange += SetIllumination;
     }
     #endregion
 

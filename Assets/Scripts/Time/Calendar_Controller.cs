@@ -76,19 +76,15 @@ public class Calendar_Controller : MonoBehaviour
         {
             case 1:
                 monthName = "Ver";
-                season = Season.Verao;
                 break;
             case 2:
                 monthName = "Out";
-                season = Season.Outono;
                 break;
             case 3:
                 monthName = "Inv";
-                season = Season.Inverno;
                 break;
             case 4:
                 monthName = "Pri";
-                season = Season.Primavera;
                 break;
         }
         if (daysText != null)

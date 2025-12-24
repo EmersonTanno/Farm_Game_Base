@@ -12503,6 +12503,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1704636623}
     - target: {fileID: 4868641704009533369, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: day
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704009533369, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: daysText
       value: 
       objectReference: {fileID: 957684790}
