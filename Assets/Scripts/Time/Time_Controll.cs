@@ -85,7 +85,6 @@ public class Time_Controll : MonoBehaviour
         {
             intensity = 0.15f;
         }
-        Debug.Log(intensity);
         IlluminationController.Instance.ChangeIlluminationIntensitySmooth(intensity, 5);
     }
 
