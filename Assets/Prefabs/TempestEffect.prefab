@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4042705106787936510}
   - component: {fileID: 4042705106787936509}
   - component: {fileID: 2904647706851369737}
+  - component: {fileID: -786024794485066887}
   m_Layer: 0
   m_Name: TempestEffect
   m_TagString: Untagged
@@ -4826,6 +4827,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073a801871b77484f905672761a95f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-786024794485066887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4042705106787936508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a23af3f1cae1b4198ce5b199b0ddc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedWeather: 3
 --- !u!1 &4042705108185814130
 GameObject:
   m_ObjectHideFlags: 0

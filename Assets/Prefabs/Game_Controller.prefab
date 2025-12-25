@@ -777,7 +777,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1177114416891016973, guid: b1d4a8415f37ecc45a385282a96ca828, type: 3}
   m_PrefabInstance: {fileID: 6036249047560094858}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1736473849
+--- !u!114 &1736473850
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -786,9 +786,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4868641703996404615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0437213b7e679304882c46b3e084514a, type: 3}
+  m_Script: {fileID: 11500000, guid: c3a23af3f1cae1b4198ce5b199b0ddc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedWeather: 2
 --- !u!1001 &6353972922151168262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -856,7 +857,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4042705106787936508, guid: de41c06f773b56444847e5c1be15d512, type: 3}
   m_PrefabInstance: {fileID: 6353972922151168262}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3743154106258802045
+--- !u!114 &3743154106258802046
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -865,9 +866,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6933091880905589242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 853b26c57d5149d4f866bd2a5ce6080c, type: 3}
+  m_Script: {fileID: 11500000, guid: c3a23af3f1cae1b4198ce5b199b0ddc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedWeather: 3
 --- !u!1001 &6917201185780094179
 PrefabInstance:
   m_ObjectHideFlags: 0

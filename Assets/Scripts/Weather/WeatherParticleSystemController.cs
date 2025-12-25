@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
-public class RainController : MonoBehaviour
+public class WeatherParticleSystemController : MonoBehaviour
 {
     private ParticleSystem ps;
+    public WeatherEnum selectedWeather;
 
     void Awake()
     {
@@ -29,18 +30,18 @@ public class RainController : MonoBehaviour
 
     void OnWeatherChanged(WeatherEnum weather)
     {
-        UpdateRain(weather);
+        UpdateTempest(weather);
     }
 
     void OnSceneChanged()
     {
-        UpdateRain(WeatherController.Instance.GetWeather());
+        UpdateTempest(WeatherController.Instance.GetWeather());
     }
 
-    void UpdateRain(WeatherEnum weather)
+    void UpdateTempest(WeatherEnum weather)
     {
         bool canRain =
-            weather == WeatherEnum.RAIN &&
+            weather == selectedWeather &&
             SceneInfo.Instance.sceneType != ScenesTypeEnum.inside;
 
         if (canRain && !ps.isPlaying)

@@ -28,7 +28,15 @@ public class WeatherController : MonoBehaviour
 
     private void Change()
     {
-        SetWeather(WeatherEnum.TEMPEST);
+        SetWeather(WeatherEnum.RAIN);
+        if(Calendar_Controller.Instance.day == 3)
+        {
+            SetWeather(WeatherEnum.SUN);
+        }
+        if(Calendar_Controller.Instance.day == 4)
+        {
+            SetWeather(WeatherEnum.TEMPEST);
+        }
     }
 
     public void SetWeather(WeatherEnum newWeather)

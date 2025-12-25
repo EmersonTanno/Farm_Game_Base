@@ -4882,7 +4882,7 @@ GameObject:
   - component: {fileID: 1177114416891016975}
   - component: {fileID: 1177114416891016972}
   - component: {fileID: 1736473848}
-  - component: {fileID: 5799552096727368742}
+  - component: {fileID: 1635004158367831261}
   m_Layer: 0
   m_Name: RainEffect
   m_TagString: Untagged
@@ -9697,7 +9697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 073a801871b77484f905672761a95f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5799552096727368742
+--- !u!114 &1635004158367831261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9706,6 +9706,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1177114416891016973}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0437213b7e679304882c46b3e084514a, type: 3}
+  m_Script: {fileID: 11500000, guid: c3a23af3f1cae1b4198ce5b199b0ddc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedWeather: 2
