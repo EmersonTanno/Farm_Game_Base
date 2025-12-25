@@ -1,30 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class WeatherController : MonoBehaviour
 {
     public static WeatherController Instance;
-    private WeatherEnum weather;
+
+    public static event Action<WeatherEnum> OnWeatherChanged;
+
+    private WeatherEnum weather = WeatherEnum.SUN;
 
     void Awake()
     {
-        if(Instance != null && Instance != this)
+        if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
 
         Instance = this;
-        weather = WeatherEnum.RAIN;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void OnEnable()
+    {
+        Calendar_Controller.OnDayChange += Change;
+    }
+
+    private void Change()
+    {
+        SetWeather(WeatherEnum.RAIN);
+        Debug.Log(weather);
     }
 
     public void SetWeather(WeatherEnum newWeather)
     {
+        if (weather == newWeather) return;
+
         weather = newWeather;
+        OnWeatherChanged?.Invoke(weather);
     }
 
-    public WeatherEnum GetWeather()
-    {
-        return weather;
-    }
+    public WeatherEnum GetWeather() => weather;
 }

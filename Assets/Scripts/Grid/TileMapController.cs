@@ -146,6 +146,7 @@ public class TileMapController : MonoBehaviour
                 {
                     tileMap.GetOriginalGrid().SetValue(x, y, 11);
                     renderer.RenderTile(x, y);
+                    continue;
                 }
 
                 if (plantTile.plant)
