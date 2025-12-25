@@ -76,8 +76,10 @@ public class TileMapController : MonoBehaviour
     public void PlowSoil(Vector2 position)
     {
         Grid<int> farmGrid = tileMap.GetOriginalGrid();
+        Grid<bool> moveGrid = tileMap.GetMovementGrid();
 
         if(farmGrid.GetGridObject(position) != 1 && farmGrid.GetGridObject(position) != 2 && farmGrid.GetGridObject(position) != 20) return;
+        if(moveGrid.GetGridObject(position) != true) return;
 
         if(farmGrid.GetGridObject(position) == 20)
         {
