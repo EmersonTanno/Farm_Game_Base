@@ -1,5 +1,4 @@
 using UnityEditor;
-using UnityEngine;
 
 [CustomEditor(typeof(WorldTile))]
 public class WorldTileEditor : Editor
