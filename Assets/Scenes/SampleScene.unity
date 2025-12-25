@@ -12502,6 +12502,10 @@ PrefabInstance:
       propertyPath: inventorySlots.Array.data[23]
       value: 
       objectReference: {fileID: 1704636623}
+    - target: {fileID: 4868641703996404613, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4868641704009533369, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: daysText
       value: 
@@ -12634,6 +12638,10 @@ PrefabInstance:
       propertyPath: sellContentContainer
       value: 
       objectReference: {fileID: 1224795421}
+    - target: {fileID: 6933091880905589240, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8160908078903560732, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: loadingListCanvas.Array.data[0]
       value: 

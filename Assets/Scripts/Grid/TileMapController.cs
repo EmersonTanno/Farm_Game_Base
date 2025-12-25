@@ -41,13 +41,11 @@ public class TileMapController : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
-        Calendar_Controller.OnDayChange += WaterSoilWithRain;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
-        Calendar_Controller.OnDayChange -= WaterSoilWithRain;
     }
 
     #endregion
@@ -122,7 +120,7 @@ public class TileMapController : MonoBehaviour
         }
     }
 
-    private void WaterSoilWithRain()
+    public void WaterSoilWithRain()
     {
         WeatherEnum weather = WeatherController.Instance.GetWeather();
 

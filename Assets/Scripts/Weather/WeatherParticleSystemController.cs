@@ -30,23 +30,36 @@ public class WeatherParticleSystemController : MonoBehaviour
 
     void OnWeatherChanged(WeatherEnum weather)
     {
-        UpdateTempest(weather);
+        UpdateTempest(weather, false);
     }
 
     void OnSceneChanged()
     {
-        UpdateTempest(WeatherController.Instance.GetWeather());
+        UpdateTempest(WeatherController.Instance.GetWeather(), true);
     }
 
-    void UpdateTempest(WeatherEnum weather)
+    void UpdateTempest(WeatherEnum weather, bool scene)
     {
         bool canRain =
             weather == selectedWeather &&
             SceneInfo.Instance.sceneType != ScenesTypeEnum.inside;
 
+        var main = ps.main;
+
+        if(scene == true)
+        {
+            main.prewarm = true;
+        } 
+        else
+        {
+            main.prewarm = false;
+        }
+
         if (canRain && !ps.isPlaying)
             ps.Play();
-        else if (!canRain && ps.isPlaying)
+        else if (!canRain && ps.isPlaying && scene == true)
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        else if (!canRain && ps.isPlaying && scene == false)
+            ps.Stop();
     }
 }
