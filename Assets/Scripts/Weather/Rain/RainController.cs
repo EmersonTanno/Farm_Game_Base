@@ -39,7 +39,6 @@ public class RainController : MonoBehaviour
 
     void UpdateRain(WeatherEnum weather)
     {
-        Debug.Log("START RAIN");
         bool canRain =
             weather == WeatherEnum.RAIN &&
             SceneInfo.Instance.sceneType != ScenesTypeEnum.inside;

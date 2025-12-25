@@ -28,8 +28,7 @@ public class WeatherController : MonoBehaviour
 
     private void Change()
     {
-        SetWeather(WeatherEnum.RAIN);
-        Debug.Log(weather);
+        SetWeather(WeatherEnum.TEMPEST);
     }
 
     public void SetWeather(WeatherEnum newWeather)
