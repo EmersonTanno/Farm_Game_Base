@@ -12386,10 +12386,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 619394801, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_Intensity
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4868641703342699364, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: itemNameText
       value: 
@@ -12506,10 +12502,6 @@ PrefabInstance:
       propertyPath: inventorySlots.Array.data[23]
       value: 
       objectReference: {fileID: 1704636623}
-    - target: {fileID: 4868641704009533369, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: day
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4868641704009533369, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: daysText
       value: 

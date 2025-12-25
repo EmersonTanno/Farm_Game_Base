@@ -41,11 +41,13 @@ public class TileMapController : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
+        Calendar_Controller.OnDayChange += WaterSoilWithRain;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
+        Calendar_Controller.OnDayChange -= WaterSoilWithRain;
     }
 
     #endregion
@@ -78,21 +80,20 @@ public class TileMapController : MonoBehaviour
         Grid<int> farmGrid = tileMap.GetOriginalGrid();
         Grid<bool> moveGrid = tileMap.GetMovementGrid();
 
-        if(farmGrid.GetGridObject(position) != 1 && farmGrid.GetGridObject(position) != 2 && farmGrid.GetGridObject(position) != 20) return;
-        if(moveGrid.GetGridObject(position) != true) return;
+        if (farmGrid.GetGridObject(position) != 1 &&
+            farmGrid.GetGridObject(position) != 2 &&
+            farmGrid.GetGridObject(position) != 20) return;
 
-        if(farmGrid.GetGridObject(position) == 20)
-        {
-            var plantDead = tileMap.GetPlantGrid().GetGridObject(position).isDead;
-            if(plantDead)
-            {
-                tileMap.GetPlantGrid().GetGridObject(position).ResetTile();
-            } else
-            {
-                return;
-            }
-        }
+        if (!moveGrid.GetGridObject(position)) return;
+
         farmGrid.SetValue(position, 10);
+
+        if (WeatherController.Instance.GetWeather() == WeatherEnum.RAIN ||
+            WeatherController.Instance.GetWeather() == WeatherEnum.TEMPEST)
+        {
+            farmGrid.SetValue(position, 11);
+        }
+
         renderer.RenderTile((int)position.x, (int)position.y);
     }
     #endregion
@@ -120,6 +121,42 @@ public class TileMapController : MonoBehaviour
             }
         }
     }
+
+    private void WaterSoilWithRain()
+    {
+        WeatherEnum weather = WeatherController.Instance.GetWeather();
+
+        if (weather != WeatherEnum.RAIN && weather != WeatherEnum.TEMPEST)
+            return;
+
+        Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
+
+        int width = plantGrid.GetWidth();
+        int height = plantGrid.GetHeight();
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                TileMapPlantData plantTile = plantGrid.GetGridObject(x, y);
+
+                if (plantTile == null && tileMap.GetOriginalGrid().GetGridObject(x, y) != 10) continue;
+
+                if(tileMap.GetOriginalGrid().GetGridObject(x, y) == 10)
+                {
+                    tileMap.GetOriginalGrid().SetValue(x, y, 11);
+                    renderer.RenderTile(x, y);
+                }
+
+                if (plantTile.plant)
+                {
+                    plantTile.PutWater();
+                    renderer.RenderTile(x, y);
+                }
+            }
+        }
+    }
+
     #endregion
 
     #region Plant
