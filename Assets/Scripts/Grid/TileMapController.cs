@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -42,11 +41,13 @@ public class TileMapController : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
+        Calendar_Controller.OnDayChange += PassPlownSoilDay;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
+        Calendar_Controller.OnDayChange -= PassPlownSoilDay;
     }
 
     #endregion
@@ -112,6 +113,24 @@ public class TileMapController : MonoBehaviour
         }
 
         renderer.RenderTile((int)position.x, (int)position.y);
+    }
+
+    private void PassPlownSoilDay()
+    {
+        var grid = tileMap.GetOriginalGrid();
+        for(int x = 0; x < grid.GetWidth(); x++)
+        {
+            for(int y = 0; y < grid.GetHeight(); y++)
+            {
+                var tile = grid.GetGridObject(x, y);
+
+                if(tile == 11)
+                {
+                    grid.SetValue(x, y, 10);
+                    renderer.RenderTile(x, y);
+                }
+            }
+        }
     }
     #endregion
 
@@ -249,7 +268,6 @@ public class TileMapController : MonoBehaviour
                 }
             }
         }
-       
     }
     #endregion
 
