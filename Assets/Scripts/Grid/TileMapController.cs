@@ -77,12 +77,23 @@ public class TileMapController : MonoBehaviour
     {
         Grid<int> farmGrid = tileMap.GetOriginalGrid();
         Grid<bool> moveGrid = tileMap.GetMovementGrid();
+        Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
-        if (farmGrid.GetGridObject(position) != 1 &&
-            farmGrid.GetGridObject(position) != 2 &&
-            farmGrid.GetGridObject(position) != 20) return;
+        int farmObject = farmGrid.GetGridObject(position);
+        if (farmObject != 1 &&
+            farmObject != 2 &&
+            farmObject != 20) return;
 
         if (!moveGrid.GetGridObject(position)) return;
+
+        if(farmObject == 20)
+        {
+            TileMapPlantData plant = plantGrid.GetGridObject(position);
+            if(plant.isDead)
+            {
+                plant.ResetTile();
+            }
+        }
 
         farmGrid.SetValue(position, 10);
 
