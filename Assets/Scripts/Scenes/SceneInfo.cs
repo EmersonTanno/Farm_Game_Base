@@ -6,6 +6,7 @@ public class SceneInfo : MonoBehaviour
 {
     public static SceneInfo Instance;
     public ScenesTypeEnum sceneType;
+    public SceneLocationEnum location;
 
     void Awake()
     {
