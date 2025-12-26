@@ -62,13 +62,19 @@ public class TileMapController : MonoBehaviour
     private void ApplySavedLayout()
     {
         if(PersistenceController.Instance.hasData == false || SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
+
         GridSaveData saveData = PersistenceController.Instance.LoadGridSaveData();
-        for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+        Grid<int> originalGrid = tileMap.GetOriginalGrid();
+        Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
+
+
+        foreach (var data in saveData.plants)
         {
-            for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+            originalGrid.SetValue(data.x, data.y, data.gridValue);
+
+            if (data.gridValue == 20 && data.plantData != null)
             {
-                tileMap.GetOriginalGrid().SetValue(x, y, saveData.originalGrid.GetGridObject(x, y));
-                tileMap.GetPlantGrid().SetValue(x, y, saveData.plantGrid.GetGridObject(x, y));
+                plantGrid.SetValue(data.x, data.y, data.plantData);
             }
         }
     }

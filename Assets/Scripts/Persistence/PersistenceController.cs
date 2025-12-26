@@ -30,10 +30,44 @@ public class PersistenceController : MonoBehaviour
     public void SaveFarm()
     {
         if(SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
+
+        gridSaveData.plants.Clear();
         hasData = true;
 
-        gridSaveData.originalGrid = TileMapController.Instance.GetGrid().GetOriginalGrid();
-        gridSaveData.plantGrid = TileMapController.Instance.GetGrid().GetPlantGrid();
+        Grid<int> originalGrid = TileMapController.Instance.GetGrid().GetOriginalGrid();
+        Grid<TileMapPlantData> plantGrid = TileMapController.Instance.GetGrid().GetPlantGrid();
+
+        for(int y = 0; y < originalGrid.GetHeight(); y++)
+        {
+            for(int x = 0; x < originalGrid.GetWidth(); x++)
+            {
+                int gridValue = originalGrid.GetGridObject(x, y);
+                if(gridValue == 10 || gridValue == 11 || gridValue == 20)
+                {
+                    if(gridValue == 20)
+                    {
+                        var plant = plantGrid.GetGridObject(x, y);
+
+                        gridSaveData.plants.Add(new PlantSaveData
+                        {
+                            x = x,
+                            y = y,
+                            gridValue = gridValue,
+                            plantData = plant
+                        });
+                        continue;
+                    }
+
+                    gridSaveData.plants.Add(new PlantSaveData
+                    {
+                        x = x,
+                        y = y,
+                        gridValue = gridValue,
+                    });
+
+                }
+            }
+        }
     }
 
     public GridSaveData LoadGridSaveData()

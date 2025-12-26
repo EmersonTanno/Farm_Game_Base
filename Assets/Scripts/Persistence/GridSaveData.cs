@@ -1,6 +1,7 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class GridSaveData
 {
-    public Grid<int> originalGrid;
-    public Grid<TileMapPlantData> plantGrid;
+    public List<PlantSaveData> plants = new();
 }
