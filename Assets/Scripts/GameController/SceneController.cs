@@ -52,7 +52,7 @@ public class SceneController : MonoBehaviour
 
         hasPendingTeleport = true;
         targetPlayerPosition = spawnPosition;
-
+        Time_Controll.Instance.PauseTime();
         StartCoroutine(LoadLevelAsync(warp));
     }
 
@@ -64,7 +64,7 @@ public class SceneController : MonoBehaviour
         Animator anim = currentTransitionCanvas.GetComponent<Animator>();
         anim.SetTrigger("Start");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(warp.scene);
         asyncLoad.allowSceneActivation = false;
@@ -105,11 +105,13 @@ public class SceneController : MonoBehaviour
     {
         yield return null;
         WarpController.Instance.EndWarp();
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time_Controll.Instance.UnpauseTime();
     }
 
     private IEnumerator DisableTransitionAfterAnim(GameObject canvas, Animator anim)
     {
-        yield return new WaitForSeconds(
+        yield return new WaitForSecondsRealtime(
             anim.GetCurrentAnimatorStateInfo(0).length
         );
 

@@ -753,6 +753,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1177114416891016975, guid: b1d4a8415f37ecc45a385282a96ca828, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177114416891016975, guid: b1d4a8415f37ecc45a385282a96ca828, type: 3}
+      propertyPath: useUnscaledTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1177114416891016975, guid: b1d4a8415f37ecc45a385282a96ca828, type: 3}
       propertyPath: ShapeModule.m_Scale.x
       value: 40
       objectReference: {fileID: 0}
@@ -800,6 +808,14 @@ PrefabInstance:
     - target: {fileID: 4042705106787936508, guid: de41c06f773b56444847e5c1be15d512, type: 3}
       propertyPath: m_Name
       value: TempestEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042705106787936510, guid: de41c06f773b56444847e5c1be15d512, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042705106787936510, guid: de41c06f773b56444847e5c1be15d512, type: 3}
+      propertyPath: useUnscaledTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4042705106787936511, guid: de41c06f773b56444847e5c1be15d512, type: 3}
       propertyPath: m_RootOrder
