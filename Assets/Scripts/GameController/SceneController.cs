@@ -98,6 +98,12 @@ public class SceneController : MonoBehaviour
         }
 
         hasPendingTeleport = false;
+        StartCoroutine(EndWarpNextFrame());
+    }
+
+    private IEnumerator EndWarpNextFrame()
+    {
+        yield return null;
         WarpController.Instance.EndWarp();
     }
 
