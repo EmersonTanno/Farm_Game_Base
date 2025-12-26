@@ -33,6 +33,7 @@ public class TileMapController : MonoBehaviour
 
         CreateGridFromTilemap();
         LoadGroundAndWarpFromTilemap();
+        ApplySavedLayout();
         renderer.Init(tileMap);
 
         SetAllGrids(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
@@ -58,18 +59,19 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region Apply Layout
-    //Implementação de load futuro
-    // private void ApplyDefaultLayout()
-    // {
-    //     for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
-    //     {
-    //         for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
-    //         {
-    //             //tileMap.GetOriginalGrid().SetValue(x, y, defaultLayoutOriginalGrid[y, x]);
-    //             tileMap.GetObjectGrid().SetValue(x, y, staticObjectLayoutGrid[y, x]);
-    //         }
-    //     }
-    // }
+    private void ApplySavedLayout()
+    {
+        if(PersistenceController.Instance.hasData == false || SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
+        GridSaveData saveData = PersistenceController.Instance.LoadGridSaveData();
+        for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+        {
+            for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+            {
+                tileMap.GetOriginalGrid().SetValue(x, y, saveData.originalGrid.GetGridObject(x, y));
+                tileMap.GetPlantGrid().SetValue(x, y, saveData.plantGrid.GetGridObject(x, y));
+            }
+        }
+    }
     #endregion
 
     #region Plow

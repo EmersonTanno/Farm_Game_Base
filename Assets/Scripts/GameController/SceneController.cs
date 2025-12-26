@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class SceneController : MonoBehaviour
     private bool hasPendingTeleport;
 
     private GameObject currentTransitionCanvas;
+    public static event Action OnWarpStart;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class SceneController : MonoBehaviour
     {
         if (hasPendingTeleport) return;
 
+        OnWarpStart?.Invoke();
         hasPendingTeleport = true;
         targetPlayerPosition = spawnPosition;
         Time_Controll.Instance.PauseTime();
