@@ -20,11 +20,13 @@ public class PersistenceController : MonoBehaviour
     void OnEnable()
     {
         SceneController.OnWarpStart += SaveFarm;
+        Calendar_Controller.OnDayChange += PassDay;
     }
 
     void OnDisable()
     {
         SceneController.OnWarpStart -= SaveFarm;
+        Calendar_Controller.OnDayChange -= PassDay;
     }
 
     public void SaveFarm()
@@ -32,7 +34,6 @@ public class PersistenceController : MonoBehaviour
         if(SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
 
         gridSaveData.plants.Clear();
-        hasData = true;
 
         Grid<int> originalGrid = TileMapController.Instance.GetGrid().GetOriginalGrid();
         Grid<TileMapPlantData> plantGrid = TileMapController.Instance.GetGrid().GetPlantGrid();
@@ -68,6 +69,8 @@ public class PersistenceController : MonoBehaviour
                 }
             }
         }
+
+        hasData = gridSaveData.plants.Count > 0;
     }
 
     public GridSaveData LoadGridSaveData()
@@ -75,4 +78,19 @@ public class PersistenceController : MonoBehaviour
         return gridSaveData;
     }
 
+    public void PassDay()
+    {
+        foreach (var plant in gridSaveData.plants)
+        {
+            if (plant.gridValue == 11)
+            {
+                plant.gridValue = 10;
+            }
+
+            if (plant.gridValue == 20 && plant.plantData != null)
+            {
+                plant.plantData.PassDay();
+            }
+        }
+    }
 }
