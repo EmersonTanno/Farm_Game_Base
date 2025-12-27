@@ -86,6 +86,7 @@ public class TileMapController : MonoBehaviour
     {
         Grid<int> farmGrid = tileMap.GetOriginalGrid();
         Grid<bool> moveGrid = tileMap.GetMovementGrid();
+        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
         int farmObject = farmGrid.GetGridObject(position);
@@ -93,7 +94,7 @@ public class TileMapController : MonoBehaviour
             farmObject != 2 &&
             farmObject != 20) return;
 
-        if (!moveGrid.GetGridObject(position)) return;
+        if (!moveGrid.GetGridObject(position) || warpGrid.GetGridObject(position) != null) return;
 
         if(farmObject == 20)
         {
