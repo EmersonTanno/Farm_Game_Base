@@ -10075,6 +10075,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bed
       objectReference: {fileID: 0}
+    - target: {fileID: 4052175598659023084, guid: 0f06884d77998c641aacf6e987ad35ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4052175598659023085, guid: 0f06884d77998c641aacf6e987ad35ff, type: 3}
       propertyPath: m_RootOrder
       value: 0

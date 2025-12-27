@@ -108,7 +108,7 @@ public class SceneController : MonoBehaviour
     {
         yield return null;
         WarpController.Instance.EndWarp();
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(1f);
         Time_Controll.Instance.UnpauseTime();
     }
 
