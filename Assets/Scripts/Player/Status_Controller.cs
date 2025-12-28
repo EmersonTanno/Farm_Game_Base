@@ -9,11 +9,14 @@ public class Status_Controller : MonoBehaviour
     public static Status_Controller Instance;
 
     #region Variables
+    [SerializeField] ThoughtBubbleController playerThought;
+
     //Gold
     public int gold = 0;
     private int goldT;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] GameObject playerUiGroup;
+ 
 
     //Lucky
     private int lucky = 0;
@@ -22,6 +25,9 @@ public class Status_Controller : MonoBehaviour
     //Energy
     private int maxEnergy = 200;
     public int energy;
+    private bool firstEnergyAdd = false;
+    private bool secondEnergyAdd = false;
+    private bool thirdAdd = false;
 
     #endregion
 
@@ -141,13 +147,44 @@ public class Status_Controller : MonoBehaviour
             Debug.Log("Insuficiente");
             return false;
         }
+
         energy -= usedEnergy;
+
+        CheckEnergyWarning();
+
         return true;
     }
+
+    private void CheckEnergyWarning()
+    {
+        if (energy <= maxEnergy / 2 && !firstEnergyAdd)
+        {
+            firstEnergyAdd = true;
+            playerThought.ShowBalloon(ThoughtEmoteEnum.Sweat);
+            return;
+        }
+
+        if (energy <= maxEnergy / 4 && !secondEnergyAdd)
+        {
+            secondEnergyAdd = true;
+            playerThought.ShowBalloon(ThoughtEmoteEnum.Sweat);
+            return;
+        }
+
+        if (energy <= 10 && !thirdAdd)
+        {
+            thirdAdd = true;
+            playerThought.ShowBalloon(ThoughtEmoteEnum.Sweat);
+        }
+    }
+
     
     private void ResetEnergy()
     {
         energy = maxEnergy;
+        firstEnergyAdd = false;
+        secondEnergyAdd = false;
+        thirdAdd = false;
     }
     #endregion
 
