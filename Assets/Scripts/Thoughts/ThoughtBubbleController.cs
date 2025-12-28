@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class ThoughtBubbleController : MonoBehaviour
@@ -27,17 +25,18 @@ public class ThoughtBubbleController : MonoBehaviour
 
     void OnEnable()
     {
-        Balloon.OnBalloonUp += CanShowEmote; 
+        Balloon.OnBalloonUp += CanShowEmote;
         Balloon.OnBalloonDown += DeactivateReaction;
         Emote.OnEmoteDown += DeactivateBalloon;
     }
 
     void OnDisable()
     {
-        Balloon.OnBalloonUp -= CanShowEmote; 
-        Balloon.OnBalloonDown -= CanShowEmote;
+        Balloon.OnBalloonUp -= CanShowEmote;
+        Balloon.OnBalloonDown -= DeactivateReaction;
         Emote.OnEmoteDown -= DeactivateBalloon;
     }
+
 
 
     public void ShowBalloon(ThoughtEmoteEnum emote)
@@ -50,20 +49,26 @@ public class ThoughtBubbleController : MonoBehaviour
         balloonAnimator.SetBool("Active", true);
     }
 
-    private void DeactivateBalloon()
+    private void DeactivateBalloon(ThoughtBubbleController owner)
     {
+        if (owner != this) return;
+
         emoteObject.SetActive(false);
         balloonAnimator.SetBool("Active", false);
     }
 
-    private void CanShowEmote()
+    private void CanShowEmote(ThoughtBubbleController owner)
     {
+        if (owner != this) return;
+
         emoteObject.SetActive(true);
         emoteAnimator.SetTrigger(ToTrigger(emoteType));
     }
 
-    private void DeactivateReaction()
+    private void DeactivateReaction(ThoughtBubbleController owner)
     {
+        if (owner != this) return;
+
         reactionBalloon.SetActive(false);
         emoteType = ThoughtEmoteEnum.None;
         canShowBalloon = true;

@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class Emote : MonoBehaviour
 {
-    public static event Action OnEmoteUp;
-    public static event Action OnEmoteDown;
+    public static event Action<ThoughtBubbleController> OnEmoteUp;
+    public static event Action<ThoughtBubbleController> OnEmoteDown;
+
+    [SerializeField] private ThoughtBubbleController owner;
 
     public void EmoteUp()
     {
-        OnEmoteUp?.Invoke();
+        OnEmoteUp?.Invoke(owner);
     }
 
     public void EmoteDown()
     {
-        OnEmoteDown?.Invoke();
+        OnEmoteDown?.Invoke(owner);
     }
+
 }

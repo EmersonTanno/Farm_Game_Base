@@ -820,6 +820,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4868641703375013115}
     m_Modifications:
+    - target: {fileID: 1629867508457424743, guid: 0b12d29facdee9b4aab354dc737dc360, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 4868641704720319584}
     - target: {fileID: 1629867508480973197, guid: 0b12d29facdee9b4aab354dc737dc360, type: 3}
       propertyPath: m_Name
       value: Reactions
@@ -868,6 +872,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1629867508670773031, guid: 0b12d29facdee9b4aab354dc737dc360, type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 4868641704720319584}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b12d29facdee9b4aab354dc737dc360, type: 3}
 --- !u!114 &4868641704720319584 stripped

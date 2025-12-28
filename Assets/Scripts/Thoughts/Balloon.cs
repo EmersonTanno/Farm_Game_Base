@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
-    public static event Action OnBalloonUp;
-    public static event Action OnBalloonDown;
+    public static event Action<ThoughtBubbleController> OnBalloonUp;
+    public static event Action<ThoughtBubbleController> OnBalloonDown;
+
+    [SerializeField] private ThoughtBubbleController owner;
 
     public void BalloonUp()
     {
-        OnBalloonUp?.Invoke();
+        OnBalloonUp?.Invoke(owner);
     }
 
     public void BalloonDown()
     {
-        OnBalloonDown?.Invoke();
+        OnBalloonDown?.Invoke(owner);
     }
+
 }
