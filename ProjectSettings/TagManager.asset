@@ -62,6 +62,12 @@ TagManager:
   - name: Bed2
     uniqueID: 378496137
     locked: 0
+  - name: Balloon
+    uniqueID: 4048691767
+    locked: 0
+  - name: Emote
+    uniqueID: 1835599723
+    locked: 0
   - name: Rain
     uniqueID: 1822739443
     locked: 0

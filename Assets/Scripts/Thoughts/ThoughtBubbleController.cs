@@ -1,39 +1,80 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class ThoughtBubbleController : MonoBehaviour
 {
     [SerializeField] GameObject reactionBalloon;
+    [SerializeField] GameObject emoteObject;
     private Animator balloonAnimator;
+    private Animator emoteAnimator;
+    private bool canShowBalloon = true;
+    private ThoughtEmoteEnum emoteType;
 
     void Awake()
     {
         balloonAnimator = reactionBalloon.GetComponent<Animator>();
+        emoteAnimator = emoteObject.GetComponent<Animator>();
     }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.B))
         {
-            ShowBalloon();
+            ShowBalloon(ThoughtEmoteEnum.Sweat);
         }
     }
 
-
-    public void ShowBalloon()
+    void OnEnable()
     {
+        Balloon.OnBalloonUp += CanShowEmote; 
+        Balloon.OnBalloonDown += DeactivateReaction;
+        Emote.OnEmoteDown += DeactivateBalloon;
+    }
+
+    void OnDisable()
+    {
+        Balloon.OnBalloonUp -= CanShowEmote; 
+        Balloon.OnBalloonDown -= CanShowEmote;
+        Emote.OnEmoteDown -= DeactivateBalloon;
+    }
+
+
+    public void ShowBalloon(ThoughtEmoteEnum emote)
+    {
+        if(!canShowBalloon) return;
+
+        canShowBalloon = false;
+        emoteType = emote;
         reactionBalloon.SetActive(true);
         balloonAnimator.SetBool("Active", true);
-        StartCoroutine(DeactivateBalloon());
     }
 
-    private IEnumerator DeactivateBalloon()
+    private void DeactivateBalloon()
     {
-        yield return new WaitForSeconds(2f);
+        emoteObject.SetActive(false);
         balloonAnimator.SetBool("Active", false);
-        yield return new WaitForSeconds(1f);
-        reactionBalloon.SetActive(false);
     }
 
-    //ajustar para ele apenas poder ativar um balão por vez
+    private void CanShowEmote()
+    {
+        emoteObject.SetActive(true);
+        emoteAnimator.SetTrigger(ToTrigger(emoteType));
+    }
+
+    private void DeactivateReaction()
+    {
+        reactionBalloon.SetActive(false);
+        emoteType = ThoughtEmoteEnum.None;
+        canShowBalloon = true;
+    }
+
+    public static string ToTrigger(ThoughtEmoteEnum emote)
+    {
+        return emote.ToString();
+    }
+
+
+
+    //Posteriormente aplicar para npcs
 }
