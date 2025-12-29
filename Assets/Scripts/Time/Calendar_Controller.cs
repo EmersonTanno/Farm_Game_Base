@@ -41,11 +41,13 @@ public class Calendar_Controller : MonoBehaviour
     void OnEnable()
     {
         Time_Controll.OnMidNightChange += ChangeDay;
+        Status_Controller.OnFaint += ChangeDay;
     }
 
     void OnDisable()
     {
         Time_Controll.OnMidNightChange -= ChangeDay;
+        Status_Controller.OnFaint -= ChangeDay;
     }
     #endregion
 

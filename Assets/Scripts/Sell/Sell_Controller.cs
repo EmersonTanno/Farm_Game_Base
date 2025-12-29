@@ -95,12 +95,12 @@ public class Sell_Controller : MonoBehaviour
     #region Events
     void OnEnable()
     {
-        Time_Controll.OnMidNightChange += SellItems;
+        Calendar_Controller.OnDayChange += SellItems;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnMidNightChange -= SellItems;
+        Calendar_Controller.OnDayChange -= SellItems;
     }
     #endregion
 

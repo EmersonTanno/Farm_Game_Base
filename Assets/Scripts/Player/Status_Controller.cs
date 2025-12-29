@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -23,11 +22,15 @@ public class Status_Controller : MonoBehaviour
     private int dayLucky = 0;
 
     //Energy
-    private int maxEnergy = 200;
+    private int maxEnergy = 50;//200;
     public int energy;
+    public bool isFainted = false;
+    private bool faintInProgress;
     private bool firstEnergyAdd = false;
     private bool secondEnergyAdd = false;
     private bool thirdAdd = false;
+
+    public static event Action OnFaint;
 
     #endregion
 
@@ -142,16 +145,15 @@ public class Status_Controller : MonoBehaviour
     #region Energy
     public bool UseEnergy(int usedEnergy)
     {
-        if (usedEnergy > energy)
+        if (isFainted)
         {
-            Debug.Log("Insuficiente");
             return false;
         }
 
         energy -= usedEnergy;
 
         CheckEnergyWarning();
-
+        CheckEnergyLevel();
         return true;
     }
 
@@ -178,13 +180,54 @@ public class Status_Controller : MonoBehaviour
         }
     }
 
-    
+    public void CheckEnergyLevel()
+    {
+        if (energy > 0) return;
+        if (faintInProgress) return;
+
+        faintInProgress = true;
+        isFainted = true;
+
+        StartCoroutine(FaintRoutine());
+    }
+
+    private IEnumerator FaintRoutine()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        WarpController.OnWarpEnd += OnWarpFinished;
+        TpToHouse();
+    }
+
+    private void OnWarpFinished()
+    {
+        WarpController.OnWarpEnd -= OnWarpFinished;
+
+        OnFaint?.Invoke();
+
+        faintInProgress = false;
+    }
+
+    private void TpToHouse()
+    {
+        WarpTile warp = new WarpTile
+        {
+            scene = "House",
+            x = 5,
+            y = 1,
+            transitionType = TransitionType.Instant
+        };
+
+        WarpController.Instance.ExecuteWarp(warp);
+    }
+
     private void ResetEnergy()
     {
         energy = maxEnergy;
         firstEnergyAdd = false;
         secondEnergyAdd = false;
         thirdAdd = false;
+        isFainted = false;
     }
     #endregion
 
