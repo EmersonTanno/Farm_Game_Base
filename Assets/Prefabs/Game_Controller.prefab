@@ -523,7 +523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e885ffb141e6e9a45842c3b0e7555b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerThought: {fileID: 4868641704720319584}
   gold: 1000
   goldText: {fileID: 0}
   playerUiGroup: {fileID: 0}
@@ -1033,6 +1032,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933913, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: reactions
+      value: 
+      objectReference: {fileID: 4868641704720319584}
     - target: {fileID: 2048634262080933913, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: myAnimator
       value: 

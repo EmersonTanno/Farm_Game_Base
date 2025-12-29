@@ -25,6 +25,9 @@ public class Player_Controller : MonoBehaviour
     private bool isPlanting = false;
     private bool isPlowing = false;
     [HideInInspector] public bool isHarvesting = false;
+
+    //Reactions
+    [SerializeField]private ThoughtBubbleController reactions;
     #endregion
 
     #region Core
@@ -460,6 +463,13 @@ public class Player_Controller : MonoBehaviour
         }
 
         return true;
+    }
+    #endregion
+
+    #region Reactions
+    public void ShowReaction(ThoughtEmoteEnum reaction)
+    {
+        reactions.ShowBalloon(reaction);
     }
     #endregion
 }

@@ -8,7 +8,6 @@ public class Status_Controller : MonoBehaviour
     public static Status_Controller Instance;
 
     #region Variables
-    [SerializeField] ThoughtBubbleController playerThought;
 
     //Gold
     public int gold = 0;
@@ -162,21 +161,21 @@ public class Status_Controller : MonoBehaviour
         if (energy <= maxEnergy / 2 && !firstEnergyAdd)
         {
             firstEnergyAdd = true;
-            playerThought.ShowBalloon(ThoughtEmoteEnum.Sweat);
+            Player_Controller.Instance.ShowReaction(ThoughtEmoteEnum.Sweat);
             return;
         }
 
         if (energy <= maxEnergy / 4 && !secondEnergyAdd)
         {
             secondEnergyAdd = true;
-            playerThought.ShowBalloon(ThoughtEmoteEnum.Sweat);
+            Player_Controller.Instance.ShowReaction(ThoughtEmoteEnum.Sweat);
             return;
         }
 
         if (energy <= 10 && !thirdAdd)
         {
             thirdAdd = true;
-            playerThought.ShowBalloon(ThoughtEmoteEnum.Sweat);
+            Player_Controller.Instance.ShowReaction(ThoughtEmoteEnum.Sweat);
         }
     }
 
@@ -187,6 +186,8 @@ public class Status_Controller : MonoBehaviour
 
         faintInProgress = true;
         isFainted = true;
+        
+        Player_Controller.Instance.ShowReaction(ThoughtEmoteEnum.Sleep);
 
         StartCoroutine(FaintRoutine());
     }
