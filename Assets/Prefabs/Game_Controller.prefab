@@ -528,6 +528,7 @@ MonoBehaviour:
   goldText: {fileID: 0}
   playerUiGroup: {fileID: 0}
   energy: 0
+  isFainted: 0
 --- !u!1 &4868641705091430081
 GameObject:
   m_ObjectHideFlags: 0

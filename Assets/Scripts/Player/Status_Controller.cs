@@ -232,7 +232,7 @@ public class Status_Controller : MonoBehaviour
     #endregion
 
     #region Ui
-    public void ControllPlayerUiGroup(bool setActive)
+    public void SetControllPlayerUiGroup(bool setActive)
     {
         playerUiGroup.SetActive(setActive);
     }

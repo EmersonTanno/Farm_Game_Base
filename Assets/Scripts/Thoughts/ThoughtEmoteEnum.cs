@@ -4,5 +4,6 @@ public enum ThoughtEmoteEnum
     Sweat,
     Tired,
     Angry,
-    Confused
+    Confused,
+    Sleep,
 }

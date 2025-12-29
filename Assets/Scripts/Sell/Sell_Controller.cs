@@ -182,7 +182,7 @@ public class Sell_Controller : MonoBehaviour
         sellUi.SetActive(active);
         InventoryManager.Instance.ControllInventoryGroup(!active);
         Calendar_Controller.Instance.ControllTimeGroup(!active);
-        Status_Controller.Instance.ControllPlayerUiGroup(!active);
+        Status_Controller.Instance.SetControllPlayerUiGroup(!active);
     }
 
     private void SetInfos(int taxedValue, int totalValue, int gainedValue)
