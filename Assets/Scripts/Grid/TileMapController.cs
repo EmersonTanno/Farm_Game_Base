@@ -46,12 +46,14 @@ public class TileMapController : MonoBehaviour
     {
         Calendar_Controller.OnDayChange += GrowPlant;
         Calendar_Controller.OnDayChange += PassPlownSoilDay;
+        TileMapController.OnTileMapReady += SetNPCsInScene;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
         Calendar_Controller.OnDayChange -= PassPlownSoilDay;
+        TileMapController.OnTileMapReady -= SetNPCsInScene;
     }
 
     #endregion
@@ -485,6 +487,11 @@ public class TileMapController : MonoBehaviour
     {
         tileMap.GetNpcGrid().SetValue(x, y, id);
     }
+
+    private void SetNPCsInScene()
+    {
+        NPCController.Instance.SetNPCsInScene();
+    }
     #endregion
 
     #region Debug
@@ -495,6 +502,7 @@ public class TileMapController : MonoBehaviour
         Grid<WorldObjectID> objectgrid = tileMap.GetObjectGrid();
         Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
         Grid<bool> movegrid = tileMap.GetMovementGrid();
+        Grid<int> npcGrid = tileMap.GetNpcGrid();
 
         int width = grid.GetWidth();
         int height = grid.GetHeight();
@@ -503,6 +511,7 @@ public class TileMapController : MonoBehaviour
         string result2 = "Move \n";
         string result3 = "Object \n";
         string result4 = "Construction \n";
+        string result5 = "NPC \n";
 
         for (int y = 0; y < height; y++)
         {
@@ -512,21 +521,25 @@ public class TileMapController : MonoBehaviour
                 WorldObjectID value3 = objectgrid.GetGridObject(x, y);
                 bool value2 = movegrid.GetGridObject(x, y);
                 ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
+                int value5 = npcGrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
                 result2 += value2.ToString().PadLeft(3) + " ";
                 result3 += value3.ToString().PadLeft(3) + " ";
                 result4 += value4.ToString().PadLeft(3) + " ";
+                result5 += value5.ToString().PadLeft(3) + " ";
             }
             result += "\n";
             result2 += "\n";
             result3 += "\n";
             result4 += "\n";
+            result5 += "\n";
         }
 
         Debug.Log(result);
         Debug.Log(result3);
         Debug.Log(result4);
         Debug.Log(result2);
+        Debug.Log(result5);
     }
     #endregion
 }
