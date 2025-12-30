@@ -21,7 +21,7 @@ public class Status_Controller : MonoBehaviour
     private int dayLucky = 0;
 
     //Energy
-    private int maxEnergy = 50;//200;
+    private int maxEnergy = 200;
     public int energy;
     public bool isFainted = false;
     private bool faintInProgress;

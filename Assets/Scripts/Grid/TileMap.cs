@@ -27,6 +27,7 @@ public class TileMap
     private Grid<ConstructionsType> constructionGrid;
     private Grid<bool> movementGrid;
     private Grid<WarpTile> warpGrid;
+    private Grid<int> npcGrid;
 
     #endregion
 
@@ -39,6 +40,7 @@ public class TileMap
         movementGrid = new Grid<bool>(width, height, cellSize, originPosition);
         constructionGrid = new Grid<ConstructionsType>(width, height, cellSize, originPosition);
         warpGrid = new Grid<WarpTile>(width, height, cellSize, originPosition);
+        npcGrid = new Grid<int>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -71,6 +73,11 @@ public class TileMap
     public Grid<WarpTile> GetWarpGrid()
     {
         return warpGrid;
+    }
+
+    public Grid<int> GetNpcGrid()
+    {
+        return npcGrid;
     }
     #endregion
 

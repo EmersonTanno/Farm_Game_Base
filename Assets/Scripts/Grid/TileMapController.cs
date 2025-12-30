@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -13,6 +14,8 @@ public class TileMapController : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private GameObject constructionsMap;
     [SerializeField] private GameObject objectsMap;
+
+    public static event Action OnTileMapReady;
 
     #region Core
     void Awake()
@@ -36,6 +39,7 @@ public class TileMapController : MonoBehaviour
         renderer.Init(tileMap);
 
         SetAllGrids(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
+        OnTileMapReady?.Invoke();
     }
 
     void OnEnable()
@@ -473,6 +477,13 @@ public class TileMapController : MonoBehaviour
                 }
             }
         }
+    }
+    #endregion
+
+    #region NPC
+    public void SetNPC(int x, int y, int id)
+    {
+        tileMap.GetNpcGrid().SetValue(x, y, id);
     }
     #endregion
 
