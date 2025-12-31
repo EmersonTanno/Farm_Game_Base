@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,16 @@ public class NPCController : MonoBehaviour
     void Awake()
     {
         Instance = this;
+    }
+
+    void OnEnable()
+    {
+        Time_Controll.OnHourChange += ChangeNPCLocations;
+    }
+
+    void OnDisable()
+    {
+        Time_Controll.OnHourChange -= ChangeNPCLocations;
     }
 
     public void SetNPCsInScene()
@@ -31,5 +42,30 @@ public class NPCController : MonoBehaviour
             }
         } 
     }
+
+    private void ChangeNPCLocations()
+    {
+        TileMapController map = TileMapController.Instance;
+        Grid<WarpTile> warps = map.GetGrid().GetWarpGrid();
+        foreach(NPC npc in npcs)
+        {
+            foreach(NPCRoutine routine in npc.npcData.routine)
+            {
+                if(routine.startHour == Time_Controll.Instance.hours)
+                {
+                    NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();;
+                    Debug.Log("Compromisso");
+                    nPCMovement.MoveTo(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y));
+                }
+            }
+        } 
+    }
+
+    public void SetDataInNPCMap(int x, int y, int data)
+    {
+        TileMapController map = TileMapController.Instance;
+        map.SetNPC(x, y, data);
+    }
+
 
 }

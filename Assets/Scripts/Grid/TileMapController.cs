@@ -445,11 +445,11 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region Warp Grid
-    private void SetWarpGrid(int x, int y, WarpTile warpData)
+    private void SetWarpGrid(int x, int y, WarpTile warpTile)
     {
         Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
 
-        warpGrid.SetValue(x, y, warpData);
+        warpGrid.SetValue(x, y, warpTile);
     }
     #endregion
 
