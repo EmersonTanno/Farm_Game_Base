@@ -17,6 +17,29 @@ public class TileMapController : MonoBehaviour
 
     public static event Action OnTileMapReady;
 
+    static readonly Vector2Int[] directions =
+    {
+        Vector2Int.up,
+        Vector2Int.down,
+        Vector2Int.left,
+        Vector2Int.right
+    };
+
+    List<Vector2Int> RetracePath(Node endNode)
+    {
+        List<Vector2Int> path = new();
+        Node current = endNode;
+
+        while (current.parent != null)
+        {
+            path.Add(current.pos);
+            current = current.parent;
+        }
+
+        path.Reverse();
+        return path;
+    }
+
     #region Core
     void Awake()
     {
@@ -492,6 +515,78 @@ public class TileMapController : MonoBehaviour
     {
         NPCController.Instance.SetNPCsInScene();
     }
+
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
+    {
+        List<Node> openSet = new();
+        HashSet<Vector2Int> closedSet = new();
+
+        Node startNode = new(start);
+        openSet.Add(startNode);
+
+        while (openSet.Count > 0)
+        {
+            Node current = openSet[0];
+
+            foreach (Node n in openSet)
+                if (n.fCost < current.fCost)
+                    current = n;
+
+            openSet.Remove(current);
+            closedSet.Add(current.pos);
+
+            if (current.pos == target)
+                return RetracePath(current);
+
+            foreach (Vector2Int dir in directions)
+            {
+                Vector2Int nextPos = current.pos + dir;
+
+                if (!IsWalkable(nextPos) || closedSet.Contains(nextPos) || IsPlayerOnWay(nextPos))
+                    continue;
+
+                int newCost = current.gCost + 1;
+
+                Node neighbor = openSet.Find(n => n.pos == nextPos);
+                if (neighbor == null)
+                {
+                    neighbor = new Node(nextPos);
+                    neighbor.gCost = newCost;
+                    neighbor.hCost = Manhattan(nextPos, target);
+                    neighbor.parent = current;
+                    openSet.Add(neighbor);
+                }
+                else if (newCost < neighbor.gCost)
+                {
+                    neighbor.gCost = newCost;
+                    neighbor.parent = current;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    int Manhattan(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
+
+    bool IsWalkable(Vector2Int pos)
+    {
+        return tileMap.GetMovementGrid().GetGridObject(new Vector3(pos.x, pos.y, 0));
+    }
+
+    bool IsPlayerOnWay(Vector2Int pos)
+    {
+        if(pos == new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region Debug

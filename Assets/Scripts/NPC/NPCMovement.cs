@@ -14,6 +14,10 @@ public class NPCMovement : MonoBehaviour
     private Vector3 targetWorldPos;
     private bool isMoving;
 
+    private Vector2Int finalTarget;
+    private List<Vector2Int> currentPath;
+    private int currentStepIndex;
+
     void Start()
     {
         npcData = GetComponent<NPC>();
@@ -22,23 +26,101 @@ public class NPCMovement : MonoBehaviour
     public void MoveTo(Vector2Int targetGridPos, Vector2Int originalPosition)
     {
         StopAllCoroutines();
-        StartCoroutine(MoveRoutine(targetGridPos, originalPosition));
+        finalTarget = targetGridPos;
+        StartMovement(originalPosition);
     }
 
-    private IEnumerator MoveRoutine(Vector2Int target, Vector2Int originalPosition)
+
+    private void StartMovement(Vector2Int startPosition)
     {
+        currentPath = TileMapController.Instance.FindPath(startPosition, finalTarget);
+        currentStepIndex = 0;
+
+        if (currentPath == null || currentPath.Count == 0)
+            return;
+
+        StartCoroutine(FollowSteps());
+    }
+
+    private void ResetMovePointer()
+    {
+        if(movePointer.transform.position == transform.position) return;
+        
+        movePointer.transform.position = transform.position;
+    }
+
+    private bool SetMovePointer(Vector2Int movement)
+    {
+        movePointer.transform.position += GetNextStep(new Vector2Int((int)movePointer.transform.position.x, (int)movePointer.transform.position.y), movement);
+        if(PlayerOnWay(movement))
+        {
+            ResetMovePointer();
+            return false;
+        }
+        return true;
+    }
+
+    private bool PlayerOnWay(Vector2Int pos)
+    {
+
+        if(new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y) ==  pos)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    Vector3 GetNextStep(Vector2Int current, Vector2Int target)
+    {
+        if (current.x < target.x) return Vector3.right;
+        if (current.x > target.x) return Vector3.left;
+        if (current.y < target.y) return Vector3.up;
+        if (current.y > target.y) return Vector3.down;
+
+        return Vector3.zero;
+    }
+
+    private void UpdateNPCLocationInGrid(Vector2Int originalPosition, Vector2 newPosition, int id)
+    {
+        NPCController.Instance.SetDataInNPCMap(originalPosition.x, originalPosition.y, 0);
+        NPCController.Instance.SetDataInNPCMap((int)newPosition.x, (int)newPosition.y, id);
+    }
+
+   private IEnumerator FollowSteps()
+    {
+        ResetMovePointer();
         isMoving = true;
 
-        movePointer.transform.position = transform.position;
-
-        Vector2Int actualPosition = originalPosition;
-
-        while (actualPosition != target)
+        while (currentStepIndex < currentPath.Count)
         {
-            Vector2Int dir = GetNextStep(actualPosition, target);
-            Vector2Int nextPos = gridPosition + dir;
+            Vector2Int nextTile = currentPath[currentStepIndex];
 
-            MovePointer(dir);
+            if (PlayerOnWay(nextTile))
+            {
+                Vector2Int actualPos = new Vector2Int(
+                    (int)transform.position.x,
+                    (int)transform.position.y
+                );
+
+                currentPath = TileMapController.Instance.FindPath(actualPos, finalTarget);
+                currentStepIndex = 0;
+
+                if (currentPath == null || currentPath.Count == 0)
+                {
+                    isMoving = false;
+                    yield break;
+                }
+
+                yield return null;
+                continue;
+            }
+
+            SetMovePointer(nextTile);
+
+            Vector2Int originalPosition = new Vector2Int(
+                (int)transform.position.x,
+                (int)transform.position.y
+            );
 
             while (transform.position != movePointer.transform.position)
             {
@@ -47,41 +129,17 @@ public class NPCMovement : MonoBehaviour
                     movePointer.transform.position,
                     moveSpeed * Time.deltaTime
                 );
-                if(transform.position == movePointer.transform.position)
-                {
-                    NPCController.Instance.SetDataInNPCMap(actualPosition.x, actualPosition.y, 0);
-                    NPCController.Instance.SetDataInNPCMap((int)movePointer.transform.position.x, (int)movePointer.transform.position.y, npcData.npcData.id);
-                    actualPosition = new Vector2Int((int)movePointer.transform.position.x, (int)movePointer.transform.position.y);
-                    Debug.Log($"{(int)movePointer.transform.position.x}, {(int)movePointer.transform.position.y}");
-                }
-
                 yield return null;
             }
 
-            transform.position = movePointer.transform.position;
-            gridPosition = nextPos;
+            UpdateNPCLocationInGrid(originalPosition, movePointer.transform.position, npcData.npcData.id);
 
-            yield return null;
+            transform.position = movePointer.transform.position;
+            currentStepIndex++;
         }
 
         isMoving = false;
     }
 
-
-    Vector2Int GetNextStep(Vector2Int current, Vector2Int target)
-    {
-        if (current.x < target.x) return Vector2Int.right;
-        if (current.x > target.x) return Vector2Int.left;
-        if (current.y < target.y) return Vector2Int.up;
-        if (current.y > target.y) return Vector2Int.down;
-
-        return Vector2Int.zero;
-    }
-
-    private void MovePointer(Vector2Int movement)
-    {
-        if(transform.position != movePointer.transform.position) return;
-        movePointer.transform.position += new Vector3(movement.x, movement.y, 0);
-    }
 
 }
