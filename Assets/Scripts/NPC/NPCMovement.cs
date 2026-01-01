@@ -7,6 +7,7 @@ public class NPCMovement : MonoBehaviour
 {
     private NPC npcData;
     [SerializeField] private GameObject movePointer;
+    [SerializeField] private Animator nPCAnimator;
 
     public Vector2Int gridPosition;
     public float moveSpeed = 3f;
@@ -116,6 +117,7 @@ public class NPCMovement : MonoBehaviour
             }
 
             SetMovePointer(nextTile);
+            SetNPCAnimation();
 
             Vector2Int originalPosition = new Vector2Int(
                 (int)transform.position.x,
@@ -139,7 +141,40 @@ public class NPCMovement : MonoBehaviour
         }
 
         isMoving = false;
+        ResetNPCAnimation();
     }
 
+    private void SetNPCAnimation()
+    {
+        ResetNPCAnimation();
+        
+        if(movePointer.transform.position.x > transform.position.x)
+        {
+            nPCAnimator.SetBool("WalkRight", true);
+            return;
+        }
+        if(movePointer.transform.position.x < transform.position.x)
+        {
+            nPCAnimator.SetBool("WalkLeft", true);
+            return;
+        }
+        if(movePointer.transform.position.y < transform.position.y)
+        {
+            nPCAnimator.SetBool("WalkFront", true);
+            return;
+        }
+        if(movePointer.transform.position.y > transform.position.y)
+        {
+            nPCAnimator.SetBool("WalkBack", true);
+            return;
+        }
+    }
 
+    private void ResetNPCAnimation()
+    {
+        nPCAnimator.SetBool("WalkFront", false);
+        nPCAnimator.SetBool("WalkBack", false);
+        nPCAnimator.SetBool("WalkLeft", false);
+        nPCAnimator.SetBool("WalkRight", false);
+    }
 }
