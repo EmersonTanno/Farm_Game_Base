@@ -16,12 +16,12 @@ public class NPCController : MonoBehaviour
 
     void OnEnable()
     {
-        Time_Controll.OnHourChange += ChangeNPCLocations;
+        Time_Controll.OnMinuteChange += ChangeNPCLocations;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnHourChange -= ChangeNPCLocations;
+        Time_Controll.OnMinuteChange -= ChangeNPCLocations;
     }
 
     public void SetNPCsInScene()
@@ -51,7 +51,7 @@ public class NPCController : MonoBehaviour
         {
             foreach(NPCRoutine routine in npc.npcData.routine)
             {
-                if(routine.startHour == Time_Controll.Instance.hours)
+                if(routine.startHour == Time_Controll.Instance.hours && routine.startMinute == Time_Controll.Instance.minutes)
                 {
                     NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();;
                     Debug.Log("Compromisso");
