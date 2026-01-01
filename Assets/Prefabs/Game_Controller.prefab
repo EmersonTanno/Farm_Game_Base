@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcs:
   - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8361fabd24b4e46877520d219b072d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 0
+  minutes: 50
   hours: 8
   timerText: {fileID: 0}
   bedCanva: {fileID: 0}
@@ -420,6 +421,7 @@ GameObject:
   - component: {fileID: 421171}
   - component: {fileID: 106489982}
   - component: {fileID: 1290773941}
+  - component: {fileID: 4868641704625557365}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: Untagged
@@ -459,6 +461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canva: {fileID: 0}
+  npcs: {fileID: 0}
 --- !u!114 &8160908078903560732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +528,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasData: 0
+--- !u!114 &4868641704625557365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868641704576069549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e6b875ff1b7bac448e0733b5e0b9a3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connections:
+  - scene: 0
+    warps: 01000000
+  - scene: 1
+    warps: 00000000
 --- !u!1 &4868641704740723755
 GameObject:
   m_ObjectHideFlags: 0

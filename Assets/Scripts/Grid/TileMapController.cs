@@ -516,7 +516,7 @@ public class TileMapController : MonoBehaviour
         NPCController.Instance.SetNPCsInScene();
     }
 
-    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, SceneLocationEnum targetScene)
     {
         List<Node> openSet = new();
         HashSet<Vector2Int> closedSet = new();
@@ -524,6 +524,11 @@ public class TileMapController : MonoBehaviour
         Node startNode = new(start);
         openSet.Add(startNode);
 
+        if(targetScene != SceneInfo.Instance.location)
+        {
+            target = GetWarpLocation(targetScene);
+            Debug.Log($"New Target: {target}");
+        }
         while (openSet.Count > 0)
         {
             Node current = openSet[0];
@@ -567,17 +572,17 @@ public class TileMapController : MonoBehaviour
         return null;
     }
 
-    int Manhattan(Vector2Int a, Vector2Int b)
+    private int Manhattan(Vector2Int a, Vector2Int b)
     {
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
-    bool IsWalkable(Vector2Int pos)
+    private bool IsWalkable(Vector2Int pos)
     {
         return tileMap.GetMovementGrid().GetGridObject(new Vector3(pos.x, pos.y, 0));
     }
 
-    bool IsPlayerOnWay(Vector2Int pos)
+    private bool IsPlayerOnWay(Vector2Int pos)
     {
         if(pos == new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y))
         {
@@ -587,13 +592,43 @@ public class TileMapController : MonoBehaviour
         return false;
     }
 
-    bool IsNPCOnWay(Vector2Int pos)
+    private bool IsNPCOnWay(Vector2Int pos)
     {
         if(tileMap.GetNpcGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)) != 0)
         {
             return true;
         }
         return false;
+    }
+
+    private Vector2Int GetWarpLocation(SceneLocationEnum targetScene)
+    {
+        List<SceneLocationEnum> scenesList = ScenesConections.Instance.GetPathToLocation(SceneInfo.Instance.location, targetScene);
+        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
+
+        int width = warpGrid.GetWidth();
+        int height = warpGrid.GetHeight();
+
+        foreach(SceneLocationEnum scene in scenesList)
+        {
+            if(scene == SceneInfo.Instance.location) continue;
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    WarpTile warp = warpGrid.GetGridObject(x, y);
+                    if (warp == null) continue;
+
+                    if (warp.scene.ToLower() == targetScene.ToString().ToLower())
+                    {
+                        return new Vector2Int(x, y);
+                    }
+                }
+            }
+        }
+
+        return Vector2Int.zero;
     }
     #endregion
 

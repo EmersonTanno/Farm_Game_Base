@@ -16,6 +16,7 @@ public class NPCMovement : MonoBehaviour
     private bool isMoving;
 
     private Vector2Int finalTarget;
+    SceneLocationEnum finalScene;
     private List<Vector2Int> currentPath;
     private int currentStepIndex;
 
@@ -24,17 +25,18 @@ public class NPCMovement : MonoBehaviour
         npcData = GetComponent<NPC>();
     }
 
-    public void MoveTo(Vector2Int targetGridPos, Vector2Int originalPosition)
+    public void MoveTo(Vector2Int targetGridPos, Vector2Int originalPosition, SceneLocationEnum targetScene)
     {
         StopAllCoroutines();
         finalTarget = targetGridPos;
+        finalScene = targetScene;
         StartMovement(originalPosition);
     }
 
 
     private void StartMovement(Vector2Int startPosition)
     {
-        currentPath = TileMapController.Instance.FindPath(startPosition, finalTarget);
+        currentPath = TileMapController.Instance.FindPath(startPosition, finalTarget, finalScene);
         currentStepIndex = 0;
 
         if (currentPath == null || currentPath.Count == 0)
@@ -103,7 +105,7 @@ public class NPCMovement : MonoBehaviour
                     (int)transform.position.y
                 );
 
-                currentPath = TileMapController.Instance.FindPath(actualPos, finalTarget);
+                currentPath = TileMapController.Instance.FindPath(actualPos, finalTarget, finalScene);
                 currentStepIndex = 0;
 
                 if (currentPath == null || currentPath.Count == 0)

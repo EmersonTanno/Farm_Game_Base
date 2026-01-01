@@ -55,7 +55,7 @@ public class NPCController : MonoBehaviour
                 {
                     NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();;
                     Debug.Log("Compromisso");
-                    nPCMovement.MoveTo(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y));
+                    nPCMovement.MoveTo(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y), routine.location);
                 }
             }
         } 

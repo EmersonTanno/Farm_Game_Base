@@ -3895,9 +3895,9 @@ GameObject:
   m_Component:
   - component: {fileID: 782744986}
   - component: {fileID: 782744985}
+  - component: {fileID: 782744988}
   - component: {fileID: 782744984}
   - component: {fileID: 782744987}
-  - component: {fileID: 782744988}
   m_Layer: 0
   m_Name: NPC_1
   m_TagString: Untagged
@@ -3926,11 +3926,11 @@ MonoBehaviour:
     routine:
     - startHour: 9
       startMinute: 10
-      location: 1
+      location: 0
       position: {x: 5, y: 7}
     - startHour: 9
       startMinute: 30
-      location: 1
+      location: 0
       position: {x: 0, y: 0}
 --- !u!212 &782744985
 SpriteRenderer:
@@ -12851,10 +12851,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 417645705, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: npcs.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 417645705, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: npcs.Array.data[0]
       value: 
       objectReference: {fileID: 782744984}
@@ -12987,10 +12983,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1181144259}
     - target: {fileID: 4868641704009533371, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: minutes
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704009533371, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: bedCanva
       value: 
       objectReference: {fileID: 1469087075}
@@ -13065,6 +13057,14 @@ PrefabInstance:
     - target: {fileID: 4868641704576069549, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: m_Name
       value: Game_Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[0].warps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[0].warps.Array.data[0].warp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4868641704740723753, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: goldText
