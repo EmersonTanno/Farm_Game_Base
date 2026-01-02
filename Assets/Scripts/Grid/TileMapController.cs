@@ -527,8 +527,8 @@ public class TileMapController : MonoBehaviour
         if(targetScene != SceneInfo.Instance.location)
         {
             target = GetWarpLocation(targetScene);
-            Debug.Log($"New Target: {target}");
         }
+
         while (openSet.Count > 0)
         {
             Node current = openSet[0];
@@ -603,33 +603,40 @@ public class TileMapController : MonoBehaviour
 
     private Vector2Int GetWarpLocation(SceneLocationEnum targetScene)
     {
-        List<SceneLocationEnum> scenesList = ScenesConections.Instance.GetPathToLocation(SceneInfo.Instance.location, targetScene);
-        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
+        List<SceneLocationEnum> scenesList =
+            ScenesConections.Instance.GetPathToLocation(
+                SceneInfo.Instance.location,
+                targetScene
+            );
 
+        if (scenesList == null || scenesList.Count < 2)
+            return Vector2Int.zero;
+
+        SceneLocationEnum nextScene = scenesList[1];
+
+        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         int width = warpGrid.GetWidth();
         int height = warpGrid.GetHeight();
 
-        foreach(SceneLocationEnum scene in scenesList)
+        for (int y = 0; y < height; y++)
         {
-            if(scene == SceneInfo.Instance.location) continue;
-
-            for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
             {
-                for (int x = 0; x < width; x++)
-                {
-                    WarpTile warp = warpGrid.GetGridObject(x, y);
-                    if (warp == null) continue;
+                WarpTile warp = warpGrid.GetGridObject(x, y);
+                if (warp == null) continue;
 
-                    if (warp.scene.ToLower() == targetScene.ToString().ToLower())
-                    {
-                        return new Vector2Int(x, y);
-                    }
+                if (warp.scene.Equals(nextScene.ToString(),
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    return new Vector2Int(x, y);
                 }
             }
         }
 
+        Debug.LogWarning($"Warp não encontrado para {nextScene}");
         return Vector2Int.zero;
     }
+
     #endregion
 
     #region Debug

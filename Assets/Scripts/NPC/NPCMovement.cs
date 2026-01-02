@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NPCMovement : MonoBehaviour
 {
-    private NPC npcData;
+    private NPC npc;
     [SerializeField] private GameObject movePointer;
     [SerializeField] private Animator nPCAnimator;
 
@@ -16,13 +16,14 @@ public class NPCMovement : MonoBehaviour
     private bool isMoving;
 
     private Vector2Int finalTarget;
+    List<SceneLocationEnum> sceneList;
     SceneLocationEnum finalScene;
     private List<Vector2Int> currentPath;
     private int currentStepIndex;
 
     void Start()
     {
-        npcData = GetComponent<NPC>();
+        npc = GetComponent<NPC>();
     }
 
     public void MoveTo(Vector2Int targetGridPos, Vector2Int originalPosition, SceneLocationEnum targetScene)
@@ -136,13 +137,19 @@ public class NPCMovement : MonoBehaviour
                 yield return null;
             }
 
-            UpdateNPCLocationInGrid(originalPosition, movePointer.transform.position, npcData.npcData.id);
+            UpdateNPCLocationInGrid(originalPosition, movePointer.transform.position, npc.npcData.id);
 
             transform.position = movePointer.transform.position;
             currentStepIndex++;
         }
 
         isMoving = false;
+        if(finalScene != SceneInfo.Instance.location)
+        {
+            RemoveNPCFromGrid();
+            npc.npcData.location = finalScene;
+            npc.npcData.gridPosition = finalTarget;
+        }
         ResetNPCAnimation();
     }
 
@@ -178,5 +185,12 @@ public class NPCMovement : MonoBehaviour
         nPCAnimator.SetBool("WalkBack", false);
         nPCAnimator.SetBool("WalkLeft", false);
         nPCAnimator.SetBool("WalkRight", false);
+    }
+
+    private void RemoveNPCFromGrid()
+    {
+        transform.position = new Vector2(-10, -10);
+        movePointer.transform.position = transform.position;
+        npc.SetNPC(false);
     }
 }

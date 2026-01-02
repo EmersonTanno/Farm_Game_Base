@@ -4014,7 +4014,7 @@ MonoBehaviour:
   movePointer: {fileID: 1635421968}
   nPCAnimator: {fileID: 782744988}
   gridPosition: {x: 0, y: 0}
-  moveSpeed: 2
+  moveSpeed: 3
 --- !u!95 &782744988
 Animator:
   serializedVersion: 5
@@ -7008,7 +7008,7 @@ MonoBehaviour:
   movePointer: {fileID: 1401356217}
   nPCAnimator: {fileID: 1420878975}
   gridPosition: {x: 10, y: 5}
-  moveSpeed: 2
+  moveSpeed: 3
 --- !u!114 &1420878973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7023,15 +7023,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData:
     id: 2
-    location: 0
-    gridPosition: {x: 0, y: 0}
+    location: 1
+    gridPosition: {x: 1, y: 1}
     state: 0
     routineIndex: 0
     routine:
     - startHour: 9
-      startMinute: 0
-      location: 1
-      position: {x: 10, y: 5}
+      startMinute: 10
+      location: 0
+      position: {x: 1, y: 1}
 --- !u!212 &1420878974
 SpriteRenderer:
   m_ObjectHideFlags: 0
