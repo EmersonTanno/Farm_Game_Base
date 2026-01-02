@@ -450,7 +450,8 @@ public class TileMapController : MonoBehaviour
                     (
                         originalGridPositionValue <= 9 || 
                         (originalGridPositionValue >= 10 && originalGridPositionValue <= 11) || 
-                        originalGridPositionValue == 20
+                        originalGridPositionValue == 20 || 
+                        originalGridPositionValue == 100 //remover após testes
                     )
                     {
                         tileMap.GetMovementGrid().SetValue(x, y, true);
@@ -516,7 +517,7 @@ public class TileMapController : MonoBehaviour
         NPCController.Instance.SetNPCsInScene();
     }
 
-    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, SceneLocationEnum targetScene)
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, SceneLocationEnum targetScene,  List<SceneLocationEnum> scenesList)
     {
         List<Node> openSet = new();
         HashSet<Vector2Int> closedSet = new();
@@ -526,7 +527,7 @@ public class TileMapController : MonoBehaviour
 
         if(targetScene != SceneInfo.Instance.location)
         {
-            target = GetWarpLocation(targetScene);
+            target = GetWarpLocation(targetScene, scenesList);
         }
 
         while (openSet.Count > 0)
@@ -601,13 +602,8 @@ public class TileMapController : MonoBehaviour
         return false;
     }
 
-    private Vector2Int GetWarpLocation(SceneLocationEnum targetScene)
+    private Vector2Int GetWarpLocation(SceneLocationEnum targetScene, List<SceneLocationEnum> scenesList)
     {
-        List<SceneLocationEnum> scenesList =
-            ScenesConections.Instance.GetPathToLocation(
-                SceneInfo.Instance.location,
-                targetScene
-            );
 
         if (scenesList == null || scenesList.Count < 2)
             return Vector2Int.zero;
@@ -634,6 +630,31 @@ public class TileMapController : MonoBehaviour
         }
 
         Debug.LogWarning($"Warp não encontrado para {nextScene}");
+        return Vector2Int.zero;
+    }
+
+    public Vector2Int GetWarpLocationInScene(SceneLocationEnum previousScene)
+    {
+        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
+        int width = warpGrid.GetWidth();
+        int height = warpGrid.GetHeight();
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                WarpTile warp = warpGrid.GetGridObject(x, y);
+                if (warp == null) continue;
+
+                if (warp.scene.Equals(previousScene.ToString(),
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        Debug.LogWarning($"Warp não encontrado para {previousScene}");
         return Vector2Int.zero;
     }
 

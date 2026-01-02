@@ -45,17 +45,20 @@ public class NPCController : MonoBehaviour
 
     private void ChangeNPCLocations()
     {
-        TileMapController map = TileMapController.Instance;
-        Grid<WarpTile> warps = map.GetGrid().GetWarpGrid();
         foreach(NPC npc in npcs)
         {
             foreach(NPCRoutine routine in npc.npcData.routine)
             {
                 if(routine.startHour == Time_Controll.Instance.hours && routine.startMinute == Time_Controll.Instance.minutes)
                 {
-                    NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();;
-                    Debug.Log("Compromisso");
-                    nPCMovement.MoveTo(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y), routine.location);
+                    NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
+                    if(npc.npcData.location == SceneInfo.Instance.location)
+                    {  
+                        nPCMovement.MoveTo(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y), routine.location);
+                    } else
+                    {
+                        nPCMovement.MoveOffScreen(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y), routine.location);
+                    }
                 }
             }
         } 
@@ -67,5 +70,9 @@ public class NPCController : MonoBehaviour
         map.SetNPC(x, y, data);
     }
 
+    public Vector3 GetNPCOffset()
+    {
+        return npcOffSet;
+    }
 
 }
