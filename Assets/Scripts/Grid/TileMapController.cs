@@ -604,7 +604,6 @@ public class TileMapController : MonoBehaviour
 
     private Vector2Int GetWarpLocation(SceneLocationEnum targetScene, List<SceneLocationEnum> scenesList)
     {
-
         if (scenesList == null || scenesList.Count < 2)
             return Vector2Int.zero;
 

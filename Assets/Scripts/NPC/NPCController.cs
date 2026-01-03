@@ -16,12 +16,12 @@ public class NPCController : MonoBehaviour
 
     void OnEnable()
     {
-        Time_Controll.OnMinuteChange += ChangeNPCLocations;
+        Time_Controll.OnMinuteChange += NPCMovement;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnMinuteChange -= ChangeNPCLocations;
+        Time_Controll.OnMinuteChange -= NPCMovement;
     }
 
     public void SetNPCsInScene()
@@ -34,6 +34,13 @@ public class NPCController : MonoBehaviour
                 npc.SetNPC(true);
                 map.SetNPC(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, npc.npcData.id);
 
+                if(npc.npcData.state == NPCStateEnum.Traveling)
+                {
+                    // NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
+                    // nPCMovement.SpawnNPCPositionMidTravel();
+                    continue;
+                }
+
                 npc.transform.position = new Vector3(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0) + npcOffSet;
             }
             else
@@ -43,7 +50,7 @@ public class NPCController : MonoBehaviour
         } 
     }
 
-    private void ChangeNPCLocations()
+    private void NPCMovement()
     {
         foreach(NPC npc in npcs)
         {

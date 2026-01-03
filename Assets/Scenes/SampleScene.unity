@@ -3926,7 +3926,7 @@ MonoBehaviour:
     routine:
     - startHour: 9
       startMinute: 0
-      location: 2
+      location: 0
       position: {x: 5, y: 7}
     - startHour: 9
       startMinute: 30
@@ -7023,14 +7023,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData:
     id: 2
-    location: 1
+    location: 2
     gridPosition: {x: 1, y: 1}
     state: 0
     routineIndex: 0
     routine:
     - startHour: 9
       startMinute: 0
-      location: 0
+      location: 1
       position: {x: 1, y: 1}
 --- !u!212 &1420878974
 SpriteRenderer:
@@ -13173,14 +13173,6 @@ PrefabInstance:
       propertyPath: plantTilemap
       value: 
       objectReference: {fileID: 219909734}
-    - target: {fileID: 6139808161351050936, guid: 728c82d2ff5893f43814e95f92c03761, type: 3}
-      propertyPath: worldTiles.Array.size
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6139808161351050936, guid: 728c82d2ff5893f43814e95f92c03761, type: 3}
-      propertyPath: worldTiles.Array.data[7]
-      value: 
-      objectReference: {fileID: 11400000, guid: ed0a64f67dd0dfb48b407406cb4dffae, type: 2}
     - target: {fileID: 6139808161351050937, guid: 728c82d2ff5893f43814e95f92c03761, type: 3}
       propertyPath: objectsMap
       value: 

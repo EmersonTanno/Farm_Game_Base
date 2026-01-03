@@ -12,11 +12,12 @@ public class NPCMovement : MonoBehaviour
     public Vector2Int gridPosition;
     public float moveSpeed = 3f;
 
-    private Vector3 targetWorldPos;
-    private bool isMoving;
+    // private Vector3 targetWorldPos;
+    // private bool isMoving;
 
     private Vector2Int finalTarget;
     List<SceneLocationEnum> sceneList;
+    SceneLocationEnum lastScene;
     SceneLocationEnum finalScene;
     private List<Vector2Int> currentPath;
     private int currentStepIndex;
@@ -24,6 +25,16 @@ public class NPCMovement : MonoBehaviour
     void Start()
     {
         npc = GetComponent<NPC>();
+    }
+
+    void OnEnable()
+    {
+        WarpController.OnWarpEnd += SpawnNPCPositionMidTravel;
+    }
+
+    void OnDisable()
+    {
+        WarpController.OnWarpEnd -= SpawnNPCPositionMidTravel;
     }
 
     public void MoveTo(Vector2Int targetGridPos, Vector2Int originalPosition, SceneLocationEnum targetScene)
@@ -102,12 +113,13 @@ public class NPCMovement : MonoBehaviour
     {
         NPCController.Instance.SetDataInNPCMap(originalPosition.x, originalPosition.y, 0);
         NPCController.Instance.SetDataInNPCMap((int)newPosition.x, (int)newPosition.y, id);
+        UpdateNPCGridPosition(newPosition);
     }
 
     private IEnumerator FollowSteps()
     {
         ResetMovePointer();
-        isMoving = true;
+        npc.npcData.state = NPCStateEnum.Traveling;
 
         while (currentStepIndex < currentPath.Count)
         {
@@ -125,7 +137,7 @@ public class NPCMovement : MonoBehaviour
 
                 if (currentPath == null || currentPath.Count == 0)
                 {
-                    isMoving = false;
+                    npc.npcData.state = NPCStateEnum.Idle;
                     yield break;
                 }
 
@@ -157,13 +169,13 @@ public class NPCMovement : MonoBehaviour
             currentStepIndex++;
         }
 
-        isMoving = false;
+        npc.npcData.state = NPCStateEnum.Idle;
         if(finalScene != SceneInfo.Instance.location)
         {
             RemoveNPCFromGrid(transform.position);
-            //Rever esse movimento
             MoveOffScreen(finalTarget, npc.npcData.gridPosition, finalScene);
         }
+
         ResetNPCAnimation();
     }
     #endregion
@@ -183,33 +195,28 @@ public class NPCMovement : MonoBehaviour
     private IEnumerator FollowScenesOffScreen()
     {
         RemoveNPCFromGrid(transform.position);
-        SceneLocationEnum previousScene = SceneLocationEnum.FARM;
 
         for (int i = 0; i < sceneList.Count - 1; i++)
         {
             SceneLocationEnum from = sceneList[i];
             SceneLocationEnum to = sceneList[i + 1];
-            previousScene = from;
 
             float travelTime = GetTravelTime(from, to);
 
             npc.npcData.state = NPCStateEnum.Traveling;
             npc.npcData.location = from;
-            Debug.Log($"Começando Viagem: {npc.npcData.location}");
-            yield return new WaitForSeconds(travelTime);
-            
+            lastScene = from;
             npc.npcData.location = to;
-            Debug.Log($"Finalizando viagem: {npc.npcData.location}");
-
             if(npc.npcData.location == SceneInfo.Instance.location)
             {
                 break;
             }
-        }
-        
-        npc.npcData.state = NPCStateEnum.Idle;
 
-        OnOffscreenMovementFinished(previousScene);
+            yield return new WaitForSeconds(travelTime);
+            npc.npcData.state = NPCStateEnum.Idle;
+        }
+
+        OnOffscreenMovementFinished(lastScene);
     }
 
     private float GetTravelTime(SceneLocationEnum from, SceneLocationEnum to)
@@ -223,6 +230,10 @@ public class NPCMovement : MonoBehaviour
         {
             NPCApearingAfterOffsetMove(previousScene);
             MoveTo(finalTarget, npc.npcData.gridPosition, finalScene);
+        } 
+        else
+        {
+            UpdateNPCGridPosition(finalTarget);
         }
     }
 
@@ -234,6 +245,37 @@ public class NPCMovement : MonoBehaviour
         transform.position = new Vector3(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0) + NPCController.Instance.GetNPCOffset();
         movePointer.transform.position = transform.position;
         npc.SetNPC(true);
+    }
+
+    public void SpawnNPCPositionMidTravel()
+    {
+        if(npc.npcData.location != SceneInfo.Instance.location || finalScene == SceneInfo.Instance.location) return;
+
+        StopCoroutine(FollowScenesOffScreen());
+
+        TravelAfterSpawn();
+    }
+
+    private void TravelAfterSpawn()
+    {
+        Vector2Int startPosition = TileMapController.Instance.GetWarpLocationInScene(lastScene);
+
+        UpdateNPCGridPosition(startPosition);
+        transform.position = new Vector3(startPosition.x, startPosition.y,  0) + NPCController.Instance.GetNPCOffset();
+        ResetMovePointer();
+
+        sceneList =
+            ScenesConections.Instance.GetPathToLocation(
+                SceneInfo.Instance.location,
+                finalScene
+            );
+        currentPath = TileMapController.Instance.FindPath(startPosition, finalTarget, finalScene, sceneList);
+        currentStepIndex = 0;
+
+        if (currentPath == null || currentPath.Count == 0)
+            return;
+
+        StartCoroutine(FollowSteps());
     }
     #endregion
 
@@ -282,4 +324,9 @@ public class NPCMovement : MonoBehaviour
         npc.SetNPC(false);
     }
     #endregion
+
+    private void UpdateNPCGridPosition(Vector2 position)
+    {
+        npc.npcData.gridPosition = new Vector2Int((int)position.x, (int)position.y);
+    }
 }

@@ -73,6 +73,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f9cf8d0587807b54a9ca04ed7403ac47, type: 2}
   - {fileID: 11400000, guid: cd3fca60994cbba4b8579ce16413008c, type: 2}
   - {fileID: 11400000, guid: 624981e246e4757429ac2d454aaaad72, type: 2}
+  - {fileID: 11400000, guid: ed0a64f67dd0dfb48b407406cb4dffae, type: 2}
   deadPlant: {fileID: 11400000, guid: 74d7de4285750bc478196b323fdd1cd9, type: 2}
 --- !u!114 &6139808161351050935
 MonoBehaviour:
