@@ -1,6 +1,7 @@
 public enum NPCStateEnum
 {
     Idle,
-    Waking,
-    Traveling
+    Walking,
+    Traveling,
+    Paused
 }

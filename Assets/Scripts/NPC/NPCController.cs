@@ -59,13 +59,7 @@ public class NPCController : MonoBehaviour
                 if(routine.startHour == Time_Controll.Instance.hours && routine.startMinute == Time_Controll.Instance.minutes)
                 {
                     NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
-                    if(npc.npcData.location == SceneInfo.Instance.location)
-                    {  
-                        nPCMovement.MoveTo(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y), routine.location);
-                    } else
-                    {
-                        nPCMovement.MoveOffScreen(routine.position, new Vector2Int((int)npc.transform.position.x, (int)npc.transform.position.y), routine.location);
-                    }
+                    nPCMovement.SetupMoveTo(routine.position, routine.location);
                 }
             }
         } 

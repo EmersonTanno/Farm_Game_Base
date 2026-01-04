@@ -4013,8 +4013,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePointer: {fileID: 1635421968}
   nPCAnimator: {fileID: 782744988}
-  gridPosition: {x: 0, y: 0}
-  moveSpeed: 3
 --- !u!95 &782744988
 Animator:
   serializedVersion: 5
@@ -7007,8 +7005,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movePointer: {fileID: 1401356217}
   nPCAnimator: {fileID: 1420878975}
-  gridPosition: {x: 10, y: 5}
-  moveSpeed: 3
 --- !u!114 &1420878973
 MonoBehaviour:
   m_ObjectHideFlags: 0
