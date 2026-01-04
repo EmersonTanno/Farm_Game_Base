@@ -34,15 +34,15 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        
-    }
+    // void OnEnable()
+    // {
+    //     WarpController.OnWarpEnd += NPCMidTravelMoveSetup;
+    // }
 
-    void OnDisable()
-    {
-        
-    }
+    // void OnDisable()
+    // {
+    //     WarpController.OnWarpEnd -= NPCMidTravelMoveSetup;
+    // }
     #endregion
 
     #region Setups
@@ -52,6 +52,8 @@ public class NPCMovement : MonoBehaviour
         finalTargetPosition = targetGridPos;
         finalTargetScene = targetScene;
         SetUpPath();
+                Debug.Log($"Target scene 1 : {finalTargetScene}");
+
     }
 
     private void SetUpPath()
@@ -85,43 +87,49 @@ public class NPCMovement : MonoBehaviour
 
             Vector2Int nextPosition = movementPath[currentStepIndex];
 
-            if (PlayerOnWay(nextPosition))
-            {
-                SetNewPath();
+            // if (PlayerOnWay(nextPosition))
+            // {
+            //     SetNewPath();
 
-                if (movementPath == null || movementPath.Count == 0)
-                {
-                    SetState(NPCStateEnum.Idle);
-                    yield break;
-                }
+            //     if (movementPath == null || movementPath.Count == 0)
+            //     {
+            //         SetState(NPCStateEnum.Idle);
+            //         yield break;
+            //     }
 
-                yield return null;
-                continue;
-            }
+            //     yield return null;
+            //     continue;
+            // }
 
             SetMovePointer(nextPosition);
             SetNPCAnimation();
 
             //Movimenta o npc se a posição do pointer for diferente da dele
-            while (transform.position != movePointer.transform.position)
+            if(npc.npcData.location == SceneInfo.Instance.location)
             {
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    movePointer.transform.position,
-                    moveSpeed * Time.deltaTime
-                );
-                yield return null;
+                while (transform.position != movePointer.transform.position)
+                {
+                    transform.position = Vector3.MoveTowards(
+                        transform.position,
+                        movePointer.transform.position,
+                        moveSpeed * Time.deltaTime
+                    );
+                    yield return null;
+                }
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.5f);
             }
 
             UpdateNPCGridPosition(movePointer.transform.position);
             CentralizeNPCInMovePointer();
-
             currentStepIndex++;
         }
 
         SetState(NPCStateEnum.Idle);
 
-        if(finalTargetScene != SceneInfo.Instance.location)
+        if(finalTargetScene != SceneInfo.Instance.location || npc.npcData.location != finalTargetScene)
         {
             RemoveNPCFromScene(npc.npcData.gridPosition);
             StartCoroutine(MoveOffScreen());
@@ -136,6 +144,7 @@ public class NPCMovement : MonoBehaviour
     {
         int i;
 
+        SetState(NPCStateEnum.Traveling);
         RemoveNPCFromScene(npc.npcData.gridPosition);
         for(i = 0; i < sceneList.Count - 1; i++)
         {
@@ -144,11 +153,10 @@ public class NPCMovement : MonoBehaviour
 
             float travelTime = GetTravelTime(fromScene, toScene);
 
-            SetState(NPCStateEnum.Traveling);
+
             yield return new WaitForSeconds(travelTime);
 
             npc.npcData.location = toScene;
-            SetState(NPCStateEnum.Idle);
             if(npc.npcData.location == SceneInfo.Instance.location)
             {
                 break;
@@ -166,6 +174,7 @@ public class NPCMovement : MonoBehaviour
         } 
         else
         {
+            SetState(NPCStateEnum.Idle);
             npc.npcData.gridPosition = finalTargetPosition;    
         }
     }
@@ -179,6 +188,9 @@ public class NPCMovement : MonoBehaviour
         transform.position = new Vector3(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0) + NPCController.Instance.GetNPCOffset();
         ResetMovePointer();
         npc.SetNPC(true);
+
+        Debug.Log($"Final target location: {finalTargetScene}");
+        Debug.Log($"Final target position: {finalTargetPosition}");
 
         SetupMoveTo(finalTargetPosition, finalTargetScene);
     }
@@ -227,11 +239,11 @@ public class NPCMovement : MonoBehaviour
     private bool SetMovePointer(Vector2Int movement)
     {
         movePointer.transform.position += GetNextStep(new Vector2Int((int)movePointer.transform.position.x, (int)movePointer.transform.position.y), movement);
-        if(PlayerOnWay(movement))
-        {
-            ResetMovePointer();
-            return false;
-        }
+        // if(PlayerOnWay(movement))
+        // {
+        //     ResetMovePointer();
+        //     return false;
+        // }
         return true;
     }
 
@@ -263,15 +275,15 @@ public class NPCMovement : MonoBehaviour
         return Vector3.zero;
     }
     
-    private bool PlayerOnWay(Vector2Int pos)
-    {
+    // private bool PlayerOnWay(Vector2Int pos)
+    // {
 
-        if(new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y) ==  pos)
-        {
-            return true;
-        }
-        return false;
-    }
+    //     if(new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y) ==  pos)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
     #endregion
 
     #region Travel Time

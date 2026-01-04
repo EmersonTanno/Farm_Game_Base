@@ -58,8 +58,11 @@ public class NPCController : MonoBehaviour
             {
                 if(routine.startHour == Time_Controll.Instance.hours && routine.startMinute == Time_Controll.Instance.minutes)
                 {
+                    if(npc.npcData.state == NPCStateEnum.Traveling) continue;
+                    
                     NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
                     nPCMovement.SetupMoveTo(routine.position, routine.location);
+                    
                 }
             }
         } 
