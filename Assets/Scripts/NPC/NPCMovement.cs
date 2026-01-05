@@ -19,6 +19,8 @@ public class NPCMovement : MonoBehaviour
     private List<Vector2Int> movementPath;
     private int currentStepIndex;
     private bool canWalk = true;
+    private float travelTimeBtweenScenes;
+    private float timeTraveled;
     #endregion
 
     #region Core
@@ -33,16 +35,6 @@ public class NPCMovement : MonoBehaviour
             canWalk = !canWalk;
         }
     }
-
-    // void OnEnable()
-    // {
-    //     WarpController.OnWarpEnd += NPCMidTravelMoveSetup;
-    // }
-
-    // void OnDisable()
-    // {
-    //     WarpController.OnWarpEnd -= NPCMidTravelMoveSetup;
-    // }
     #endregion
 
     #region Setups
@@ -52,8 +44,6 @@ public class NPCMovement : MonoBehaviour
         finalTargetPosition = targetGridPos;
         finalTargetScene = targetScene;
         SetUpPath();
-                Debug.Log($"Target scene 1 : {finalTargetScene}");
-
     }
 
     private void SetUpPath()
@@ -80,26 +70,13 @@ public class NPCMovement : MonoBehaviour
         ResetMovePointer();
 
         SetState(NPCStateEnum.Walking);
+        npc.SetNPC(true);
 
         while (currentStepIndex < movementPath.Count)
         {
             yield return WaitIfPaused();
 
             Vector2Int nextPosition = movementPath[currentStepIndex];
-
-            // if (PlayerOnWay(nextPosition))
-            // {
-            //     SetNewPath();
-
-            //     if (movementPath == null || movementPath.Count == 0)
-            //     {
-            //         SetState(NPCStateEnum.Idle);
-            //         yield break;
-            //     }
-
-            //     yield return null;
-            //     continue;
-            // }
 
             SetMovePointer(nextPosition);
             SetNPCAnimation();
@@ -127,12 +104,14 @@ public class NPCMovement : MonoBehaviour
             currentStepIndex++;
         }
 
-        SetState(NPCStateEnum.Idle);
-
         if(finalTargetScene != SceneInfo.Instance.location || npc.npcData.location != finalTargetScene)
         {
             RemoveNPCFromScene(npc.npcData.gridPosition);
             StartCoroutine(MoveOffScreen());
+        }
+        else
+        {
+            SetState(NPCStateEnum.Idle);
         }
 
         ResetNPCAnimation();
@@ -143,27 +122,49 @@ public class NPCMovement : MonoBehaviour
     private IEnumerator MoveOffScreen()
     {
         int i;
-
-        SetState(NPCStateEnum.Traveling);
+        bool canChangeScene = true;
+        
         RemoveNPCFromScene(npc.npcData.gridPosition);
         for(i = 0; i < sceneList.Count - 1; i++)
         {
             SceneLocationEnum fromScene = sceneList[i];
             SceneLocationEnum toScene = sceneList[i + 1];
+            travelTimeBtweenScenes = GetTravelTime(fromScene, toScene);
+            timeTraveled = 0;
 
-            float travelTime = GetTravelTime(fromScene, toScene);
+            if(npc.npcData.state != NPCStateEnum.Walking)
+            {
+                while(timeTraveled < travelTimeBtweenScenes)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    timeTraveled += 0.1f;
+                    if(fromScene == SceneInfo.Instance.location)
+                    {
+                        canChangeScene = false;
+                        break;
+                    }
+                }
+            } 
+            else
+            {
+                SetState(NPCStateEnum.Traveling);
+            }
 
+            if(canChangeScene)
+            {
+                npc.npcData.location = toScene;
+                Debug.Log(npc.npcData.location);
+            }
 
-            yield return new WaitForSeconds(travelTime);
-
-            npc.npcData.location = toScene;
             if(npc.npcData.location == SceneInfo.Instance.location)
             {
                 break;
             }
+            
         }
 
-        OnOffScreenMovementFinish(sceneList[i]);
+        
+        OnOffScreenMovementFinish(canChangeScene ? sceneList[i] : sceneList[i - 1]);
     }
 
     private void OnOffScreenMovementFinish(SceneLocationEnum fromScene)
@@ -181,16 +182,35 @@ public class NPCMovement : MonoBehaviour
 
     private void NPCAppearInSceneAfterTravel(SceneLocationEnum fromScene)
     {
+        foreach(SceneLocationEnum scene in sceneList)
+        {
+            Debug.Log(scene);
+        }
         Vector2Int startPosition = TileMapController.Instance.GetWarpLocationInScene(fromScene);
 
         npc.npcData.gridPosition = startPosition;
 
+        if(timeTraveled < travelTimeBtweenScenes)
+        {
+            List<Vector2Int> path = TileMapController.Instance.FindPath(npc.npcData.gridPosition, finalTargetPosition, finalTargetScene, npc.npcData.location, sceneList);
+
+            if (path == null || path.Count == 0)
+            {
+                Debug.LogWarning("Path vazio no mid travel");
+                return;
+            }
+
+            float progress = timeTraveled / travelTimeBtweenScenes;
+            progress = Mathf.Clamp01(progress);
+
+            int stepsDone = Mathf.FloorToInt(progress * path.Count);
+            stepsDone = Mathf.Clamp(stepsDone, 0, path.Count - 1);
+
+            npc.npcData.gridPosition = path[stepsDone];
+        }
+
         transform.position = new Vector3(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0) + NPCController.Instance.GetNPCOffset();
         ResetMovePointer();
-        npc.SetNPC(true);
-
-        Debug.Log($"Final target location: {finalTargetScene}");
-        Debug.Log($"Final target position: {finalTargetPosition}");
 
         SetupMoveTo(finalTargetPosition, finalTargetScene);
     }
@@ -199,7 +219,7 @@ public class NPCMovement : MonoBehaviour
     #region Set Path and Scene List
     private void SetNewPath()
     {
-        movementPath = TileMapController.Instance.FindPath(npc.npcData.gridPosition, finalTargetPosition, finalTargetScene, sceneList);
+        movementPath = TileMapController.Instance.FindPath(npc.npcData.gridPosition, finalTargetPosition, finalTargetScene, npc.npcData.location, sceneList);
         currentStepIndex = 0;
     }
 
@@ -239,11 +259,7 @@ public class NPCMovement : MonoBehaviour
     private bool SetMovePointer(Vector2Int movement)
     {
         movePointer.transform.position += GetNextStep(new Vector2Int((int)movePointer.transform.position.x, (int)movePointer.transform.position.y), movement);
-        // if(PlayerOnWay(movement))
-        // {
-        //     ResetMovePointer();
-        //     return false;
-        // }
+
         return true;
     }
 
@@ -274,16 +290,6 @@ public class NPCMovement : MonoBehaviour
 
         return Vector3.zero;
     }
-    
-    // private bool PlayerOnWay(Vector2Int pos)
-    // {
-
-    //     if(new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y) ==  pos)
-    //     {
-    //         return true;
-    //     }
-    //     return false;
-    // }
     #endregion
 
     #region Travel Time

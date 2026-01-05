@@ -517,7 +517,7 @@ public class TileMapController : MonoBehaviour
         NPCController.Instance.SetNPCsInScene();
     }
 
-    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, SceneLocationEnum targetScene,  List<SceneLocationEnum> scenesList)
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, SceneLocationEnum targetScene, SceneLocationEnum currentScene,  List<SceneLocationEnum> scenesList)
     {
         List<Node> openSet = new();
         HashSet<Vector2Int> closedSet = new();
@@ -527,7 +527,7 @@ public class TileMapController : MonoBehaviour
 
         if(targetScene != SceneInfo.Instance.location)
         {
-            target = GetWarpLocation(targetScene, scenesList);
+            target = GetWarpLocation(currentScene, scenesList);
         }
 
         while (openSet.Count > 0)
@@ -602,12 +602,13 @@ public class TileMapController : MonoBehaviour
         return false;
     }
 
-    private Vector2Int GetWarpLocation(SceneLocationEnum targetScene, List<SceneLocationEnum> scenesList)
+    private Vector2Int GetWarpLocation(SceneLocationEnum currentScene, List<SceneLocationEnum> scenesList)
     {
         if (scenesList == null || scenesList.Count < 2)
             return Vector2Int.zero;
 
-        SceneLocationEnum nextScene = scenesList[1];
+        int index = scenesList.FindIndex(p => p == currentScene);
+        SceneLocationEnum nextScene = scenesList[index + 1];
 
         Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         int width = warpGrid.GetWidth();
@@ -632,7 +633,7 @@ public class TileMapController : MonoBehaviour
         return Vector2Int.zero;
     }
 
-    public Vector2Int GetWarpLocationInScene(SceneLocationEnum previousScene)
+    public Vector2Int GetWarpLocationInScene(SceneLocationEnum scene)
     {
         Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         int width = warpGrid.GetWidth();
@@ -645,7 +646,7 @@ public class TileMapController : MonoBehaviour
                 WarpTile warp = warpGrid.GetGridObject(x, y);
                 if (warp == null) continue;
 
-                if (warp.scene.Equals(previousScene.ToString(),
+                if (warp.scene.Equals(scene.ToString(),
                     StringComparison.OrdinalIgnoreCase))
                 {
                     return new Vector2Int(x, y);
@@ -653,7 +654,7 @@ public class TileMapController : MonoBehaviour
             }
         }
 
-        Debug.LogWarning($"Warp não encontrado para {previousScene}");
+        Debug.LogWarning($"Warp não encontrado para {scene}");
         return Vector2Int.zero;
     }
 

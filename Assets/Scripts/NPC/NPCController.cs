@@ -31,15 +31,13 @@ public class NPCController : MonoBehaviour
         {
             if(npc.npcData.location == SceneInfo.Instance.location)
             {
-                npc.SetNPC(true);
-                map.SetNPC(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, npc.npcData.id);
-
                 if(npc.npcData.state == NPCStateEnum.Traveling)
                 {
-                    // NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
-                    // nPCMovement.SpawnNPCPositionMidTravel();
                     continue;
                 }
+
+                npc.SetNPC(true);
+                map.SetNPC(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, npc.npcData.id);
 
                 npc.transform.position = new Vector3(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0) + npcOffSet;
             }
