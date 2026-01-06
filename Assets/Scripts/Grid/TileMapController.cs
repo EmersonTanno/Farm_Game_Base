@@ -548,7 +548,7 @@ public class TileMapController : MonoBehaviour
             {
                 Vector2Int nextPos = current.pos + dir;
 
-                if (!IsWalkable(nextPos) || closedSet.Contains(nextPos) || IsNPCOnWay(nextPos)) //|| IsPlayerOnWay(nextPos))
+                if (!IsWalkable(nextPos) || closedSet.Contains(nextPos) || IsNPCOnWay(nextPos))
                     continue;
 
                 int newCost = current.gCost + 1;
@@ -582,16 +582,6 @@ public class TileMapController : MonoBehaviour
     {
         return tileMap.GetMovementGrid().GetGridObject(new Vector3(pos.x, pos.y, 0));
     }
-
-    // private bool IsPlayerOnWay(Vector2Int pos)
-    // {
-    //     if(pos == new Vector2Int((int)Player_Controller.Instance.transform.position.x, (int)Player_Controller.Instance.transform.position.y))
-    //     {
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
 
     private bool IsNPCOnWay(Vector2Int pos)
     {

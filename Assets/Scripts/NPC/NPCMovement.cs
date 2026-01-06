@@ -28,13 +28,6 @@ public class NPCMovement : MonoBehaviour
     {
         npc = GetComponent<NPC>();
     }
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            canWalk = !canWalk;
-        }
-    }
     #endregion
 
     #region Setups
@@ -339,6 +332,13 @@ public class NPCMovement : MonoBehaviour
     private void SetState(NPCStateEnum newState)
     {
         npc.npcData.state = newState;
+    }
+    #endregion
+
+    #region Set NPC CanWalk
+    public void SetNPCCanWalk(bool state)
+    {
+        canWalk = state;
     }
     #endregion
 }
