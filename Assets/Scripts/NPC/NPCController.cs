@@ -77,4 +77,10 @@ public class NPCController : MonoBehaviour
         return npcOffSet;
     }
 
+    public void InteractWithNPC(int id)
+    {
+        NPC npc = npcs.Find(p => p.npcData.id == id);
+        npc.Interact();
+    }
+
 }

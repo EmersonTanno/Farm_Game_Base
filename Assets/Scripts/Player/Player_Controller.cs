@@ -85,8 +85,15 @@ public class Player_Controller : MonoBehaviour
 
         Vector2 pos = transform.position;
 
-        WorldObjectID obj1 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
-        WorldObjectID obj2 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+        WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+        WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+        int nPCId = TileMapController.Instance.GetGrid().GetNpcGrid().GetGridObject(pos + GetSide());
+
+        if(nPCId != 0)
+        {
+            NPCController.Instance.InteractWithNPC(nPCId);
+            return;
+        }
 
         if (obj1 == WorldObjectID.Bed || obj2 == WorldObjectID.Bed)
         {
