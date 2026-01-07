@@ -20,7 +20,6 @@ public class NPC : MonoBehaviour
 
     public void Interact()
     {
-        Debug.Log("Interagiu");
         npcMovement.SetNPCCanWalk(false);
         bubble.ShowBalloon(ThoughtEmoteEnum.Sweat);
     }

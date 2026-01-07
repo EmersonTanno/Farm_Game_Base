@@ -87,7 +87,7 @@ public class Player_Controller : MonoBehaviour
 
         WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
         WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
-        int nPCId = TileMapController.Instance.GetGrid().GetNpcGrid().GetGridObject(pos + GetSide());
+        int nPCId = CheckNPC(pos);
 
         if(nPCId != 0)
         {
@@ -477,6 +477,26 @@ public class Player_Controller : MonoBehaviour
     public void ShowReaction(ThoughtEmoteEnum reaction)
     {
         reactions.ShowBalloon(reaction);
+    }
+    #endregion
+
+    #region NPC Interaction
+    private int CheckNPC(Vector2 currentPosition)
+    {
+        Vector2 side = GetSide();
+        Grid<int> npcGrid = TileMapController.Instance.GetGrid().GetNpcGrid();
+
+        int firstTile = npcGrid.GetGridObject(currentPosition + side);
+
+        if (firstTile != 0)
+            return firstTile;
+
+        int secondTile = npcGrid.GetGridObject(currentPosition + (side * 2));
+
+        if (secondTile != 0)
+            return secondTile;
+
+        return 0;
     }
     #endregion
 }
