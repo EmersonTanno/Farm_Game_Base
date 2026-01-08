@@ -23,4 +23,22 @@ public class NPC : MonoBehaviour
         npcMovement.SetNPCCanWalk(false);
         bubble.ShowBalloon(ThoughtEmoteEnum.Sweat);
     }
+
+    public void AddHeart(float num)
+    {
+        npcData.hearts += num;
+        if(npcData.hearts > 10)
+        {
+            npcData.hearts = 10;
+        }
+    }
+
+    public void RemoveHeart(float num)
+    {
+        npcData.hearts -= num;
+        if(npcData.hearts < 0)
+        {
+            npcData.hearts = 0;
+        }
+    }
 }
