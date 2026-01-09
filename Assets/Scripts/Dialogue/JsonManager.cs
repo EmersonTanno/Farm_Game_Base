@@ -1,31 +1,75 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class JsonManager : MonoBehaviour
 {
-    public TextAsset textFile;
+    public static JsonManager Instance;
 
-    [System.Serializable]
-    public class JsonData
+    [Header("Dialogue JSON Files")]
+    [SerializeField] private List<TextAsset> dialogueJsonFiles;
+
+    private Dictionary<int, Dictionary<int, Dialogue>> dialogueDatabase;
+
+    private void Awake()
     {
-        public int id;
-        public string Text;
+        if(Instance && Instance != this)
+        {
+            Destroy(this);
+        }
+        
+        Instance = this;
+        LoadAllDialogues();
     }
 
-    [System.Serializable]
-    public class JsonDataList
+    private void LoadAllDialogues()
     {
-        public JsonData[] jsonData;
+        dialogueDatabase = new Dictionary<int, Dictionary<int, Dialogue>>();
+
+        foreach (TextAsset json in dialogueJsonFiles)
+        {
+            if (json == null) continue;
+
+            NpcDialogues npcDialogues =
+                JsonUtility.FromJson<NpcDialogues>(json.text);
+
+            if (npcDialogues == null)
+            {
+                Debug.LogWarning($"Erro ao ler JSON: {json.name}");
+                continue;
+            }
+
+            if (!dialogueDatabase.ContainsKey(npcDialogues.npcId))
+            {
+                dialogueDatabase[npcDialogues.npcId] =
+                    new Dictionary<int, Dialogue>();
+            }
+
+            foreach (Dialogue dialogue in npcDialogues.npcDialogueList)
+            {
+                dialogueDatabase[npcDialogues.npcId][dialogue.dialogueId] =
+                    dialogue;
+            }
+        }
+
+        Debug.Log($"JsonManager carregou {dialogueDatabase.Count} NPCs");
     }
 
-    public JsonData[] data;
-
-    private void Start()
+    public List<DialogueLine> GetDialogue(int npcId, int dialogueId)
     {
-        JsonDataList jsonDataList =
-            JsonUtility.FromJson<JsonDataList>(textFile.text);
+        if (!dialogueDatabase.ContainsKey(npcId))
+        {
+            Debug.LogWarning($"NPC {npcId} não encontrado");
+            return null;
+        }
 
-        data = jsonDataList.jsonData;
+        if (!dialogueDatabase[npcId].ContainsKey(dialogueId))
+        {
+            Debug.LogWarning(
+                $"Diálogo {dialogueId} não encontrado para NPC {npcId}"
+            );
+            return null;
+        }
 
-        Debug.Log("Quantidade de diálogos: " + data.Length);
+        return dialogueDatabase[npcId][dialogueId].dialogue;
     }
 }

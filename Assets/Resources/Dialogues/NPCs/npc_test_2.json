@@ -1,18 +1,18 @@
 {
-  "npcId": 1,
+  "npcId": 2,
   "npcDialogueList": [
     {
       "dialogueId": 1,
       "dialogue": [
         {
-          "portrait": 0,
-          "textLinePt": "Olá, eu sou o prefeito da cidade.",
-          "textLineEn": "Hello, I am the mayor of the city."
+          "portrait": 1,
+          "textLinePt": "Você deve ser o novo morador.",
+          "textLineEn": "You must be the new farmer."
         },
         {
-          "portrait": 0,
+          "portrait": 1,
           "textLinePt": "Espero que você pague as taxas direitinho.",
-          "textLineEn": "I hope you pay your taxes properly."
+          "textLineEn": "Hello, I am the mayor of the city."
         }
       ]
     },
@@ -22,12 +22,12 @@
         {
           "portrait": 1,
           "textLinePt": "Cuidado ao sair da fazenda.",
-          "textLineEn": "Be careful when leaving the farm."
+          "textLineEn": "Hello, I am the mayor of the city."
         },
         {
           "portrait": 1,
           "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
-          "textLineEn": "You never know what kind of taxes you might encounter."
+          "textLineEn": "Hello, I am the mayor of the city."
         }
       ]
     }
