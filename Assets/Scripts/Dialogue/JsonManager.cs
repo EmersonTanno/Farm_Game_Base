@@ -16,7 +16,7 @@ public class JsonManager : MonoBehaviour
         {
             Destroy(this);
         }
-        
+
         Instance = this;
         LoadAllDialogues();
     }
@@ -50,8 +50,6 @@ public class JsonManager : MonoBehaviour
                     dialogue;
             }
         }
-
-        Debug.Log($"JsonManager carregou {dialogueDatabase.Count} NPCs");
     }
 
     public List<DialogueLine> GetDialogue(int npcId, int dialogueId)
