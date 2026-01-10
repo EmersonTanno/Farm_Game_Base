@@ -22,6 +22,7 @@ public class NPC : MonoBehaviour
     {
         npcMovement.SetNPCCanWalk(false);
         bubble.ShowBalloon(ThoughtEmoteEnum.Sweat);
+        DialogueManager.Instance.SetDialogue(npcData.id, 1);
     }
 
     public void AddHeart(float num)

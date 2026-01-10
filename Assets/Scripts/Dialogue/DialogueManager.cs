@@ -18,6 +18,8 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping;
     private bool nextLine;
     private bool completeLine;
+    private bool canAdvance;
+
 
     void Awake()
     {
@@ -27,11 +29,6 @@ public class DialogueManager : MonoBehaviour
         }
 
         Instance = this;
-    }
-
-    void Start()
-    {
-        SetDialogue(1, 1);
     }
 
     private void SetDialogueCanvas(bool active)
@@ -75,14 +72,19 @@ public class DialogueManager : MonoBehaviour
     {
         SetDialogueCanvas(true);
         dialogueActive = true;
+        canAdvance = false;
 
-        List<DialogueLine> dialogue = JsonManager.Instance.GetDialogue(npcId, dialogueId);
+        List<DialogueLine> dialogue =
+            JsonManager.Instance.GetDialogue(npcId, dialogueId);
 
+        StartCoroutine(EnableAdvanceNextFrame());
         StartCoroutine(StartDialogue(dialogue));
     }
 
+
     private IEnumerator StartDialogue(List<DialogueLine> dialogue)
     {
+        completeLine = false;
         foreach (DialogueLine dialogueLine in dialogue)
         {
             SetDialogueSide(dialogueLine.portrait);
@@ -109,7 +111,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         nextLine = false;
-        
+
         EndDialogue();
     }
 
@@ -142,7 +144,7 @@ public class DialogueManager : MonoBehaviour
 
     public void NextLine()
     {
-        if (!dialogueActive) return;
+        if (!dialogueActive || !canAdvance) return;
 
         if (isTyping)
         {
@@ -152,4 +154,11 @@ public class DialogueManager : MonoBehaviour
 
         nextLine = true;
     }
+
+    private IEnumerator EnableAdvanceNextFrame()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        canAdvance = true;
+    }
+
 }
