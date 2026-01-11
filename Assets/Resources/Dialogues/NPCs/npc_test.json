@@ -7,7 +7,19 @@
         {
           "portrait": 1,
           "textLinePt": "Olá, eu sou o prefeito da cidade.",
-          "textLineEn": "Hello, I am the mayor of the city."
+          "textLineEn": "Hello, I am the mayor of the city.",
+          "options": [
+            {
+              "answerOptionPt": "Quem é você?",
+              "answerOptionEn": "Who are you?",
+              "toDialogueId": 2
+            },
+            {
+              "answerOption": "Tenho que ir",
+              "answerOptionEn": "I need to go",
+              "toDialogueId": 0
+            }
+          ]
         },
         {
           "portrait": 1,
