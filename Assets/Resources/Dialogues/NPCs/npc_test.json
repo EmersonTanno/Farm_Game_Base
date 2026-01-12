@@ -7,7 +7,12 @@
         {
           "portrait": 1,
           "textLinePt": "Olá, eu sou o prefeito da cidade.",
-          "textLineEn": "Hello, I am the mayor of the city.",
+          "textLineEn": "Hello, I am the mayor of the city."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Espero que você pague as taxas direitinho.",
+          "textLineEn": "I hope you pay your taxes properly.",
           "options": [
             {
               "answerOptionPt": "Quem é você?",
@@ -15,16 +20,11 @@
               "toDialogueId": 2
             },
             {
-              "answerOption": "Tenho que ir",
+              "answerOptionPt": "Tenho que ir",
               "answerOptionEn": "I need to go",
-              "toDialogueId": 0
+              "toDialogueId": 2
             }
           ]
-        },
-        {
-          "portrait": 1,
-          "textLinePt": "Espero que você pague as taxas direitinho.",
-          "textLineEn": "I hope you pay your taxes properly."
         }
       ]
     },

@@ -146,7 +146,6 @@ public class NPCMovement : MonoBehaviour
             if(canChangeScene)
             {
                 npc.npcData.location = toScene;
-                Debug.Log(npc.npcData.location);
             }
 
             if(npc.npcData.location == SceneInfo.Instance.location)
@@ -175,10 +174,6 @@ public class NPCMovement : MonoBehaviour
 
     private void NPCAppearInSceneAfterTravel(SceneLocationEnum fromScene)
     {
-        foreach(SceneLocationEnum scene in sceneList)
-        {
-            Debug.Log(scene);
-        }
         Vector2Int startPosition = TileMapController.Instance.GetWarpLocationInScene(fromScene);
 
         npc.npcData.gridPosition = startPosition;

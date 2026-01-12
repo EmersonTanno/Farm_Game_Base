@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
-    [SerializeField] GameObject DialogueGroup;
-    [SerializeField] GameObject DialogueLeftSide;
-    [SerializeField] TextMeshProUGUI LeftText;
-    [SerializeField] GameObject DialogueRightSide;
-    [SerializeField] TextMeshProUGUI RightText;
+    [SerializeField] GameObject dialogueGroup;
+    [SerializeField] GameObject dialogueLeftSide;
+    [SerializeField] TextMeshProUGUI leftText;
+    [SerializeField] GameObject dialogueRightSide;
+    [SerializeField] TextMeshProUGUI rightText;
+
+    [SerializeField] GameObject buttonGroup;
+    [SerializeField] List<GameObject> buttons;
 
 
     public bool dialogueActive = false;
@@ -19,6 +23,8 @@ public class DialogueManager : MonoBehaviour
     private bool nextLine;
     private bool completeLine;
     private bool canAdvance;
+    private bool optionSelected;
+    private int selectedOption;
 
 
     void Awake()
@@ -33,31 +39,31 @@ public class DialogueManager : MonoBehaviour
 
     private void SetDialogueCanvas(bool active)
     {
-        DialogueGroup.SetActive(active);
+        dialogueGroup.SetActive(active);
     }
 
     private void SetDialogueSide(int portrait)
     {
         if(portrait == 0)
         {
-            DialogueRightSide.SetActive(false);
-            DialogueLeftSide.SetActive(true);
+            dialogueRightSide.SetActive(false);
+            dialogueLeftSide.SetActive(true);
         }
         else
         {
-            DialogueLeftSide.SetActive(false);
-            DialogueRightSide.SetActive(true);
+            dialogueLeftSide.SetActive(false);
+            dialogueRightSide.SetActive(true);
         }
     }
 
     private IEnumerator DisplayDialogueLine(string dialogueLine)
     {
         isTyping = true;
-        RightText.text = "";
+        rightText.text = "";
 
         foreach (char character in dialogueLine)
         {
-            RightText.text += character;
+            rightText.text += character;
             if(!completeLine)
                 yield return new WaitForSecondsRealtime(0.03f);
         }
@@ -85,6 +91,8 @@ public class DialogueManager : MonoBehaviour
     private IEnumerator StartDialogue(List<DialogueLine> dialogue)
     {
         completeLine = false;
+        optionSelected = false;
+        selectedOption = 0;
         foreach (DialogueLine dialogueLine in dialogue)
         {
             SetDialogueSide(dialogueLine.portrait);
@@ -94,15 +102,29 @@ public class DialogueManager : MonoBehaviour
                 dialogueLine
             );
 
+            if (dialogueLine.options != null && dialogueLine.options.Count > 0)
+            {
+                SetButtons(dialogueLine.options);
+            }
+            else
+            {
+                DeactivateButtons();
+            }
+
             yield return StartCoroutine(DisplayDialogueLine(textLine));
 
-            while (!nextLine)
+            while (!nextLine || (!optionSelected && dialogueLine.options != null && dialogueLine.options.Count > 0))
             {
                 yield return null;
             }
 
             nextLine = false;
             yield return new WaitForSecondsRealtime(0.1f);
+        }
+
+        if(optionSelected)
+        {
+            ContinueDialogue(1, dialogue[dialogue.Count - 1].options[selectedOption].toDialogueId);
         }
 
         while (!nextLine)
@@ -160,5 +182,64 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
         canAdvance = true;
     }
+
+    #region Tree Dialog
+    private void SetButtons(List<DialogueOptions> options)
+    {
+        DeactivateButtons();
+
+        buttonGroup.SetActive(true);
+
+        for(int i = 0; i < options.Count; i++)
+        {
+            buttons[i].SetActive(true);
+            buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = GetLanguageOption(GameConfigurations.Instance.gameLanguage, options[i]);
+        }
+        
+        optionSelected = false;
+    }
+
+    private void DeactivateButtons()
+    {
+        foreach(GameObject gameObject in buttons)
+        {
+            gameObject.SetActive(false);
+        }
+
+        buttonGroup.SetActive(false);
+    }
+
+    private string GetLanguageOption(LanguageEnum language, DialogueOptions option)
+    {
+        switch(language)
+        {
+            case LanguageEnum.Potugues:
+                {
+                    return option.answerOptionPt;
+                }
+            
+            case LanguageEnum.Ingles:
+                {
+                    return option.answerOptionEn;
+                }
+            default:
+                {
+                    return "";
+                }
+        }
+    }
+
+    public void OnSelectButton(int choice)
+    {
+        selectedOption = choice;
+        optionSelected = true;
+    }
+
+    private void ContinueDialogue(int npcId, int dialogueId)
+    {
+        StopAllCoroutines();
+        SetDialogue(npcId, dialogueId);
+    }
+    #endregion
 
 }
