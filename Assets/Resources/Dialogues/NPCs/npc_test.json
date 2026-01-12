@@ -39,7 +39,29 @@
         {
           "portrait": 1,
           "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
-          "textLineEn": "You never know what kind of taxes you might encounter."
+          "textLineEn": "You never know what kind of taxes you might encounter.",
+          "options": [
+            {
+              "answerOptionPt": "Quem é você?",
+              "answerOptionEn": "Who are you?",
+              "toDialogueId": 3
+            },
+            {
+              "answerOptionPt": "Tenho que ir",
+              "answerOptionEn": "I need to go",
+              "toDialogueId": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dialogueId": 3,
+      "dialogue": [
+        {
+          "portrait": 1,
+          "textLinePt": "Fim",
+          "textLineEn": "End"
         }
       ]
     }

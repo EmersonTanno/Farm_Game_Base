@@ -102,7 +102,9 @@ public class DialogueManager : MonoBehaviour
                 dialogueLine
             );
 
-            if (dialogueLine.options != null && dialogueLine.options.Count > 0)
+            yield return StartCoroutine(DisplayDialogueLine(textLine));
+
+            if (dialogueLine.options != null && dialogueLine.options.Count > 0 && !isTyping)
             {
                 SetButtons(dialogueLine.options);
             }
@@ -110,8 +112,6 @@ public class DialogueManager : MonoBehaviour
             {
                 DeactivateButtons();
             }
-
-            yield return StartCoroutine(DisplayDialogueLine(textLine));
 
             while (!nextLine || (!optionSelected && dialogueLine.options != null && dialogueLine.options.Count > 0))
             {
@@ -233,6 +233,7 @@ public class DialogueManager : MonoBehaviour
     {
         selectedOption = choice;
         optionSelected = true;
+        DeactivateButtons();
     }
 
     private void ContinueDialogue(int npcId, int dialogueId)
