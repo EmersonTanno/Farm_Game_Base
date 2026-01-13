@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
+    #region Variables
     [SerializeField] GameObject dialogueGroup;
     [SerializeField] GameObject dialogueLeftSide;
     [SerializeField] TextMeshProUGUI leftText;
@@ -26,8 +27,9 @@ public class DialogueManager : MonoBehaviour
     private bool canAdvance;
     private bool optionSelected;
     private int selectedOption;
+    #endregion
 
-
+    #region Core
     void Awake()
     {
         if(Instance && Instance != this)
@@ -37,7 +39,9 @@ public class DialogueManager : MonoBehaviour
 
         Instance = this;
     }
+    #endregion
 
+    #region Setup
     private void SetDialogueCanvas(bool active)
     {
         dialogueGroup.SetActive(active);
@@ -85,11 +89,13 @@ public class DialogueManager : MonoBehaviour
             JsonManager.Instance.GetDialogue(npcId, dialogueId);
 
         StartCoroutine(EnableAdvanceNextFrame());
-        StartCoroutine(StartDialogue(dialogue));
+        StartCoroutine(StartDialogue(npcId, dialogue));
     }
+    #endregion
 
 
-    private IEnumerator StartDialogue(List<DialogueLine> dialogue)
+    #region Dialogue
+    private IEnumerator StartDialogue(int npcId,List<DialogueLine> dialogue)
     {
         completeLine = false;
         optionSelected = false;
@@ -101,7 +107,7 @@ public class DialogueManager : MonoBehaviour
 
             if(dialogueLine.reaction != null)
             {
-                NPCController.Instance.ShowNPCReaction(1, GetReaction(dialogueLine.reaction));
+                NPCController.Instance.ShowNPCReaction(npcId, GetReaction(dialogueLine.reaction));
             }
             
             string textLine = GetLanguageLine(
@@ -189,6 +195,7 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
         canAdvance = true;
     }
+    #endregion
 
     #region Tree Dialog
     private void SetButtons(List<DialogueOptions> options)
