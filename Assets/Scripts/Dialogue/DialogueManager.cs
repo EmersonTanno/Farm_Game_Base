@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -97,6 +98,12 @@ public class DialogueManager : MonoBehaviour
         {
             SetDialogueSide(dialogueLine.portrait);
 
+
+            if(dialogueLine.reaction != null)
+            {
+                NPCController.Instance.ShowNPCReaction(1, GetReaction(dialogueLine.reaction));
+            }
+            
             string textLine = GetLanguageLine(
                 GameConfigurations.Instance.gameLanguage,
                 dialogueLine
@@ -241,6 +248,27 @@ public class DialogueManager : MonoBehaviour
         StopAllCoroutines();
         SetDialogue(npcId, dialogueId);
     }
+    #endregion
+
+    #region Reactions
+    private ThoughtEmoteEnum GetReaction(string reaction)
+    {
+        if (string.IsNullOrEmpty(reaction))
+            return ThoughtEmoteEnum.None;
+
+        if (System.Enum.TryParse(
+            reaction,
+            true,
+            out ThoughtEmoteEnum result
+        ))
+        {
+            return result;
+        }
+
+        Debug.LogWarning($"Reaction inválida no JSON: {reaction}");
+        return ThoughtEmoteEnum.None;
+    }
+
     #endregion
 
 }

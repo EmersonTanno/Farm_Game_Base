@@ -21,7 +21,7 @@ public class NPC : MonoBehaviour
     public void Interact()
     {
         npcMovement.SetNPCCanWalk(false);
-        bubble.ShowBalloon(ThoughtEmoteEnum.Sweat);
+        //bubble.ShowBalloon(ThoughtEmoteEnum.Sweat);
         DialogueManager.Instance.SetDialogue(npcData.id, 1);
     }
 
@@ -41,5 +41,10 @@ public class NPC : MonoBehaviour
         {
             npcData.hearts = 0;
         }
+    }
+
+    public void ShowReaction(ThoughtEmoteEnum reaction)
+    {
+        bubble.ShowBalloon(reaction);
     }
 }

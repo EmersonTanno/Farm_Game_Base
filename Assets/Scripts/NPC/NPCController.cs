@@ -83,4 +83,9 @@ public class NPCController : MonoBehaviour
         npc.Interact();
     }
 
+    public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
+    {
+        NPC npc = npcs.Find(p => p.npcData.id == id);
+        npc.ShowReaction(reaction);
+    }
 }

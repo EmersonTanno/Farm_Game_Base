@@ -6,6 +6,7 @@
       "dialogue": [
         {
           "portrait": 1,
+          "reaction": "Sweat",
           "textLinePt": "Olá, eu sou o prefeito da cidade.",
           "textLineEn": "Hello, I am the mayor of the city."
         },
@@ -33,6 +34,7 @@
       "dialogue": [
         {
           "portrait": 1,
+          "reaction": "Sweat",
           "textLinePt": "Cuidado ao sair da fazenda.",
           "textLineEn": "Be careful when leaving the farm."
         },
