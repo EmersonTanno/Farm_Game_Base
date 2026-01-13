@@ -7,5 +7,6 @@ public class DialogueLine
     public string textLinePt;
     public string textLineEn;
     public string reaction;
+    public int addHearts;
     public List<DialogueOptions> options;
 }

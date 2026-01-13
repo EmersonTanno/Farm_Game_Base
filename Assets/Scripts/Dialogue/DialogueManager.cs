@@ -104,11 +104,11 @@ public class DialogueManager : MonoBehaviour
         {
             SetDialogueSide(dialogueLine.portrait);
 
-
             if(dialogueLine.reaction != null)
             {
                 NPCController.Instance.ShowNPCReaction(npcId, GetReaction(dialogueLine.reaction));
             }
+            AddHearts(npcId, dialogueLine.addHearts);
             
             string textLine = GetLanguageLine(
                 GameConfigurations.Instance.gameLanguage,
@@ -263,7 +263,7 @@ public class DialogueManager : MonoBehaviour
         if (string.IsNullOrEmpty(reaction))
             return ThoughtEmoteEnum.None;
 
-        if (System.Enum.TryParse(
+        if (Enum.TryParse(
             reaction,
             true,
             out ThoughtEmoteEnum result
@@ -277,4 +277,12 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion
 
+
+    #region Hearts
+    private void AddHearts(int npcId, int hearts)
+    {
+        if(hearts == 0) return;
+        NPCController.Instance.AddNPCHearts(npcId, hearts);
+    }
+    #endregion
 }

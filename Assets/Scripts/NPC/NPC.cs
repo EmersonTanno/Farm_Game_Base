@@ -21,26 +21,22 @@ public class NPC : MonoBehaviour
     public void Interact()
     {
         npcMovement.SetNPCCanWalk(false);
-        //bubble.ShowBalloon(ThoughtEmoteEnum.Sweat);
         DialogueManager.Instance.SetDialogue(npcData.id, "1");
     }
 
-    public void AddHeart(float num)
+    public void AddHeart(int num)
     {
         npcData.hearts += num;
         if(npcData.hearts > 10)
         {
             npcData.hearts = 10;
         }
-    }
-
-    public void RemoveHeart(float num)
-    {
-        npcData.hearts -= num;
         if(npcData.hearts < 0)
         {
             npcData.hearts = 0;
         }
+
+        Debug.Log("Corações adicionados " + npcData.hearts);
     }
 
     public void ShowReaction(ThoughtEmoteEnum reaction)

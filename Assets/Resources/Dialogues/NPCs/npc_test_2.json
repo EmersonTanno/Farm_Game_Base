@@ -2,7 +2,7 @@
   "npcId": 2,
   "npcDialogueList": [
     {
-      "dialogueId": 1,
+      "dialogueId": "1",
       "dialogue": [
         {
           "portrait": 2,
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "dialogueId": 2,
+      "dialogueId": "2",
       "dialogue": [
         {
           "portrait": 2,

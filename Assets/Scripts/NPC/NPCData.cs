@@ -6,7 +6,7 @@ public class NPCData
 {
     public int id;
 
-    public float hearts = 0;
+    public int hearts = 0;
 
     public SceneLocationEnum location;
     public Vector2Int gridPosition;

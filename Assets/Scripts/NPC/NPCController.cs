@@ -77,15 +77,26 @@ public class NPCController : MonoBehaviour
         return npcOffSet;
     }
 
+    public NPC GetNPC(int id)
+    {
+        return npcs.Find(p => p.npcData.id == id);
+    }
+
     public void InteractWithNPC(int id)
     {
-        NPC npc = npcs.Find(p => p.npcData.id == id);
+        NPC npc = GetNPC(id);
         npc.Interact();
     }
 
     public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
     {
-        NPC npc = npcs.Find(p => p.npcData.id == id);
+        NPC npc = GetNPC(id);
         npc.ShowReaction(reaction);
+    }
+
+    public void AddNPCHearts(int id, int hearts)
+    {
+        NPC npc = GetNPC(id);
+        npc.AddHeart(hearts);
     }
 }
