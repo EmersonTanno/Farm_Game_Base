@@ -2,7 +2,7 @@
   "npcId": 1,
   "npcDialogueList": [
     {
-      "dialogueId": 1,
+      "dialogueId": "1",
       "dialogue": [
         {
           "portrait": 1,
@@ -18,19 +18,19 @@
             {
               "answerOptionPt": "Quem é você?",
               "answerOptionEn": "Who are you?",
-              "toDialogueId": 2
+              "toDialogueId": "2"
             },
             {
               "answerOptionPt": "Tenho que ir",
               "answerOptionEn": "I need to go",
-              "toDialogueId": 2
+              "toDialogueId": "2"
             }
           ]
         }
       ]
     },
     {
-      "dialogueId": 2,
+      "dialogueId": "2",
       "dialogue": [
         {
           "portrait": 1,
@@ -46,19 +46,19 @@
             {
               "answerOptionPt": "Quem é você?",
               "answerOptionEn": "Who are you?",
-              "toDialogueId": 3
+              "toDialogueId": "3"
             },
             {
               "answerOptionPt": "Tenho que ir",
               "answerOptionEn": "I need to go",
-              "toDialogueId": 3
+              "toDialogueId": "3"
             }
           ]
         }
       ]
     },
     {
-      "dialogueId": 3,
+      "dialogueId": "3",
       "dialogue": [
         {
           "portrait": 1,

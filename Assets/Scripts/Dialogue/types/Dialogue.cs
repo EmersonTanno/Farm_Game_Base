@@ -3,6 +3,6 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Dialogue
 {
-    public int dialogueId;
+    public string dialogueId;
     public List<DialogueLine> dialogue;
 }

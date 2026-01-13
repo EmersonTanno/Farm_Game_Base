@@ -79,7 +79,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void SetDialogue(int npcId, int dialogueId)
+    public void SetDialogue(int npcId, string dialogueId)
     {
         SetDialogueCanvas(true);
         dialogueActive = true;
@@ -250,7 +250,7 @@ public class DialogueManager : MonoBehaviour
         DeactivateButtons();
     }
 
-    private void ContinueDialogue(int npcId, int dialogueId)
+    private void ContinueDialogue(int npcId, string dialogueId)
     {
         StopAllCoroutines();
         SetDialogue(npcId, dialogueId);
@@ -275,7 +275,6 @@ public class DialogueManager : MonoBehaviour
         Debug.LogWarning($"Reaction inválida no JSON: {reaction}");
         return ThoughtEmoteEnum.None;
     }
-
     #endregion
 
 }
