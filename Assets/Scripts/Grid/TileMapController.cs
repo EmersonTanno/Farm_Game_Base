@@ -61,7 +61,7 @@ public class TileMapController : MonoBehaviour
         ApplySavedLayout();
         renderer.Init(tileMap);
 
-        SetAllGrids(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
+        SetAllGrids();
         OnTileMapReady?.Invoke();
     }
 
@@ -69,14 +69,14 @@ public class TileMapController : MonoBehaviour
     {
         Calendar_Controller.OnDayChange += GrowPlant;
         Calendar_Controller.OnDayChange += PassPlownSoilDay;
-        TileMapController.OnTileMapReady += SetNPCsInScene;
+        OnTileMapReady += SetNPCsInScene;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
         Calendar_Controller.OnDayChange -= PassPlownSoilDay;
-        TileMapController.OnTileMapReady -= SetNPCsInScene;
+        OnTileMapReady -= SetNPCsInScene;
     }
 
     #endregion
@@ -391,6 +391,8 @@ public class TileMapController : MonoBehaviour
                 worldTile.id
             );
 
+            SetMoveGrid(pos.x, pos.y, worldTile.IsWalkable);
+
             if(worldTile.isWarp)
             {
                 SetWarpGrid(pos.x, pos.y, worldTile.warp);
@@ -417,9 +419,8 @@ public class TileMapController : MonoBehaviour
 
     #region SetGrids
 
-    private void SetAllGrids(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
+    private void SetAllGrids()
     {
-        SetMovementGrid(originalGrid, objectGrid);
         SetConstructionsInSceneAndConstructionsWarps();
         SetObjectsInScene();
     }
@@ -427,39 +428,9 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region MovementGrid
-    private void SetMovementGrid(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
+    private void SetMoveGrid(int x, int y, bool canWalk)
     {
-        int height = originalGrid.GetHeight();
-        int width = originalGrid.GetWidth();
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int originalGridPositionValue = originalGrid.GetGridObject(x, y);
-                WorldObjectID objectGridPositionValue = objectGrid.GetGridObject(x, y);
-
-                if(objectGridPositionValue == WorldObjectID.None)
-                {
-                    if(originalGridPositionValue == 0)
-                    {
-                        continue;
-                    }
-
-                    if
-                    (
-                        originalGridPositionValue <= 9 || 
-                        (originalGridPositionValue >= 10 && originalGridPositionValue <= 11) || 
-                        originalGridPositionValue == 20 || 
-                        originalGridPositionValue == 100 //remover após testes
-                    )
-                    {
-                        tileMap.GetMovementGrid().SetValue(x, y, true);
-                        continue;
-                    }
-                } 
-            }
-        }
+        tileMap.GetMovementGrid().SetValue(x, y, canWalk);
     }
 
     public bool CanMoveInGrid(Vector2 position)
@@ -471,9 +442,7 @@ public class TileMapController : MonoBehaviour
     #region Warp Grid
     private void SetWarpGrid(int x, int y, WarpTile warpTile)
     {
-        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
-
-        warpGrid.SetValue(x, y, warpTile);
+        tileMap.GetWarpGrid().SetValue(x, y, warpTile);
     }
     #endregion
 
