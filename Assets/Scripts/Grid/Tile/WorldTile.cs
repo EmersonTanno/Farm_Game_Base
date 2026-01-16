@@ -6,6 +6,7 @@ public class WorldTile : Tile
 {
     public int id;
     public bool isWarp;
-    public bool IsWalkable;
+    public bool isWalkable;
+    public bool isPath;
     public WarpTile warp;
 }

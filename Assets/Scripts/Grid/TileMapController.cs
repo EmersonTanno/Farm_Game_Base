@@ -391,7 +391,7 @@ public class TileMapController : MonoBehaviour
                 worldTile.id
             );
 
-            SetMoveGrid(pos.x, pos.y, worldTile.IsWalkable);
+            SetMoveGrid(pos.x, pos.y, worldTile.isWalkable);
 
             if(worldTile.isWarp)
             {
