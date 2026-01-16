@@ -392,6 +392,7 @@ public class TileMapController : MonoBehaviour
             );
 
             SetMoveGrid(pos.x, pos.y, worldTile.isWalkable);
+            SetPathGrid(pos.x, pos.y, worldTile.isPath);
 
             if(worldTile.isWarp)
             {
@@ -443,6 +444,13 @@ public class TileMapController : MonoBehaviour
     private void SetWarpGrid(int x, int y, WarpTile warpTile)
     {
         tileMap.GetWarpGrid().SetValue(x, y, warpTile);
+    }
+    #endregion
+
+    #region Path Grid
+    private void SetPathGrid(int x, int y, bool isPath)
+    {
+        tileMap.GetMovementGrid().SetValue(x, y, isPath);
     }
     #endregion
 
