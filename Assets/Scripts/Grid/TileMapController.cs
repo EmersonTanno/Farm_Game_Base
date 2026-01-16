@@ -450,7 +450,7 @@ public class TileMapController : MonoBehaviour
     #region Path Grid
     private void SetPathGrid(int x, int y, bool isPath)
     {
-        tileMap.GetMovementGrid().SetValue(x, y, isPath);
+        tileMap.GetPathGrid().SetValue(x, y, isPath);
     }
     #endregion
 
@@ -528,7 +528,7 @@ public class TileMapController : MonoBehaviour
                 if (!IsWalkable(nextPos) || closedSet.Contains(nextPos) || IsNPCOnWay(nextPos))
                     continue;
 
-                int newCost = current.gCost + 1;
+                int newCost = current.gCost + GetMoveCost(nextPos);
 
                 Node neighbor = openSet.Find(n => n.pos == nextPos);
                 if (neighbor == null)
@@ -625,6 +625,17 @@ public class TileMapController : MonoBehaviour
         return Vector2Int.zero;
     }
 
+    private int GetMoveCost(Vector2Int pos)
+    {
+        int cost = 10;
+
+        if (tileMap.GetPathGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)))
+        {
+            cost = 1;
+        }
+
+        return cost;
+    }
     #endregion
 
     #region Debug
