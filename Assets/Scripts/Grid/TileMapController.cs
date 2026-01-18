@@ -393,13 +393,11 @@ public class TileMapController : MonoBehaviour
 
             SetMoveGrid(pos.x, pos.y, worldTile.isWalkable);
             SetPathGrid(pos.x, pos.y, worldTile.isPath);
-
-            if(worldTile.isWarp)
-            {
-                SetWarpGrid(pos.x, pos.y, worldTile.warp);
-            }
         }
+        LoadWarpsFromScene();
     }
+
+
 
     private void CreateGridFromTilemap()
     {
@@ -445,6 +443,33 @@ public class TileMapController : MonoBehaviour
     {
         tileMap.GetWarpGrid().SetValue(x, y, warpTile);
     }
+
+    private void LoadWarpsFromScene()
+    {
+        Warp[] warps = FindObjectsByType<Warp>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
+
+        foreach (Warp warp in warps)
+        {
+            Vector3 worldPos = warp.transform.position;
+
+            int x = Mathf.RoundToInt(worldPos.x);
+            int y = Mathf.RoundToInt(worldPos.y);
+
+            WarpTile warpTile = new WarpTile
+            {
+                scene = warp.toScene.ToString(),
+                x = warp.toX,
+                y = warp.toY,
+                transitionType = warp.transitionType
+            };
+
+            SetWarpGrid(x, y, warpTile);
+        }
+    }
+
     #endregion
 
     #region Path Grid
