@@ -14,6 +14,7 @@ public class TileMapController : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private GameObject constructionsMap;
     [SerializeField] private GameObject objectsMap;
+    [SerializeField] private GameObject warpHolder;
 
     public static event Action OnTileMapReady;
 
@@ -446,10 +447,7 @@ public class TileMapController : MonoBehaviour
 
     private void LoadWarpsFromScene()
     {
-        Warp[] warps = FindObjectsByType<Warp>(
-            FindObjectsInactive.Include,
-            FindObjectsSortMode.None
-        );
+        Warp[] warps = warpHolder.GetComponentsInChildren<Warp>(true);
 
         foreach (Warp warp in warps)
         {
@@ -499,10 +497,6 @@ public class TileMapController : MonoBehaviour
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
                 tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
                 tileMap.GetConstructionGrid().SetValue(position, construction.GetWorldObjectType());
-                if(tile.isWarp)
-                {
-                    SetWarpGrid((int)construction.transform.position.x + tile.offset.x, (int)construction.transform.position.y + tile.offset.y, tile.warp);
-                }
             }
         }
     }
