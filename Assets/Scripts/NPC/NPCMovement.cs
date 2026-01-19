@@ -9,6 +9,7 @@ public class NPCMovement : MonoBehaviour
     private NPC npc;
     [SerializeField] private GameObject movePointer;
     [SerializeField] private Animator nPCAnimator;
+    [SerializeField] private WarpGraph warpGraph;
     #endregion
 
     #region Variable
@@ -120,9 +121,9 @@ public class NPCMovement : MonoBehaviour
         RemoveNPCFromScene(npc.npcData.gridPosition);
         for(i = 0; i < sceneList.Count - 1; i++)
         {
-            SceneLocationEnum fromScene = sceneList[i];
+            SceneLocationEnum fromScene = sceneList[i - 1 > -1 ? i - 1: i];
             SceneLocationEnum toScene = sceneList[i + 1];
-            travelTimeBtweenScenes = GetTravelTime(fromScene, toScene);
+            travelTimeBtweenScenes = GetTravelTime(fromScene, toScene, sceneList[i]);
             timeTraveled = 0;
 
             if(npc.npcData.state != NPCStateEnum.Walking)
@@ -281,9 +282,29 @@ public class NPCMovement : MonoBehaviour
     #endregion
 
     #region Travel Time
-    private float GetTravelTime(SceneLocationEnum from, SceneLocationEnum to)
+    private float GetTravelTime(SceneLocationEnum from, SceneLocationEnum to, SceneLocationEnum sctualScene)
     {
-        return 3f;
+        WarpNode node = warpGraph.nodes.Find(n => n.scene == sctualScene);
+        Vector2Int initialPos;
+        Vector2Int targetPos;
+        WarpData initialWarpData = node.warps.Find(n => n.toScene == from);
+        if(initialWarpData == null)
+        {
+            initialPos = npc.npcData.gridPosition;
+        }
+        else
+        {
+            initialPos = initialWarpData.fromGridPosition;
+        }
+        WarpData finalWarpData = node.warps.Find(n => n.toScene == to);
+        targetPos = finalWarpData.fromGridPosition;
+
+        int distance =
+            Mathf.Abs(initialPos.x - targetPos.x) +
+            Mathf.Abs(initialPos.y - targetPos.y);
+        
+        Debug.Log(distance * (1f / moveSpeed));
+        return distance * (1f / moveSpeed);
     }
     #endregion
 
