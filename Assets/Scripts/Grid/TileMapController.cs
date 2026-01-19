@@ -544,7 +544,7 @@ public class TileMapController : MonoBehaviour
             {
                 Vector2Int nextPos = current.pos + dir;
 
-                if (!IsWalkable(nextPos) || closedSet.Contains(nextPos) || IsNPCOnWay(nextPos))
+                if (!IsWalkable(nextPos) || closedSet.Contains(nextPos))
                     continue;
 
                 int newCost = current.gCost + GetMoveCost(nextPos);
