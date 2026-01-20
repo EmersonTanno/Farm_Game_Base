@@ -4,11 +4,9 @@ using UnityEngine.Tilemaps;
 
 public class TileMapRenderer : MonoBehaviour
 {
+    [SerializeField] private WorldTileDataBase tilesDataBase;
     public Tilemap soilTilemap;
     public Tilemap plantTilemap;
-
-    [SerializeField] WorldTile[] worldTiles;
-    private Dictionary<int, TileBase> tileLookup;
 
     [Header("Plant Tiles (growth stages)")]
     public TileBase deadPlant;
@@ -20,21 +18,7 @@ public class TileMapRenderer : MonoBehaviour
     public void Init(TileMap tileMap)
     {
         this.tileMap = tileMap;
-        BuildTileLookup();
         RenderAll();
-    }
-
-    private void BuildTileLookup()
-    {
-        tileLookup = new Dictionary<int, TileBase>();
-
-        foreach (var worldTile in worldTiles)
-        {
-            if (!tileLookup.ContainsKey(worldTile.id))
-                tileLookup.Add(worldTile.id, worldTile);
-            else
-                Debug.LogWarning($"Tile duplicado com id {worldTile.id}");
-        }
     }
 
     public void RenderAll()
@@ -48,15 +32,16 @@ public class TileMapRenderer : MonoBehaviour
         }
     }
 
-    private TileBase GetTile(int soilState)
+    private TileBase GetTile(int tileId)
     {
-        if(soilState == 0)
+        if(tileId == 0)
             return null;
 
-        if (tileLookup.TryGetValue(soilState, out var tile))
-            return tile;
+        var tile = tilesDataBase.GetTile(tileId);
+
+        if(tile) return tile;
         
-        Debug.LogWarning($"Nenhum tile encontrado para soilState {soilState}");
+        Debug.LogWarning($"Nenhum tile encontrado para soilState {tileId}");
         return null;
     }
 

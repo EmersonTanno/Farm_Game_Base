@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7936cae9c1be44541ad6832685ce7fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilesDataBase: {fileID: 11400000, guid: 80a58f4f34e0a4547b1c58a2be4ee941, type: 2}
   soilTilemap: {fileID: 0}
   plantTilemap: {fileID: 0}
   worldTiles:
