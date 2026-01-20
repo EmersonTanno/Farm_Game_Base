@@ -12,6 +12,8 @@ public class TileMapRenderer : MonoBehaviour
 
     [Header("Plant Tiles (growth stages)")]
     public TileBase deadPlant;
+    public TileBase plowSoil;
+    public TileBase wateredSoil;
 
     private TileMap tileMap;
 
@@ -66,12 +68,17 @@ public class TileMapRenderer : MonoBehaviour
     private void RenderSoil(int x, int y)
     {
         int soilState = tileMap.GetOriginalGrid().GetGridObject(x, y);
+        TileMapPlantData plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
         TileBase tileToUse = null;
 
-        if(soilState == 20)
+        if(plantTile != null)
         {
-            RenderPlant(x, y);
-        } else
+            if(plantTile.plant != null || plantTile.isPlown)
+            {
+                RenderPlant(x, y, plantTile);
+            } 
+        }
+        else
         {
             tileToUse = GetTile(soilState);
         }
@@ -79,10 +86,23 @@ public class TileMapRenderer : MonoBehaviour
         soilTilemap.SetTile(new Vector3Int(x, y), tileToUse);
     }
 
-    private void RenderPlant(int x, int y)
+    private void RenderPlant(int x, int y, TileMapPlantData plantData)
     {
-        var plantObject = tileMap.GetPlantGrid().GetGridObject(x, y);
-        var plantTile = plantObject.GetStageTile();
+        if(!plantData.plant)
+        {
+            if(plantData.isPlown && plantData.isWater)
+            {
+                plantTilemap.SetTile(new Vector3Int(x, y), wateredSoil);
+                return;
+            }
+            else if(plantData.isPlown)
+            {
+                plantTilemap.SetTile(new Vector3Int(x, y), plowSoil);
+                return;
+            }
+        }
+
+        var plantTile = plantData.GetStageTile();
 
         if(plantTile == null)
         {

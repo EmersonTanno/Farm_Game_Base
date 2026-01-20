@@ -34,10 +34,11 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  id: 5
+  id: 7
   isWarp: 1
   isWalkable: 1
   isPath: 1
+  canBePlanted: 0
   warp:
     scene: Farm
     x: 3

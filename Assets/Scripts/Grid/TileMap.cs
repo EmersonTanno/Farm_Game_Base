@@ -29,6 +29,7 @@ public class TileMap
     private Grid<WarpTile> warpGrid;
     private Grid<int> npcGrid;
     private Grid<bool> pathGrid;
+    private Grid<bool> plowGrid;
 
     #endregion
 
@@ -43,6 +44,7 @@ public class TileMap
         warpGrid = new Grid<WarpTile>(width, height, cellSize, originPosition);
         npcGrid = new Grid<int>(width, height, cellSize, originPosition);
         pathGrid = new Grid<bool>(width, height, cellSize, originPosition);
+        plowGrid = new Grid<bool>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -85,6 +87,11 @@ public class TileMap
     public Grid<bool> GetPathGrid()
     {
         return pathGrid;
+    }
+
+    public Grid<bool> GetPlowGrid()
+    {
+        return plowGrid;
     }
     #endregion
 

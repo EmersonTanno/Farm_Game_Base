@@ -38,6 +38,7 @@ MonoBehaviour:
   isWarp: 0
   isWalkable: 1
   isPath: 0
+  canBePlanted: 1
   warp:
     scene: 
     x: 0

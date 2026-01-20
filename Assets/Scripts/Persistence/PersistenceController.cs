@@ -43,29 +43,17 @@ public class PersistenceController : MonoBehaviour
             for(int x = 0; x < originalGrid.GetWidth(); x++)
             {
                 int gridValue = originalGrid.GetGridObject(x, y);
-                if(gridValue == 10 || gridValue == 11 || gridValue == 20)
+                TileMapPlantData plantData = plantGrid.GetGridObject(x, y);
+                if(plantData != null)
                 {
-                    if(gridValue == 20)
-                    {
-                        var plant = plantGrid.GetGridObject(x, y);
-
-                        gridSaveData.plants.Add(new PlantSaveData
-                        {
-                            x = x,
-                            y = y,
-                            gridValue = gridValue,
-                            plantData = plant
-                        });
-                        continue;
-                    }
-
                     gridSaveData.plants.Add(new PlantSaveData
                     {
                         x = x,
                         y = y,
                         gridValue = gridValue,
+                        plantData = plantData
                     });
-
+                    continue;
                 }
             }
         }
@@ -82,12 +70,7 @@ public class PersistenceController : MonoBehaviour
     {
         foreach (var plant in gridSaveData.plants)
         {
-            if (plant.gridValue == 11)
-            {
-                plant.gridValue = 10;
-            }
-
-            if (plant.gridValue == 20 && plant.plantData != null)
+            if (plant.plantData != null)
             {
                 plant.plantData.PassDay();
             }

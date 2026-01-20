@@ -8,5 +8,6 @@ public class WorldTile : Tile
     public bool isWarp;
     public bool isWalkable;
     public bool isPath;
+    public bool canBePlanted;
     public WarpTile warp;
 }

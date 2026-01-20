@@ -51,6 +51,7 @@ MonoBehaviour:
   groundTilemap: {fileID: 0}
   constructionsMap: {fileID: 0}
   objectsMap: {fileID: 0}
+  warpHolder: {fileID: 0}
 --- !u!114 &6139808161351050936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,6 +101,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b8f926a68d8b727428576e9f70f08df5, type: 2}
   - {fileID: 11400000, guid: fe9bc4d890ec192468a4dfff62559270, type: 2}
   deadPlant: {fileID: 11400000, guid: 74d7de4285750bc478196b323fdd1cd9, type: 2}
+  plowSoil: {fileID: 11400000, guid: f9cf8d0587807b54a9ca04ed7403ac47, type: 2}
+  wateredSoil: {fileID: 11400000, guid: cd3fca60994cbba4b8579ce16413008c, type: 2}
 --- !u!114 &6139808161351050935
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -103,9 +103,12 @@ public class TileMapController : MonoBehaviour
         {
             originalGrid.SetValue(data.x, data.y, data.gridValue);
 
-            if (data.gridValue == 20 && data.plantData != null)
+            if (data.plantData != null)
             {
-                plantGrid.SetValue(data.x, data.y, data.plantData);
+                if(data.plantData.isPlown || data.plantData.plant != null)
+                {
+                    plantGrid.SetValue(data.x, data.y, data.plantData);
+                }
             }
         }
     }
@@ -118,29 +121,29 @@ public class TileMapController : MonoBehaviour
         Grid<bool> moveGrid = tileMap.GetMovementGrid();
         Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
+        Grid<bool> plowGrid = tileMap.GetPlowGrid();
 
-        int farmObject = farmGrid.GetGridObject(position);
-        if (farmObject != 1 &&
-            farmObject != 2 &&
-            farmObject != 20) return;
+        bool canPlant = plowGrid.GetGridObject(position);
+        if (!canPlant) return;
 
         if (!moveGrid.GetGridObject(position) || warpGrid.GetGridObject(position) != null) return;
 
-        if(farmObject == 20)
+
+        TileMapPlantData plant = plantGrid.GetGridObject(position);
+        if(plant != null)
         {
-            TileMapPlantData plant = plantGrid.GetGridObject(position);
             if(plant.isDead)
             {
                 plant.ResetTile();
             }
         }
 
-        farmGrid.SetValue(position, 10);
+        plantGrid.SetValue(position, new TileMapPlantData(null, false, true));
 
         if (WeatherController.Instance.GetWeather() == WeatherEnum.RAIN ||
             WeatherController.Instance.GetWeather() == WeatherEnum.TEMPEST)
         {
-            farmGrid.SetValue(position, 11);
+            plantGrid.GetGridObject(position).PutWater();
         }
 
         renderer.RenderTile((int)position.x, (int)position.y);
@@ -168,24 +171,13 @@ public class TileMapController : MonoBehaviour
     #region Water
     public void WaterSoil(Vector2 position)
     {
-        int tileValue = tileMap.GetOriginalGrid().GetGridObject(position);
-        if(tileValue == 10 || tileValue == 20)
+        TileMapPlantData plantValue = tileMap.GetPlantGrid().GetGridObject(position);
+        if(plantValue != null)
         {
-            switch(tileValue)
-            {
-                case 10:
-                {
-                    tileMap.GetOriginalGrid().SetValue(position, 11);
-                    renderer.RenderTile((int)position.x, (int)position.y);
-                    break;
-                }
-                case 20:
-                {
-                    tileMap.GetPlantGrid().GetGridObject(position).PutWater();
-                    renderer.RenderTile((int)position.x, (int)position.y);
-                    break;
-                }
-            }
+            if(plantValue.isDead) return;
+
+            plantValue.PutWater();
+            renderer.RenderTile((int)position.x, (int)position.y);
         }
     }
 
@@ -207,20 +199,11 @@ public class TileMapController : MonoBehaviour
             {
                 TileMapPlantData plantTile = plantGrid.GetGridObject(x, y);
 
-                if (plantTile == null && tileMap.GetOriginalGrid().GetGridObject(x, y) != 10) continue;
+                if (plantTile == null) continue;
+                if (plantTile.isWater) continue;
 
-                if(tileMap.GetOriginalGrid().GetGridObject(x, y) == 10)
-                {
-                    tileMap.GetOriginalGrid().SetValue(x, y, 11);
-                    renderer.RenderTile(x, y);
-                    continue;
-                }
-
-                if (plantTile.plant)
-                {
-                    plantTile.PutWater();
-                    renderer.RenderTile(x, y);
-                }
+                plantTile.PutWater();
+                renderer.RenderTile(x, y);
             }
         }
     }
@@ -230,49 +213,14 @@ public class TileMapController : MonoBehaviour
     #region Plant
     public void PlantSoil(Vector2 position, PlantType plant)
     {
-        int tileValue = tileMap.GetOriginalGrid().GetGridObject(position);
-        
-        if (tileValue == 10 || tileValue == 11)
+        TileMapPlantData plantData = tileMap.GetPlantGrid().GetGridObject(position);
+
+        if (plantData != null)
         {
-            switch(tileValue)
+            if(plantData.plant == null)
             {
-                case 10: 
-                {
-                    var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
-        
-                    if (plantTile == null)
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        tileMap.GetPlantGrid().SetValue((int)position.x, (int)position.y, new TileMapPlantData(plant, false));
-                    }
-                    else
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        plantTile.SetPlant(plant, false);
-                    }
-
-                    break;
-                }
-
-                case 11:
-                {
-                    var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
-        
-                    if (plantTile == null)
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        tileMap.GetPlantGrid().SetValue((int)position.x, (int)position.y, new TileMapPlantData(plant, true));
-                    }
-                    else
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        plantTile.SetPlant(plant, true);
-                    }
-
-                    break;
-                }
+                plantData.SetPlant(plant, plantData.isWater);
             }
-
             renderer.RenderTile((int)position.x, (int)position.y);
         }
     }
@@ -283,7 +231,7 @@ public class TileMapController : MonoBehaviour
         {
             for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
             {
-                var plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
+                TileMapPlantData plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
         
                 if (plantTile == null)
                 {
@@ -291,11 +239,10 @@ public class TileMapController : MonoBehaviour
                 }
                 else
                 {
-                    if(plantTile.plant)
-                    {
-                        plantTile.PassDay();
-                        renderer.RenderTile(x, y);
-                    }
+                    
+                    plantTile.PassDay();
+                    renderer.RenderTile(x, y);
+                    
                 }
             }
         }
@@ -394,6 +341,7 @@ public class TileMapController : MonoBehaviour
 
             SetMoveGrid(pos.x, pos.y, worldTile.isWalkable);
             SetPathGrid(pos.x, pos.y, worldTile.isPath);
+            SetPlowGrid(pos.x, pos.y, worldTile.canBePlanted);
         }
         LoadWarpsFromScene();
     }
@@ -425,6 +373,13 @@ public class TileMapController : MonoBehaviour
         SetObjectsInScene();
     }
 
+    #endregion
+
+    #region PlowGrid
+    private void SetPlowGrid(int x, int y, bool canPlant)
+    {
+        tileMap.GetPlowGrid().SetValue(x, y, canPlant);
+    }
     #endregion
 
     #region MovementGrid
