@@ -23,7 +23,6 @@ public class TileMap
     #region Variables
     private Grid<WorldTileData> grid;
     private Grid<TileMapPlantData> plantGrid;
-    private Grid<WorldObjectID> objectGrid;
     private Grid<ConstructionsType> constructionGrid;
 
     #endregion
@@ -35,7 +34,6 @@ public class TileMap
         grid = new Grid<WorldTileData>(width, height, cellSize, originPosition);
         plantGrid = new Grid<TileMapPlantData>(width, height, cellSize, originPosition);
         constructionGrid = new Grid<ConstructionsType>(width, height, cellSize, originPosition);
-        objectGrid = new Grid<WorldObjectID>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -48,11 +46,6 @@ public class TileMap
     public Grid<TileMapPlantData> GetPlantGrid()
     {
         return plantGrid;
-    }
-
-    public Grid<WorldObjectID> GetObjectGrid()
-    {
-        return objectGrid;
     }
 
     public Grid<ConstructionsType> GetConstructionGrid()

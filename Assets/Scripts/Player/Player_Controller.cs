@@ -85,8 +85,8 @@ public class Player_Controller : MonoBehaviour
 
         Vector2 pos = transform.position;
 
-        WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
-        WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+        WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
+        WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos + GetSide()).objectID;
         int nPCId = CheckNPC(pos);
 
         if(nPCId != 0 && nPCId != -1)
@@ -449,7 +449,7 @@ public class Player_Controller : MonoBehaviour
             return false;
         }
 
-        WorldObjectID objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+        WorldObjectID objectGridValue = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
 
         if(objectGridValue == WorldObjectID.Bed)
         {
@@ -460,7 +460,7 @@ public class Player_Controller : MonoBehaviour
             }
         }
 
-        if(TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(transform.position) == WorldObjectID.Bed)
+        if(TileMapController.Instance.GetGrid().GetGrid().GetGridObject(transform.position).objectID == WorldObjectID.Bed)
         {
             Vector2 side = GetSide();
             if (side == Vector2.down || side == Vector2.up)

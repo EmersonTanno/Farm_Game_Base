@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public struct WorldTileData
 {
     public int baseTileId;
@@ -8,6 +6,7 @@ public struct WorldTileData
     public bool isPath;
     public int npcId;
     public WarpTile warp;
+    public WorldObjectID objectID;
 
     public WorldTileData WithBaseTileId(int value)
     {
@@ -41,6 +40,13 @@ public struct WorldTileData
     {
         WorldTileData copy = this;
         copy.warp = value;
+        return copy;
+    }
+
+    public WorldTileData WithObjectId(WorldObjectID value)
+    {
+        WorldTileData copy = this;
+        copy.objectID = value;
         return copy;
     }
 }
