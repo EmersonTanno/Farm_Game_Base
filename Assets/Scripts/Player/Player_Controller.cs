@@ -245,7 +245,7 @@ public class Player_Controller : MonoBehaviour
             return;
 
         
-        WarpTile warp = TileMapController.Instance.GetGrid().GetWarpGrid().GetGridObject(transform.position);
+        WarpTile warp = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(transform.position).warp;
         if(warp != null)
         {
             WarpController.Instance.ExecuteWarp(warp);

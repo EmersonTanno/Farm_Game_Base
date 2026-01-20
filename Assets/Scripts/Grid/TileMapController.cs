@@ -116,10 +116,9 @@ public class TileMapController : MonoBehaviour
     public void PlowSoil(Vector2 position)
     {
         Grid<WorldTileData> grid = tileMap.GetGrid();
-        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
-        if (!grid.GetGridObject(position).canBePlanted || !grid.GetGridObject(position).isWalkable || warpGrid.GetGridObject(position) != null) return;
+        if (!grid.GetGridObject(position).canBePlanted || !grid.GetGridObject(position).isWalkable || grid.GetGridObject(position).warp != null) return;
 
         TileMapPlantData plant = plantGrid.GetGridObject(position);
         if(plant != null)
@@ -358,7 +357,7 @@ public class TileMapController : MonoBehaviour
     #region Warp Grid
     private void SetWarpGrid(int x, int y, WarpTile warpTile)
     {
-        tileMap.GetWarpGrid().SetValue(x, y, warpTile);
+        tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithWarp(warpTile));
     }
 
     private void LoadWarpsFromScene()
@@ -506,15 +505,15 @@ public class TileMapController : MonoBehaviour
         int index = scenesList.FindIndex(p => p == currentScene);
         SceneLocationEnum nextScene = scenesList[index + 1];
 
-        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
-        int width = warpGrid.GetWidth();
-        int height = warpGrid.GetHeight();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
+        int width = grid.GetWidth();
+        int height = grid.GetHeight();
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                WarpTile warp = warpGrid.GetGridObject(x, y);
+                WarpTile warp = grid.GetGridObject(x, y).warp;
                 if (warp == null) continue;
 
                 if (warp.scene.Equals(nextScene.ToString(),
@@ -531,15 +530,15 @@ public class TileMapController : MonoBehaviour
 
     public Vector2Int GetWarpLocationInScene(SceneLocationEnum scene)
     {
-        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
-        int width = warpGrid.GetWidth();
-        int height = warpGrid.GetHeight();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
+        int width = grid.GetWidth();
+        int height = grid.GetHeight();
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                WarpTile warp = warpGrid.GetGridObject(x, y);
+                WarpTile warp = grid.GetGridObject(x, y).warp;
                 if (warp == null) continue;
 
                 if (warp.scene.Equals(scene.ToString(),

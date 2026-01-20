@@ -25,7 +25,6 @@ public class TileMap
     private Grid<TileMapPlantData> plantGrid;
     private Grid<WorldObjectID> objectGrid;
     private Grid<ConstructionsType> constructionGrid;
-    private Grid<WarpTile> warpGrid;
 
     #endregion
 
@@ -37,9 +36,6 @@ public class TileMap
         plantGrid = new Grid<TileMapPlantData>(width, height, cellSize, originPosition);
         constructionGrid = new Grid<ConstructionsType>(width, height, cellSize, originPosition);
         objectGrid = new Grid<WorldObjectID>(width, height, cellSize, originPosition);
-
-        // Talvez remover
-        warpGrid = new Grid<WarpTile>(width, height, cellSize, originPosition);
     }
     #endregion
 
@@ -62,11 +58,6 @@ public class TileMap
     public Grid<ConstructionsType> GetConstructionGrid()
     {
         return constructionGrid;
-    }
-
-    public Grid<WarpTile> GetWarpGrid()
-    {
-        return warpGrid;
     }
     #endregion
 

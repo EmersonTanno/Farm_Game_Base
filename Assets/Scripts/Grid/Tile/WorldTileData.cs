@@ -7,6 +7,7 @@ public struct WorldTileData
     public bool canBePlanted;
     public bool isPath;
     public int npcId;
+    public WarpTile warp;
 
     public WorldTileData WithBaseTileId(int value)
     {
@@ -33,6 +34,13 @@ public struct WorldTileData
     {
         WorldTileData copy = this;
         copy.npcId = value;
+        return copy;
+    }
+
+    public WorldTileData WithWarp(WarpTile value)
+    {
+        WorldTileData copy = this;
+        copy.warp = value;
         return copy;
     }
 }
