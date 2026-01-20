@@ -415,7 +415,7 @@ public class TileMapController : MonoBehaviour
     #region NPC
     public void SetNPC(int x, int y, int id)
     {
-        tileMap.GetNpcGrid().SetValue(x, y, id);
+        tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithNPCId(id));
     }
 
     private void SetNPCsInScene()
@@ -491,7 +491,7 @@ public class TileMapController : MonoBehaviour
 
     private bool IsNPCOnWay(Vector2Int pos)
     {
-        if(tileMap.GetNpcGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)) != 0)
+        if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
         {
             return true;
         }
@@ -575,7 +575,7 @@ public class TileMapController : MonoBehaviour
         Grid<WorldObjectID> objectgrid = tileMap.GetObjectGrid();
         Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
         //Grid<bool> movegrid = tileMap.GetMovementGrid();
-        Grid<int> npcGrid = tileMap.GetNpcGrid();
+        //Grid<int> npcGrid = tileMap.GetNpcGrid();
 
         int width = grid.GetWidth();
         int height = grid.GetHeight();
@@ -594,12 +594,12 @@ public class TileMapController : MonoBehaviour
                 WorldObjectID value3 = objectgrid.GetGridObject(x, y);
                 //bool value2 = movegrid.GetGridObject(x, y);
                 ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
-                int value5 = npcGrid.GetGridObject(x, y);
+                //nt value5 = npcGrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
                 //result2 += value2.ToString().PadLeft(3) + " ";
                 result3 += value3.ToString().PadLeft(3) + " ";
                 result4 += value4.ToString().PadLeft(3) + " ";
-                result5 += value5.ToString().PadLeft(3) + " ";
+                //result5 += value5.ToString().PadLeft(3) + " ";
             }
             result += "\n";
             result2 += "\n";

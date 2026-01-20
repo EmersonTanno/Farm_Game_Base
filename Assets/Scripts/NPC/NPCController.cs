@@ -85,18 +85,27 @@ public class NPCController : MonoBehaviour
     public void InteractWithNPC(int id)
     {
         NPC npc = GetNPC(id);
+
+        if(npc == null) return;
+        
         npc.Interact();
     }
 
     public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
     {
         NPC npc = GetNPC(id);
+
+        if(npc == null) return;
+
         npc.ShowReaction(reaction);
     }
 
     public void AddNPCHearts(int id, int hearts)
     {
         NPC npc = GetNPC(id);
+
+        if(npc == null) return;
+
         npc.AddHeart(hearts);
     }
 }

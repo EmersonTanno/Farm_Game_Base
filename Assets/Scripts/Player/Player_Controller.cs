@@ -89,7 +89,7 @@ public class Player_Controller : MonoBehaviour
         WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
         int nPCId = CheckNPC(pos);
 
-        if(nPCId != 0)
+        if(nPCId != 0 && nPCId != -1)
         {
             NPCController.Instance.InteractWithNPC(nPCId);
             return;
@@ -484,16 +484,14 @@ public class Player_Controller : MonoBehaviour
     private int CheckNPC(Vector2 currentPosition)
     {
         Vector2 side = GetSide();
-        Grid<int> npcGrid = TileMapController.Instance.GetGrid().GetNpcGrid();
+        Grid<WorldTileData> npcGrid = TileMapController.Instance.GetGrid().GetGrid();
 
-        int firstTile = npcGrid.GetGridObject(currentPosition + side);
-
-        if (firstTile != 0)
+        int firstTile = npcGrid.GetGridObject(currentPosition + side).npcId;
+        if (firstTile != 0 && firstTile != -1)
             return firstTile;
 
-        int secondTile = npcGrid.GetGridObject(currentPosition + (side * 2));
-
-        if (secondTile != 0)
+        int secondTile = npcGrid.GetGridObject(currentPosition + (side * 2)).npcId;
+        if (secondTile != 0 && secondTile != -1)
             return secondTile;
 
         return 0;

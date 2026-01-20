@@ -28,6 +28,13 @@ public struct WorldTileData
         copy.isPath = value;
         return copy;
     }
+
+    public WorldTileData WithNPCId(int value)
+    {
+        WorldTileData copy = this;
+        copy.npcId = value;
+        return copy;
+    }
 }
 
 
