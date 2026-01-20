@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2550aa4ecec27249b33b5ae7a054fb5, type: 3}
-  m_Name: Ground1
+  m_Name: FarmFence 3
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -1488053072, guid: 07ed90570826a6544a6a2c10f6d32799, type: 3}
+  m_Sprite: {fileID: 1250779307, guid: 9900be8725db9e841b550e257b34a75b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -34,8 +34,8 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  id: 1
+  id: 0
   isWarp: 0
-  isWalkable: 1
+  isWalkable: 0
   isPath: 0
-  canBePlanted: 1
+  canBePlanted: 0
