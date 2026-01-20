@@ -39,9 +39,9 @@ public class TileMapRenderer : MonoBehaviour
 
     public void RenderAll()
     {
-        for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+        for(int x = 0; x < tileMap.GetGrid().GetWidth(); x++)
         {
-            for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+            for(int y = 0; y < tileMap.GetGrid().GetHeight(); y++)
             {
                 RenderTile(x, y);
             }
@@ -67,7 +67,7 @@ public class TileMapRenderer : MonoBehaviour
 
     private void RenderSoil(int x, int y)
     {
-        int soilState = tileMap.GetOriginalGrid().GetGridObject(x, y);
+        int tileId = tileMap.GetGrid().GetGridObject(x, y).baseTileId;
         TileMapPlantData plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
         TileBase tileToUse = null;
 
@@ -80,7 +80,7 @@ public class TileMapRenderer : MonoBehaviour
         }
         else
         {
-            tileToUse = GetTile(soilState);
+            tileToUse = GetTile(tileId);
         }
 
         soilTilemap.SetTile(new Vector3Int(x, y), tileToUse);

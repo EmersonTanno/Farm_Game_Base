@@ -69,14 +69,12 @@ public class TileMapController : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
-        Calendar_Controller.OnDayChange += PassPlownSoilDay;
         OnTileMapReady += SetNPCsInScene;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
-        Calendar_Controller.OnDayChange -= PassPlownSoilDay;
         OnTileMapReady -= SetNPCsInScene;
     }
 
@@ -95,13 +93,13 @@ public class TileMapController : MonoBehaviour
         if(PersistenceController.Instance.hasData == false || SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
 
         GridSaveData saveData = PersistenceController.Instance.LoadGridSaveData();
-        Grid<int> originalGrid = tileMap.GetOriginalGrid();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
 
         foreach (var data in saveData.plants)
         {
-            originalGrid.SetValue(data.x, data.y, data.gridValue);
+            grid.SetValue(data.x, data.y, grid.GetGridObject(data.x, data.y).WithBaseTileId(data.gridValue));
 
             if (data.plantData != null)
             {
@@ -117,17 +115,11 @@ public class TileMapController : MonoBehaviour
     #region Plow
     public void PlowSoil(Vector2 position)
     {
-        Grid<int> farmGrid = tileMap.GetOriginalGrid();
-        Grid<bool> moveGrid = tileMap.GetMovementGrid();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
         Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
-        Grid<bool> plowGrid = tileMap.GetPlowGrid();
 
-        bool canPlant = plowGrid.GetGridObject(position);
-        if (!canPlant) return;
-
-        if (!moveGrid.GetGridObject(position) || warpGrid.GetGridObject(position) != null) return;
-
+        if (!grid.GetGridObject(position).canBePlanted || !grid.GetGridObject(position).isWalkable || warpGrid.GetGridObject(position) != null) return;
 
         TileMapPlantData plant = plantGrid.GetGridObject(position);
         if(plant != null)
@@ -147,24 +139,6 @@ public class TileMapController : MonoBehaviour
         }
 
         renderer.RenderTile((int)position.x, (int)position.y);
-    }
-
-    private void PassPlownSoilDay()
-    {
-        var grid = tileMap.GetOriginalGrid();
-        for(int x = 0; x < grid.GetWidth(); x++)
-        {
-            for(int y = 0; y < grid.GetHeight(); y++)
-            {
-                var tile = grid.GetGridObject(x, y);
-
-                if(tile == 11)
-                {
-                    grid.SetValue(x, y, 10);
-                    renderer.RenderTile(x, y);
-                }
-            }
-        }
     }
     #endregion
 
@@ -227,9 +201,9 @@ public class TileMapController : MonoBehaviour
 
     private void GrowPlant()
     {
-        for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+        for(int x = 0; x < tileMap.GetPlantGrid().GetWidth(); x++)
         {
-            for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+            for(int y = 0; y < tileMap.GetPlantGrid().GetHeight(); y++)
             {
                 TileMapPlantData plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
         
@@ -239,10 +213,8 @@ public class TileMapController : MonoBehaviour
                 }
                 else
                 {
-                    
                     plantTile.PassDay();
                     renderer.RenderTile(x, y);
-                    
                 }
             }
         }
@@ -260,16 +232,14 @@ public class TileMapController : MonoBehaviour
 
         plantTile.ResetTile();
 
-        tileMap.GetOriginalGrid().SetValue(position, 10);
         renderer.RenderTile((int)position.x, (int)position.y);
     }
 
     public bool CanHarvest(Vector2 position)
     {
         var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
-        var globalTile = tileMap.GetOriginalGrid().GetGridObject(position);
 
-        if(globalTile != 20 || !plantTile.CanHarvest()) return false;
+        if(!plantTile.CanHarvest()) return false;
 
         return true;
     }
@@ -313,7 +283,8 @@ public class TileMapController : MonoBehaviour
             foreach(ObjectTile tile in objectPositionData)
             {
                 Vector2 position = new Vector2(worldObject.transform.position.x + tile.offset.x, worldObject.transform.position.y + tile.offset.y);
-                tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
+
+                SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
                 tileMap.GetObjectGrid().SetValue(position, worldObject.GetWorldObjectType());
             }
         }
@@ -333,15 +304,7 @@ public class TileMapController : MonoBehaviour
             WorldTile worldTile = tile as WorldTile;
             if (worldTile == null) continue;
 
-            tileMap.GetOriginalGrid().SetValue(
-                pos.x,
-                pos.y,
-                worldTile.id
-            );
-
-            SetMoveGrid(pos.x, pos.y, worldTile.isWalkable);
-            SetPathGrid(pos.x, pos.y, worldTile.isPath);
-            SetPlowGrid(pos.x, pos.y, worldTile.canBePlanted);
+            SetGridTileData(pos.x, pos.y, WorldTileFactory.CreateDefault(worldTile));
         }
         LoadWarpsFromScene();
     }
@@ -373,24 +336,22 @@ public class TileMapController : MonoBehaviour
         SetObjectsInScene();
     }
 
-    #endregion
-
-    #region PlowGrid
-    private void SetPlowGrid(int x, int y, bool canPlant)
+    private void SetGridTileData(int x, int y, WorldTileData tileData)
     {
-        tileMap.GetPlowGrid().SetValue(x, y, canPlant);
+        tileMap.GetGrid().SetValue(x, y, tileData);
     }
     #endregion
+
 
     #region MovementGrid
     private void SetMoveGrid(int x, int y, bool canWalk)
     {
-        tileMap.GetMovementGrid().SetValue(x, y, canWalk);
+        tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithIsWalkable(canWalk));
     }
 
     public bool CanMoveInGrid(Vector2 position)
     {
-        return tileMap.GetMovementGrid().GetGridObject(position);
+        return tileMap.GetGrid().GetGridObject(position).isWalkable;
     }
     #endregion
 
@@ -425,13 +386,6 @@ public class TileMapController : MonoBehaviour
 
     #endregion
 
-    #region Path Grid
-    private void SetPathGrid(int x, int y, bool isPath)
-    {
-        tileMap.GetPathGrid().SetValue(x, y, isPath);
-    }
-    #endregion
-
     #region Construction
     private WorldConstruction[] GetConstructionsInScene()
     {
@@ -450,7 +404,8 @@ public class TileMapController : MonoBehaviour
             foreach(ConstructionTile tile in constructionPositionData)
             {
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
-                tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
+
+                SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
                 tileMap.GetConstructionGrid().SetValue(position, construction.GetWorldObjectType());
             }
         }
@@ -531,7 +486,7 @@ public class TileMapController : MonoBehaviour
 
     private bool IsWalkable(Vector2Int pos)
     {
-        return tileMap.GetMovementGrid().GetGridObject(new Vector3(pos.x, pos.y, 0));
+        return tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isWalkable;
     }
 
     private bool IsNPCOnWay(Vector2Int pos)
@@ -603,7 +558,7 @@ public class TileMapController : MonoBehaviour
     {
         int cost = 10;
 
-        if (tileMap.GetPathGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)))
+        if (tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isPath)
         {
             cost = 1;
         }
@@ -616,10 +571,10 @@ public class TileMapController : MonoBehaviour
     [ContextMenu("Debug/Print Ground Grid")]
     public void PrintGroundGrid()
     {
-        Grid<int> grid = tileMap.GetOriginalGrid();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
         Grid<WorldObjectID> objectgrid = tileMap.GetObjectGrid();
         Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
-        Grid<bool> movegrid = tileMap.GetMovementGrid();
+        //Grid<bool> movegrid = tileMap.GetMovementGrid();
         Grid<int> npcGrid = tileMap.GetNpcGrid();
 
         int width = grid.GetWidth();
@@ -635,13 +590,13 @@ public class TileMapController : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {
-                int value = grid.GetGridObject(x, y);
+                int value = grid.GetGridObject(x, y).baseTileId;
                 WorldObjectID value3 = objectgrid.GetGridObject(x, y);
-                bool value2 = movegrid.GetGridObject(x, y);
+                //bool value2 = movegrid.GetGridObject(x, y);
                 ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
                 int value5 = npcGrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
-                result2 += value2.ToString().PadLeft(3) + " ";
+                //result2 += value2.ToString().PadLeft(3) + " ";
                 result3 += value3.ToString().PadLeft(3) + " ";
                 result4 += value4.ToString().PadLeft(3) + " ";
                 result5 += value5.ToString().PadLeft(3) + " ";

@@ -35,14 +35,14 @@ public class PersistenceController : MonoBehaviour
 
         gridSaveData.plants.Clear();
 
-        Grid<int> originalGrid = TileMapController.Instance.GetGrid().GetOriginalGrid();
+        Grid<WorldTileData> originalGrid = TileMapController.Instance.GetGrid().GetGrid();
         Grid<TileMapPlantData> plantGrid = TileMapController.Instance.GetGrid().GetPlantGrid();
 
         for(int y = 0; y < originalGrid.GetHeight(); y++)
         {
             for(int x = 0; x < originalGrid.GetWidth(); x++)
             {
-                int gridValue = originalGrid.GetGridObject(x, y);
+                int gridValue = originalGrid.GetGridObject(x, y).baseTileId;
                 TileMapPlantData plantData = plantGrid.GetGridObject(x, y);
                 if(plantData != null)
                 {

@@ -444,7 +444,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckPlayerMoveGrid(Vector2 pos)
     {
-        if(TileMapController.Instance.GetGrid().GetMovementGrid().GetGridObject(pos) == false)
+        if(TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).isWalkable == false)
         {
             return false;
         }

@@ -21,37 +21,34 @@ public class TileMap
     #endregion
 
     #region Variables
-    private Grid<int> originalGrid;
+    private Grid<WorldTileData> grid;
     private Grid<TileMapPlantData> plantGrid;
     private Grid<WorldObjectID> objectGrid;
     private Grid<ConstructionsType> constructionGrid;
-    private Grid<bool> movementGrid;
     private Grid<WarpTile> warpGrid;
     private Grid<int> npcGrid;
-    private Grid<bool> pathGrid;
-    private Grid<bool> plowGrid;
 
     #endregion
 
     #region Defining Grids
     public TileMap(int width, int height, float cellSize, Vector3 originPosition)
     {
-        originalGrid = new Grid<int>(width, height, cellSize, originPosition);
+        //Manter
+        grid = new Grid<WorldTileData>(width, height, cellSize, originPosition);
         plantGrid = new Grid<TileMapPlantData>(width, height, cellSize, originPosition);
-        objectGrid = new Grid<WorldObjectID>(width, height, cellSize, originPosition);
-        movementGrid = new Grid<bool>(width, height, cellSize, originPosition);
         constructionGrid = new Grid<ConstructionsType>(width, height, cellSize, originPosition);
-        warpGrid = new Grid<WarpTile>(width, height, cellSize, originPosition);
+        objectGrid = new Grid<WorldObjectID>(width, height, cellSize, originPosition);
+
+        // Talvez remover
         npcGrid = new Grid<int>(width, height, cellSize, originPosition);
-        pathGrid = new Grid<bool>(width, height, cellSize, originPosition);
-        plowGrid = new Grid<bool>(width, height, cellSize, originPosition);
+        warpGrid = new Grid<WarpTile>(width, height, cellSize, originPosition);
     }
     #endregion
 
     #region Get
-    public Grid<int> GetOriginalGrid()
+    public Grid<WorldTileData> GetGrid()
     {
-        return originalGrid;
+        return grid;
     }
 
     public Grid<TileMapPlantData> GetPlantGrid()
@@ -69,11 +66,6 @@ public class TileMap
         return constructionGrid;
     }
 
-    public Grid<bool> GetMovementGrid()
-    {
-        return movementGrid;
-    }
-
     public Grid<WarpTile> GetWarpGrid()
     {
         return warpGrid;
@@ -82,16 +74,6 @@ public class TileMap
     public Grid<int> GetNpcGrid()
     {
         return npcGrid;
-    }
-
-    public Grid<bool> GetPathGrid()
-    {
-        return pathGrid;
-    }
-
-    public Grid<bool> GetPlowGrid()
-    {
-        return plowGrid;
     }
     #endregion
 
