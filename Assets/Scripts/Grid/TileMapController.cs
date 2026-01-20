@@ -405,7 +405,7 @@ public class TileMapController : MonoBehaviour
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
 
                 SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
-                tileMap.GetConstructionGrid().SetValue(position, construction.GetWorldObjectType());
+                tileMap.GetGrid().SetValue(position, tileMap.GetGrid().GetGridObject(position).WithConstructionId(construction.GetWorldObjectType()));
             }
         }
     }
@@ -571,10 +571,6 @@ public class TileMapController : MonoBehaviour
     public void PrintGroundGrid()
     {
         Grid<WorldTileData> grid = tileMap.GetGrid();
-        //Grid<WorldObjectID> objectgrid = tileMap.GetObjectGrid();
-        Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
-        //Grid<bool> movegrid = tileMap.GetMovementGrid();
-        //Grid<int> npcGrid = tileMap.GetNpcGrid();
 
         int width = grid.GetWidth();
         int height = grid.GetHeight();
@@ -590,15 +586,7 @@ public class TileMapController : MonoBehaviour
             for (int x = 0; x < width; x++)
             {
                 int value = grid.GetGridObject(x, y).baseTileId;
-               // WorldObjectID value3 = objectgrid.GetGridObject(x, y);
-                //bool value2 = movegrid.GetGridObject(x, y);
-                ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
-                //nt value5 = npcGrid.GetGridObject(x, y);
                 result += value.ToString().PadLeft(3) + " ";
-                //result2 += value2.ToString().PadLeft(3) + " ";
-               // result3 += value3.ToString().PadLeft(3) + " ";
-                result4 += value4.ToString().PadLeft(3) + " ";
-                //result5 += value5.ToString().PadLeft(3) + " ";
             }
             result += "\n";
             result2 += "\n";
