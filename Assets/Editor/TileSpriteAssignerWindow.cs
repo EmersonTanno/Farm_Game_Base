@@ -150,6 +150,8 @@ public class TileSpriteAssignerWindow : EditorWindow
             return;
         }
 
+        bool changed = false;
+
         for (int i = 0; i < tiles.Count; i++)
         {
             if (tiles[i] == null || sprites[i] == null)
@@ -158,10 +160,19 @@ public class TileSpriteAssignerWindow : EditorWindow
             Undo.RecordObject(tiles[i], "Assign Tile Sprite");
             tiles[i].sprite = sprites[i];
             EditorUtility.SetDirty(tiles[i]);
+
+            changed = true;
+        }
+
+        if (changed)
+        {
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         Debug.Log($"Sprites atribuídos com sucesso ({tiles.Count}).");
     }
+
 
     private void ClearLists()
     {

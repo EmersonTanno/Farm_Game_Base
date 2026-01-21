@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using System.Linq;
 
 [CustomEditor(typeof(WorldTileDataBase))]
 public class WorldTileDataBaseEditor : Editor
@@ -37,8 +36,12 @@ public class WorldTileDataBaseEditor : Editor
 
             if (tile.id == 0)
             {
+                Undo.RecordObject(tile, "Generate Tile ID");
+
                 maxId++;
                 tile.id = maxId;
+
+                EditorUtility.SetDirty(tile);
                 changed = true;
             }
         }
@@ -46,7 +49,10 @@ public class WorldTileDataBaseEditor : Editor
         if (changed)
         {
             EditorUtility.SetDirty(db);
-            Debug.Log("IDs de tiles gerados com sucesso.");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Debug.Log("IDs de tiles gerados e salvos com sucesso.");
         }
         else
         {

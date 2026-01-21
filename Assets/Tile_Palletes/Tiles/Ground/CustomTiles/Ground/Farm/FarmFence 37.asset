@@ -34,7 +34,7 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  id: 0
+  id: 163
   isWarp: 0
   isWalkable: 0
   isPath: 0
