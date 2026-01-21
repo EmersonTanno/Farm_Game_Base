@@ -35997,6 +35997,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Game_Controller
       objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[3].scene
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[3].warps.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[0].warps.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[2].warps.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: connections.Array.data[3].warps.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4868641704740723753, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: goldText
       value: 
