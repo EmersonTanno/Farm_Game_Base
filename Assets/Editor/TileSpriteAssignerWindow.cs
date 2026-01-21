@@ -11,6 +11,15 @@ public class TileSpriteAssignerWindow : EditorWindow
     private Rect tileDropArea;
     private Rect spriteDropArea;
 
+    private Vector2 tileScroll;
+    private Vector2 spriteScroll;
+
+    private bool showTiles = true;
+    private bool showSprites = true;
+
+    private const float LIST_HEIGHT = 150f;
+
+
     [MenuItem("Tools/World/Tile Sprite Assigner")]
     public static void Open()
     {
@@ -55,18 +64,50 @@ public class TileSpriteAssignerWindow : EditorWindow
 
     private void DrawPreviewLists()
     {
-        GUILayout.Label($"Tiles ({tiles.Count})", EditorStyles.boldLabel);
-        foreach (var tile in tiles)
+        showTiles = EditorGUILayout.Foldout(
+            showTiles,
+            $"Tiles ({tiles.Count})",
+            true,
+            EditorStyles.foldoutHeader
+        );
+
+        if (showTiles)
         {
-            EditorGUILayout.ObjectField(tile, typeof(WorldTile), false);
+            tileScroll = EditorGUILayout.BeginScrollView(
+                tileScroll,
+                GUILayout.Height(LIST_HEIGHT)
+            );
+
+            foreach (var tile in tiles)
+            {
+                EditorGUILayout.ObjectField(tile, typeof(WorldTile), false);
+            }
+
+            EditorGUILayout.EndScrollView();
         }
 
         GUILayout.Space(10);
 
-        GUILayout.Label($"Sprites ({sprites.Count})", EditorStyles.boldLabel);
-        foreach (var sprite in sprites)
+        showSprites = EditorGUILayout.Foldout(
+            showSprites,
+            $"Sprites ({sprites.Count})",
+            true,
+            EditorStyles.foldoutHeader
+        );
+
+        if (showSprites)
         {
-            EditorGUILayout.ObjectField(sprite, typeof(Sprite), false);
+            spriteScroll = EditorGUILayout.BeginScrollView(
+                spriteScroll,
+                GUILayout.Height(LIST_HEIGHT)
+            );
+
+            foreach (var sprite in sprites)
+            {
+                EditorGUILayout.ObjectField(sprite, typeof(Sprite), false);
+            }
+
+            EditorGUILayout.EndScrollView();
         }
     }
 
