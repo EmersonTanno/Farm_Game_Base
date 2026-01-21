@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/City.unity
     guid: 865101c85f454314cbeebdb7c8559040
+  - enabled: 1
+    path: Assets/Scenes/FarmBridge.unity
+    guid: 88190f51b8ba65a4a99d0c4651aacfff
   m_configObjects: {}
