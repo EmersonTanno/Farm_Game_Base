@@ -1047,11 +1047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toX
-      value: 9
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toY
-      value: 3
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
@@ -6885,11 +6885,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toX
-      value: 9
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toY
-      value: 3
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
@@ -10253,11 +10253,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toX
-      value: 9
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toY
-      value: 3
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene

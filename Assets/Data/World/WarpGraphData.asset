@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e4b15bd94590b54eac96e4f2cadeb82, type: 3}
-  m_Name: New Warp Graph
+  m_Name: WarpGraphData
   m_EditorClassIdentifier: 
   nodes:
   - scene: 2
@@ -18,34 +18,29 @@ MonoBehaviour:
     - scene: 2
       fromGridPosition: {x: 0, y: 6}
       toScene: 0
-      toGridPosition: {x: 9, y: 3}
+      toGridPosition: {x: 51, y: 28}
       transitionType: 0
     - scene: 2
       fromGridPosition: {x: 0, y: 5}
       toScene: 0
-      toGridPosition: {x: 9, y: 3}
+      toGridPosition: {x: 51, y: 27}
       transitionType: 0
     - scene: 2
       fromGridPosition: {x: 0, y: 7}
       toScene: 0
-      toGridPosition: {x: 9, y: 3}
+      toGridPosition: {x: 51, y: 29}
       transitionType: 0
   - scene: 0
     warps:
     - scene: 0
-      fromGridPosition: {x: 11, y: 3}
-      toScene: 2
-      toGridPosition: {x: 1, y: 6}
-      transitionType: 0
-    - scene: 0
-      fromGridPosition: {x: 3, y: 6}
-      toScene: 1
-      toGridPosition: {x: 3, y: 1}
+      fromGridPosition: {x: 3, y: 0}
+      toScene: 0
+      toGridPosition: {x: 32, y: 30}
       transitionType: 1
   - scene: 1
     warps:
     - scene: 1
       fromGridPosition: {x: 3, y: 0}
       toScene: 0
-      toGridPosition: {x: 3, y: 5}
+      toGridPosition: {x: 11, y: 30}
       transitionType: 1

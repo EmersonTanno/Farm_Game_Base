@@ -1751,11 +1751,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toX
-      value: 3
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toY
-      value: 5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
