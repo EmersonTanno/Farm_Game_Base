@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class NPCMovement : MonoBehaviour
@@ -115,15 +116,17 @@ public class NPCMovement : MonoBehaviour
     #region Move off Screen
     private IEnumerator MoveOffScreen()
     {
-        int i;
         bool canChangeScene = true;
         
-        RemoveNPCFromScene(npc.npcData.gridPosition);
-        for(i = 0; i < sceneList.Count - 1; i++)
+        SceneLocationEnum fromScene = sceneList[0];
+        SceneLocationEnum toScene = sceneList[1];
+        SceneLocationEnum lastScene = fromScene;
+        LogSceneList();
+        while(sceneList.Count > 1)
         {
-            SceneLocationEnum fromScene = sceneList[i - 1 > -1 ? i - 1: i];
-            SceneLocationEnum toScene = sceneList[i + 1];
-            travelTimeBtweenScenes = GetTravelTime(fromScene, toScene, sceneList[i]);
+            fromScene = sceneList[0];
+            toScene = sceneList[1];
+            travelTimeBtweenScenes = GetTravelTime(fromScene, toScene, npc.npcData.location);
             timeTraveled = 0;
 
             if(npc.npcData.state != NPCStateEnum.Walking)
@@ -146,21 +149,33 @@ public class NPCMovement : MonoBehaviour
 
             if(canChangeScene)
             {
+                Debug.Log($"Changed to: {toScene}");
                 npc.npcData.location = toScene;
+                sceneList.Remove(fromScene);
+                LogSceneList();
             }
 
             if(npc.npcData.location == SceneInfo.Instance.location)
             {
                 break;
             }
-            
+
+            lastScene = fromScene;
         }
 
-        
-        OnOffScreenMovementFinish(canChangeScene ? sceneList[i] : sceneList[i - 1]);
+        ProccessOffScreenMovementFinish(lastScene);
     }
 
-    private void OnOffScreenMovementFinish(SceneLocationEnum fromScene)
+    private void LogSceneList()
+    {
+        for(int i = 0; i < sceneList.Count; i++)
+        {
+            Debug.Log(sceneList[i]);
+        }
+    }
+
+
+    private void ProccessOffScreenMovementFinish(SceneLocationEnum fromScene)
     {
         if(npc.npcData.location == SceneInfo.Instance.location)
         {
@@ -171,6 +186,12 @@ public class NPCMovement : MonoBehaviour
             SetState(NPCStateEnum.Idle);
             npc.npcData.gridPosition = finalTargetPosition;    
         }
+    }
+
+    private void OnOffScreenMovementFinish()
+    {
+        SetState(NPCStateEnum.Idle);
+        npc.npcData.gridPosition = finalTargetPosition; 
     }
 
     private void NPCAppearInSceneAfterTravel(SceneLocationEnum fromScene)
@@ -214,7 +235,12 @@ public class NPCMovement : MonoBehaviour
 
     private void SetSceneList()
     {
-        sceneList = ScenesConections.Instance.GetPathToLocation(npc.npcData.location, finalTargetScene);
+        sceneList = warpGraph.GetPath(npc.npcData.location, finalTargetScene);
+
+        if (sceneList == null || sceneList.Count == 0)
+        {
+            Debug.LogWarning("NPC não encontrou caminho.");
+        }
     }
     #endregion
 
@@ -282,9 +308,9 @@ public class NPCMovement : MonoBehaviour
     #endregion
 
     #region Travel Time
-    private float GetTravelTime(SceneLocationEnum from, SceneLocationEnum to, SceneLocationEnum sctualScene)
+    private float GetTravelTime(SceneLocationEnum from, SceneLocationEnum to, SceneLocationEnum actualScene)
     {
-        WarpNode node = warpGraph.nodes.Find(n => n.scene == sctualScene);
+        WarpNode node = warpGraph.nodes.Find(n => n.scene == actualScene);
         Vector2Int initialPos;
         Vector2Int targetPos;
         WarpData initialWarpData = node.warps.Find(n => n.toScene == from);

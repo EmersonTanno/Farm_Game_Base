@@ -17,26 +17,41 @@ MonoBehaviour:
     warps:
     - scene: 2
       fromGridPosition: {x: 0, y: 6}
-      toScene: 0
-      toGridPosition: {x: 51, y: 28}
+      toScene: 3
+      toGridPosition: {x: 17, y: 6}
       transitionType: 0
     - scene: 2
       fromGridPosition: {x: 0, y: 5}
-      toScene: 0
-      toGridPosition: {x: 51, y: 27}
+      toScene: 3
+      toGridPosition: {x: 17, y: 5}
       transitionType: 0
     - scene: 2
       fromGridPosition: {x: 0, y: 7}
-      toScene: 0
-      toGridPosition: {x: 51, y: 29}
+      toScene: 3
+      toGridPosition: {x: 17, y: 7}
       transitionType: 0
   - scene: 0
     warps:
     - scene: 0
-      fromGridPosition: {x: 3, y: 0}
-      toScene: 0
-      toGridPosition: {x: 32, y: 30}
+      fromGridPosition: {x: 52, y: 28}
+      toScene: 3
+      toGridPosition: {x: 1, y: 8}
+      transitionType: 0
+    - scene: 0
+      fromGridPosition: {x: 32, y: 31}
+      toScene: 1
+      toGridPosition: {x: 3, y: 1}
       transitionType: 1
+    - scene: 0
+      fromGridPosition: {x: 52, y: 29}
+      toScene: 3
+      toGridPosition: {x: 1, y: 9}
+      transitionType: 0
+    - scene: 0
+      fromGridPosition: {x: 52, y: 27}
+      toScene: 3
+      toGridPosition: {x: 1, y: 7}
+      transitionType: 0
   - scene: 1
     warps:
     - scene: 1
@@ -44,3 +59,35 @@ MonoBehaviour:
       toScene: 0
       toGridPosition: {x: 11, y: 30}
       transitionType: 1
+  - scene: 3
+    warps:
+    - scene: 3
+      fromGridPosition: {x: 0, y: 7}
+      toScene: 0
+      toGridPosition: {x: 51, y: 27}
+      transitionType: 0
+    - scene: 3
+      fromGridPosition: {x: 0, y: 9}
+      toScene: 0
+      toGridPosition: {x: 51, y: 29}
+      transitionType: 0
+    - scene: 3
+      fromGridPosition: {x: 18, y: 9}
+      toScene: 0
+      toGridPosition: {x: 1, y: 7}
+      transitionType: 0
+    - scene: 3
+      fromGridPosition: {x: 0, y: 8}
+      toScene: 0
+      toGridPosition: {x: 51, y: 28}
+      transitionType: 0
+    - scene: 3
+      fromGridPosition: {x: 18, y: 7}
+      toScene: 0
+      toGridPosition: {x: 1, y: 5}
+      transitionType: 0
+    - scene: 3
+      fromGridPosition: {x: 18, y: 8}
+      toScene: 0
+      toGridPosition: {x: 1, y: 6}
+      transitionType: 0
