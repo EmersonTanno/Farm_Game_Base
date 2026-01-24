@@ -18,17 +18,17 @@ MonoBehaviour:
     - scene: 2
       fromGridPosition: {x: 0, y: 6}
       toScene: 3
-      toGridPosition: {x: 17, y: 6}
+      toGridPosition: {x: 17, y: 8}
       transitionType: 0
     - scene: 2
       fromGridPosition: {x: 0, y: 5}
       toScene: 3
-      toGridPosition: {x: 17, y: 5}
+      toGridPosition: {x: 17, y: 7}
       transitionType: 0
     - scene: 2
       fromGridPosition: {x: 0, y: 7}
       toScene: 3
-      toGridPosition: {x: 17, y: 7}
+      toGridPosition: {x: 17, y: 9}
       transitionType: 0
   - scene: 0
     warps:

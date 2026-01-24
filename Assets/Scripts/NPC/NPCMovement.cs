@@ -181,7 +181,8 @@ public class NPCMovement : MonoBehaviour
             lastScene = fromScene;
         }
 
-        ProccessOffScreenMovementFinish(SceneInfo.Instance.location == fromScene ? lastScene : fromScene);
+        ProccessOffScreenMovementFinish();
+        //SceneInfo.Instance.location == fromScene ? lastScene : fromScene
     }
 
     private void LogSceneList()
@@ -193,11 +194,11 @@ public class NPCMovement : MonoBehaviour
     }
 
 
-    private void ProccessOffScreenMovementFinish(SceneLocationEnum fromScene)
+    private void ProccessOffScreenMovementFinish()
     {
         if(npc.npcData.location == SceneInfo.Instance.location)
         {
-            NPCAppearInSceneAfterTravel(fromScene);
+            NPCAppearInSceneAfterTravel();
         } 
         else
         {
@@ -211,12 +212,8 @@ public class NPCMovement : MonoBehaviour
         npc.npcData.gridPosition = finalTargetPosition; 
     }
 
-    private void NPCAppearInSceneAfterTravel(SceneLocationEnum fromScene)
+    private void NPCAppearInSceneAfterTravel()
     {
-        Vector2Int startPosition = TileMapController.Instance.GetWarpLocationInScene(fromScene);
-
-        npc.npcData.gridPosition = startPosition;
-
         if(timeTraveled < travelTimeBtweenScenes)
         {
             List<Vector2Int> path = TileMapController.Instance.FindPath(npc.npcData.gridPosition, finalTargetPosition, finalTargetScene, npc.npcData.location, sceneList);
