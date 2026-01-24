@@ -4420,7 +4420,11 @@ MonoBehaviour:
     gridPosition: {x: 45, y: 27}
     state: 0
     routineIndex: 0
-    routine: []
+    routine:
+    - startHour: 9
+      startMinute: 0
+      location: 3
+      position: {x: 14, y: 5}
 --- !u!212 &782744985
 SpriteRenderer:
   m_ObjectHideFlags: 0

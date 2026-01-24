@@ -121,7 +121,6 @@ public class NPCMovement : MonoBehaviour
         SceneLocationEnum fromScene = sceneList[0];
         SceneLocationEnum toScene = sceneList[1];
         SceneLocationEnum lastScene = fromScene;
-        LogSceneList();
         while(sceneList.Count > 1)
         {
             fromScene = sceneList[0];
@@ -152,7 +151,6 @@ public class NPCMovement : MonoBehaviour
                 Debug.Log($"Changed to: {toScene}");
                 npc.npcData.location = toScene;
                 sceneList.Remove(fromScene);
-                LogSceneList();
             }
 
             if(npc.npcData.location == SceneInfo.Instance.location)
@@ -160,10 +158,15 @@ public class NPCMovement : MonoBehaviour
                 break;
             }
 
+            if(npc.npcData.location == finalTargetScene)
+            {
+                Debug.Log("ACHOU");
+            }
+
             lastScene = fromScene;
         }
 
-        ProccessOffScreenMovementFinish(lastScene);
+        ProccessOffScreenMovementFinish(SceneInfo.Instance.location == fromScene ? lastScene : fromScene);
     }
 
     private void LogSceneList()
