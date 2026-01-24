@@ -15,6 +15,9 @@ public class SceneController : MonoBehaviour
     private Vector3 targetPlayerPosition;
     private bool hasPendingTeleport;
 
+    //Flags
+    private bool npcLoaded = false;
+
     private GameObject currentTransitionCanvas;
     public static event Action OnWarpStart;
 
@@ -46,6 +49,16 @@ public class SceneController : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnEnable()
+    {
+        NPCController.OnNPCSet += NPCLoaded;
+    }
+
+    void OnDisable()
+    {
+        NPCController.OnNPCSet -= NPCLoaded;
     }
 
     public void LoadScene(WarpTile warp, Vector2 spawnPosition)
@@ -106,10 +119,22 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator EndWarpNextFrame()
     {
-        yield return null;
+        while(!npcLoaded)
+        {
+            yield return null;
+        }
+        
+        yield return new WaitForSecondsRealtime(1f);
         WarpController.Instance.EndWarp();
         yield return new WaitForSecondsRealtime(1f);
         Time_Controll.Instance.UnpauseTime();
+        npcLoaded = false;
+    }
+
+    private void NPCLoaded()
+    {
+        Debug.Log("NPC Loaded");
+        npcLoaded = true;
     }
 
     private IEnumerator DisableTransitionAfterAnim(GameObject canvas, Animator anim)

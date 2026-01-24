@@ -9,6 +9,8 @@ public class NPCController : MonoBehaviour
 
     private Vector3 npcOffSet = new Vector3(0.5f, 0.7f, 0);
 
+    public static event Action OnNPCSet;
+
     void Awake()
     {
         Instance = this;
@@ -46,6 +48,7 @@ public class NPCController : MonoBehaviour
                 npc.SetNPC(false);
             }
         } 
+        OnNPCSet?.Invoke();
     }
 
     private void NPCMovement()

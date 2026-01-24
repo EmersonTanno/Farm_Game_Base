@@ -4417,7 +4417,7 @@ MonoBehaviour:
     id: 1
     hearts: 0
     location: 0
-    gridPosition: {x: 45, y: 27}
+    gridPosition: {x: 45, y: 26}
     state: 0
     routineIndex: 0
     routine:
@@ -4508,6 +4508,7 @@ MonoBehaviour:
   movePointer: {fileID: 1635421968}
   nPCAnimator: {fileID: 782744988}
   warpGraph: {fileID: 11400000, guid: 0ee7fee5e239774408e98902504c374a, type: 2}
+  mapGraph: {fileID: 11400000, guid: f68d236e90aba0a479cb82ae85c2b115, type: 2}
 --- !u!95 &782744988
 Animator:
   serializedVersion: 5
@@ -8527,6 +8528,7 @@ MonoBehaviour:
   movePointer: {fileID: 1401356217}
   nPCAnimator: {fileID: 1420878975}
   warpGraph: {fileID: 11400000, guid: 0ee7fee5e239774408e98902504c374a, type: 2}
+  mapGraph: {fileID: 11400000, guid: f68d236e90aba0a479cb82ae85c2b115, type: 2}
 --- !u!114 &1420878973
 MonoBehaviour:
   m_ObjectHideFlags: 0

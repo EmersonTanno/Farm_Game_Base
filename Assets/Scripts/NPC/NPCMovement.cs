@@ -11,6 +11,7 @@ public class NPCMovement : MonoBehaviour
     [SerializeField] private GameObject movePointer;
     [SerializeField] private Animator nPCAnimator;
     [SerializeField] private WarpGraph warpGraph;
+    [SerializeField] private MapGraph mapGraph;
     #endregion
 
     #region Variable
@@ -29,6 +30,8 @@ public class NPCMovement : MonoBehaviour
     private void Start()
     {
         npc = GetComponent<NPC>();
+        
+        Debug.Log($"NPC {npc.npcData.id}: {mapGraph.GetTile(npc.npcData.location, npc.npcData.gridPosition.x, npc.npcData.gridPosition.y)}");
     }
     #endregion
 
