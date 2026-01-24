@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
     [SerializeField] private GameObject canva;
+    [SerializeField] private GameObject npcs;
 
     private void Awake()
     {
@@ -20,5 +21,6 @@ public class GameController : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(canva);
+        DontDestroyOnLoad(npcs);
     }
 }

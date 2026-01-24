@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class SceneController : MonoBehaviour
     private bool hasPendingTeleport;
 
     private GameObject currentTransitionCanvas;
+    public static event Action OnWarpStart;
 
     private void Awake()
     {
@@ -50,9 +52,10 @@ public class SceneController : MonoBehaviour
     {
         if (hasPendingTeleport) return;
 
+        OnWarpStart?.Invoke();
         hasPendingTeleport = true;
         targetPlayerPosition = spawnPosition;
-
+        Time_Controll.Instance.PauseTime();
         StartCoroutine(LoadLevelAsync(warp));
     }
 
@@ -64,7 +67,7 @@ public class SceneController : MonoBehaviour
         Animator anim = currentTransitionCanvas.GetComponent<Animator>();
         anim.SetTrigger("Start");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(warp.scene);
         asyncLoad.allowSceneActivation = false;
@@ -98,12 +101,20 @@ public class SceneController : MonoBehaviour
         }
 
         hasPendingTeleport = false;
+        StartCoroutine(EndWarpNextFrame());
+    }
+
+    private IEnumerator EndWarpNextFrame()
+    {
+        yield return null;
         WarpController.Instance.EndWarp();
+        yield return new WaitForSecondsRealtime(1f);
+        Time_Controll.Instance.UnpauseTime();
     }
 
     private IEnumerator DisableTransitionAfterAnim(GameObject canvas, Animator anim)
     {
-        yield return new WaitForSeconds(
+        yield return new WaitForSecondsRealtime(
             anim.GetCurrentAnimatorStateInfo(0).length
         );
 

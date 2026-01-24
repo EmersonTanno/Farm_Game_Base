@@ -1,0 +1,79 @@
+using UnityEngine;
+
+public class PersistenceController : MonoBehaviour
+{
+    public static PersistenceController Instance;
+    private GridSaveData gridSaveData = new GridSaveData();
+    public bool hasData = false;
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void OnEnable()
+    {
+        SceneController.OnWarpStart += SaveFarm;
+        Calendar_Controller.OnDayChange += PassDay;
+    }
+
+    void OnDisable()
+    {
+        SceneController.OnWarpStart -= SaveFarm;
+        Calendar_Controller.OnDayChange -= PassDay;
+    }
+
+    public void SaveFarm()
+    {
+        if(SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
+
+        gridSaveData.plants.Clear();
+
+        Grid<WorldTileData> originalGrid = TileMapController.Instance.GetGrid().GetGrid();
+        Grid<TileMapPlantData> plantGrid = TileMapController.Instance.GetGrid().GetPlantGrid();
+
+        for(int y = 0; y < originalGrid.GetHeight(); y++)
+        {
+            for(int x = 0; x < originalGrid.GetWidth(); x++)
+            {
+                int gridValue = originalGrid.GetGridObject(x, y).baseTileId;
+                TileMapPlantData plantData = plantGrid.GetGridObject(x, y);
+                if(plantData != null)
+                {
+                    gridSaveData.plants.Add(new PlantSaveData
+                    {
+                        x = x,
+                        y = y,
+                        gridValue = gridValue,
+                        plantData = plantData
+                    });
+                    continue;
+                }
+            }
+        }
+
+        hasData = gridSaveData.plants.Count > 0;
+    }
+
+    public GridSaveData LoadGridSaveData()
+    {
+        return gridSaveData;
+    }
+
+    public void PassDay()
+    {
+        foreach (var plant in gridSaveData.plants)
+        {
+            if (plant.plantData != null)
+            {
+                plant.plantData.PassDay();
+            }
+        }
+    }
+}

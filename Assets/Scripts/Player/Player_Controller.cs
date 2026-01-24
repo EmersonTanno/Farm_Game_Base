@@ -25,6 +25,9 @@ public class Player_Controller : MonoBehaviour
     private bool isPlanting = false;
     private bool isPlowing = false;
     [HideInInspector] public bool isHarvesting = false;
+
+    //Reactions
+    [SerializeField]private ThoughtBubbleController reactions;
     #endregion
 
     #region Core
@@ -82,8 +85,15 @@ public class Player_Controller : MonoBehaviour
 
         Vector2 pos = transform.position;
 
-        WorldObjectID obj1 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
-        WorldObjectID obj2 = (WorldObjectID)TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos + GetSide());
+        WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
+        WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos + GetSide()).objectID;
+        int nPCId = CheckNPC(pos);
+
+        if(nPCId != 0 && nPCId != -1)
+        {
+            NPCController.Instance.InteractWithNPC(nPCId);
+            return;
+        }
 
         if (obj1 == WorldObjectID.Bed || obj2 == WorldObjectID.Bed)
         {
@@ -235,7 +245,7 @@ public class Player_Controller : MonoBehaviour
             return;
 
         
-        WarpTile warp = TileMapController.Instance.GetGrid().GetWarpGrid().GetGridObject(transform.position);
+        WarpTile warp = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(transform.position).warp;
         if(warp != null)
         {
             WarpController.Instance.ExecuteWarp(warp);
@@ -404,7 +414,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckAction()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
+        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active || DialogueManager.Instance.dialogueActive)
         {
             return true;
         }
@@ -434,12 +444,12 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckPlayerMoveGrid(Vector2 pos)
     {
-        if(TileMapController.Instance.GetGrid().GetMovementGrid().GetGridObject(pos) == false)
+        if(TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).isWalkable == false)
         {
             return false;
         }
 
-        WorldObjectID objectGridValue = TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(pos);
+        WorldObjectID objectGridValue = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
 
         if(objectGridValue == WorldObjectID.Bed)
         {
@@ -450,7 +460,7 @@ public class Player_Controller : MonoBehaviour
             }
         }
 
-        if(TileMapController.Instance.GetGrid().GetObjectGrid().GetGridObject(transform.position) == WorldObjectID.Bed)
+        if(TileMapController.Instance.GetGrid().GetGrid().GetGridObject(transform.position).objectID == WorldObjectID.Bed)
         {
             Vector2 side = GetSide();
             if (side == Vector2.down || side == Vector2.up)
@@ -460,6 +470,31 @@ public class Player_Controller : MonoBehaviour
         }
 
         return true;
+    }
+    #endregion
+
+    #region Reactions
+    public void ShowReaction(ThoughtEmoteEnum reaction)
+    {
+        reactions.ShowBalloon(reaction);
+    }
+    #endregion
+
+    #region NPC Interaction
+    private int CheckNPC(Vector2 currentPosition)
+    {
+        Vector2 side = GetSide();
+        Grid<WorldTileData> npcGrid = TileMapController.Instance.GetGrid().GetGrid();
+
+        int firstTile = npcGrid.GetGridObject(currentPosition + side).npcId;
+        if (firstTile != 0 && firstTile != -1)
+            return firstTile;
+
+        int secondTile = npcGrid.GetGridObject(currentPosition + (side * 2)).npcId;
+        if (secondTile != 0 && secondTile != -1)
+            return secondTile;
+
+        return 0;
     }
     #endregion
 }

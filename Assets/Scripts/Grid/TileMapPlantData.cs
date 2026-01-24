@@ -5,6 +5,7 @@ public class TileMapPlantData
 {
     #region Variables
     public PlantType plant;
+    public bool isPlown;
     public bool isWater;
     public int growthDays;
     public int dryDays;
@@ -12,10 +13,11 @@ public class TileMapPlantData
     #endregion
 
     #region Constructor
-    public TileMapPlantData(PlantType plant, bool isWater)
+    public TileMapPlantData(PlantType plant, bool isWater, bool isPlown)
     {
         this.plant = plant;
         this.isWater = isWater;
+        this.isPlown = isPlown;
         growthDays = 0;
         dryDays = 0;
         isDead = false;
@@ -42,25 +44,48 @@ public class TileMapPlantData
     #region Day Controll
     public void PassDay()
     {
-        if(isWater == true)
+        if (plant != null)
         {
-            growthDays+=1;
-            dryDays = 0;
-            RemoveWater();
-        } else
-        {
-            dryDays+=1;
-            if(dryDays > plant.maxDaysWithoutWater)
+            if (isWater)
+            {
+                growthDays += 1;
+                dryDays = 0;
+                RemoveWater();
+                return;
+            }
+            else
+            {
+                dryDays += 1;
+                if (dryDays > plant.maxDaysWithoutWater)
+                {
+                    Die();
+                }
+            }
+
+            if (plant.season != Calendar_Controller.Instance.season)
             {
                 Die();
             }
         }
-
-        if(plant.season != Calendar_Controller.Instance.season)
+        else
         {
-            Die();
+            if (isPlown && isWater)
+            {
+                isWater = false;
+
+                return;
+            }
+            else if(isPlown)
+            {
+                if (Random.value < 0.5f)
+                {
+                    Debug.Log("Resetou");
+                    isPlown = false;
+                }
+            }
         }
     }
+
 
     #endregion
 

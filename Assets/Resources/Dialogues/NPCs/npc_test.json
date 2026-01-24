@@ -1,0 +1,73 @@
+{
+  "npcId": 1,
+  "npcDialogueList": [
+    {
+      "dialogueId": "1",
+      "dialogue": [
+        {
+          "portrait": 1,
+          "reaction": "Sweat",
+          "addHearts": 2,
+          "textLinePt": "Olá, eu sou o prefeito da cidade.",
+          "textLineEn": "Hello, I am the mayor of the city."
+        },
+        {
+          "portrait": 1,
+          "addHearts": -1,
+          "textLinePt": "Espero que você pague as taxas direitinho.",
+          "textLineEn": "I hope you pay your taxes properly.",
+          "options": [
+            {
+              "answerOptionPt": "Quem é você?",
+              "answerOptionEn": "Who are you?",
+              "toDialogueId": "2"
+            },
+            {
+              "answerOptionPt": "Tenho que ir",
+              "answerOptionEn": "I need to go",
+              "toDialogueId": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dialogueId": "2",
+      "dialogue": [
+        {
+          "portrait": 1,
+          "reaction": "Sweat",
+          "textLinePt": "Cuidado ao sair da fazenda.",
+          "textLineEn": "Be careful when leaving the farm."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
+          "textLineEn": "You never know what kind of taxes you might encounter.",
+          "options": [
+            {
+              "answerOptionPt": "Quem é você?",
+              "answerOptionEn": "Who are you?",
+              "toDialogueId": "3"
+            },
+            {
+              "answerOptionPt": "Tenho que ir",
+              "answerOptionEn": "I need to go",
+              "toDialogueId": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dialogueId": "3",
+      "dialogue": [
+        {
+          "portrait": 1,
+          "textLinePt": "Fim",
+          "textLineEn": "End"
+        }
+      ]
+    }
+  ]
+}

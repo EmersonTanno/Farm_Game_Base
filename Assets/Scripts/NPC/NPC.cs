@@ -1,0 +1,46 @@
+using UnityEngine;
+
+public class NPC : MonoBehaviour
+{
+    public NPCData npcData;
+    private SpriteRenderer spriteRenderer;
+    private NPCMovement npcMovement;
+    private ThoughtBubbleController bubble;
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        npcMovement = GetComponent<NPCMovement>();
+        bubble = GetComponentInChildren<ThoughtBubbleController>();
+    }
+
+    public void SetNPC(bool active)
+    {
+        spriteRenderer.enabled = active;
+    }
+
+    public void Interact()
+    {
+        npcMovement.SetNPCCanWalk(false);
+        DialogueManager.Instance.SetDialogue(npcData.id, "1");
+    }
+
+    public void AddHeart(int num)
+    {
+        npcData.hearts += num;
+        if(npcData.hearts > 10)
+        {
+            npcData.hearts = 10;
+        }
+        if(npcData.hearts < 0)
+        {
+            npcData.hearts = 0;
+        }
+
+        Debug.Log("Corações adicionados " + npcData.hearts);
+    }
+
+    public void ShowReaction(ThoughtEmoteEnum reaction)
+    {
+        bubble.ShowBalloon(reaction);
+    }
+}

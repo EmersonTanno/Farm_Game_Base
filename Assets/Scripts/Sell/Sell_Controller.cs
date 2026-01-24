@@ -95,12 +95,12 @@ public class Sell_Controller : MonoBehaviour
     #region Events
     void OnEnable()
     {
-        Time_Controll.OnMidNightChange += SellItems;
+        Calendar_Controller.OnDayChange += SellItems;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnMidNightChange -= SellItems;
+        Calendar_Controller.OnDayChange -= SellItems;
     }
     #endregion
 
@@ -182,7 +182,7 @@ public class Sell_Controller : MonoBehaviour
         sellUi.SetActive(active);
         InventoryManager.Instance.ControllInventoryGroup(!active);
         Calendar_Controller.Instance.ControllTimeGroup(!active);
-        Status_Controller.Instance.ControllPlayerUiGroup(!active);
+        Status_Controller.Instance.SetControllPlayerUiGroup(!active);
     }
 
     private void SetInfos(int taxedValue, int totalValue, int gainedValue)

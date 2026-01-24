@@ -1,0 +1,35 @@
+{
+  "npcId": 2,
+  "npcDialogueList": [
+    {
+      "dialogueId": "1",
+      "dialogue": [
+        {
+          "portrait": 2,
+          "textLinePt": "Você deve ser o novo morador.",
+          "textLineEn": "You must be the new farmer."
+        },
+        {
+          "portrait": 2,
+          "textLinePt": "Espero que você pague as taxas direitinho.",
+          "textLineEn": "Hello, I am the mayor of the city."
+        }
+      ]
+    },
+    {
+      "dialogueId": "2",
+      "dialogue": [
+        {
+          "portrait": 2,
+          "textLinePt": "Cuidado ao sair da fazenda.",
+          "textLineEn": "Hello, I am the mayor of the city."
+        },
+        {
+          "portrait": 2,
+          "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
+          "textLineEn": "Hello, I am the mayor of the city."
+        }
+      ]
+    }
+  ]
+}

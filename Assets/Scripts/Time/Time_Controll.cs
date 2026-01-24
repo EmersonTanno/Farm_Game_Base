@@ -29,6 +29,7 @@ public class Time_Controll : MonoBehaviour
     //Event
     public static event Action OnMidNightChange;
     public static event Action OnHourChange;
+    public static event Action OnMinuteChange;
     #endregion
 
     #region Core
@@ -55,11 +56,13 @@ public class Time_Controll : MonoBehaviour
         if (minutes < 50)
         {
             minutes += 10;
+            OnMinuteChange?.Invoke();
         }
         else
         {
             hours += 1;
             minutes = 0;
+            OnMinuteChange?.Invoke();
             OnHourChange?.Invoke();
 
             if (hours > 23)

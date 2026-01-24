@@ -4,57 +4,44 @@ using UnityEngine.Tilemaps;
 
 public class TileMapRenderer : MonoBehaviour
 {
+    [SerializeField] private WorldTileDataBase tilesDataBase;
     public Tilemap soilTilemap;
     public Tilemap plantTilemap;
 
-    [SerializeField] WorldTile[] worldTiles;
-    private Dictionary<int, TileBase> tileLookup;
-
     [Header("Plant Tiles (growth stages)")]
     public TileBase deadPlant;
+    public TileBase plowSoil;
+    public TileBase wateredSoil;
 
     private TileMap tileMap;
 
     public void Init(TileMap tileMap)
     {
         this.tileMap = tileMap;
-        BuildTileLookup();
         RenderAll();
-    }
-
-    private void BuildTileLookup()
-    {
-        tileLookup = new Dictionary<int, TileBase>();
-
-        foreach (var worldTile in worldTiles)
-        {
-            if (!tileLookup.ContainsKey(worldTile.id))
-                tileLookup.Add(worldTile.id, worldTile);
-            else
-                Debug.LogWarning($"Tile duplicado com id {worldTile.id}");
-        }
     }
 
     public void RenderAll()
     {
-        for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+        for(int x = 0; x < tileMap.GetGrid().GetWidth(); x++)
         {
-            for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+            for(int y = 0; y < tileMap.GetGrid().GetHeight(); y++)
             {
                 RenderTile(x, y);
             }
         }
     }
 
-    private TileBase GetTile(int soilState)
+    private TileBase GetTile(int tileId)
     {
-        if(soilState == 0)
+        if(tileId == 0)
             return null;
 
-        if (tileLookup.TryGetValue(soilState, out var tile))
-            return tile;
+        var tile = tilesDataBase.GetTile(tileId);
+
+        if(tile) return tile;
         
-        Debug.LogWarning($"Nenhum tile encontrado para soilState {soilState}");
+        Debug.LogWarning($"Nenhum tile encontrado para soilState {tileId}");
         return null;
     }
 
@@ -65,24 +52,42 @@ public class TileMapRenderer : MonoBehaviour
 
     private void RenderSoil(int x, int y)
     {
-        int soilState = tileMap.GetOriginalGrid().GetGridObject(x, y);
+        int tileId = tileMap.GetGrid().GetGridObject(x, y).baseTileId;
+        TileMapPlantData plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
         TileBase tileToUse = null;
 
-        if(soilState == 20)
+        if(plantTile != null)
         {
-            RenderPlant(x, y);
-        } else
+            if(plantTile.plant != null || plantTile.isPlown)
+            {
+                RenderPlant(x, y, plantTile);
+            } 
+        }
+        else
         {
-            tileToUse = GetTile(soilState);
+            tileToUse = GetTile(tileId);
         }
 
         soilTilemap.SetTile(new Vector3Int(x, y), tileToUse);
     }
 
-    private void RenderPlant(int x, int y)
+    private void RenderPlant(int x, int y, TileMapPlantData plantData)
     {
-        var plantObject = tileMap.GetPlantGrid().GetGridObject(x, y);
-        var plantTile = plantObject.GetStageTile();
+        if(!plantData.plant)
+        {
+            if(plantData.isPlown && plantData.isWater)
+            {
+                plantTilemap.SetTile(new Vector3Int(x, y), wateredSoil);
+                return;
+            }
+            else if(plantData.isPlown)
+            {
+                plantTilemap.SetTile(new Vector3Int(x, y), plowSoil);
+                return;
+            }
+        }
+
+        var plantTile = plantData.GetStageTile();
 
         if(plantTile == null)
         {

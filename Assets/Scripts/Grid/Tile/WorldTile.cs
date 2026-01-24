@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,5 +6,8 @@ public class WorldTile : Tile
 {
     public int id;
     public bool isWarp;
+    public bool isWalkable;
+    public bool isPath;
+    public bool canBePlanted;
     public WarpTile warp;
 }

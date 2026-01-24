@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -14,6 +14,32 @@ public class TileMapController : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private GameObject constructionsMap;
     [SerializeField] private GameObject objectsMap;
+    [SerializeField] private GameObject warpHolder;
+
+    public static event Action OnTileMapReady;
+
+    static readonly Vector2Int[] directions =
+    {
+        Vector2Int.up,
+        Vector2Int.down,
+        Vector2Int.left,
+        Vector2Int.right
+    };
+
+    List<Vector2Int> RetracePath(Node endNode)
+    {
+        List<Vector2Int> path = new();
+        Node current = endNode;
+
+        while (current.parent != null)
+        {
+            path.Add(current.pos);
+            current = current.parent;
+        }
+
+        path.Reverse();
+        return path;
+    }
 
     #region Core
     void Awake()
@@ -33,19 +59,23 @@ public class TileMapController : MonoBehaviour
 
         CreateGridFromTilemap();
         LoadGroundAndWarpFromTilemap();
+        ApplySavedLayout();
         renderer.Init(tileMap);
 
-        SetAllGrids(tileMap.GetOriginalGrid(), tileMap.GetObjectGrid());
+        SetAllGrids();
+        OnTileMapReady?.Invoke();
     }
 
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
+        OnTileMapReady += SetNPCsInScene;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
+        OnTileMapReady -= SetNPCsInScene;
     }
 
     #endregion
@@ -58,39 +88,55 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region Apply Layout
-    //Implementação de load futuro
-    // private void ApplyDefaultLayout()
-    // {
-    //     for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
-    //     {
-    //         for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
-    //         {
-    //             //tileMap.GetOriginalGrid().SetValue(x, y, defaultLayoutOriginalGrid[y, x]);
-    //             tileMap.GetObjectGrid().SetValue(x, y, staticObjectLayoutGrid[y, x]);
-    //         }
-    //     }
-    // }
+    private void ApplySavedLayout()
+    {
+        if(PersistenceController.Instance.hasData == false || SceneInfo.Instance.location != SceneLocationEnum.FARM) return;
+
+        GridSaveData saveData = PersistenceController.Instance.LoadGridSaveData();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
+        Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
+
+
+        foreach (var data in saveData.plants)
+        {
+            grid.SetValue(data.x, data.y, grid.GetGridObject(data.x, data.y).WithBaseTileId(data.gridValue));
+
+            if (data.plantData != null)
+            {
+                if(data.plantData.isPlown || data.plantData.plant != null)
+                {
+                    plantGrid.SetValue(data.x, data.y, data.plantData);
+                }
+            }
+        }
+    }
     #endregion
 
     #region Plow
     public void PlowSoil(Vector2 position)
     {
-        Grid<int> farmGrid = tileMap.GetOriginalGrid();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
+        Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
-        if(farmGrid.GetGridObject(position) != 1 && farmGrid.GetGridObject(position) != 2 && farmGrid.GetGridObject(position) != 20) return;
+        if (!grid.GetGridObject(position).canBePlanted || !grid.GetGridObject(position).isWalkable || grid.GetGridObject(position).warp != null) return;
 
-        if(farmGrid.GetGridObject(position) == 20)
+        TileMapPlantData plant = plantGrid.GetGridObject(position);
+        if(plant != null)
         {
-            var plantDead = tileMap.GetPlantGrid().GetGridObject(position).isDead;
-            if(plantDead)
+            if(plant.isDead)
             {
-                tileMap.GetPlantGrid().GetGridObject(position).ResetTile();
-            } else
-            {
-                return;
+                plant.ResetTile();
             }
         }
-        farmGrid.SetValue(position, 10);
+
+        plantGrid.SetValue(position, new TileMapPlantData(null, false, true));
+
+        if (WeatherController.Instance.GetWeather() == WeatherEnum.RAIN ||
+            WeatherController.Instance.GetWeather() == WeatherEnum.TEMPEST)
+        {
+            plantGrid.GetGridObject(position).PutWater();
+        }
+
         renderer.RenderTile((int)position.x, (int)position.y);
     }
     #endregion
@@ -98,85 +144,67 @@ public class TileMapController : MonoBehaviour
     #region Water
     public void WaterSoil(Vector2 position)
     {
-        int tileValue = tileMap.GetOriginalGrid().GetGridObject(position);
-        if(tileValue == 10 || tileValue == 20)
+        TileMapPlantData plantValue = tileMap.GetPlantGrid().GetGridObject(position);
+        if(plantValue != null)
         {
-            switch(tileValue)
+            if(plantValue.isDead) return;
+
+            plantValue.PutWater();
+            renderer.RenderTile((int)position.x, (int)position.y);
+        }
+    }
+
+    public void WaterSoilWithRain()
+    {
+        WeatherEnum weather = WeatherController.Instance.GetWeather();
+
+        if (weather != WeatherEnum.RAIN && weather != WeatherEnum.TEMPEST)
+            return;
+
+        Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
+
+        int width = plantGrid.GetWidth();
+        int height = plantGrid.GetHeight();
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
             {
-                case 10:
-                {
-                    tileMap.GetOriginalGrid().SetValue(position, 11);
-                    renderer.RenderTile((int)position.x, (int)position.y);
-                    break;
-                }
-                case 20:
-                {
-                    tileMap.GetPlantGrid().GetGridObject(position).PutWater();
-                    renderer.RenderTile((int)position.x, (int)position.y);
-                    break;
-                }
+                TileMapPlantData plantTile = plantGrid.GetGridObject(x, y);
+
+                if (plantTile == null) continue;
+                if (plantTile.isWater) continue;
+
+                plantTile.PutWater();
+                renderer.RenderTile(x, y);
             }
         }
     }
+
     #endregion
 
     #region Plant
     public void PlantSoil(Vector2 position, PlantType plant)
     {
-        int tileValue = tileMap.GetOriginalGrid().GetGridObject(position);
-        
-        if (tileValue == 10 || tileValue == 11)
+        TileMapPlantData plantData = tileMap.GetPlantGrid().GetGridObject(position);
+
+        if (plantData != null)
         {
-            switch(tileValue)
+            if(plantData.plant == null)
             {
-                case 10: 
-                {
-                    var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
-        
-                    if (plantTile == null)
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        tileMap.GetPlantGrid().SetValue((int)position.x, (int)position.y, new TileMapPlantData(plant, false));
-                    }
-                    else
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        plantTile.SetPlant(plant, false);
-                    }
-
-                    break;
-                }
-
-                case 11:
-                {
-                    var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
-        
-                    if (plantTile == null)
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        tileMap.GetPlantGrid().SetValue((int)position.x, (int)position.y, new TileMapPlantData(plant, true));
-                    }
-                    else
-                    {
-                        tileMap.GetOriginalGrid().SetValue(position, 20);
-                        plantTile.SetPlant(plant, true);
-                    }
-
-                    break;
-                }
+                plantData.SetPlant(plant, plantData.isWater);
             }
-
             renderer.RenderTile((int)position.x, (int)position.y);
         }
     }
 
     private void GrowPlant()
     {
-        for(int x = 0; x < tileMap.GetOriginalGrid().GetWidth(); x++)
+        for(int x = 0; x < tileMap.GetPlantGrid().GetWidth(); x++)
         {
-            for(int y = 0; y < tileMap.GetOriginalGrid().GetHeight(); y++)
+            for(int y = 0; y < tileMap.GetPlantGrid().GetHeight(); y++)
             {
-                var plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
+                TileMapPlantData plantTile = tileMap.GetPlantGrid().GetGridObject(x, y);
         
                 if (plantTile == null)
                 {
@@ -184,15 +212,11 @@ public class TileMapController : MonoBehaviour
                 }
                 else
                 {
-                    if(plantTile.plant)
-                    {
-                        plantTile.PassDay();
-                        renderer.RenderTile(x, y);
-                    }
+                    plantTile.PassDay();
+                    renderer.RenderTile(x, y);
                 }
             }
         }
-       
     }
     #endregion
 
@@ -207,16 +231,14 @@ public class TileMapController : MonoBehaviour
 
         plantTile.ResetTile();
 
-        tileMap.GetOriginalGrid().SetValue(position, 10);
         renderer.RenderTile((int)position.x, (int)position.y);
     }
 
     public bool CanHarvest(Vector2 position)
     {
         var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
-        var globalTile = tileMap.GetOriginalGrid().GetGridObject(position);
 
-        if(globalTile != 20 || !plantTile.CanHarvest()) return false;
+        if(!plantTile.CanHarvest()) return false;
 
         return true;
     }
@@ -260,8 +282,9 @@ public class TileMapController : MonoBehaviour
             foreach(ObjectTile tile in objectPositionData)
             {
                 Vector2 position = new Vector2(worldObject.transform.position.x + tile.offset.x, worldObject.transform.position.y + tile.offset.y);
-                tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
-                tileMap.GetObjectGrid().SetValue(position, worldObject.GetWorldObjectType());
+
+                SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
+                tileMap.GetGrid().SetValue(position, tileMap.GetGrid().GetGridObject(position).WithObjectId(worldObject.GetWorldObjectType()));
             }
         }
     }
@@ -280,18 +303,12 @@ public class TileMapController : MonoBehaviour
             WorldTile worldTile = tile as WorldTile;
             if (worldTile == null) continue;
 
-            tileMap.GetOriginalGrid().SetValue(
-                pos.x,
-                pos.y,
-                worldTile.id
-            );
-
-            if(worldTile.isWarp)
-            {
-                SetWarpGrid(pos.x, pos.y, worldTile.warp);
-            }
+            SetGridTileData(pos.x, pos.y, WorldTileFactory.CreateDefault(worldTile));
         }
+        LoadWarpsFromScene();
     }
+
+
 
     private void CreateGridFromTilemap()
     {
@@ -312,63 +329,60 @@ public class TileMapController : MonoBehaviour
 
     #region SetGrids
 
-    private void SetAllGrids(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
+    private void SetAllGrids()
     {
-        SetMovementGrid(originalGrid, objectGrid);
         SetConstructionsInSceneAndConstructionsWarps();
         SetObjectsInScene();
     }
 
+    private void SetGridTileData(int x, int y, WorldTileData tileData)
+    {
+        tileMap.GetGrid().SetValue(x, y, tileData);
+    }
     #endregion
 
+
     #region MovementGrid
-    private void SetMovementGrid(Grid<int> originalGrid, Grid<WorldObjectID> objectGrid)
+    private void SetMoveGrid(int x, int y, bool canWalk)
     {
-        int height = originalGrid.GetHeight();
-        int width = originalGrid.GetWidth();
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                int originalGridPositionValue = originalGrid.GetGridObject(x, y);
-                WorldObjectID objectGridPositionValue = objectGrid.GetGridObject(x, y);
-
-                if(objectGridPositionValue == WorldObjectID.None)
-                {
-                    if(originalGridPositionValue == 0)
-                    {
-                        continue;
-                    }
-
-                    if
-                    (
-                        originalGridPositionValue <= 9 || 
-                        (originalGridPositionValue >= 10 && originalGridPositionValue <= 11) || 
-                        originalGridPositionValue == 20
-                    )
-                    {
-                        tileMap.GetMovementGrid().SetValue(x, y, true);
-                        continue;
-                    }
-                } 
-            }
-        }
+        tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithIsWalkable(canWalk));
     }
 
     public bool CanMoveInGrid(Vector2 position)
     {
-        return tileMap.GetMovementGrid().GetGridObject(position);
+        return tileMap.GetGrid().GetGridObject(position).isWalkable;
     }
     #endregion
 
     #region Warp Grid
-    private void SetWarpGrid(int x, int y, WarpTile warpData)
+    private void SetWarpGrid(int x, int y, WarpTile warpTile)
     {
-        Grid<WarpTile> warpGrid = tileMap.GetWarpGrid();
-
-        warpGrid.SetValue(x, y, warpData);
+        tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithWarp(warpTile));
     }
+
+    private void LoadWarpsFromScene()
+    {
+        Warp[] warps = warpHolder.GetComponentsInChildren<Warp>(true);
+
+        foreach (Warp warp in warps)
+        {
+            Vector3 worldPos = warp.transform.position;
+
+            int x = Mathf.RoundToInt(worldPos.x);
+            int y = Mathf.RoundToInt(worldPos.y);
+
+            WarpTile warpTile = new WarpTile
+            {
+                scene = warp.toScene.ToString(),
+                x = warp.toX,
+                y = warp.toY,
+                transitionType = warp.transitionType
+            };
+
+            SetWarpGrid(x, y, warpTile);
+        }
+    }
+
     #endregion
 
     #region Construction
@@ -389,14 +403,166 @@ public class TileMapController : MonoBehaviour
             foreach(ConstructionTile tile in constructionPositionData)
             {
                 Vector2 position = new Vector2(construction.transform.position.x + tile.offset.x, construction.transform.position.y + tile.offset.y);
-                tileMap.GetMovementGrid().SetValue(position, !tile.blocksMovement);
-                tileMap.GetConstructionGrid().SetValue(position, construction.GetWorldObjectType());
-                if(tile.isWarp)
+
+                SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
+                tileMap.GetGrid().SetValue(position, tileMap.GetGrid().GetGridObject(position).WithConstructionId(construction.GetWorldObjectType()));
+            }
+        }
+    }
+    #endregion
+
+    #region NPC
+    public void SetNPC(int x, int y, int id)
+    {
+        tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithNPCId(id));
+    }
+
+    private void SetNPCsInScene()
+    {
+        NPCController.Instance.SetNPCsInScene();
+    }
+
+    public List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, SceneLocationEnum targetScene, SceneLocationEnum currentScene,  List<SceneLocationEnum> scenesList)
+    {
+        List<Node> openSet = new();
+        HashSet<Vector2Int> closedSet = new();
+
+        Node startNode = new(start);
+        openSet.Add(startNode);
+
+        if(targetScene != SceneInfo.Instance.location)
+        {
+            target = GetWarpLocation(currentScene, scenesList);
+        }
+
+        while (openSet.Count > 0)
+        {
+            Node current = openSet[0];
+
+            foreach (Node n in openSet)
+                if (n.fCost < current.fCost)
+                    current = n;
+
+            openSet.Remove(current);
+            closedSet.Add(current.pos);
+
+            if (current.pos == target)
+                return RetracePath(current);
+
+            foreach (Vector2Int dir in directions)
+            {
+                Vector2Int nextPos = current.pos + dir;
+
+                if (!IsWalkable(nextPos) || closedSet.Contains(nextPos))
+                    continue;
+
+                int newCost = current.gCost + GetMoveCost(nextPos);
+
+                Node neighbor = openSet.Find(n => n.pos == nextPos);
+                if (neighbor == null)
                 {
-                    SetWarpGrid((int)construction.transform.position.x + tile.offset.x, (int)construction.transform.position.y + tile.offset.y, tile.warp);
+                    neighbor = new Node(nextPos);
+                    neighbor.gCost = newCost;
+                    neighbor.hCost = Manhattan(nextPos, target);
+                    neighbor.parent = current;
+                    openSet.Add(neighbor);
+                }
+                else if (newCost < neighbor.gCost)
+                {
+                    neighbor.gCost = newCost;
+                    neighbor.parent = current;
                 }
             }
         }
+
+        return null;
+    }
+
+    private int Manhattan(Vector2Int a, Vector2Int b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
+
+    private bool IsWalkable(Vector2Int pos)
+    {
+        return tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isWalkable;
+    }
+
+    private bool IsNPCOnWay(Vector2Int pos)
+    {
+        if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private Vector2Int GetWarpLocation(SceneLocationEnum currentScene, List<SceneLocationEnum> scenesList)
+    {
+        if (scenesList == null || scenesList.Count < 2)
+            return Vector2Int.zero;
+
+        int index = scenesList.FindIndex(p => p == currentScene);
+        SceneLocationEnum nextScene = scenesList[index + 1];
+
+        Grid<WorldTileData> grid = tileMap.GetGrid();
+        int width = grid.GetWidth();
+        int height = grid.GetHeight();
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                WarpTile warp = grid.GetGridObject(x, y).warp;
+                if (warp == null) continue;
+
+                if (warp.scene.Equals(nextScene.ToString(),
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        Debug.LogWarning($"Warp não encontrado para {nextScene}");
+        return Vector2Int.zero;
+    }
+
+    public Vector2Int GetWarpLocationInScene(SceneLocationEnum scene)
+    {
+        Grid<WorldTileData> grid = tileMap.GetGrid();
+        int width = grid.GetWidth();
+        int height = grid.GetHeight();
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                WarpTile warp = grid.GetGridObject(x, y).warp;
+                if (warp == null) continue;
+
+                if (warp.scene.Equals(scene.ToString(),
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+
+        Debug.LogWarning($"Warp não encontrado para {scene}");
+        return Vector2Int.zero;
+    }
+
+    private int GetMoveCost(Vector2Int pos)
+    {
+        int cost = 10;
+
+        if (tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isPath)
+        {
+            cost = 1;
+        }
+
+        return cost;
     }
     #endregion
 
@@ -404,10 +570,7 @@ public class TileMapController : MonoBehaviour
     [ContextMenu("Debug/Print Ground Grid")]
     public void PrintGroundGrid()
     {
-        Grid<int> grid = tileMap.GetOriginalGrid();
-        Grid<WorldObjectID> objectgrid = tileMap.GetObjectGrid();
-        Grid<ConstructionsType> constructionGrid = tileMap.GetConstructionGrid();
-        Grid<bool> movegrid = tileMap.GetMovementGrid();
+        Grid<WorldTileData> grid = tileMap.GetGrid();
 
         int width = grid.GetWidth();
         int height = grid.GetHeight();
@@ -416,30 +579,27 @@ public class TileMapController : MonoBehaviour
         string result2 = "Move \n";
         string result3 = "Object \n";
         string result4 = "Construction \n";
+        string result5 = "NPC \n";
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                int value = grid.GetGridObject(x, y);
-                WorldObjectID value3 = objectgrid.GetGridObject(x, y);
-                bool value2 = movegrid.GetGridObject(x, y);
-                ConstructionsType value4 = constructionGrid.GetGridObject(x, y);
+                int value = grid.GetGridObject(x, y).baseTileId;
                 result += value.ToString().PadLeft(3) + " ";
-                result2 += value2.ToString().PadLeft(3) + " ";
-                result3 += value3.ToString().PadLeft(3) + " ";
-                result4 += value4.ToString().PadLeft(3) + " ";
             }
             result += "\n";
             result2 += "\n";
             result3 += "\n";
             result4 += "\n";
+            result5 += "\n";
         }
 
         Debug.Log(result);
         Debug.Log(result3);
         Debug.Log(result4);
         Debug.Log(result2);
+        Debug.Log(result5);
     }
     #endregion
 }
