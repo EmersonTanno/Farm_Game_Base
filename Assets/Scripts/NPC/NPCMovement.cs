@@ -119,7 +119,7 @@ public class NPCMovement : MonoBehaviour
         bool canChangeScene = true;
         
         SceneLocationEnum fromScene = sceneList[0];
-        SceneLocationEnum toScene = sceneList[1];
+        SceneLocationEnum toScene;
         SceneLocationEnum lastScene = fromScene;
         while(sceneList.Count > 1)
         {
@@ -149,6 +149,11 @@ public class NPCMovement : MonoBehaviour
             if(canChangeScene)
             {
                 npc.npcData.location = toScene;
+
+                WarpNode node = warpGraph.nodes.Find(n => n.scene == toScene);
+                Vector2Int warpPosition = node.warps.Find(n => n.toScene == fromScene).fromGridPosition;
+
+                npc.npcData.gridPosition = warpPosition;
                 sceneList.Remove(fromScene);
             }
 
@@ -159,15 +164,7 @@ public class NPCMovement : MonoBehaviour
 
             if(npc.npcData.location == finalTargetScene)
             {
-                Debug.Log($"De: {lastScene}");
-                Debug.Log($"Para: {toScene}");
-                Debug.Log($"Local Atual: {npc.npcData.location}");
-                Debug.Log("ACHOU");
-                WarpNode node = warpGraph.nodes.Find(n => n.scene == npc.npcData.location);
-                Vector2Int initialWarpPosition = node.warps.Find(n => n.toScene == lastScene).fromGridPosition;
-                Debug.Log(initialWarpPosition);
-                Debug.Log($"TIME: {GetTravelTimeInScene(initialWarpPosition, finalTargetPosition)}");
-                travelTimeBtweenScenes = GetTravelTimeInScene(initialWarpPosition, finalTargetPosition);
+                travelTimeBtweenScenes = GetTravelTimeInScene(npc.npcData.gridPosition, finalTargetPosition);
                 timeTraveled = 0;
 
                 while(timeTraveled < travelTimeBtweenScenes)
@@ -179,7 +176,6 @@ public class NPCMovement : MonoBehaviour
                         break;
                     }
                 }
-                Debug.Log("Chegou");
             }
 
             lastScene = fromScene;

@@ -73,7 +73,7 @@ MonoBehaviour:
       transitionType: 0
     - scene: 3
       fromGridPosition: {x: 18, y: 9}
-      toScene: 0
+      toScene: 2
       toGridPosition: {x: 1, y: 7}
       transitionType: 0
     - scene: 3
@@ -83,11 +83,11 @@ MonoBehaviour:
       transitionType: 0
     - scene: 3
       fromGridPosition: {x: 18, y: 7}
-      toScene: 0
+      toScene: 2
       toGridPosition: {x: 1, y: 5}
       transitionType: 0
     - scene: 3
       fromGridPosition: {x: 18, y: 8}
-      toScene: 0
+      toScene: 2
       toGridPosition: {x: 1, y: 6}
       transitionType: 0
