@@ -125,7 +125,7 @@ public class NPCMovement : MonoBehaviour
         {
             fromScene = sceneList[0];
             toScene = sceneList[1];
-            travelTimeBtweenScenes = GetTravelTime(fromScene, toScene, npc.npcData.location);
+            travelTimeBtweenScenes = GetTravelTimeBtweenScenes(fromScene, toScene, npc.npcData.location);
             timeTraveled = 0;
 
             if(npc.npcData.state != NPCStateEnum.Walking)
@@ -148,7 +148,6 @@ public class NPCMovement : MonoBehaviour
 
             if(canChangeScene)
             {
-                Debug.Log($"Changed to: {toScene}");
                 npc.npcData.location = toScene;
                 sceneList.Remove(fromScene);
             }
@@ -160,7 +159,27 @@ public class NPCMovement : MonoBehaviour
 
             if(npc.npcData.location == finalTargetScene)
             {
+                Debug.Log($"De: {lastScene}");
+                Debug.Log($"Para: {toScene}");
+                Debug.Log($"Local Atual: {npc.npcData.location}");
                 Debug.Log("ACHOU");
+                WarpNode node = warpGraph.nodes.Find(n => n.scene == npc.npcData.location);
+                Vector2Int initialWarpPosition = node.warps.Find(n => n.toScene == lastScene).fromGridPosition;
+                Debug.Log(initialWarpPosition);
+                Debug.Log($"TIME: {GetTravelTimeInScene(initialWarpPosition, finalTargetPosition)}");
+                travelTimeBtweenScenes = GetTravelTimeInScene(initialWarpPosition, finalTargetPosition);
+                timeTraveled = 0;
+
+                while(timeTraveled < travelTimeBtweenScenes)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    timeTraveled += 0.1f;
+                    if(npc.npcData.location == SceneInfo.Instance.location)
+                    {
+                        break;
+                    }
+                }
+                Debug.Log("Chegou");
             }
 
             lastScene = fromScene;
@@ -186,8 +205,7 @@ public class NPCMovement : MonoBehaviour
         } 
         else
         {
-            SetState(NPCStateEnum.Idle);
-            npc.npcData.gridPosition = finalTargetPosition;    
+            OnOffScreenMovementFinish();
         }
     }
 
@@ -311,7 +329,7 @@ public class NPCMovement : MonoBehaviour
     #endregion
 
     #region Travel Time
-    private float GetTravelTime(SceneLocationEnum from, SceneLocationEnum to, SceneLocationEnum actualScene)
+    private float GetTravelTimeBtweenScenes(SceneLocationEnum from, SceneLocationEnum to, SceneLocationEnum actualScene)
     {
         WarpNode node = warpGraph.nodes.Find(n => n.scene == actualScene);
         Vector2Int initialPos;
@@ -332,7 +350,12 @@ public class NPCMovement : MonoBehaviour
             Mathf.Abs(initialPos.x - targetPos.x) +
             Mathf.Abs(initialPos.y - targetPos.y);
         
-        Debug.Log(distance * (1f / moveSpeed));
+        return distance * (1f / moveSpeed);
+    }
+
+    private float GetTravelTimeInScene(Vector2Int initialPos, Vector2Int targetPos)
+    {
+        int distance =  Mathf.Abs(initialPos.x - targetPos.x) + Mathf.Abs(initialPos.y - targetPos.y);
         return distance * (1f / moveSpeed);
     }
     #endregion
