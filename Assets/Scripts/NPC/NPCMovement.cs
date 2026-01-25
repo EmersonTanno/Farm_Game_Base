@@ -55,7 +55,6 @@ public class NPCMovement : MonoBehaviour
             StartCoroutine(MoveOnScreen());
         } else
         {
-            //StartCoroutine(MoveOffScreen());
             StartCoroutine(MoveOffScreen2());
         }
     }
@@ -108,6 +107,10 @@ public class NPCMovement : MonoBehaviour
 
         if(finalTargetScene != SceneInfo.Instance.location || npc.npcData.location != finalTargetScene)
         {
+            if(npc.npcData.gridPosition == movementPath[movementPath.Count - 1])
+            {
+                SetNPCNextScene();
+            }
             RemoveNPCFromScene(npc.npcData.gridPosition);
             StartCoroutine(MoveOffScreen2());
         }
@@ -139,6 +142,12 @@ public class NPCMovement : MonoBehaviour
 
             List<Vector2Int> positions = mapGraph.GetPath(npc.npcData.location, npc.npcData.gridPosition, targetPos);
 
+            if (positions == null || positions.Count == 0)
+            {
+                Debug.LogWarning($"NPC {npc.name} sem path offscreen.");
+                yield break;
+            }
+
             foreach(Vector2Int position in positions)
             {
                 yield return new WaitForSeconds(1f / moveSpeed);
@@ -151,11 +160,7 @@ public class NPCMovement : MonoBehaviour
 
             if(npc.npcData.gridPosition == targetPos && npc.npcData.location != finalTargetScene)
             {
-                SceneLocationEnum previousScene = sceneList[0];
-                sceneList.RemoveAt(0);
-                npc.npcData.location = sceneList[0];
-                WarpNode node = warpGraph.nodes.Find(n => n.scene == npc.npcData.location);
-                npc.npcData.gridPosition = node.warps.Find(n => n.toScene == previousScene).fromGridPosition;
+                SetNPCNextScene();
             }
 
             if(npc.npcData.location == SceneInfo.Instance.location)
@@ -229,6 +234,17 @@ public class NPCMovement : MonoBehaviour
         {
             Debug.LogWarning("NPC não encontrou caminho.");
         }
+    }
+    #endregion
+
+    #region Set Next Scene
+    private void SetNPCNextScene()
+    {
+        SceneLocationEnum previousScene = sceneList[0];
+        sceneList.RemoveAt(0);
+        npc.npcData.location = sceneList[0];
+        WarpNode node = warpGraph.nodes.Find(n => n.scene == npc.npcData.location);
+        npc.npcData.gridPosition = node.warps.Find(n => n.toScene == previousScene).fromGridPosition;
     }
     #endregion
 
