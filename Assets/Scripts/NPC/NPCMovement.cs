@@ -119,7 +119,10 @@ public class NPCMovement : MonoBehaviour
             SetState(NPCStateEnum.Idle);
         }
 
-        SetIdle(finalSide);
+        if(npc.npcData.location == finalTargetScene && npc.npcData.gridPosition == finalTargetPosition)
+        {
+            SetIdle(finalSide);
+        }
     }
     #endregion
 
@@ -216,6 +219,7 @@ public class NPCMovement : MonoBehaviour
     {
         SetState(NPCStateEnum.Idle);
         npc.npcData.gridPosition = finalTargetPosition; 
+         SetIdle(finalSide);
     }
     #endregion
 
