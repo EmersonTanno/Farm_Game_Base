@@ -4421,8 +4421,8 @@ MonoBehaviour:
     state: 0
     routineIndex: 0
     routine:
-    - startHour: 9
-      startMinute: 20
+    - startHour: 10
+      startMinute: 0
       location: 3
       position: {x: 14, y: 5}
 --- !u!212 &782744985
