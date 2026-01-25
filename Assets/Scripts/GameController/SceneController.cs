@@ -106,13 +106,6 @@ public class SceneController : MonoBehaviour
             player.movePoint.position = spawn;
         }
 
-        if (currentTransitionCanvas != null)
-        {
-            Animator anim = currentTransitionCanvas.GetComponent<Animator>();
-            anim.SetTrigger("End");
-            StartCoroutine(DisableTransitionAfterAnim(currentTransitionCanvas, anim));
-        }
-
         hasPendingTeleport = false;
         StartCoroutine(EndWarpNextFrame());
     }
@@ -123,28 +116,41 @@ public class SceneController : MonoBehaviour
         {
             yield return null;
         }
-        
+
         WarpController.Instance.EndWarp();
-        yield return new WaitForSecondsRealtime(1f);
+
+        if (currentTransitionCanvas != null)
+        {
+            Animator anim = currentTransitionCanvas.GetComponent<Animator>();
+            anim.SetTrigger("End");
+            yield return StartCoroutine(
+                DisableTransitionAfterAnim(currentTransitionCanvas, anim)
+            );
+        }
+
+        yield return new WaitForSecondsRealtime(0.2f);
         Time_Controll.Instance.UnpauseTime();
+
         npcLoaded = false;
     }
 
+
     private void NPCLoaded()
     {
-        Debug.Log("NPC Loaded");
         npcLoaded = true;
     }
 
     private IEnumerator DisableTransitionAfterAnim(GameObject canvas, Animator anim)
     {
-        yield return new WaitForSecondsRealtime(
-            anim.GetCurrentAnimatorStateInfo(0).length
-        );
+        yield return null;
+
+        float duration = anim.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSecondsRealtime(duration);
 
         canvas.SetActive(false);
         currentTransitionCanvas = null;
     }
+
 
     private GameObject GetTransitionCanvas(TransitionType type)
     {
