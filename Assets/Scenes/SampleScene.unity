@@ -4421,10 +4421,11 @@ MonoBehaviour:
     state: 0
     routineIndex: 0
     routine:
-    - startHour: 10
+    - startHour: 9
       startMinute: 0
-      location: 3
-      position: {x: 14, y: 5}
+      targetLocation: 3
+      targetPosition: {x: 9, y: 7}
+      finalSide: 0
 --- !u!212 &782744985
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8551,8 +8552,9 @@ MonoBehaviour:
     routine:
     - startHour: 9
       startMinute: 0
-      location: 1
-      position: {x: 1, y: 1}
+      targetLocation: 1
+      targetPosition: {x: 2, y: 2}
+      finalSide: 1
 --- !u!212 &1420878974
 SpriteRenderer:
   m_ObjectHideFlags: 0

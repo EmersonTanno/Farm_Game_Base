@@ -62,7 +62,7 @@ public class NPCController : MonoBehaviour
                     if(npc.npcData.state == NPCStateEnum.Traveling) continue;
                     
                     NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
-                    nPCMovement.SetupMoveTo(routine.position, routine.location);
+                    nPCMovement.SetupMoveTo(routine.targetPosition, routine.targetLocation, routine.finalSide);
                     
                 }
             }

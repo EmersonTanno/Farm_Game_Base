@@ -18,12 +18,11 @@ public class NPCMovement : MonoBehaviour
     private float moveSpeed = 2.5f;
     private Vector2Int finalTargetPosition;
     private SceneLocationEnum finalTargetScene;
+    private NPCSide finalSide;
     private List<SceneLocationEnum> sceneList;
     private List<Vector2Int> movementPath;
     private int currentStepIndex;
     private bool canWalk = true;
-    private float travelTimeBtweenScenes;
-    private float timeTraveled;
     #endregion
 
     #region Core
@@ -34,11 +33,12 @@ public class NPCMovement : MonoBehaviour
     #endregion
 
     #region Setups
-    public void SetupMoveTo(Vector2Int targetGridPos, SceneLocationEnum targetScene)
+    public void SetupMoveTo(Vector2Int targetGridPos, SceneLocationEnum targetScene, NPCSide finalSide)
     {
         StopAllCoroutines();
         finalTargetPosition = targetGridPos;
         finalTargetScene = targetScene;
+        this.finalSide = finalSide;
         SetUpPath();
     }
 
@@ -119,7 +119,7 @@ public class NPCMovement : MonoBehaviour
             SetState(NPCStateEnum.Idle);
         }
 
-        ResetNPCAnimation();
+        SetIdle(finalSide);
     }
     #endregion
 
@@ -208,7 +208,7 @@ public class NPCMovement : MonoBehaviour
         transform.position = new Vector3(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0) + NPCController.Instance.GetNPCOffset();
         ResetMovePointer();
 
-        SetupMoveTo(finalTargetPosition, finalTargetScene);
+        SetupMoveTo(finalTargetPosition, finalTargetScene, finalSide);
     }
 
 
@@ -370,12 +370,36 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
+    private void SetIdle(NPCSide side)
+    {
+        ResetNPCAnimation();
+        switch(side)
+        {
+            case NPCSide.FRONT:
+                nPCAnimator.SetBool("IdleFront", true);
+                break;
+            case NPCSide.BACK:
+                nPCAnimator.SetBool("IdleBack", true);
+                break;
+            case NPCSide.LEFT:
+                nPCAnimator.SetBool("IdleLeft", true);
+                break;
+            case NPCSide.RIGHT:
+                nPCAnimator.SetBool("IdleRight", true);
+                break;
+        }
+    }
+
     private void ResetNPCAnimation()
     {
         nPCAnimator.SetBool("WalkFront", false);
         nPCAnimator.SetBool("WalkBack", false);
         nPCAnimator.SetBool("WalkLeft", false);
         nPCAnimator.SetBool("WalkRight", false);
+        nPCAnimator.SetBool("IdleFront", false);
+        nPCAnimator.SetBool("IdleBack", false);
+        nPCAnimator.SetBool("IdleLeft", false);
+        nPCAnimator.SetBool("IdleRight", false);
     }
     #endregion
 
