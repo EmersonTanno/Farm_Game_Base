@@ -91,7 +91,8 @@ public class Player_Controller : MonoBehaviour
 
         if(nPCId != 0 && nPCId != -1)
         {
-            NPCController.Instance.InteractWithNPC(nPCId);
+            Vector2 side = GetSide();
+            NPCController.Instance.InteractWithNPC(nPCId, side);
             return;
         }
 

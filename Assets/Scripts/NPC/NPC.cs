@@ -24,9 +24,26 @@ public class NPC : MonoBehaviour
         spriteRenderer.enabled = active;
     }
 
-    public void Interact()
+    public void Interact(Vector2 side)
     {
         npcMovement.SetNPCCanWalk(false);
+        NPCSide npcSide;
+        
+        if(side == Vector2.up)
+        {
+            npcSide = NPCSide.FRONT;
+        } else if (side == Vector2.down)
+        {
+            npcSide = NPCSide.BACK;
+        } else if (side == Vector2.left)
+        {
+            npcSide = NPCSide.RIGHT;
+        } else
+        {
+            npcSide = NPCSide.LEFT;
+        }
+
+        npcMovement.SetIdle(npcSide);
         DialogueManager.Instance.SetDialogue(npcData.id, "1");
     }
 

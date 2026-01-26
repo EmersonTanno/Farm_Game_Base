@@ -85,13 +85,13 @@ public class NPCController : MonoBehaviour
         return npcs.Find(p => p.npcData.id == id);
     }
 
-    public void InteractWithNPC(int id)
+    public void InteractWithNPC(int id, Vector2 side)
     {
         NPC npc = GetNPC(id);
 
         if(npc == null) return;
         
-        npc.Interact();
+        npc.Interact(side);
     }
 
     public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
