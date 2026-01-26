@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
@@ -11,6 +12,11 @@ public class NPC : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         npcMovement = GetComponent<NPCMovement>();
         bubble = GetComponentInChildren<ThoughtBubbleController>();
+    }
+
+    void OnEnable()
+    {
+        DialogueManager.OnDialogueFinish += EndInteraction;
     }
 
     public void SetNPC(bool active)
@@ -42,5 +48,20 @@ public class NPC : MonoBehaviour
     public void ShowReaction(ThoughtEmoteEnum reaction)
     {
         bubble.ShowBalloon(reaction);
+    }
+
+    private void EndInteraction(int npcId)
+    {
+        if(npcId == npcData.id)
+        {
+            StartCoroutine(ResetStates());
+        }
+    }
+
+
+    private IEnumerator ResetStates()
+    {
+        yield return new WaitForSeconds(1f);
+        npcMovement.SetNPCCanWalk(true);
     }
 }

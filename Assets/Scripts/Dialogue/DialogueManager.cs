@@ -27,6 +27,10 @@ public class DialogueManager : MonoBehaviour
     private bool canAdvance;
     private bool optionSelected;
     private int selectedOption;
+
+
+    //triggers
+    public static event Action<int> OnDialogueFinish;
     #endregion
 
     #region Core
@@ -147,14 +151,15 @@ public class DialogueManager : MonoBehaviour
 
         nextLine = false;
 
-        EndDialogue();
+        EndDialogue(npcId);
     }
 
 
-    private void EndDialogue()
+    private void EndDialogue(int npcId)
     {
         dialogueActive = false;
         SetDialogueCanvas(false);
+        OnDialogueFinish?.Invoke(npcId);
     }
 
     private string GetLanguageLine(LanguageEnum language, DialogueLine line)
