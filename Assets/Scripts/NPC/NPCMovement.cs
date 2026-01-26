@@ -107,6 +107,10 @@ public class NPCMovement : MonoBehaviour
 
         if(finalTargetScene != SceneInfo.Instance.location || npc.npcData.location != finalTargetScene)
         {
+            while(!canWalk)
+            {
+                yield return null;
+            }
             NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0);
             if(npc.npcData.gridPosition == movementPath[movementPath.Count - 1])
             {
@@ -375,7 +379,7 @@ public class NPCMovement : MonoBehaviour
         }
     }
 
-    private void SetIdle(NPCSide side)
+    public void SetIdle(NPCSide side)
     {
         ResetNPCAnimation();
         switch(side)
