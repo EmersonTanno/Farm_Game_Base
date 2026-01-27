@@ -69,6 +69,7 @@ public class Calendar_Controller : MonoBehaviour
             OnMonthChange?.Invoke();
         }
         UpdateCanvas();
+        Debug.Log(GetWeekDay());
     }
 
     private void UpdateCanvas()
@@ -112,6 +113,12 @@ public class Calendar_Controller : MonoBehaviour
                 season = Season.Primavera;
                 break;
         }
+    }
+
+    public WeekDayEnum GetWeekDay()
+    {
+        int index = (day - 1) % 7;
+        return (WeekDayEnum)index;
     }
     #endregion
 
