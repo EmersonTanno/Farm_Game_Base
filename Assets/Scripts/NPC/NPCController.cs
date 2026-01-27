@@ -18,12 +18,12 @@ public class NPCController : MonoBehaviour
 
     void OnEnable()
     {
-        Time_Controll.OnMinuteChange += NPCMovement;
+        Time_Controll.OnMinuteChange += NPCActivateRoutine;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnMinuteChange -= NPCMovement;
+        Time_Controll.OnMinuteChange -= NPCActivateRoutine;
     }
 
     public void SetNPCsInScene()
@@ -51,23 +51,71 @@ public class NPCController : MonoBehaviour
         OnNPCSet?.Invoke();
     }
 
-    private void NPCMovement()
+    #region Routine
+    private void NPCActivateRoutine()
     {
-        foreach(NPC npc in npcs)
+        foreach (NPC npc in npcs)
         {
-            foreach(NPCRoutine routine in npc.npcData.routine)
+            if (npc.npcData.state == NPCStateEnum.Traveling)
+                continue;
+
+            NPCRoutine selectedRoutine = null;
+
+            foreach (NPCRoutine routine in npc.npcData.routine)
             {
-                if(routine.startHour == Time_Controll.Instance.hours && routine.startMinute == Time_Controll.Instance.minutes)
+                if (!IsRoutineTime(routine)) continue;
+                if (!IsRoutineValid(npc, routine)) continue;
+
+                if (selectedRoutine == null ||
+                    routine.priority > selectedRoutine.priority)
                 {
-                    if(npc.npcData.state == NPCStateEnum.Traveling) continue;
-                    
-                    NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
-                    nPCMovement.SetupMoveTo(routine.targetPosition, routine.targetLocation, routine.finalSide);
-                    
+                    selectedRoutine = routine;
                 }
             }
-        } 
+
+            if (selectedRoutine != null)
+            {
+                NPCMovement movement = npc.GetComponent<NPCMovement>();
+                movement.SetupMoveTo(
+                    selectedRoutine.targetPosition,
+                    selectedRoutine.targetLocation,
+                    selectedRoutine.finalSide
+                );
+            }
+        }
     }
+
+    private bool IsRoutineTime(NPCRoutine routine)
+    {
+        return routine.startHour == Time_Controll.Instance.hours &&
+            routine.startMinute == Time_Controll.Instance.minutes;
+    }
+
+    private bool IsRoutineValid(NPC npc, NPCRoutine routine)
+    {
+        // Dia da semana
+        if (routine.validDays != null && routine.validDays.Count > 0)
+        {
+            WeekDayEnum today = Calendar_Controller.Instance.GetWeekDay();
+            if (!routine.validDays.Contains(today))
+                return false;
+        }
+
+        // Clima
+        if (routine.validWeather != null && routine.validWeather.Count > 0)
+        {
+            WeatherEnum currentWeather = WeatherController.Instance.GetWeather();
+            if (!routine.validWeather.Contains(currentWeather))
+                return false;
+        }
+
+        // Afinidade
+        if (npc.npcData.hearts < routine.minHearts)
+            return false;
+
+        return true;
+    }
+    #endregion
 
     public void SetDataInNPCMap(int x, int y, int data)
     {
