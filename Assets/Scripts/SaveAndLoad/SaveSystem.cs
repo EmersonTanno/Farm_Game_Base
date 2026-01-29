@@ -12,6 +12,7 @@ public class SaveSystem
     public struct SaveData
     {
         public FarmSaveData FarmSaveData;
+        public NPCSaveData NPCSaveData;
     }
 
     public static string SaveFileName()
@@ -31,8 +32,11 @@ public class SaveSystem
     {
         if (_saveData.FarmSaveData == null)
             _saveData.FarmSaveData = new FarmSaveData();
+        if (_saveData.NPCSaveData == null)
+            _saveData.NPCSaveData = new NPCSaveData();
 
         PersistenceController.Instance.Save(ref _saveData.FarmSaveData);
+        NPCController.Instance.Save(ref _saveData.NPCSaveData);
     }
 
     public static void Load()
@@ -45,5 +49,6 @@ public class SaveSystem
     private static void HandleLoadData()
     {
         PersistenceController.Instance.Load(_saveData.FarmSaveData);
+        NPCController.Instance.Load(_saveData.NPCSaveData);
     }
 }

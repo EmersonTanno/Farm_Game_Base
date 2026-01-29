@@ -159,4 +159,33 @@ public class NPCController : MonoBehaviour
 
         npc.AddHeart(hearts);
     }
+
+
+    #region Save / Load
+    public void Save(ref NPCSaveData data)
+    {
+        data.npcs.Clear();
+        foreach(NPC npc in npcs)
+        {
+            NPCSaveDataData saveData = new NPCSaveDataData();
+            saveData.id = npc.npcData.id;
+            saveData.hearts = npc.npcData.hearts;
+            data.npcs.Add(saveData);
+        }
+    }
+
+    public void Load(NPCSaveData data)
+    {
+        foreach(NPCSaveDataData npcData in data.npcs)
+        {
+           NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
+           npc.npcData.hearts = npcData.hearts;
+        }
+
+        foreach(NPC npc in npcs)
+        {
+            Debug.Log($"{npc.npcData.id} = {npc.npcData.hearts} corações");
+        }
+    }
+    #endregion
 }
