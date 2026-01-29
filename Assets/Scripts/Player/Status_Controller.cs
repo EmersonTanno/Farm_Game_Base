@@ -238,4 +238,16 @@ public class Status_Controller : MonoBehaviour
         playerUiGroup.SetActive(setActive);
     }
     #endregion
+
+    #region Save / Load
+    public void Save(ref PlayerSaveData data)
+    {
+        data.playerData.gold = gold;
+    }
+
+    public void Load(PlayerSaveData data)
+    {
+        gold = data.playerData.gold;
+    }
+    #endregion
 }
