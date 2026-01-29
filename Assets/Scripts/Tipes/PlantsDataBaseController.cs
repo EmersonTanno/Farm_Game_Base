@@ -13,7 +13,6 @@ public class PlantsDataBaseController : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        Debug.Log(GetPlantType(1).name);
     }
 
     public PlantType GetPlantType(int id)

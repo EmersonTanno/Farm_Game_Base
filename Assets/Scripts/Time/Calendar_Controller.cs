@@ -69,7 +69,6 @@ public class Calendar_Controller : MonoBehaviour
             OnMonthChange?.Invoke();
         }
         UpdateCanvas();
-        Debug.Log(GetWeekDay());
     }
 
     private void UpdateCanvas()
@@ -126,6 +125,25 @@ public class Calendar_Controller : MonoBehaviour
     public void ControllTimeGroup(bool setActive)
     {
         timeGroup.SetActive(setActive);
+    }
+    #endregion
+
+    #region Save / Load
+    public void Save(ref CalendarSaveData data)
+    {
+        data.calendar.day = day;
+        data.calendar.month = month;
+        data.calendar.year = year;
+        data.calendar.season = season;
+    }
+
+    public void Load(CalendarSaveData data)
+    {
+        day = data.calendar.day;
+        month = data.calendar.month;
+        year = data.calendar.year;
+        season = data.calendar.season;
+        UpdateCanvas();
     }
     #endregion
 }

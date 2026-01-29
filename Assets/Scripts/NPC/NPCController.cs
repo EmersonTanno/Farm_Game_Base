@@ -181,11 +181,6 @@ public class NPCController : MonoBehaviour
            NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
            npc.npcData.hearts = npcData.hearts;
         }
-
-        foreach(NPC npc in npcs)
-        {
-            Debug.Log($"{npc.npcData.id} = {npc.npcData.hearts} corações");
-        }
     }
     #endregion
 }
