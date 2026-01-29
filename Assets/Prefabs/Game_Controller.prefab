@@ -189,11 +189,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a65d421a2ac96048bf3601bec566534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialogueGroup: {fileID: 0}
-  DialogueLeftSide: {fileID: 0}
-  LeftText: {fileID: 0}
-  DialogueRightSide: {fileID: 0}
-  RightText: {fileID: 0}
+  dialogueGroup: {fileID: 0}
+  dialogueLeftSide: {fileID: 0}
+  leftText: {fileID: 0}
+  dialogueRightSide: {fileID: 0}
+  rightText: {fileID: 0}
+  buttonGroup: {fileID: 0}
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   dialogueActive: 0
 --- !u!1 &1262699618591634176
 GameObject:
@@ -489,6 +495,7 @@ GameObject:
   - component: {fileID: 1290773941}
   - component: {fileID: 4868641704625557365}
   - component: {fileID: 2468946439636220640}
+  - component: {fileID: 1034845831}
   m_Layer: 0
   m_Name: Game_Controller
   m_TagString: Untagged
@@ -609,11 +616,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - scene: 0
-    warps: 0100000002000000
+    warps: 0100000003000000
   - scene: 1
     warps: 00000000
   - scene: 2
-    warps: 00000000
+    warps: 03000000
+  - scene: 3
+    warps: 0000000002000000
 --- !u!114 &2468946439636220640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,6 +636,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameLanguage: 0
+--- !u!114 &1034845831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4868641704576069549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af001160a8c84e4438b27abc2754e770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantsDB: {fileID: 11400000, guid: 0fee0f62e798d9d47a90a640af26afe6, type: 2}
 --- !u!1 &4868641704740723755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,11 +1166,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933912, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.5
+      value: 32.5
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933912, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.7
+      value: 30.7
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933912, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1207,7 +1229,15 @@ PrefabInstance:
       value: Player/Shop[/Keyboard/p]
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
@@ -1223,20 +1253,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4868641703342699364}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1831400644}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4868641704449660284}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NextLine
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ActivateDeactivateShop
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: DialogueManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Shop_Manager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933914, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName

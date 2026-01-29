@@ -4423,7 +4423,7 @@ MonoBehaviour:
     routine:
     - startHour: 9
       startMinute: 0
-      validDays: 
+      validDays: 01000000
       validWeather: 
       minHearts: 0
       targetLocation: 3
@@ -35701,22 +35701,10 @@ PrefabInstance:
       propertyPath: npcs.Array.data[1]
       value: 
       objectReference: {fileID: 1420878973}
-    - target: {fileID: 1831400641, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: LeftText
-      value: 
-      objectReference: {fileID: 989462157}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: leftText
       value: 
       objectReference: {fileID: 989462157}
-    - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: RightText
-      value: 
-      objectReference: {fileID: 1399122536}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: rightText
       value: 
@@ -35726,33 +35714,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1621091189}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: DialogueGroup
-      value: 
-      objectReference: {fileID: 1185715114}
-    - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: dialogueGroup
       value: 
       objectReference: {fileID: 1185715114}
-    - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: DialogueLeftSide
-      value: 
-      objectReference: {fileID: 1067067734}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: dialogueLeftSide
       value: 
       objectReference: {fileID: 1067067734}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: DialogueRightSide
-      value: 
-      objectReference: {fileID: 950227684}
-    - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: dialogueRightSide
       value: 
       objectReference: {fileID: 950227684}
-    - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: buttons.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: buttons.Array.data[0]
       value: 
@@ -35885,42 +35857,6 @@ PrefabInstance:
       propertyPath: inventorySlots.Array.data[23]
       value: 
       objectReference: {fileID: 1704636623}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1831400644}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: NextLine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: DialogueManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013113, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_ActionEvents.Array.data[14].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013115, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 32.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641703375013115, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 30.7
-      objectReference: {fileID: 0}
     - target: {fileID: 4868641704009533369, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: daysText
       value: 
@@ -36004,30 +35940,6 @@ PrefabInstance:
     - target: {fileID: 4868641704576069549, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: m_Name
       value: Game_Controller
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: connections.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: connections.Array.data[3].scene
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: connections.Array.data[3].warps.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: connections.Array.data[0].warps.Array.data[1]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: connections.Array.data[2].warps.Array.data[0]
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4868641704625557365, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
-      propertyPath: connections.Array.data[3].warps.Array.data[1]
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4868641704740723753, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: goldText

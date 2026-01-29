@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
   m_Name: Abobora_Plant
   m_EditorClassIdentifier: 
+  id: 3
   plantName: "Ab\xF3bora"
   growthTimeInDays: 12
   maxDaysWithoutWater: 3

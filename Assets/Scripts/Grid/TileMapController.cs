@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 public class TileMapController : MonoBehaviour
@@ -66,6 +67,21 @@ public class TileMapController : MonoBehaviour
         OnTileMapReady?.Invoke();
     }
 
+    //Testando Load remover futuramente
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            SaveSystem.Save();
+        }
+
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("LOAD BUTTON");
+            SaveSystem.Load();
+        }
+    }
+
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
@@ -96,8 +112,7 @@ public class TileMapController : MonoBehaviour
         Grid<WorldTileData> grid = tileMap.GetGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
-
-        foreach (var data in saveData.plants)
+        foreach (PlantSaveData data in saveData.plants)
         {
             grid.SetValue(data.x, data.y, grid.GetGridObject(data.x, data.y).WithBaseTileId(data.gridValue));
 

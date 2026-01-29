@@ -22,6 +22,15 @@ public class TileMapPlantData
         dryDays = 0;
         isDead = false;
     }
+    public TileMapPlantData(PlantType plant, bool isWater, bool isPlown, int growthDays, int dryDays, bool isDead)
+    {
+        this.plant = plant;
+        this.isWater = isWater;
+        this.isPlown = isPlown;
+        this.growthDays = growthDays;
+        this.dryDays = dryDays;
+        this.isDead = isDead;
+    }
 
     public override string ToString()
     {

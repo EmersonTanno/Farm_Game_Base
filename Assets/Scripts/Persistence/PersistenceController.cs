@@ -51,7 +51,16 @@ public class PersistenceController : MonoBehaviour
                         x = x,
                         y = y,
                         gridValue = gridValue,
-                        plantData = plantData
+                        
+
+                        plantId = plantData.plant != null ? plantData.plant.id : -1,
+                        isPlown = plantData.isPlown,
+                        isWater = plantData.isWater,
+                        growthDays = plantData.plant != null ? plantData.growthDays : 0,
+                        dryDays = plantData.plant != null ? plantData.dryDays : 0,
+                        isDead = plantData.isDead,
+
+                        plantData = plantData,
                     });
                     continue;
                 }
@@ -75,5 +84,29 @@ public class PersistenceController : MonoBehaviour
                 plant.plantData.PassDay();
             }
         }
+    }
+
+    public void Save(ref FarmSaveData data)
+    {
+        data.plants = gridSaveData.plants;
+    }
+
+    public void Load(FarmSaveData data)
+    {
+        gridSaveData.plants = data.plants;
+        foreach(PlantSaveData plant in gridSaveData.plants)
+        {
+            TileMapPlantData plantData;
+            if(plant.plantId == -1)
+            {
+                plantData = new TileMapPlantData(null, plant.isWater, plant.isPlown, plant.growthDays, plant.dryDays, plant.isDead);
+            }
+            else
+            {
+                plantData = new TileMapPlantData(PlantsDataBaseController.Instance.GetPlantType(plant.plantId), plant.isWater, plant.isPlown, plant.growthDays, plant.dryDays, plant.isDead);
+            }
+            plant.plantData = plantData;
+        }
+        hasData = gridSaveData.plants.Count > 0;
     }
 }
