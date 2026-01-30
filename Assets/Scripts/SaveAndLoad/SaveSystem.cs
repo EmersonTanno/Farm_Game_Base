@@ -12,6 +12,7 @@ public class SaveSystem
     public struct SaveData
     {
         public PlayerSaveData PlayerSaveData;
+        public InventorySaveData InventorySaveData;
         public CalendarSaveData CalendarSaveData;
         public FarmSaveData FarmSaveData;
         public NPCSaveData NPCSaveData;
@@ -34,6 +35,8 @@ public class SaveSystem
     {
         if(_saveData.PlayerSaveData == null)
             _saveData.PlayerSaveData = new PlayerSaveData();
+        if(_saveData.InventorySaveData == null)
+            _saveData.InventorySaveData = new InventorySaveData();
         if(_saveData.CalendarSaveData == null)
             _saveData.CalendarSaveData = new CalendarSaveData();
         if (_saveData.FarmSaveData == null)
@@ -42,6 +45,7 @@ public class SaveSystem
             _saveData.NPCSaveData = new NPCSaveData();
 
         Status_Controller.Instance.Save(ref _saveData.PlayerSaveData);
+        InventoryManager.Instance.Save(ref _saveData.InventorySaveData);
         Calendar_Controller.Instance.Save(ref _saveData.CalendarSaveData);
         PersistenceController.Instance.Save(ref _saveData.FarmSaveData);
         NPCController.Instance.Save(ref _saveData.NPCSaveData);
@@ -57,6 +61,7 @@ public class SaveSystem
     private static void HandleLoadData()
     {
         Status_Controller.Instance.Load(_saveData.PlayerSaveData);
+        InventoryManager.Instance.Load(_saveData.InventorySaveData);
         Calendar_Controller.Instance.Load(_saveData.CalendarSaveData);
         PersistenceController.Instance.Load(_saveData.FarmSaveData);
         NPCController.Instance.Load(_saveData.NPCSaveData);
