@@ -25,15 +25,10 @@ public class Tax_System : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        
-    }
-
     void OnEnable()
     {
         Calendar_Controller.OnMonthChange += SetSellTaxes;
-         Calendar_Controller.OnDayChange += SetSellTaxes;
+        //Calendar_Controller.OnDayChange += SetSellTaxes;
     }
 
     void OnDisable()
@@ -105,6 +100,25 @@ public class Tax_System : MonoBehaviour
     public int GetTaxPaidDuringYear()
     {
         return taxPaidDuringYear;
+    }
+    #endregion
+
+
+    #region Save / Load
+    public void Save(ref TaxSaveData data)
+    {
+        data.taxData.taxRate = taxRate;
+        data.taxData.taxPaidDuringYear = taxPaidDuringYear; 
+        data.taxData.anualTaxPercentage = anualTaxPercentage;
+        data.taxData.anualSells = anualSells;
+    }
+
+    public void Load(TaxSaveData data)
+    {
+        taxRate = data.taxData.taxRate ;
+        taxPaidDuringYear = data.taxData.taxPaidDuringYear; 
+        anualTaxPercentage = data.taxData.anualTaxPercentage;
+        anualSells = data.taxData.anualSells;
     }
     #endregion
 }

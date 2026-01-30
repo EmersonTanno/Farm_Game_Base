@@ -16,6 +16,7 @@ public class SaveSystem
         public CalendarSaveData CalendarSaveData;
         public FarmSaveData FarmSaveData;
         public NPCSaveData NPCSaveData;
+        public TaxSaveData TaxSaveData;
     }
 
     public static string SaveFileName()
@@ -43,12 +44,15 @@ public class SaveSystem
             _saveData.FarmSaveData = new FarmSaveData();
         if (_saveData.NPCSaveData == null)
             _saveData.NPCSaveData = new NPCSaveData();
+        if (_saveData.TaxSaveData == null)
+            _saveData.TaxSaveData = new TaxSaveData();
 
         Status_Controller.Instance.Save(ref _saveData.PlayerSaveData);
         InventoryManager.Instance.Save(ref _saveData.InventorySaveData);
         Calendar_Controller.Instance.Save(ref _saveData.CalendarSaveData);
         PersistenceController.Instance.Save(ref _saveData.FarmSaveData);
         NPCController.Instance.Save(ref _saveData.NPCSaveData);
+        Tax_System.Instance.Save(ref _saveData.TaxSaveData);
     }
 
     public static void Load()
@@ -65,5 +69,6 @@ public class SaveSystem
         Calendar_Controller.Instance.Load(_saveData.CalendarSaveData);
         PersistenceController.Instance.Load(_saveData.FarmSaveData);
         NPCController.Instance.Load(_saveData.NPCSaveData);
+        Tax_System.Instance.Load(_saveData.TaxSaveData);
     }
 }
