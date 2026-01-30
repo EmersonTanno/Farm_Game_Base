@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
   m_Name: Pickaxe_Item
   m_EditorClassIdentifier: 
+  id: 1
   itemName: Picareta
   type: 1
   image: {fileID: 21300000, guid: 27e9965c5c049944ca7e21a8bffec92e, type: 3}
