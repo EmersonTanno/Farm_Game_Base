@@ -248,6 +248,7 @@ public class Status_Controller : MonoBehaviour
     public void Load(PlayerSaveData data)
     {
         gold = data.playerData.gold;
+        goldText.text = gold.ToString();
     }
     #endregion
 }
