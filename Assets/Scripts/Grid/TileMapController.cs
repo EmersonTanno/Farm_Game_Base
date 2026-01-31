@@ -77,7 +77,6 @@ public class TileMapController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.U))
         {
-            Debug.Log("LOAD BUTTON");
             SaveSystem.Load();
         }
     }

@@ -8,6 +8,14 @@ public class SaveSystem
 {
     private static SaveData _saveData = new SaveData();
 
+
+    public static event System.Action OnSaveStart;
+    public static event System.Action OnSaveFinish;
+
+    public static event System.Action OnLoadStart;
+    public static event System.Action OnLoadFinish;
+
+
     [System.Serializable]
     public struct SaveData
     {
@@ -27,9 +35,18 @@ public class SaveSystem
 
     public static void Save()
     {
+        OnSaveStart?.Invoke();
+
         HandleSaveData();
+
+        File.WriteAllText(
+            SaveFileName(),
+            JsonUtility.ToJson(_saveData, true)
+        );
+
         Debug.Log($"Saved {SaveFileName()}");
-        File.WriteAllText(SaveFileName(), JsonUtility.ToJson(_saveData, true));
+
+        OnSaveFinish?.Invoke();
     }
 
     private static void HandleSaveData()
@@ -57,9 +74,23 @@ public class SaveSystem
 
     public static void Load()
     {
+        OnLoadStart?.Invoke();
+
+        if (!File.Exists(SaveFileName()))
+        {
+            Debug.LogWarning("Save file not found!");
+            OnLoadFinish?.Invoke();
+            return;
+        }
+
         string saveContent = File.ReadAllText(SaveFileName());
         _saveData = JsonUtility.FromJson<SaveData>(saveContent);
+
         HandleLoadData();
+
+         Debug.Log($"Loading {SaveFileName()}");
+
+        OnLoadFinish?.Invoke();
     }
 
     private static void HandleLoadData()
