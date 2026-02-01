@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class GameController : MonoBehaviour
@@ -11,6 +8,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject canva;
     [SerializeField] private GameObject npcs;
     private bool canSave = false;
+    [SerializeField] GameObject saveIcon;
 
     private void Awake()
     {
@@ -30,6 +28,8 @@ public class GameController : MonoBehaviour
     {
         Calendar_Controller.OnDayChange += SaveGameData;
         Sell_Controller.OnSellFinish += CanSave;
+        SaveSystem.OnSaveStart += ShowSaveIcon;
+        SaveSystem.OnSaveFinish += HideSaveIcon;
     }
 
     void OnDisable()
@@ -57,5 +57,15 @@ public class GameController : MonoBehaviour
         
         SaveSystem.Save();
         canSave = false;
+    }
+
+    private void ShowSaveIcon()
+    {
+        saveIcon.SetActive(true);
+    }
+
+    private void HideSaveIcon()
+    {
+        saveIcon.SetActive(false);
     }
 }
