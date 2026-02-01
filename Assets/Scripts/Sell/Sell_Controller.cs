@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -31,6 +32,8 @@ public class Sell_Controller : MonoBehaviour
     private List<Item> sellItemsList = new List<Item>();
 
     public bool active = false;
+
+    public static Action OnSellFinish;
 
     #endregion
 
@@ -121,7 +124,6 @@ public class Sell_Controller : MonoBehaviour
             taxedValue += tax;
             gainedValue += item.sellValue - tax;
 
-            //problema aqui
             AddItem(item);
         }
 
@@ -140,6 +142,8 @@ public class Sell_Controller : MonoBehaviour
         totalText.text = $"Total: ${totalValue}";
 
         Status_Controller.Instance.AddGold(gainedValue);
+
+        OnSellFinish?.Invoke();
     }
     #endregion
 
@@ -213,23 +217,23 @@ public class Sell_Controller : MonoBehaviour
         if (taxedValue == 0)
         {
             if (jokeListNoProfit.Count == 0) return "";
-            index = Random.Range(0, jokeListNoProfit.Count);
+            index = UnityEngine.Random.Range(0, jokeListNoProfit.Count);
             return jokeListNoProfit[index];
         }
         if(taxedValue < 500)
         {
             if (jokeListLow.Count == 0) return "";
-            index = Random.Range(0, jokeListLow.Count);
+            index = UnityEngine.Random.Range(0, jokeListLow.Count);
             return jokeListLow[index];
         } else if(taxedValue > 1000)
         {
             if (jokeListMedium.Count == 0) return "";
-            index = Random.Range(0, jokeListMedium.Count);
+            index = UnityEngine.Random.Range(0, jokeListMedium.Count);
             return jokeListMedium[index];
         } else
         {
             if (jokeListHigh.Count == 0) return "";
-            index = Random.Range(0, jokeListHigh.Count);
+            index = UnityEngine.Random.Range(0, jokeListHigh.Count);
             return jokeListHigh[index];
         }
     }
