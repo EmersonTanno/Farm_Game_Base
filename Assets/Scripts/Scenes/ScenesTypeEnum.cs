@@ -5,5 +5,6 @@ using UnityEngine;
 public enum ScenesTypeEnum
 {
     outside,
-    inside
+    inside,
+    homeScreen
 }

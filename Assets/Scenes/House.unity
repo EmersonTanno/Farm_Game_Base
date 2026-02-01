@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneType: 1
-  location: 1
+  location: 2
 --- !u!4 &535892672
 Transform:
   m_ObjectHideFlags: 0
