@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FarmBridge.unity
     guid: 88190f51b8ba65a4a99d0c4651aacfff
+  - enabled: 1
+    path: Assets/Scenes/HomeScreen.unity
+    guid: a514c7a301e004142bb4300ebc9bb731
+  - enabled: 1
+    path: Assets/Scenes/LoadGameHouse.unity
+    guid: 9f570159d82d57b47854e4d2e51a2e61
   m_configObjects: {}
