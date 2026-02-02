@@ -77,7 +77,7 @@ public class MainMenuController : MonoBehaviour
     {
         if(startNewGame) return;
         BootContext.IsLoadingGame = false;
-        BootContext.SaveSlot = null;
+        BootContext.SaveSlot = "1";
         startNewGame = true;
     }
 

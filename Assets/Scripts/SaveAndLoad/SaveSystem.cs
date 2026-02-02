@@ -27,27 +27,38 @@ public class SaveSystem
         public TaxSaveData TaxSaveData;
     }
 
-    public static string SaveFileName()
+    public static string SaveFileName(string saveName)
     {
-        string saveFile = Application.persistentDataPath + "/save" + ".txt";
-        return saveFile;
+        string dir = Path.Combine(Application.persistentDataPath, "save");
+
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        return Path.Combine(dir, saveName + ".txt");
     }
 
-    public static void Save()
+    public static void Save(string saveName)
     {
+        if (string.IsNullOrEmpty(saveName))
+        {
+            Debug.LogError("Save failed: saveName is null or empty");
+            return;
+        }
+
         OnSaveStart?.Invoke();
 
         HandleSaveData();
 
         File.WriteAllText(
-            SaveFileName(),
+            SaveFileName(saveName),
             JsonUtility.ToJson(_saveData, true)
         );
 
-        Debug.Log($"Saved {SaveFileName()}");
+        Debug.Log($"Saved {SaveFileName(saveName)}");
 
         OnSaveFinish?.Invoke();
     }
+
 
     private static void HandleSaveData()
     {
@@ -72,23 +83,29 @@ public class SaveSystem
         Tax_System.Instance.Save(ref _saveData.TaxSaveData);
     }
 
-    public static void Load()
+    public static void Load(string saveName)
     {
+        if (string.IsNullOrEmpty(saveName))
+        {
+            Debug.LogError("Load failed: saveName is null or empty");
+            return;
+        }
+
         OnLoadStart?.Invoke();
 
-        if (!File.Exists(SaveFileName()))
+        if (!File.Exists(SaveFileName(saveName)))
         {
             Debug.LogWarning("Save file not found!");
             OnLoadFinish?.Invoke();
             return;
         }
 
-        string saveContent = File.ReadAllText(SaveFileName());
+        string saveContent = File.ReadAllText(SaveFileName(saveName));
         _saveData = JsonUtility.FromJson<SaveData>(saveContent);
 
         HandleLoadData();
 
-         Debug.Log($"Loading {SaveFileName()}");
+         Debug.Log($"Loading {SaveFileName(saveName)}");
 
         OnLoadFinish?.Invoke();
     }

@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject weather;
     private bool canSave = false;
     [SerializeField] GameObject saveIcon;
+    string saveSlot;
 
     private void Awake()
     {
@@ -22,15 +23,14 @@ public class GameController : MonoBehaviour
         }
 
         Instance = this;
-        // DontDestroyOnLoad(gameObject);
-        // DontDestroyOnLoad(canva);
-        // DontDestroyOnLoad(npcs);
+
+        saveSlot = BootContext.SaveSlot;
+        BootContext.SaveSlot = null;
 
         if(BootContext.IsLoadingGame == true)
         {
-            SaveSystem.Load();
+            SaveSystem.Load(saveSlot);
             BootContext.IsLoadingGame = false;
-            BootContext.SaveSlot = null;
         }  
     }
 
@@ -93,8 +93,18 @@ public class GameController : MonoBehaviour
         {
             yield return null;
         }
+
         
-        SaveSystem.Save();
+
+        Debug.Log($"Game Controller slot: {saveSlot}");
+
+        if (string.IsNullOrEmpty(saveSlot))
+        {
+            Debug.LogWarning("Save skipped: no active save slot");
+            yield break;
+        }
+        
+        SaveSystem.Save(saveSlot);
         canSave = false;
     }
 

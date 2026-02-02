@@ -67,20 +67,6 @@ public class TileMapController : MonoBehaviour
         OnTileMapReady?.Invoke();
     }
 
-    //Testando Load remover futuramente
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Y))
-        {
-            SaveSystem.Save();
-        }
-
-        if(Input.GetKeyDown(KeyCode.U))
-        {
-            SaveSystem.Load();
-        }
-    }
-
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += GrowPlant;
