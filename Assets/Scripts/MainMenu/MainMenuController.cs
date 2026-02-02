@@ -25,6 +25,10 @@ public class MainMenuController : MonoBehaviour
     private bool skipIntro = false;
     #endregion
 
+    #region load game variables
+    private bool loadGame = false;
+    #endregion
+
 
     #region Default
     void Start()
@@ -35,7 +39,7 @@ public class MainMenuController : MonoBehaviour
 
     void Update()
     {
-        if (!startNewGame) return;
+        if (!startNewGame && !loadGame) return;
 
         backGroundIntroObj.SetActive(true);
 
@@ -46,6 +50,11 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
+            if(loadGame)
+            {
+                SceneManager.LoadScene(loadGameScene);
+            }
+            
             canSkipIntro = true;
             if(skipIntro)
             {
@@ -77,7 +86,7 @@ public class MainMenuController : MonoBehaviour
         if(startNewGame) return;
         BootContext.IsLoadingGame = true;
         BootContext.SaveSlot = "1";
-        SceneManager.LoadScene(loadGameScene);
+        loadGame = true;
     }
     #endregion
 
