@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameController : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     [SerializeField] private GameObject canva;
     [SerializeField] private GameObject npcs;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject weather;
     private bool canSave = false;
     [SerializeField] GameObject saveIcon;
 
@@ -19,9 +22,16 @@ public class GameController : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-        DontDestroyOnLoad(canva);
-        DontDestroyOnLoad(npcs);
+        // DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(canva);
+        // DontDestroyOnLoad(npcs);
+
+        if(BootContext.IsLoadingGame == true)
+        {
+            SaveSystem.Load();
+            BootContext.IsLoadingGame = false;
+            BootContext.SaveSlot = null;
+        }  
     }
 
     void OnEnable()
@@ -38,6 +48,35 @@ public class GameController : MonoBehaviour
         Sell_Controller.OnSellFinish -= CanSave;
     }
 
+    #region Start Game
+    public void StartNewGame()
+    {
+        WarpTile warpTile = new WarpTile();
+        warpTile.scene = SceneLocationEnum.FARM.ToString();
+        warpTile.x = 32;
+        warpTile.y = 30;
+        warpTile.transitionType = TransitionType.Instant;
+        SceneController.Instance.LoadScene(warpTile, new Vector2(32, 30));
+        SetGameComponents(true);
+    }
+
+    private void LoadGame()
+    {
+        Debug.Log("LOAD GAME");
+    }
+    #endregion
+
+    #region Set Components
+    private void SetGameComponents(bool active)
+    {
+        canva.SetActive(active);
+        npcs.SetActive(active);
+        player.SetActive(active);
+        weather.SetActive(active);
+    }
+    #endregion
+
+    #region Save Game
     private void CanSave()
     {
         canSave = true;
@@ -68,4 +107,5 @@ public class GameController : MonoBehaviour
     {
         saveIcon.SetActive(false);
     }
+    #endregion
 }

@@ -537,6 +537,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canva: {fileID: 0}
   npcs: {fileID: 0}
+  player: {fileID: 4868641703375013110}
+  weather: {fileID: 1262699618591634176}
+  saveIcon: {fileID: 0}
 --- !u!114 &8160908078903560732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1173,6 +1176,10 @@ PrefabInstance:
     - target: {fileID: 2048634262080933909, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2048634262080933909, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2048634262080933912, guid: 164f79097843d924399fcdc9cc72379f, type: 3}
       propertyPath: m_RootOrder
