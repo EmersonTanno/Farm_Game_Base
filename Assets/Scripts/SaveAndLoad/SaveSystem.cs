@@ -65,8 +65,6 @@ public class SaveSystem
         WriteMainSave(saveName);
         WriteMetaSave(saveName);
 
-        Debug.Log($"Saved {SaveFileName(saveName)}");
-
         OnSaveFinish?.Invoke();
     }
 
@@ -142,8 +140,6 @@ public class SaveSystem
 
         HandleLoadData();
 
-         Debug.Log($"Loading {SaveFileName(saveName)}");
-
         OnLoadFinish?.Invoke();
     }
 
@@ -155,6 +151,28 @@ public class SaveSystem
         PersistenceController.Instance.Load(_saveData.FarmSaveData);
         NPCController.Instance.Load(_saveData.NPCSaveData);
         Tax_System.Instance.Load(_saveData.TaxSaveData);
+    }
+    #endregion
+
+    #region Load Meta Data
+    public static SaveMetaData LoadMetaData(string saveId)
+    {
+        if (string.IsNullOrEmpty(saveId))
+        {
+            Debug.LogError("Load failed: saveId is null or empty");
+            return null;
+        }
+
+        if (!File.Exists(MetaFileName(saveId)))
+        {
+            OnLoadFinish?.Invoke();
+            return null;
+        }
+
+        string saveContent = File.ReadAllText(MetaFileName(saveId));
+        SaveMetaData metaData = JsonUtility.FromJson<SaveMetaData>(saveContent);
+
+        return metaData;
     }
     #endregion
 }

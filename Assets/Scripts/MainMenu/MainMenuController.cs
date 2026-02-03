@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,13 +5,17 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    public static MainMenuController Instance;
+
+    [SerializeField] GameObject mainCanvas;
     [SerializeField] GameObject buttons;
+    [SerializeField] GameObject loadCanvas;
     [SerializeField] string newGameScene;
     [SerializeField] string loadGameScene;
 
 
     #region new game variables
-    private bool startNewGame = false;
+    public bool startNewGame = false;
     [SerializeField] private RectTransform textTransform;
     [SerializeField] private float scrollSpeed = 30f;
     [SerializeField] private float endY = 800f;
@@ -26,9 +28,13 @@ public class MainMenuController : MonoBehaviour
     #endregion
 
     #region load game variables
-    private bool loadGame = false;
+    public bool loadGame = false;
     #endregion
 
+    void Awake()
+    {
+        Instance = this;
+    }
 
     #region Default
     void Start()
@@ -75,18 +81,14 @@ public class MainMenuController : MonoBehaviour
     #region Start/Load
     public void StartNewGame()
     {
-        if(startNewGame) return;
         BootContext.IsLoadingGame = false;
-        BootContext.SaveSlot = "1";
-        startNewGame = true;
+        SetLoadCanvas(true);
     }
 
     public void LoadGame()
     {
-        if(startNewGame) return;
         BootContext.IsLoadingGame = true;
-        BootContext.SaveSlot = "1";
-        loadGame = true;
+        SetLoadCanvas(true);
     }
     #endregion
 
@@ -105,6 +107,15 @@ public class MainMenuController : MonoBehaviour
         if(!startNewGame || !canSkipIntro) return;
 
         skipIntro = true;
+    }
+    #endregion
+
+    #region Saves
+    public void SetLoadCanvas(bool active)
+    {
+        loadCanvas.SetActive(active);
+        buttons.SetActive(!active);
+        mainCanvas.SetActive(!active);
     }
     #endregion
 }
