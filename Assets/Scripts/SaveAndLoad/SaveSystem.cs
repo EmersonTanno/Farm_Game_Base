@@ -27,6 +27,7 @@ public class SaveSystem
         public TaxSaveData TaxSaveData;
     }
 
+    #region File Names
     public static string SaveFileName(string saveName)
     {
         string dir = Path.Combine(Application.persistentDataPath, "save");
@@ -37,6 +38,18 @@ public class SaveSystem
         return Path.Combine(dir, saveName + ".txt");
     }
 
+    public static string MetaFileName(string saveName)
+    {
+        string dir = Path.Combine(Application.persistentDataPath, "save");
+
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        return Path.Combine(dir, saveName + ".meta");
+    }
+    #endregion
+
+    #region Save Game
     public static void Save(string saveName)
     {
         if (string.IsNullOrEmpty(saveName))
@@ -49,10 +62,8 @@ public class SaveSystem
 
         HandleSaveData();
 
-        File.WriteAllText(
-            SaveFileName(saveName),
-            JsonUtility.ToJson(_saveData, true)
-        );
+        WriteMainSave(saveName);
+        WriteMetaSave(saveName);
 
         Debug.Log($"Saved {SaveFileName(saveName)}");
 
@@ -83,6 +94,32 @@ public class SaveSystem
         Tax_System.Instance.Save(ref _saveData.TaxSaveData);
     }
 
+    private static void WriteMainSave(string saveName)
+    {
+        File.WriteAllText(
+            SaveFileName(saveName),
+            JsonUtility.ToJson(_saveData, true)
+        );
+    }
+
+    private static void WriteMetaSave(string saveName)
+    {
+        SaveMetaData meta = new SaveMetaData
+        {
+            gold = _saveData.PlayerSaveData.playerData.gold,
+            day = _saveData.CalendarSaveData.calendar.day,
+            month = _saveData.CalendarSaveData.calendar.month,
+            year = _saveData.CalendarSaveData.calendar.year,
+            season = _saveData.CalendarSaveData.calendar.season,
+            lastPlayed = System.DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+        };
+
+        string path = MetaFileName(saveName);
+        File.WriteAllText(path, JsonUtility.ToJson(meta, true));
+    }
+    #endregion
+
+    #region Load Game
     public static void Load(string saveName)
     {
         if (string.IsNullOrEmpty(saveName))
@@ -119,4 +156,5 @@ public class SaveSystem
         NPCController.Instance.Load(_saveData.NPCSaveData);
         Tax_System.Instance.Load(_saveData.TaxSaveData);
     }
+    #endregion
 }
