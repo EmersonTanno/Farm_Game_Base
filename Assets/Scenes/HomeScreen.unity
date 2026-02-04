@@ -2346,10 +2346,10 @@ MonoBehaviour:
   saveLoadAnimator: {fileID: 209732132}
   newGameScene: SampleScene
   loadGameScene: LoadGameHouse
+  canvasRect: {fileID: 1011872061}
   startNewGame: 0
   textTransform: {fileID: 1193484589}
-  scrollSpeed: 50
-  endY: 700
+  scrollSpeed: 100
   backGroundIntro: {fileID: 528213425}
   backGroundIntroObj: {fileID: 528213423}
   fadeSpeed: 1
@@ -3444,7 +3444,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 53.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

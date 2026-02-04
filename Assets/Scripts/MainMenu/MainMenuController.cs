@@ -15,12 +15,15 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] string newGameScene;
     [SerializeField] string loadGameScene;
 
+    [SerializeField] private RectTransform canvasRect;
 
     #region new game variables
     public bool startNewGame = false;
     [SerializeField] private RectTransform textTransform;
+    private float startY;
+    private float endY;
     [SerializeField] private float scrollSpeed = 30f;
-    [SerializeField] private float endY = 800f;
+    //[SerializeField] private float endY = 800f;
     [SerializeField] private Image backGroundIntro;
     [SerializeField] private GameObject backGroundIntroObj;
     [SerializeField] private float fadeSpeed = 1f;
@@ -47,6 +50,7 @@ public class MainMenuController : MonoBehaviour
     {
         backGroundIntroObj.SetActive(false);
         SetBackgroundAlpha(0f);
+        SetupTextPositions();
     }
 
     void Update()
@@ -133,6 +137,21 @@ public class MainMenuController : MonoBehaviour
     {
         SetLoadCanvas(false);
         selectedNewOrLoad = false;;
+    }
+    #endregion
+
+    #region Setup New Game Text
+    private void SetupTextPositions()
+    {
+        float canvasHeight = canvasRect.rect.height;
+        float textHeight = textTransform.rect.height;
+
+        startY = -canvasHeight / 2f - textHeight / 2;
+
+        endY = canvasHeight / 2f + textHeight / 2;
+
+        textTransform.anchoredPosition =
+            new Vector2(textTransform.anchoredPosition.x, startY);
     }
     #endregion
 }
