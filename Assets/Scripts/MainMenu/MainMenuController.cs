@@ -10,6 +10,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject mainCanvas;
     [SerializeField] GameObject buttons;
     [SerializeField] GameObject loadCanvas;
+    [SerializeField] Animator mainAnimator;
+    [SerializeField] Animator saveLoadAnimator;
     [SerializeField] string newGameScene;
     [SerializeField] string loadGameScene;
 
@@ -29,6 +31,10 @@ public class MainMenuController : MonoBehaviour
 
     #region load game variables
     public bool loadGame = false;
+    #endregion
+
+    #region controll
+    private bool selectedNewOrLoad = false;
     #endregion
 
     void Awake()
@@ -81,14 +87,20 @@ public class MainMenuController : MonoBehaviour
     #region Start/Load
     public void StartNewGame()
     {
+        if(selectedNewOrLoad) return;
+
         BootContext.IsLoadingGame = false;
         SetLoadCanvas(true);
+        selectedNewOrLoad = true;
     }
 
     public void LoadGame()
     {
+        if(selectedNewOrLoad) return;
+
         BootContext.IsLoadingGame = true;
         SetLoadCanvas(true);
+        selectedNewOrLoad = true;
     }
     #endregion
 
@@ -113,14 +125,14 @@ public class MainMenuController : MonoBehaviour
     #region Saves
     public void SetLoadCanvas(bool active)
     {
-        loadCanvas.SetActive(active);
-        buttons.SetActive(!active);
-        mainCanvas.SetActive(!active);
+        mainAnimator.SetBool("save/load", active);
+        saveLoadAnimator.SetBool("save/load", active);
     }
 
     public void ReturnToMainFromLoad()
     {
         SetLoadCanvas(false);
+        selectedNewOrLoad = false;;
     }
     #endregion
 }
