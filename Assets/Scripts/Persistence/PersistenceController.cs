@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PersistenceController : MonoBehaviour
@@ -5,6 +7,8 @@ public class PersistenceController : MonoBehaviour
     public static PersistenceController Instance;
     private GridSaveData gridSaveData = new GridSaveData();
     public bool hasData = false;
+
+    public static event Action OnDayChangeFinish;
 
     void Awake()
     {
@@ -14,7 +18,6 @@ public class PersistenceController : MonoBehaviour
             return;
         }
         Instance = this;
-        //DontDestroyOnLoad(gameObject);
     }
 
     void OnEnable()
@@ -77,18 +80,41 @@ public class PersistenceController : MonoBehaviour
 
     public void PassDay()
     {
-        foreach (var plant in gridSaveData.plants)
+        foreach (PlantSaveData plant in gridSaveData.plants)
         {
             if (plant.plantData != null)
             {
                 plant.plantData.PassDay();
             }
         }
+
+        OnDayChangeFinish?.Invoke();
     }
 
     public void Save(ref FarmSaveData data)
     {
         data.plants = gridSaveData.plants;
+
+        List<PlantSaveData> plantsToSave = new List<PlantSaveData>();
+
+        foreach(PlantSaveData plant in gridSaveData.plants)
+        {
+            PlantSaveData newPlantData = new PlantSaveData();
+            newPlantData.gridValue = plant.gridValue;
+            newPlantData.growthDays = plant.plantData.growthDays;
+            newPlantData.isDead = plant.plantData.isDead;
+            newPlantData.dryDays = plant.plantData.dryDays;
+            newPlantData.isPlown = plant.plantData.isPlown;
+            newPlantData.isWater = plant.plantData.isWater;
+            newPlantData.plantData = plant.plantData;
+            newPlantData.plantId = plant.plantId;
+            newPlantData.x = plant.x;
+            newPlantData.y = plant.y;
+
+            plantsToSave.Add(newPlantData);
+        }
+
+        data.plants = plantsToSave;
     }
 
     public void Load(FarmSaveData data)

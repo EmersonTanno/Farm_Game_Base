@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject weather;
     private bool canSave = false;
+    private bool canSavePersistence = false;
     [SerializeField] GameObject saveIcon;
     string saveSlot;
 
@@ -40,12 +41,17 @@ public class GameController : MonoBehaviour
         Sell_Controller.OnSellFinish += CanSave;
         SaveSystem.OnSaveStart += ShowSaveIcon;
         SaveSystem.OnSaveFinish += HideSaveIcon;
+        PersistenceController.OnDayChangeFinish += CanSavePersistence;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= SaveGameData;
         Sell_Controller.OnSellFinish -= CanSave;
+        SaveSystem.OnSaveStart -= ShowSaveIcon;
+        SaveSystem.OnSaveFinish -= HideSaveIcon;
+        PersistenceController.OnDayChangeFinish -= CanSavePersistence;
+        
     }
 
     #region Start Game
@@ -58,11 +64,6 @@ public class GameController : MonoBehaviour
         warpTile.transitionType = TransitionType.Instant;
         SceneController.Instance.LoadScene(warpTile, new Vector2(32, 30));
         SetGameComponents(true);
-    }
-
-    private void LoadGame()
-    {
-        Debug.Log("LOAD GAME");
     }
     #endregion
 
@@ -82,6 +83,11 @@ public class GameController : MonoBehaviour
         canSave = true;
     }
 
+    private void CanSavePersistence()
+    {
+        canSavePersistence = true;
+    }
+
     private void SaveGameData()
     {
         StartCoroutine(SaveData());
@@ -89,14 +95,10 @@ public class GameController : MonoBehaviour
 
     private IEnumerator SaveData()
     {
-        while(!canSave)
+        while(!canSave || !canSavePersistence)
         {
             yield return null;
         }
-
-        
-
-        Debug.Log($"Game Controller slot: {saveSlot}");
 
         if (string.IsNullOrEmpty(saveSlot))
         {
@@ -106,6 +108,7 @@ public class GameController : MonoBehaviour
         
         SaveSystem.Save(saveSlot);
         canSave = false;
+        canSavePersistence = false;
     }
 
     private void ShowSaveIcon()
