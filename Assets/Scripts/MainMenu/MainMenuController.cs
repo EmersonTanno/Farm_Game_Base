@@ -117,5 +117,10 @@ public class MainMenuController : MonoBehaviour
         buttons.SetActive(!active);
         mainCanvas.SetActive(!active);
     }
+
+    public void ReturnToMainFromLoad()
+    {
+        SetLoadCanvas(false);
+    }
     #endregion
 }
