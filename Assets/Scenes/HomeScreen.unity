@@ -2353,6 +2353,16 @@ MonoBehaviour:
   backGroundIntro: {fileID: 528213425}
   backGroundIntroObj: {fileID: 528213423}
   fadeSpeed: 1
+  introArea: {fileID: 1193484590}
+  ptText: "Durante anos, essa fazenda ficou esquecida.\nA terra endureceu, as cercas
+    ca\xEDram, e ningu\xE9m se importou o suficiente para consertar.\n\nO governo
+    decidiu que algu\xE9m precisava cuidar disso.\nE, por algum motivo, esse algu\xE9m
+    foi voc\xEA.\n\nN\xE3o \xE9 muito.\nMas \xE9 sua.\nE talvez\u2026 seja suficiente
+    para recome\xE7ar"
+  enText: "For years, this farm stayed forgotten.\nThe land hardened, the fences
+    fell, and no one cared enough to fix them.\n\nThe government decided someone
+    had to take responsibility.\nAnd, for some reason, that someone was you.\n\nIt\u2019s
+    not much.\nBut it\u2019s yours.\nAnd maybe\u2026 it\u2019s enough to start over."
   loadGame: 0
 --- !u!4 &644740535
 Transform:
@@ -3390,8 +3400,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -966}
-  m_SizeDelta: {x: -100.000015, y: 0}
+  m_AnchoredPosition: {x: 0, y: -896.78864}
+  m_SizeDelta: {x: -100, y: -138.4227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1193484590
 MonoBehaviour:
@@ -3444,7 +3454,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.5
+  m_fontSize: 46.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3651,6 +3661,51 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 0}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!1 &1260154924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1260154926}
+  - component: {fileID: 1260154925}
+  m_Layer: 0
+  m_Name: GameSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1260154925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260154924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38218894ce1c27643bfdc2950ae57db9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameLanguage: 1
+--- !u!4 &1260154926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260154924}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 761.60297, y: -264.22116, z: -8.532823}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1306913316
 GameObject:
   m_ObjectHideFlags: 0

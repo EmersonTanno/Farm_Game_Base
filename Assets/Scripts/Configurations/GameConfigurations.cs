@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameConfigurations : MonoBehaviour
@@ -15,5 +13,7 @@ public class GameConfigurations : MonoBehaviour
         }
 
         Instance = this;
+
+        DontDestroyOnLoad(this);
     }
 }

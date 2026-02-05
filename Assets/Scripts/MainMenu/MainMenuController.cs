@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,13 +24,17 @@ public class MainMenuController : MonoBehaviour
     private float startY;
     private float endY;
     [SerializeField] private float scrollSpeed = 30f;
-    //[SerializeField] private float endY = 800f;
     [SerializeField] private Image backGroundIntro;
     [SerializeField] private GameObject backGroundIntroObj;
     [SerializeField] private float fadeSpeed = 1f;
     private float bgAlpha = 0f;
     private bool canSkipIntro = false;
     private bool skipIntro = false;
+    [SerializeField] private TextMeshProUGUI introArea;
+    [TextArea(5, 20)]
+    [SerializeField] private string ptText;
+    [TextArea(5, 20)]
+    [SerializeField] private string enText;
     #endregion
 
     #region load game variables
@@ -50,6 +55,7 @@ public class MainMenuController : MonoBehaviour
     {
         backGroundIntroObj.SetActive(false);
         SetBackgroundAlpha(0f);
+        SetupTextContent();
         SetupTextPositions();
     }
 
@@ -152,6 +158,18 @@ public class MainMenuController : MonoBehaviour
 
         textTransform.anchoredPosition =
             new Vector2(textTransform.anchoredPosition.x, startY);
+    }
+
+    private void SetupTextContent()
+    {
+        if(GameConfigurations.Instance.gameLanguage == LanguageEnum.Potugues)
+        {
+            introArea.text = ptText;
+        }
+        else
+        {
+            introArea.text = enText;
+        }
     }
     #endregion
 }

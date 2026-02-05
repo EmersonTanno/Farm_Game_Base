@@ -10122,7 +10122,8 @@ PrefabInstance:
       propertyPath: loadingListCanvas.Array.data[1]
       value: 
       objectReference: {fileID: 4924957107686940967}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2468946439636220640, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
 --- !u!114 &560722003226436106 stripped
 MonoBehaviour:
