@@ -2,18 +2,28 @@ using UnityEngine;
 
 public class GameConfigurations : MonoBehaviour
 {
-    public static GameConfigurations Instance;
+    public static GameConfigurations Instance { get; private set; }
 
     public LanguageEnum gameLanguage = LanguageEnum.Potugues;
+
     void Awake()
     {
-        if(Instance && Instance != this)
+        if (Instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+        //implementação futura
+        //LoadConfig();
+    }
 
-        DontDestroyOnLoad(this);
+    public void SetLanguage(LanguageEnum lang)
+    {
+        gameLanguage = lang;
+        //implementação futura
+        //SaveConfig();
     }
 }
