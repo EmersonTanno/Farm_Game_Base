@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject loadCanvas;
     [SerializeField] Animator mainAnimator;
     [SerializeField] Animator saveLoadAnimator;
+    [SerializeField] Animator configsAnimator;
     [SerializeField] string newGameScene;
     [SerializeField] string loadGameScene;
 
@@ -43,6 +45,7 @@ public class MainMenuController : MonoBehaviour
 
     #region controll
     private bool selectedNewOrLoad = false;
+    private bool selectedConfigs = false;
     #endregion
 
     void Awake()
@@ -94,23 +97,37 @@ public class MainMenuController : MonoBehaviour
     }
     #endregion
 
-    #region Start/Load
+    #region Start/Load/Configs
     public void StartNewGame()
     {
-        if(selectedNewOrLoad) return;
+        if(selectedNewOrLoad || selectedConfigs) return;
 
         BootContext.IsLoadingGame = false;
         SetLoadCanvas(true);
-        selectedNewOrLoad = true;
     }
 
     public void LoadGame()
     {
-        if(selectedNewOrLoad) return;
+        if(selectedNewOrLoad || selectedConfigs) return;
 
         BootContext.IsLoadingGame = true;
         SetLoadCanvas(true);
-        selectedNewOrLoad = true;
+    }
+
+    public void ReturnToMainFromLoad()
+    {
+        SetLoadCanvas(false);
+    }
+
+    public void OpenConfigs()
+    {
+        if(selectedNewOrLoad || selectedConfigs) return;
+        SetConfigCanvas(true);
+    }
+
+    public void ReturnToMainFromConfigs()
+    {
+        SetConfigCanvas(false);
     }
     #endregion
 
@@ -132,17 +149,19 @@ public class MainMenuController : MonoBehaviour
     }
     #endregion
 
-    #region Saves
+    #region Canvas Controll
     public void SetLoadCanvas(bool active)
     {
         mainAnimator.SetBool("save/load", active);
         saveLoadAnimator.SetBool("save/load", active);
+        selectedNewOrLoad = active;
     }
 
-    public void ReturnToMainFromLoad()
+    public void SetConfigCanvas(bool active)
     {
-        SetLoadCanvas(false);
-        selectedNewOrLoad = false;;
+        mainAnimator.SetBool("configs", active);
+        configsAnimator.SetBool("configs", active);
+        selectedConfigs = active;
     }
     #endregion
 
