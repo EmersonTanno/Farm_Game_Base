@@ -21,6 +21,9 @@ public class MainMenuLanguageManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI returnButton2;
     [SerializeField] string returnButtonTextPt;
     [SerializeField] string returnButtonTextEn;  
+    [SerializeField] TextMeshProUGUI applyButton;
+    [SerializeField] string applyButtonTextPt;
+    [SerializeField] string applyButtonTextEn;  
 
     private void Awake()
     {
@@ -49,6 +52,7 @@ public class MainMenuLanguageManager : MonoBehaviour
                 setingsButton.text = setingsButtonTextPt;
                 returnButton1.text = returnButtonTextPt;
                 returnButton2.text = returnButtonTextPt;
+                applyButton.text = applyButtonTextPt;
                 break;
             }
             case LanguageEnum.Ingles:
@@ -58,6 +62,7 @@ public class MainMenuLanguageManager : MonoBehaviour
                 setingsButton.text = setingsButtonTextEn;
                 returnButton1.text = returnButtonTextEn;
                 returnButton2.text = returnButtonTextEn;
+                applyButton.text = applyButtonTextEn;
                 break;
             }
         }

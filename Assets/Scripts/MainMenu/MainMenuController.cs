@@ -220,6 +220,11 @@ public class MainMenuController : MonoBehaviour
         }
         
         GameConfigurations.Instance.SetLanguage(newLanguage);
+    }
+
+    public void ApplyNewConfigs()
+    {
+        SetLanguage();
         OnConfigChange?.Invoke();
     }
     #endregion
