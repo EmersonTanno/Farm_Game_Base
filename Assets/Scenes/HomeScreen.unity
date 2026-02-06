@@ -2787,6 +2787,7 @@ GameObject:
   - component: {fileID: 644740535}
   - component: {fileID: 644740534}
   - component: {fileID: 644740536}
+  - component: {fileID: 644740537}
   m_Layer: 0
   m_Name: Home
   m_TagString: Untagged
@@ -2934,6 +2935,34 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &644740537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644740533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 149f3dc04d173e54c862ce08ab84eece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newGameButton: {fileID: 292683408}
+  newGameButtonTextPt: Novo Jogo
+  newGameButtonTextEn: New Game
+  loadGameButton: {fileID: 1352235463}
+  loadGameButtonTextPt: Carregar Jogo
+  loadGameButtonTextEn: Load Game
+  setingsButton: {fileID: 1870913735}
+  setingsButtonTextPt: "Configura\xE7\xF5es"
+  setingsButtonTextEn: Settings
+  languageField: {fileID: 943329703}
+  languageFieldTextPt: Idioma
+  languageFieldTextEn: Language
+  returnButton1: {fileID: 1573374927}
+  returnButton2: {fileID: 1935494890}
+  returnButtonTextPt: Retornar
+  returnButtonTextEn: Return
 --- !u!1 &677244380
 GameObject:
   m_ObjectHideFlags: 0

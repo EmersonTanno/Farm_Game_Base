@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,8 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     public static MainMenuController Instance;
+
+    public static event Action OnConfigChange;
 
     [SerializeField] GameObject mainCanvas;
     [SerializeField] GameObject buttons;
@@ -64,6 +67,7 @@ public class MainMenuController : MonoBehaviour
         SetBackgroundAlpha(0f);
         SetupTextContent();
         SetupTextPositions();
+        OnConfigChange?.Invoke();
     }
 
     void Update()
@@ -216,6 +220,7 @@ public class MainMenuController : MonoBehaviour
         }
         
         GameConfigurations.Instance.SetLanguage(newLanguage);
+        OnConfigChange?.Invoke();
     }
     #endregion
 }
