@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,8 +15,10 @@ public class SaveSlotMenu : MonoBehaviour
     [SerializeField] TextMeshProUGUI seasonText;
     [SerializeField] TextMeshProUGUI lastPlayedText;
 
+    private SaveMetaData metaData;
+
     private void Start() {
-        SaveMetaData metaData = SaveSystem.LoadMetaData(saveId);
+        metaData = SaveSystem.LoadMetaData(saveId);
 
         if(metaData == null)
         {
@@ -38,14 +41,15 @@ public class SaveSlotMenu : MonoBehaviour
 
             button.enabled = true;
 
-            goldText.text += metaData.gold;
-            dayText.text += metaData.day;
-            yearText.text += metaData.year;
-            seasonText.text += metaData.season;
-            lastPlayedText.text += metaData.lastPlayed;
+            SetData();
         }
     }
-    
+
+    void OnEnable()
+    {
+        MainMenuController.OnConfigChange += StartSetDataLate;
+    }
+
     public void SelectSlot()
     {
         if(MainMenuController.Instance.startNewGame || MainMenuController.Instance.loadGame) return;
@@ -60,4 +64,25 @@ public class SaveSlotMenu : MonoBehaviour
             MainMenuController.Instance.startNewGame = true;
         }
     }
+
+    private void SetData()
+    {
+        goldText.text += metaData.gold;
+        dayText.text += metaData.day;
+        yearText.text += metaData.year;
+        seasonText.text += metaData.season;
+        lastPlayedText.text += metaData.lastPlayed;
+    }
+
+    private void StartSetDataLate()
+    {
+        StartCoroutine(SetDataLate());
+    }
+
+    private IEnumerator SetDataLate()
+    {
+        yield return null;
+        SetData();
+    }
+    //a
 }
