@@ -48,6 +48,10 @@ public class MainMenuController : MonoBehaviour
     private bool selectedConfigs = false;
     #endregion
 
+    #region Configs
+    [SerializeField] private TMP_Dropdown languageSelector;
+    #endregion
+
     void Awake()
     {
         Instance = this;
@@ -189,6 +193,29 @@ public class MainMenuController : MonoBehaviour
         {
             introArea.text = enText;
         }
+    }
+    #endregion
+
+    #region Configs
+    public void SetLanguage()
+    {
+        LanguageEnum newLanguage;
+        switch(languageSelector.value)
+        {
+            case 0:
+                newLanguage = LanguageEnum.Potugues;
+            break;
+
+            case 1:
+                newLanguage = LanguageEnum.Ingles;
+            break;
+
+            default:
+                newLanguage = LanguageEnum.Potugues;
+            break;
+        }
+        
+        GameConfigurations.Instance.SetLanguage(newLanguage);
     }
     #endregion
 }

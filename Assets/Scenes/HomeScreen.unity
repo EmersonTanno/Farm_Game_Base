@@ -220,7 +220,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 644740534}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: SetLanguage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &38990769
 MonoBehaviour:
@@ -2820,6 +2832,7 @@ MonoBehaviour:
     had to take responsibility.\nAnd, for some reason, that someone was you.\n\nIt\u2019s
     not much.\nBut it\u2019s yours.\nAnd maybe\u2026 it\u2019s enough to start over."
   loadGame: 0
+  languageSelector: {fileID: 38990768}
 --- !u!4 &644740535
 Transform:
   m_ObjectHideFlags: 0
@@ -3683,7 +3696,7 @@ GameObject:
   - component: {fileID: 943329704}
   - component: {fileID: 943329703}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Language
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3704,9 +3717,9 @@ RectTransform:
   m_Father: {fileID: 1375702121}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 483, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -477, y: 0}
   m_SizeDelta: {x: 370.583, y: 100.7139}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943329703
