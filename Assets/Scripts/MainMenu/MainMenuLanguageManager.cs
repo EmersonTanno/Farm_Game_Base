@@ -1,29 +1,26 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
+[System.Serializable]
+public class LanguageItem
+{
+    public string key;
+    public string pt;
+    public string en;
+}
+
+[System.Serializable]
+public class MainMenuLanguageData
+{
+    public LanguageItem[] items;
+}
 
 public class MainMenuLanguageManager : MonoBehaviour
 {
     public static MainMenuLanguageManager Instance;
 
-    [SerializeField] TextMeshProUGUI newGameButton;
-    [SerializeField] string newGameButtonTextPt;
-    [SerializeField] string newGameButtonTextEn;
-    [SerializeField] TextMeshProUGUI loadGameButton;
-    [SerializeField] string loadGameButtonTextPt;
-    [SerializeField] string loadGameButtonTextEn;
-    [SerializeField] TextMeshProUGUI setingsButton;
-    [SerializeField] string setingsButtonTextPt;
-    [SerializeField] string setingsButtonTextEn;   
-    [SerializeField] TextMeshProUGUI languageField;
-    [SerializeField] string languageFieldTextPt;
-    [SerializeField] string languageFieldTextEn;  
-    [SerializeField] TextMeshProUGUI returnButton1;
-    [SerializeField] TextMeshProUGUI returnButton2;
-    [SerializeField] string returnButtonTextPt;
-    [SerializeField] string returnButtonTextEn;  
-    [SerializeField] TextMeshProUGUI applyButton;
-    [SerializeField] string applyButtonTextPt;
-    [SerializeField] string applyButtonTextEn;  
+    private Dictionary<string, LanguageItem> languageMap;
 
     private void Awake()
     {
@@ -34,37 +31,38 @@ public class MainMenuLanguageManager : MonoBehaviour
         }
 
         Instance = this;
+        LoadLanguageFile();
     }
 
-    void OnEnable()
+    private void LoadLanguageFile()
     {
-        MainMenuController.OnConfigChange += ReloadGameLanguage;
-    }
+        TextAsset json = Resources.Load<TextAsset>("Languages/main_menu");
 
-    private void ReloadGameLanguage()
-    {
-        switch(GameConfigurations.Instance.gameLanguage)
+        if (json == null)
         {
-            case LanguageEnum.Potugues:
-            {
-                newGameButton.text = newGameButtonTextPt;
-                loadGameButton.text = loadGameButtonTextPt;
-                setingsButton.text = setingsButtonTextPt;
-                returnButton1.text = returnButtonTextPt;
-                returnButton2.text = returnButtonTextPt;
-                applyButton.text = applyButtonTextPt;
-                break;
-            }
-            case LanguageEnum.Ingles:
-            {
-                newGameButton.text = newGameButtonTextEn;
-                loadGameButton.text = loadGameButtonTextEn;
-                setingsButton.text = setingsButtonTextEn;
-                returnButton1.text = returnButtonTextEn;
-                returnButton2.text = returnButtonTextEn;
-                applyButton.text = applyButtonTextEn;
-                break;
-            }
+            Debug.LogError("Language file not found!");
+            return;
         }
+
+        var data = JsonUtility.FromJson<MainMenuLanguageData>(json.text);
+
+        languageMap = new Dictionary<string, LanguageItem>();
+
+        foreach (var item in data.items)
+        {
+            languageMap[item.key] = item;
+        }
+    }
+
+    public string GetText(string key)
+    {
+        if (!languageMap.ContainsKey(key))
+            return $"#{key}";
+
+        var item = languageMap[key];
+
+        return GameConfigurations.Instance.gameLanguage == LanguageEnum.Potugues
+            ? item.pt
+            : item.en;
     }
 }
