@@ -1,20 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class LanguageItem
-{
-    public string key;
-    public string pt;
-    public string en;
-}
-
-[System.Serializable]
-public class MainMenuLanguageData
-{
-    public LanguageItem[] items;
-}
-
 public class MainMenuLanguageManager : MonoBehaviour
 {
     public static MainMenuLanguageManager Instance;

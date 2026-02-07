@@ -10,7 +10,10 @@ public class Sell_Controller : MonoBehaviour
     #region Variables
     [Header("UI")]
     [SerializeField] GameObject sellUi;
+    [SerializeField] TextMeshProUGUI titleSellText;
+    [SerializeField] TextMeshProUGUI infosText;
     [SerializeField] TextMeshProUGUI totalText;
+    [SerializeField] TextMeshProUGUI continueButtonText;
     [SerializeField] TextMeshProUGUI taxText;
     [SerializeField] TextMeshProUGUI gainText;
     [SerializeField] TextMeshProUGUI actualTaxText;
@@ -137,9 +140,9 @@ public class Sell_Controller : MonoBehaviour
         RefreshSellContentUI();
         SetInfos(taxedValue, totalValue, gainedValue);
 
-        gainText.text = $"Recebido: ${gainedValue}";
-        taxText.text = $"Taxas: -${taxedValue}";
-        totalText.text = $"Total: ${totalValue}";
+        gainText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("total")}${gainedValue}";
+        taxText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("tax")}-${taxedValue}";
+        totalText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("received")}${totalValue}";
 
         Status_Controller.Instance.AddGold(gainedValue);
 
@@ -191,10 +194,13 @@ public class Sell_Controller : MonoBehaviour
 
     private void SetInfos(int taxedValue, int totalValue, int gainedValue)
     {
-        actualTaxText.text = $"Imposto atual: {Tax_System.Instance.GetTax()}%";
-        taxPaidText.text = $"Total de impostos pagos: ${Tax_System.Instance.GetTaxPaidDuringYear()}";
-        nextYearTaxText.text = $"Previsão do imposto anual: ${Tax_System.Instance.CalculateAnualTax()}";
-        debtText.text = $"Débito: $0";
+        titleSellText.text = GameLanguageManager.Instance.GetSellMenuItemName("sell");
+        infosText.text = GameLanguageManager.Instance.GetSellMenuItemName("infos");
+        continueButtonText.text = GameLanguageManager.Instance.GetSellMenuItemName("continue");
+        actualTaxText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("actualTax")}{Tax_System.Instance.GetTax()}%";
+        taxPaidText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("totalTax")}${Tax_System.Instance.GetTaxPaidDuringYear()}";
+        nextYearTaxText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("yearTaxPrevision")}${Tax_System.Instance.CalculateAnualTax()}";
+        debtText.text = $"{GameLanguageManager.Instance.GetSellMenuItemName("debt")}$0";
         
         jokeText.text = ReplaceVars(GetRandomJoke(taxedValue), taxedValue, totalValue, gainedValue, sellControlDict.Count);
     }
