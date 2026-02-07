@@ -50,7 +50,7 @@ public class ShopSlot : MonoBehaviour
 
         itemImage.sprite = sellItem.image;
         buyValueTax = Tax_System.Instance.ApplyBuyTaxes(sellItem.buyValue);
-        itemText.text = $"{sellItem.itemName} ${buyValueTax}";
+        itemText.text = $"{GameLanguageManager.Instance.GetItemName(sellItem)} ${buyValueTax}";
         itemQuantity.text = quantity.ToString();
     }
 

@@ -1,0 +1,14 @@
+{
+  "items": [
+    { "key": "item_1", "pt": "Picareta", "en": "Pickaxe" },
+    { "key": "item_2", "pt": "Enxada", "en": "Plow" },
+    { "key": "item_3", "pt": "Foice", "en": "Scythe" },
+    { "key": "item_4", "pt": "Regador", "en": "Watering Can" },
+    { "key": "item_5", "pt": "Semente de Cenoura", "en": "Carrot Seed" },
+    { "key": "item_6", "pt": "Cenoura", "en": "Carrot" },
+    { "key": "item_7", "pt": "Semente de Batata", "en": "Potato Seed" },
+    { "key": "item_8", "pt": "Batata", "en": "Semente de Batata" },
+    { "key": "item_9", "pt": "Semente de Abóbora", "en": "Pumpkin Seed" },
+    { "key": "item_10", "pt": "Abóbora", "en": "Pumpkin" }
+  ]
+}

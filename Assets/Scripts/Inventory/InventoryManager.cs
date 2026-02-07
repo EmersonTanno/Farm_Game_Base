@@ -91,7 +91,7 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot.item != null)
         {
             Item item = itemInSlot.item;
-            itemNameText.text = item.itemName;
+            itemNameText.text = GameLanguageManager.Instance.GetItemName(item);
         }
         else
         {
@@ -106,7 +106,7 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot.item != null)
         {
             Item item = itemInSlot.item;
-            itemNameText.text = item.itemName;
+            itemNameText.text = GameLanguageManager.Instance.GetItemName(item);
         }
         else
         {
