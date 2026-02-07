@@ -9,6 +9,10 @@ public class LocalizedText : MonoBehaviour
     private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
+    }
+
+    void Start()
+    {
         UpdateText();
     }
 

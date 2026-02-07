@@ -66,6 +66,10 @@ public class MainMenuController : MonoBehaviour
         SetBackgroundAlpha(0f);
         SetupTextContent();
         OnConfigChange?.Invoke();
+        if(GameConfigurations.Instance.gameLanguage == LanguageEnum.Potugues)
+            languageSelector.value = 0;
+        if(GameConfigurations.Instance.gameLanguage == LanguageEnum.Ingles)
+            languageSelector.value = 1;
     }
 
     void OnEnable()

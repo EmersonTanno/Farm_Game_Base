@@ -41,7 +41,7 @@ public class SaveSlotMenu : MonoBehaviour
 
             button.enabled = true;
 
-            SetData();
+            //SetData();
         }
     }
 
@@ -90,5 +90,4 @@ public class SaveSlotMenu : MonoBehaviour
         yield return null;
         SetData();
     }
-    //a
 }
