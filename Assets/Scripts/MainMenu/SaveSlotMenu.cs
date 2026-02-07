@@ -67,6 +67,7 @@ public class SaveSlotMenu : MonoBehaviour
         else
         {
             MainMenuController.Instance.startNewGame = true;
+            MainMenuController.Instance.SetupTextPositions();
         }
     }
 

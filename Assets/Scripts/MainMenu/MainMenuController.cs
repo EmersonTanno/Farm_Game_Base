@@ -65,7 +65,6 @@ public class MainMenuController : MonoBehaviour
         backGroundIntroObj.SetActive(false);
         SetBackgroundAlpha(0f);
         SetupTextContent();
-        SetupTextPositions();
         OnConfigChange?.Invoke();
     }
 
@@ -183,7 +182,7 @@ public class MainMenuController : MonoBehaviour
     #endregion
 
     #region Setup New Game Text
-    private void SetupTextPositions()
+    public void SetupTextPositions()
     {
         float canvasHeight = canvasRect.rect.height;
         float textHeight = textTransform.rect.height;
