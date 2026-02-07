@@ -50,6 +50,11 @@ public class SaveSlotMenu : MonoBehaviour
         MainMenuController.OnConfigChange += StartSetDataLate;
     }
 
+    void OnDisable()
+    {
+        MainMenuController.OnConfigChange -= StartSetDataLate;
+    }
+
     public void SelectSlot()
     {
         if(MainMenuController.Instance.startNewGame || MainMenuController.Instance.loadGame) return;

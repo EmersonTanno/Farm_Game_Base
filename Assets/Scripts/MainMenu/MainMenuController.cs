@@ -69,6 +69,16 @@ public class MainMenuController : MonoBehaviour
         OnConfigChange?.Invoke();
     }
 
+    void OnEnable()
+    {
+        OnConfigChange += SetupTextContent;
+    }
+
+    void OnDisable()
+    {
+        OnConfigChange -= SetupTextContent;
+    }
+
     void Update()
     {
         if (!startNewGame && !loadGame) return;
@@ -180,7 +190,7 @@ public class MainMenuController : MonoBehaviour
 
         startY = -canvasHeight / 2f - textHeight / 2;
 
-        endY = canvasHeight / 2f + textHeight / 2;
+        endY = canvasHeight / 2f + textHeight;
 
         textTransform.anchoredPosition =
             new Vector2(textTransform.anchoredPosition.x, startY);
