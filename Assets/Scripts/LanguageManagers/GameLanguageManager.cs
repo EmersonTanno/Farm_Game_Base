@@ -9,6 +9,7 @@ class GameLanguageManager : MonoBehaviour
     private Dictionary<string, FieldLanguage> sellMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> shopMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> sleepMenuLanguageMap = new Dictionary<string, FieldLanguage>();
+    private Dictionary<string, FieldLanguage> timeMenuLanguageMap = new Dictionary<string, FieldLanguage>();
 
     void Awake()
     {
@@ -23,6 +24,7 @@ class GameLanguageManager : MonoBehaviour
         sellMenuLanguageMap = LoadFile("Languages/sell_menu");
         shopMenuLanguageMap = LoadFile("Languages/shop_menu");
         sleepMenuLanguageMap = LoadFile("Languages/sleep_menu");
+        timeMenuLanguageMap = LoadFile("Languages/time_menu");
     }
 
     private Dictionary<string, FieldLanguage> LoadFile(string filePath)
@@ -113,6 +115,24 @@ class GameLanguageManager : MonoBehaviour
                 break;
             default:
                 itemName = sleepMenuLanguageMap[item].pt;
+                break;
+        }
+        return itemName;
+    }
+
+    public string GetTimeMenuItemName(string item)
+    {
+        string itemName;
+        switch(GameConfigurations.Instance.gameLanguage)
+        {
+            case LanguageEnum.Potugues:
+                itemName = timeMenuLanguageMap[item].pt;
+                break;
+            case LanguageEnum.Ingles:
+                itemName = timeMenuLanguageMap[item].en;
+                break;
+            default:
+                itemName = timeMenuLanguageMap[item].pt;
                 break;
         }
         return itemName;

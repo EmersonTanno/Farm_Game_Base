@@ -91,7 +91,7 @@ public class Calendar_Controller : MonoBehaviour
         }
         if (daysText != null)
         {
-            daysText.text = $"Data: {day:D2}/{monthName}";
+            daysText.text = $"{day:D2}/{monthName}";
         }
     }
 

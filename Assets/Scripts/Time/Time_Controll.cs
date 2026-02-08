@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class Time_Controll : MonoBehaviour
 {
@@ -14,6 +11,7 @@ public class Time_Controll : MonoBehaviour
     //Min and Hr count
     public int minutes = 0;
     public int hours = 0;
+    [SerializeField] TextMeshProUGUI dataText;
 
     //Controll Variable
     private bool canChangeTime = true;
@@ -45,6 +43,7 @@ public class Time_Controll : MonoBehaviour
     void Start()
     {
         SetBedCanvas();
+        SetTimeCanvas();
     }
     void Update()
     {
@@ -168,6 +167,13 @@ public class Time_Controll : MonoBehaviour
     }
     #endregion
 
+
+    #region TimeCanvas
+    private void SetTimeCanvas()
+    {
+        dataText.text = GameLanguageManager.Instance.GetTimeMenuItemName("date");
+    }
+    #endregion
     #region BedCanvas
     private void SetBedCanvas()
     {
