@@ -1,13 +1,14 @@
 [System.Serializable]
-public class LanguageItem
+public class FieldLanguage
 {
     public string key;
     public string pt;
     public string en;
 }
 
+
 [System.Serializable]
-public class MainMenuLanguageData
+public class FieldLanguageData
 {
-    public LanguageItem[] items;
+    public FieldLanguage[] items;
 }

@@ -5,8 +5,8 @@ class GameLanguageManager : MonoBehaviour
 {
     public static GameLanguageManager Instance;
 
-    private Dictionary<string, ItemLanguage> itemsLanguageMap;
-    private Dictionary<string, SellInfoLanguageItem> sellMenuLanguageMap;
+    private Dictionary<string, FieldLanguage> itemsLanguageMap = new Dictionary<string, FieldLanguage>();
+    private Dictionary<string, FieldLanguage> sellMenuLanguageMap = new Dictionary<string, FieldLanguage>();
 
     void Awake()
     {
@@ -17,38 +17,30 @@ class GameLanguageManager : MonoBehaviour
 
     private void LoadLanguageFile()
     {
-        TextAsset itemsJson = Resources.Load<TextAsset>("Languages/items_names");
-        TextAsset sellMenuJson = Resources.Load<TextAsset>("Languages/sell_menu");
+        itemsLanguageMap = LoadFile("Languages/items_names");
+        sellMenuLanguageMap = LoadFile("Languages/sell_menu");
+    }
+
+    private Dictionary<string, FieldLanguage> LoadFile(string filePath)
+    {
+        var map = new Dictionary<string, FieldLanguage>();
+        TextAsset itemsJson = Resources.Load<TextAsset>(filePath);
 
         if (itemsJson == null)
         {
-            Debug.LogError("Language file for items not found!");
-            return;
-        }
-        
-        if (sellMenuJson == null)
-        {
-            Debug.LogError("Language file for sell menu not found!");
-            return;
+            Debug.LogError($"Language file for path '{filePath}' not found!");
+            return null;
         }
 
-        var itemsData = JsonUtility.FromJson<ItemLanguageData>(itemsJson.text);
-        var sellMenuData = JsonUtility.FromJson<SellInfoLanguageData>(sellMenuJson.text);
-
-        itemsLanguageMap = new Dictionary<string, ItemLanguage>();
-        sellMenuLanguageMap = new Dictionary<string, SellInfoLanguageItem>();
+        var itemsData = JsonUtility.FromJson<FieldLanguageData>(itemsJson.text);
 
         foreach (var item in itemsData.items)
         {
-            itemsLanguageMap[item.key] = item;
+            map[item.key] = item;
         }
 
-        foreach (var item in sellMenuData.items)
-        {
-            sellMenuLanguageMap[item.key] = item;
-        }
+        return map;
     }
-
 
     public string GetItemName(Item item)
     {   

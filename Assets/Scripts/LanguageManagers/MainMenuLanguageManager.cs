@@ -5,7 +5,7 @@ public class MainMenuLanguageManager : MonoBehaviour
 {
     public static MainMenuLanguageManager Instance;
 
-    private Dictionary<string, LanguageItem> languageMap;
+    private Dictionary<string, FieldLanguage> languageMap;
 
     private void Awake()
     {
@@ -29,9 +29,9 @@ public class MainMenuLanguageManager : MonoBehaviour
             return;
         }
 
-        var data = JsonUtility.FromJson<MainMenuLanguageData>(json.text);
+        var data = JsonUtility.FromJson<FieldLanguageData>(json.text);
 
-        languageMap = new Dictionary<string, LanguageItem>();
+        languageMap = new Dictionary<string, FieldLanguage>();
 
         foreach (var item in data.items)
         {
