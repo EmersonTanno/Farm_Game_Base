@@ -1912,8 +1912,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.816986, y: -1420.0004}
-  m_SizeDelta: {x: 23.6348, y: 2840}
+  m_AnchoredPosition: {x: -11.816986, y: -206.57722}
+  m_SizeDelta: {x: 23.6348, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4924957106526964394
 MonoBehaviour:
@@ -3528,7 +3528,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.95
+  m_fontSize: 62.65
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5460,8 +5460,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250.3661, y: -278.29996}
-  m_SizeDelta: {x: 104.7322, y: 88.965}
+  m_AnchoredPosition: {x: 208.593, y: -278.29996}
+  m_SizeDelta: {x: 188.279, y: 88.965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4924957107236004878
 CanvasRenderer:
@@ -8563,7 +8563,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 89.5, y: -278.3}
+  m_AnchoredPosition: {x: 4, y: -278.3}
   m_SizeDelta: {x: 199.6375, y: 88.9646}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4924957108148924140
@@ -9990,10 +9990,26 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 4924957106912726080}
+    - target: {fileID: 4868641704009533371, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: noButtonText
+      value: 
+      objectReference: {fileID: 4924957106637698250}
+    - target: {fileID: 4868641704009533371, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: questionText
+      value: 
+      objectReference: {fileID: 4924957106914480230}
+    - target: {fileID: 4868641704009533371, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: yesButtonText
+      value: 
+      objectReference: {fileID: 4924957107697280581}
     - target: {fileID: 4868641704449660284, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: shopCanvas
       value: 
       objectReference: {fileID: 4924957107103952526}
+    - target: {fileID: 4868641704449660284, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: buyButtonText
+      value: 
+      objectReference: {fileID: 4924957106770672546}
     - target: {fileID: 4868641704449660284, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: slotContainer
       value: 

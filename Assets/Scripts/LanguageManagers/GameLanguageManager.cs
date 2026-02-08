@@ -7,6 +7,8 @@ class GameLanguageManager : MonoBehaviour
 
     private Dictionary<string, FieldLanguage> itemsLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> sellMenuLanguageMap = new Dictionary<string, FieldLanguage>();
+    private Dictionary<string, FieldLanguage> shopMenuLanguageMap = new Dictionary<string, FieldLanguage>();
+    private Dictionary<string, FieldLanguage> sleepMenuLanguageMap = new Dictionary<string, FieldLanguage>();
 
     void Awake()
     {
@@ -19,6 +21,8 @@ class GameLanguageManager : MonoBehaviour
     {
         itemsLanguageMap = LoadFile("Languages/items_names");
         sellMenuLanguageMap = LoadFile("Languages/sell_menu");
+        shopMenuLanguageMap = LoadFile("Languages/shop_menu");
+        sleepMenuLanguageMap = LoadFile("Languages/sleep_menu");
     }
 
     private Dictionary<string, FieldLanguage> LoadFile(string filePath)
@@ -73,6 +77,42 @@ class GameLanguageManager : MonoBehaviour
                 break;
             default:
                 itemName = sellMenuLanguageMap[item].pt;
+                break;
+        }
+        return itemName;
+    }
+
+    public string GetShopMenuItemName(string item)
+    {
+        string itemName;
+        switch(GameConfigurations.Instance.gameLanguage)
+        {
+            case LanguageEnum.Potugues:
+                itemName = shopMenuLanguageMap[item].pt;
+                break;
+            case LanguageEnum.Ingles:
+                itemName = shopMenuLanguageMap[item].en;
+                break;
+            default:
+                itemName = shopMenuLanguageMap[item].pt;
+                break;
+        }
+        return itemName;
+    }
+
+    public string GetSleepMenuItemName(string item)
+    {
+        string itemName;
+        switch(GameConfigurations.Instance.gameLanguage)
+        {
+            case LanguageEnum.Potugues:
+                itemName = sleepMenuLanguageMap[item].pt;
+                break;
+            case LanguageEnum.Ingles:
+                itemName = sleepMenuLanguageMap[item].en;
+                break;
+            default:
+                itemName = sleepMenuLanguageMap[item].pt;
                 break;
         }
         return itemName;

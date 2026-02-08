@@ -23,6 +23,9 @@ public class Time_Controll : MonoBehaviour
 
     //Bed
     [SerializeField] GameObject bedCanva;
+    [SerializeField] TextMeshProUGUI questionText;
+    [SerializeField] TextMeshProUGUI yesButtonText;
+    [SerializeField] TextMeshProUGUI noButtonText;
     private bool canSelectOption = false;
     public bool bedActive = false;
 
@@ -37,6 +40,11 @@ public class Time_Controll : MonoBehaviour
     {
         Instance = this;
         UpdateCanvas();
+    }
+
+    void Start()
+    {
+        SetBedCanvas();
     }
     void Update()
     {
@@ -157,6 +165,15 @@ public class Time_Controll : MonoBehaviour
     public void UnpauseTime()
     {
         Time.timeScale = 1f;
+    }
+    #endregion
+
+    #region BedCanvas
+    private void SetBedCanvas()
+    {
+        questionText.text = GameLanguageManager.Instance.GetSleepMenuItemName("sleep");
+        yesButtonText.text = GameLanguageManager.Instance.GetSleepMenuItemName("yes");
+        noButtonText.text = GameLanguageManager.Instance.GetSleepMenuItemName("no");
     }
     #endregion
 }
