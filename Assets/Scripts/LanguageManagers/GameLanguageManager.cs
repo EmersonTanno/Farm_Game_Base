@@ -6,7 +6,7 @@ class GameLanguageManager : MonoBehaviour
     public static GameLanguageManager Instance;
 
     private Dictionary<string, ItemLanguage> itemsLanguageMap;
-    private Dictionary<string, LanguageItem> sellMenuLanguageMap;
+    private Dictionary<string, SellInfoLanguageItem> sellMenuLanguageMap;
 
     void Awake()
     {
@@ -33,10 +33,10 @@ class GameLanguageManager : MonoBehaviour
         }
 
         var itemsData = JsonUtility.FromJson<ItemLanguageData>(itemsJson.text);
-        var sellMenuData = JsonUtility.FromJson<MainMenuLanguageData>(sellMenuJson.text);
+        var sellMenuData = JsonUtility.FromJson<SellInfoLanguageData>(sellMenuJson.text);
 
         itemsLanguageMap = new Dictionary<string, ItemLanguage>();
-        sellMenuLanguageMap = new Dictionary<string, LanguageItem>();
+        sellMenuLanguageMap = new Dictionary<string, SellInfoLanguageItem>();
 
         foreach (var item in itemsData.items)
         {
