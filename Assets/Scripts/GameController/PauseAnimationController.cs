@@ -9,6 +9,6 @@ public class PauseAnimationController : MonoBehaviour
 
     public void OnStampLeft()
     {
-        Debug.Log("Saiu");
+        PauseController.Instance.SetCanSelect(true);
     }
 }
