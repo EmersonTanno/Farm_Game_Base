@@ -75,14 +75,15 @@ public class PauseController : MonoBehaviour
     #region change pages
     public void FromPauseToSettings()
     {
-        SetPauseCanvas(false);
         SetSettingCanvas(true);
+        SetCanSelect(false);
+        pauseAnimator.SetBool("settings", true);
     }
 
     public void FromSettingsToPause()
     {
-        SetSettingCanvas(false);
-        SetPauseCanvas(true);
+        SetCanSelect(false);
+        pauseAnimator.SetBool("settings", false);
     }
     #endregion
 

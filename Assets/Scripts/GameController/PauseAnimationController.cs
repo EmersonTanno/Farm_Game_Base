@@ -11,4 +11,15 @@ public class PauseAnimationController : MonoBehaviour
     {
         PauseController.Instance.SetCanSelect(true);
     }
+
+    public void OnSettingsSwitchEnd()
+    {
+        PauseController.Instance.SetCanSelect(true);
+    }
+
+    public void OnSettingsSwitchToPauseEnd()
+    {
+        PauseController.Instance.SetCanSelect(true);
+        PauseController.Instance.SetSettingCanvas(false);
+    }
 }
