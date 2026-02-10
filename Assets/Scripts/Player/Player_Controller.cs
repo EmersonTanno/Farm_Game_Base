@@ -80,6 +80,7 @@ public class Player_Controller : MonoBehaviour
 
     public void SetAction(InputAction.CallbackContext value)
     {
+        if(PauseController.Instance.gamePaused) return;
         if (!value.performed) return;
         if (CheckAction()) return;
 
