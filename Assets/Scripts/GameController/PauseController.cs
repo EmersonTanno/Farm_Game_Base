@@ -98,4 +98,11 @@ public class PauseController : MonoBehaviour
     }
     #endregion
 
+    #region exit game
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    #endregion
+
 }
