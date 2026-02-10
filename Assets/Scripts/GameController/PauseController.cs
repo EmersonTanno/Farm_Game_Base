@@ -1,7 +1,4 @@
-using UnityEngine.UI;
 using UnityEngine;
-using System.Collections;
-using Unity.VisualScripting;
 
 public class PauseController : MonoBehaviour
 {
@@ -14,7 +11,7 @@ public class PauseController : MonoBehaviour
 
     private bool canSelect = false;
 
-    private bool gamePaused = false;
+    public bool gamePaused = false;
 
     void Awake()
     {
@@ -74,5 +71,19 @@ public class PauseController : MonoBehaviour
     {
         canSelect = can;
     }
+
+    #region change pages
+    public void FromPauseToSettings()
+    {
+        SetPauseCanvas(false);
+        SetSettingCanvas(true);
+    }
+
+    public void FromSettingsToPause()
+    {
+        SetSettingCanvas(false);
+        SetPauseCanvas(true);
+    }
+    #endregion
 
 }
