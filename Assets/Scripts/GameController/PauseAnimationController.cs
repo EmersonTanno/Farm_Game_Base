@@ -7,12 +7,7 @@ public class PauseAnimationController : MonoBehaviour
         PauseController.Instance.SetPauseCanvas(true);
     }
 
-    public void OnStampLeft()
-    {
-        PauseController.Instance.SetCanSelect(true);
-    }
-
-    public void OnSettingsSwitchEnd()
+    public void CanSelectOptions()
     {
         PauseController.Instance.SetCanSelect(true);
     }

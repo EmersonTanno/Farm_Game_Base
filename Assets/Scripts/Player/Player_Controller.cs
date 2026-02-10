@@ -53,6 +53,11 @@ public class Player_Controller : MonoBehaviour
     {
         CheckWarp();
     }
+
+    void OnDestroy()
+    {
+        Destroy(movePoint.gameObject);   
+    }
     #endregion
 
     #region InputSystem

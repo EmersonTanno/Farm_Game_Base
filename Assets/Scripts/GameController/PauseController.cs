@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseController : MonoBehaviour
 {
     public static PauseController Instance;
+    [SerializeField] GameSession gameSession;
     [SerializeField] GameObject pauseCanvasGroup;
     [SerializeField] GameObject pauseCanvas;
     [SerializeField] GameObject settingsCanvas;
@@ -84,6 +86,15 @@ public class PauseController : MonoBehaviour
     {
         SetCanSelect(false);
         pauseAnimator.SetBool("settings", false);
+    }
+    #endregion
+
+    #region to title page
+    public void ChangeToTitlePage()
+    {
+        Time_Controll.Instance.UnpauseTime();
+        SceneManager.LoadScene("HomeScreen");
+        GameSession.Instance.KillSession();
     }
     #endregion
 

@@ -446,7 +446,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1264778646785077037}
         m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
-        m_MethodName: ContinueGame
+        m_MethodName: ChangeToTitlePage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1140,7 +1140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7207064841550552510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11530,10 +11530,10 @@ RectTransform:
   m_Father: {fileID: 7207064841550552510}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15815629, y: 0.1067272}
-  m_AnchorMax: {x: 0.86243755, y: 0.88100004}
-  m_AnchoredPosition: {x: 1.190979, y: -0.83621216}
-  m_SizeDelta: {x: -1.6442871, y: -2.649475}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 14.190918, y: -4.8362427}
+  m_SizeDelta: {x: -377.6443, y: 513.3505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7849644434704268178
 CanvasRenderer:
@@ -12738,7 +12738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 14.690979, y: -4.9356}
+  m_AnchoredPosition: {x: 14.69104, y: -4.9356}
   m_SizeDelta: {x: -378.6443, y: 514.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4121713200417807119
@@ -13611,6 +13611,10 @@ PrefabInstance:
       propertyPath: buttons.Array.data[3]
       value: 
       objectReference: {fileID: 4924957106263400882}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: gameSession
+      value: 
+      objectReference: {fileID: 4924957106501786186}
     - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: pauseCanvas
       value: 
