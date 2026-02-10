@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PauseController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PauseController : MonoBehaviour
     [SerializeField] GameObject pauseCanvasGroup;
     [SerializeField] GameObject pauseCanvas;
     [SerializeField] GameObject settingsCanvas;
-    [SerializeField] Image backGroundCanvas;
+    [SerializeField] GameObject backGroundCanvas;
     [SerializeField] Animator pauseAnimator;
 
     private bool canSelect = false;
@@ -20,6 +21,7 @@ public class PauseController : MonoBehaviour
         Instance = this;
         SetPauseCanvas(false);
         SetSettingCanvas(false);
+        SetBackGround(false);
     }
 
     public void EscButtonPresses()
@@ -37,7 +39,6 @@ public class PauseController : MonoBehaviour
     public void PauseGame()
     {
         Time_Controll.Instance.PauseTime();
-        StartCoroutine(SetBackGround());
         pauseCanvasGroup.SetActive(true);
         pauseAnimator.SetTrigger("pause");
         gamePaused = true;
@@ -46,16 +47,22 @@ public class PauseController : MonoBehaviour
     public void ContinueGame()
     {
         if(!canSelect) return;
-        SetBackGroundOpacity(0);
+        SetBackGround(false);
         pauseCanvas.SetActive(false);
         Time_Controll.Instance.UnpauseTime();
         pauseCanvasGroup.SetActive(false);
         gamePaused = false;
     }
 
+    public void SetBackGround(bool active)
+    {
+        backGroundCanvas.SetActive(active);
+    }
+
     public void SetPauseCanvas(bool active)
     {
         pauseCanvas.SetActive(active);
+        SetBackGround(true);
     }
 
     public void SetSettingCanvas(bool active)
@@ -68,19 +75,4 @@ public class PauseController : MonoBehaviour
         canSelect = can;
     }
 
-    public void SetBackGroundOpacity(float value)
-    {
-        Color c = backGroundCanvas.color;
-        c.a = Mathf.Clamp01(value);
-        backGroundCanvas.color = c;
-    }
-
-    private IEnumerator SetBackGround()
-    {
-        for(float i = 0; i < 0.7f; i+=0.1f)
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-            SetBackGroundOpacity(i);
-        }
-    }
 }
