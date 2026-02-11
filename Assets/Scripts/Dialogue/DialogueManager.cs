@@ -79,12 +79,14 @@ public class DialogueManager : MonoBehaviour
 
         foreach (char character in dialogueLine)
         {
-            if(!PauseController.Instance.gamePaused)
+            while(PauseController.Instance.gamePaused)
             {
-                rightText.text += character;
-                if(!completeLine)
-                    yield return new WaitForSecondsRealtime(0.03f);
+                yield return null;
             }
+            rightText.text += character;
+            if(!completeLine)
+                yield return new WaitForSecondsRealtime(0.03f);
+
         }
 
         yield return new WaitForSecondsRealtime(0.1f);
