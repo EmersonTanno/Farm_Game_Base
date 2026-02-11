@@ -9,6 +9,7 @@ public class ItemEditor : Editor
         Item item = (Item)target;
 
         // --- Sempre visíveis ---
+        item.id = EditorGUILayout.IntField("Item ID", item.id);
         item.itemName = EditorGUILayout.TextField("Item Name", item.itemName);
         item.type = (ItemType)EditorGUILayout.EnumPopup("Type", item.type);
         item.image = (Sprite)EditorGUILayout.ObjectField("Image", item.image, typeof(Sprite), false);

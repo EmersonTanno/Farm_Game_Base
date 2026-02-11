@@ -96,8 +96,7 @@ public class TileMapController : MonoBehaviour
         Grid<WorldTileData> grid = tileMap.GetGrid();
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
-
-        foreach (var data in saveData.plants)
+        foreach (PlantSaveData data in saveData.plants)
         {
             grid.SetValue(data.x, data.y, grid.GetGridObject(data.x, data.y).WithBaseTileId(data.gridValue));
 

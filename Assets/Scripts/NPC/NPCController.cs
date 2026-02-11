@@ -9,6 +9,8 @@ public class NPCController : MonoBehaviour
 
     private Vector3 npcOffSet = new Vector3(0.5f, 0.7f, 0);
 
+    public static event Action OnNPCSet;
+
     void Awake()
     {
         Instance = this;
@@ -16,12 +18,12 @@ public class NPCController : MonoBehaviour
 
     void OnEnable()
     {
-        Time_Controll.OnMinuteChange += NPCMovement;
+        Time_Controll.OnMinuteChange += NPCActivateRoutine;
     }
 
     void OnDisable()
     {
-        Time_Controll.OnMinuteChange -= NPCMovement;
+        Time_Controll.OnMinuteChange -= NPCActivateRoutine;
     }
 
     public void SetNPCsInScene()
@@ -46,25 +48,74 @@ public class NPCController : MonoBehaviour
                 npc.SetNPC(false);
             }
         } 
+        OnNPCSet?.Invoke();
     }
 
-    private void NPCMovement()
+    #region Routine
+    private void NPCActivateRoutine()
     {
-        foreach(NPC npc in npcs)
+        foreach (NPC npc in npcs)
         {
-            foreach(NPCRoutine routine in npc.npcData.routine)
+            if (npc.npcData.state == NPCStateEnum.Traveling)
+                continue;
+
+            NPCRoutine selectedRoutine = null;
+
+            foreach (NPCRoutine routine in npc.npcData.routine)
             {
-                if(routine.startHour == Time_Controll.Instance.hours && routine.startMinute == Time_Controll.Instance.minutes)
+                if (!IsRoutineTime(routine)) continue;
+                if (!IsRoutineValid(npc, routine)) continue;
+
+                if (selectedRoutine == null ||
+                    routine.priority > selectedRoutine.priority)
                 {
-                    if(npc.npcData.state == NPCStateEnum.Traveling) continue;
-                    
-                    NPCMovement nPCMovement = npc.GetComponent<NPCMovement>();
-                    nPCMovement.SetupMoveTo(routine.position, routine.location);
-                    
+                    selectedRoutine = routine;
                 }
             }
-        } 
+
+            if (selectedRoutine != null)
+            {
+                NPCMovement movement = npc.GetComponent<NPCMovement>();
+                movement.SetupMoveTo(
+                    selectedRoutine.targetPosition,
+                    selectedRoutine.targetLocation,
+                    selectedRoutine.finalSide
+                );
+            }
+        }
     }
+
+    private bool IsRoutineTime(NPCRoutine routine)
+    {
+        return routine.startHour == Time_Controll.Instance.hours &&
+            routine.startMinute == Time_Controll.Instance.minutes;
+    }
+
+    private bool IsRoutineValid(NPC npc, NPCRoutine routine)
+    {
+        // Dia da semana
+        if (routine.validDays != null && routine.validDays.Count > 0)
+        {
+            WeekDayEnum today = Calendar_Controller.Instance.GetWeekDay();
+            if (!routine.validDays.Contains(today))
+                return false;
+        }
+
+        // Clima
+        if (routine.validWeather != null && routine.validWeather.Count > 0)
+        {
+            WeatherEnum currentWeather = WeatherController.Instance.GetWeather();
+            if (!routine.validWeather.Contains(currentWeather))
+                return false;
+        }
+
+        // Afinidade
+        if (npc.npcData.hearts < routine.minHearts)
+            return false;
+
+        return true;
+    }
+    #endregion
 
     public void SetDataInNPCMap(int x, int y, int data)
     {
@@ -82,13 +133,13 @@ public class NPCController : MonoBehaviour
         return npcs.Find(p => p.npcData.id == id);
     }
 
-    public void InteractWithNPC(int id)
+    public void InteractWithNPC(int id, Vector2 side)
     {
         NPC npc = GetNPC(id);
 
         if(npc == null) return;
         
-        npc.Interact();
+        npc.Interact(side);
     }
 
     public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
@@ -108,4 +159,28 @@ public class NPCController : MonoBehaviour
 
         npc.AddHeart(hearts);
     }
+
+
+    #region Save / Load
+    public void Save(ref NPCSaveData data)
+    {
+        data.npcs.Clear();
+        foreach(NPC npc in npcs)
+        {
+            NPCSaveDataData saveData = new NPCSaveDataData();
+            saveData.id = npc.npcData.id;
+            saveData.hearts = npc.npcData.hearts;
+            data.npcs.Add(saveData);
+        }
+    }
+
+    public void Load(NPCSaveData data)
+    {
+        foreach(NPCSaveDataData npcData in data.npcs)
+        {
+           NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
+           npc.npcData.hearts = npcData.hearts;
+        }
+    }
+    #endregion
 }

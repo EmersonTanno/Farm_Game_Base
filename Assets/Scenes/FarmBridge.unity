@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneType: 0
-  location: 3
+  location: 4
 --- !u!4 &535892672
 Transform:
   m_ObjectHideFlags: 0
@@ -786,7 +786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -1089,7 +1089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -1163,7 +1163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -1292,7 +1292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8934000387580789056, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.991983
+      value: 9.6390085
       objectReference: {fileID: 0}
     - target: {fileID: 8934000387580789056, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1395,7 +1395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -5072,7 +5072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}

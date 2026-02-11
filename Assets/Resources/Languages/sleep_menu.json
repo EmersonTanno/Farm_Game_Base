@@ -1,0 +1,11 @@
+{
+  "items": [
+    {
+      "key": "sleep",
+      "pt": "Gostaria de dormir e encerrar o dia?",
+      "en": "Would you like to sleep and end the day?"
+    },
+    { "key": "yes", "pt": "Sim", "en": "Yes" },
+    { "key": "no", "pt": "Não", "en": "No" }
+  ]
+}

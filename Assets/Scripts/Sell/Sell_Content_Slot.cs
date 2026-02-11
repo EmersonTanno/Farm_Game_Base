@@ -10,7 +10,7 @@ public class Sell_Content_Slot : MonoBehaviour
 
     public void SetInfo(Item item, int quantity)
     {
-        itemName.text = item.itemName;
+        itemName.text = GameLanguageManager.Instance.GetItemName(item);
         itemQuantity.text = $"x{quantity}";
         itemSprite.sprite = item.image;
     }

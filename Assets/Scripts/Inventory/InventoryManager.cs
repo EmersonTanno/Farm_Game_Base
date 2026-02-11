@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -31,14 +29,16 @@ public class InventoryManager : MonoBehaviour
         ChangeSelectedSlot(0);
     }
 
-        void OnEnable()
+    void OnEnable()
     {
         InventoryItem.OnItemDrop += ReloadSlot;
+        GameLanguageManager.OnLanguageChange += ReloadSlot;
     }
 
     void OnDisable()
     {
         InventoryItem.OnItemDrop -= ReloadSlot;
+        GameLanguageManager.OnLanguageChange -= ReloadSlot;
     }
     #endregion
 
@@ -93,7 +93,7 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot.item != null)
         {
             Item item = itemInSlot.item;
-            itemNameText.text = item.itemName;
+            itemNameText.text = GameLanguageManager.Instance.GetItemName(item);
         }
         else
         {
@@ -108,7 +108,7 @@ public class InventoryManager : MonoBehaviour
         if (itemInSlot.item != null)
         {
             Item item = itemInSlot.item;
-            itemNameText.text = item.itemName;
+            itemNameText.text = GameLanguageManager.Instance.GetItemName(item);
         }
         else
         {
@@ -210,6 +210,53 @@ public class InventoryManager : MonoBehaviour
     {
         inventoryGroup.SetActive(setActive);
         active = setActive;
+    }
+    #endregion
+
+    #region Save / Load
+    public void Save(ref InventorySaveData data)
+    {
+        InventorySaveData newInventoryData = new InventorySaveData();
+
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            if (itemInSlot == null || itemInSlot.item == null)
+                continue;
+
+            ItemSaveData newItemData = new ItemSaveData
+            {
+                itemId = itemInSlot.item.id,
+                quantity = itemInSlot.count,
+                slot = i
+            };
+
+            newInventoryData.items.Add(newItemData);
+        }
+
+        data = newInventoryData;
+    }
+
+    public void Load(InventorySaveData data)
+    {
+        foreach(InventorySlot slot in inventorySlots)
+        {
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            itemInSlot.RemoveItem();
+            itemInSlot.count = 0;
+            itemInSlot.RefreshCount();
+        }
+        foreach(ItemSaveData item in data.items)
+        {
+            InventorySlot slot = inventorySlots[item.slot];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            SpawnNewItem(ItemDataBaseController.Instance.GetItemById(item.itemId), slot);
+            itemInSlot.count = item.quantity;
+            itemInSlot.RefreshCount();
+        }
     }
     #endregion
 }

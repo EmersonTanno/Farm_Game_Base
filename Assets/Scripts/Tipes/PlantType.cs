@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "NewPlant", menuName = "Farming/Plant")]
 public class PlantType : ScriptableObject
 {
+    public int id;
     public string plantName;
     public int growthTimeInDays;
     public int maxDaysWithoutWater;

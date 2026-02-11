@@ -12,6 +12,7 @@ public class Shop_Manager : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalPriceText;
     [SerializeField] Transform slotContainer;
     [SerializeField] GameObject slotPrefab;
+    [SerializeField] TextMeshProUGUI buyButtonText;
 
     [Header("Itens por Estação")]
     [SerializeField] Item[] itemVerao;
@@ -33,6 +34,7 @@ public class Shop_Manager : MonoBehaviour
     void Start()
     {
         SetShopItens();
+        SetCanvaLanguage();
     }
 
     void OnEnable()
@@ -40,6 +42,8 @@ public class Shop_Manager : MonoBehaviour
         Tax_System.OnTaxChange += SetShopItens;
         Calendar_Controller.OnMonthChange += SetShopItens;
         ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
+        GameLanguageManager.OnLanguageChange += SetCanvaLanguage;
+        GameLanguageManager.OnLanguageChange += SetShopItens;
     }
 
     void OnDisable()
@@ -47,6 +51,8 @@ public class Shop_Manager : MonoBehaviour
         Tax_System.OnTaxChange -= SetShopItens;
         Calendar_Controller.OnMonthChange -= SetShopItens;
         ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
+        GameLanguageManager.OnLanguageChange -= SetCanvaLanguage;
+        GameLanguageManager.OnLanguageChange -= SetShopItens;
     }
     #endregion
 
@@ -153,6 +159,13 @@ public class Shop_Manager : MonoBehaviour
             slot.Reset();
         }
         ReloadTotalPrice();
+    }
+    #endregion
+
+    #region Canvas
+    private void SetCanvaLanguage()
+    {
+        buyButtonText.text = GameLanguageManager.Instance.GetShopMenuItemName("buy");
     }
     #endregion
 }

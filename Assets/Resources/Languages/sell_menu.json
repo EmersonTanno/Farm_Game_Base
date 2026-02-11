@@ -1,0 +1,22 @@
+{
+  "items": [
+    { "key": "sell", "pt": "Vendas", "en": "Sells" },
+    { "key": "infos", "pt": "Informações", "en": "Infos" },
+    { "key": "actualTax", "pt": "Imposto Atual: ", "en": "Actual Tax: " },
+    {
+      "key": "totalTax",
+      "pt": "Total de Impostos Pagos: ",
+      "en": "Total Payed Tax: "
+    },
+    {
+      "key": "yearTaxPrevision",
+      "pt": "Previsão do Imposto Anual: ",
+      "en": "Annual Tax Forecast: "
+    },
+    { "key": "debt", "pt": "Débito: ", "en": "Debt: " },
+    { "key": "total", "pt": "Total: ", "en": "Total: " },
+    { "key": "tax", "pt": "Taxas: ", "en": "Tax: " },
+    { "key": "received", "pt": "Recebido: ", "en": "Received: " },
+    { "key": "continue", "pt": "Continue", "en": "Continue" }
+  ]
+}

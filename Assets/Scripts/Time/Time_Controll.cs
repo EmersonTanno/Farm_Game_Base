@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class Time_Controll : MonoBehaviour
 {
@@ -14,6 +11,7 @@ public class Time_Controll : MonoBehaviour
     //Min and Hr count
     public int minutes = 0;
     public int hours = 0;
+    [SerializeField] TextMeshProUGUI dataText;
 
     //Controll Variable
     private bool canChangeTime = true;
@@ -23,6 +21,9 @@ public class Time_Controll : MonoBehaviour
 
     //Bed
     [SerializeField] GameObject bedCanva;
+    [SerializeField] TextMeshProUGUI questionText;
+    [SerializeField] TextMeshProUGUI yesButtonText;
+    [SerializeField] TextMeshProUGUI noButtonText;
     private bool canSelectOption = false;
     public bool bedActive = false;
 
@@ -38,12 +39,30 @@ public class Time_Controll : MonoBehaviour
         Instance = this;
         UpdateCanvas();
     }
+
+    void Start()
+    {
+        SetBedCanvas();
+        SetTimeCanvas();
+    }
     void Update()
     {
         if (canChangeTime && !bedActive)
         {
             StartCoroutine(UpdateTime());
         }
+    }
+
+    void OnEnable()
+    {
+        GameLanguageManager.OnLanguageChange += SetBedCanvas;
+        GameLanguageManager.OnLanguageChange += SetTimeCanvas;
+    }
+
+    void OnDisable()
+    {
+        GameLanguageManager.OnLanguageChange -= SetBedCanvas;
+        GameLanguageManager.OnLanguageChange -= SetTimeCanvas;
     }
     #endregion
 
@@ -157,6 +176,22 @@ public class Time_Controll : MonoBehaviour
     public void UnpauseTime()
     {
         Time.timeScale = 1f;
+    }
+    #endregion
+
+
+    #region TimeCanvas
+    private void SetTimeCanvas()
+    {
+        dataText.text = GameLanguageManager.Instance.GetTimeMenuItemName("date");
+    }
+    #endregion
+    #region BedCanvas
+    private void SetBedCanvas()
+    {
+        questionText.text = GameLanguageManager.Instance.GetSleepMenuItemName("sleep");
+        yesButtonText.text = GameLanguageManager.Instance.GetSleepMenuItemName("yes");
+        noButtonText.text = GameLanguageManager.Instance.GetSleepMenuItemName("no");
     }
     #endregion
 }

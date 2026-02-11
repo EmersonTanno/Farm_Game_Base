@@ -1,0 +1,15 @@
+{
+  "items": [
+    { "key": "new_game", "pt": "Novo Jogo", "en": "New Game" },
+    { "key": "load_game", "pt": "Carregar Jogo", "en": "Load Game" },
+    { "key": "settings", "pt": "Configurações", "en": "Settings" },
+    { "key": "language", "pt": "Idioma", "en": "Language" },
+    { "key": "return", "pt": "Voltar", "en": "Return" },
+    { "key": "apply", "pt": "Aplicar", "en": "Apply" },
+    { "key": "gold", "pt": "Dinheiro: ", "en": "Gold: " },
+    { "key": "day", "pt": "Dia: ", "en": "Day: " },
+    { "key": "season", "pt": "Estação: ", "en": "Season: " },
+    { "key": "year", "pt": "Ano: ", "en": "Year: " },
+    { "key": "last_played", "pt": "Jogou em: ", "en": "Last Played: " }
+  ]
+}

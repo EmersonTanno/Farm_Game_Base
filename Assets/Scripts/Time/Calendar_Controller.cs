@@ -91,7 +91,7 @@ public class Calendar_Controller : MonoBehaviour
         }
         if (daysText != null)
         {
-            daysText.text = $"Data: {day:D2}/{monthName}";
+            daysText.text = $"{day:D2}/{monthName}";
         }
     }
 
@@ -113,12 +113,37 @@ public class Calendar_Controller : MonoBehaviour
                 break;
         }
     }
+
+    public WeekDayEnum GetWeekDay()
+    {
+        int index = (day - 1) % 7;
+        return (WeekDayEnum)index;
+    }
     #endregion
 
     #region Ui
     public void ControllTimeGroup(bool setActive)
     {
         timeGroup.SetActive(setActive);
+    }
+    #endregion
+
+    #region Save / Load
+    public void Save(ref CalendarSaveData data)
+    {
+        data.calendar.day = day;
+        data.calendar.month = month;
+        data.calendar.year = year;
+        data.calendar.season = season;
+    }
+
+    public void Load(CalendarSaveData data)
+    {
+        day = data.calendar.day;
+        month = data.calendar.month;
+        year = data.calendar.year;
+        season = data.calendar.season;
+        UpdateCanvas();
     }
     #endregion
 }

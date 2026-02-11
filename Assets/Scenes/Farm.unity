@@ -640,7 +640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -3102,7 +3102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneType: 0
-  location: 0
+  location: 1
 --- !u!4 &572381398
 Transform:
   m_ObjectHideFlags: 0
@@ -5302,6 +5302,7 @@ MonoBehaviour:
   movePointer: {fileID: 1707681664}
   nPCAnimator: {fileID: 746083274}
   warpGraph: {fileID: 11400000, guid: 0ee7fee5e239774408e98902504c374a, type: 2}
+  mapGraph: {fileID: 0}
 --- !u!114 &746083276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5324,8 +5325,13 @@ MonoBehaviour:
     routine:
     - startHour: 9
       startMinute: 0
-      location: 1
-      position: {x: 1, y: 1}
+      validDays: 
+      validWeather: 
+      minHearts: 0
+      targetLocation: 0
+      targetPosition: {x: 0, y: 0}
+      finalSide: 0
+      priority: 0
 --- !u!212 &746083277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5616,7 +5622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: transitionType
@@ -6449,6 +6455,7 @@ MonoBehaviour:
   movePointer: {fileID: 466231232}
   nPCAnimator: {fileID: 924048930}
   warpGraph: {fileID: 11400000, guid: 0ee7fee5e239774408e98902504c374a, type: 2}
+  mapGraph: {fileID: 0}
 --- !u!114 &924048929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6471,12 +6478,22 @@ MonoBehaviour:
     routine:
     - startHour: 9
       startMinute: 0
-      location: 0
-      position: {x: 5, y: 7}
+      validDays: 
+      validWeather: 
+      minHearts: 0
+      targetLocation: 0
+      targetPosition: {x: 0, y: 0}
+      finalSide: 0
+      priority: 0
     - startHour: 9
       startMinute: 30
-      location: 0
-      position: {x: 0, y: 0}
+      validDays: 
+      validWeather: 
+      minHearts: 0
+      targetLocation: 0
+      targetPosition: {x: 0, y: 0}
+      finalSide: 0
+      priority: 0
 --- !u!95 &924048930
 Animator:
   serializedVersion: 5
@@ -9176,7 +9193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
@@ -35819,7 +35836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817003628516408983, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}
       propertyPath: toScene
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0faa142222ba4c41b6f94d08ad755eb, type: 3}

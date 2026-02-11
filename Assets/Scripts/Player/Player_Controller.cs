@@ -53,6 +53,12 @@ public class Player_Controller : MonoBehaviour
     {
         CheckWarp();
     }
+
+    void OnDestroy()
+    {
+        if (movePoint != null)
+            Destroy(movePoint.gameObject);
+    }
     #endregion
 
     #region InputSystem
@@ -80,6 +86,7 @@ public class Player_Controller : MonoBehaviour
 
     public void SetAction(InputAction.CallbackContext value)
     {
+        if(PauseController.Instance.gamePaused) return;
         if (!value.performed) return;
         if (CheckAction()) return;
 
@@ -91,7 +98,8 @@ public class Player_Controller : MonoBehaviour
 
         if(nPCId != 0 && nPCId != -1)
         {
-            NPCController.Instance.InteractWithNPC(nPCId);
+            Vector2 side = GetSide();
+            NPCController.Instance.InteractWithNPC(nPCId, side);
             return;
         }
 
