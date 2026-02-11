@@ -1140,7 +1140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7207064841550552510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12350,9 +12350,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: ApplyNewConfigs
+      - m_Target: {fileID: 1264778646785077037}
+        m_TargetAssemblyTypeName: PauseController, Assembly-CSharp
+        m_MethodName: ApplySettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13612,6 +13612,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4924957106263400882}
     - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: exitText
+      value: 
+      objectReference: {fileID: 4664050792111313577}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: applyText
+      value: 
+      objectReference: {fileID: 7243557138255120328}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: pauseText
+      value: 
+      objectReference: {fileID: 2322973845251044670}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: titleText
+      value: 
+      objectReference: {fileID: 3301987917824651534}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: resumeText
+      value: 
+      objectReference: {fileID: 4595176303043476913}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: returnText
+      value: 
+      objectReference: {fileID: 5905447290827939331}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: gameSession
       value: 
       objectReference: {fileID: 4924957106501786186}
@@ -13619,6 +13643,14 @@ PrefabInstance:
       propertyPath: pauseCanvas
       value: 
       objectReference: {fileID: 5139227153901845346}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: languageText
+      value: 
+      objectReference: {fileID: 2769813421043530844}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: settingsText
+      value: 
+      objectReference: {fileID: 1241172593035938334}
     - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: pauseAnimator
       value: 
@@ -13631,6 +13663,10 @@ PrefabInstance:
       propertyPath: backGroundCanvas
       value: 
       objectReference: {fileID: 4785439176708666263}
+    - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: languageSelector
+      value: 
+      objectReference: {fileID: 7739264387042211949}
     - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: pauseCanvasGroup
       value: 

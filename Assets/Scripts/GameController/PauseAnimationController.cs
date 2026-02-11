@@ -17,4 +17,9 @@ public class PauseAnimationController : MonoBehaviour
         PauseController.Instance.SetCanSelect(true);
         PauseController.Instance.SetSettingCanvas(false);
     }
+
+    public void OnSetNewSettings()
+    {
+        PauseController.Instance.ChangeGameLanguage();
+    }
 }

@@ -1,0 +1,12 @@
+{
+  "items": [
+    { "key": "pause", "pt": "Pause", "en": "Pause" },
+    { "key": "resume", "pt": "Continuar", "en": "Resume" },
+    { "key": "settings", "pt": "Configurações", "en": "Settings" },
+    { "key": "title", "pt": "Tela de Título", "en": "To Title Screen" },
+    { "key": "exit", "pt": "Sair do Jogo", "en": "Exit Game" },
+    { "key": "language", "pt": "Idioma", "en": "Language" },
+    { "key": "apply", "pt": "Aplicar", "en": "Apply" },
+    { "key": "return", "pt": "Retornar", "en": "Return" }
+  ]
+}

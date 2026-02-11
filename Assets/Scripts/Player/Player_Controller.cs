@@ -56,7 +56,8 @@ public class Player_Controller : MonoBehaviour
 
     void OnDestroy()
     {
-        Destroy(movePoint.gameObject);   
+        if (movePoint != null)
+            Destroy(movePoint.gameObject);
     }
     #endregion
 
