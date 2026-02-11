@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ class GameLanguageManager : MonoBehaviour
     private Dictionary<string, FieldLanguage> sleepMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> timeMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> pauseMenuLanguageMap = new Dictionary<string, FieldLanguage>();
+
+
+    public static event Action OnLanguageChange;
 
     void Awake()
     {
@@ -156,5 +160,10 @@ class GameLanguageManager : MonoBehaviour
                 break;
         }
         return itemName;
+    }
+
+    public void ChangeGameLanguage()
+    {
+        OnLanguageChange?.Invoke();
     }
 }

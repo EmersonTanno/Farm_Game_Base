@@ -42,6 +42,8 @@ public class Shop_Manager : MonoBehaviour
         Tax_System.OnTaxChange += SetShopItens;
         Calendar_Controller.OnMonthChange += SetShopItens;
         ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
+        GameLanguageManager.OnLanguageChange += SetCanvaLanguage;
+        GameLanguageManager.OnLanguageChange += SetShopItens;
     }
 
     void OnDisable()
@@ -49,6 +51,8 @@ public class Shop_Manager : MonoBehaviour
         Tax_System.OnTaxChange -= SetShopItens;
         Calendar_Controller.OnMonthChange -= SetShopItens;
         ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
+        GameLanguageManager.OnLanguageChange -= SetCanvaLanguage;
+        GameLanguageManager.OnLanguageChange -= SetShopItens;
     }
     #endregion
 

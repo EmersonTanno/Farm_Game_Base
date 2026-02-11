@@ -28,8 +28,6 @@ public class PauseController : MonoBehaviour
 
     public bool gamePaused = false;
 
-    public static event Action OnLanguageChange;
-
     #region Core
     void Awake()
     {
@@ -47,12 +45,12 @@ public class PauseController : MonoBehaviour
 
     void OnEnable()
     {
-        OnLanguageChange += SetPauseLanguage;
+        GameLanguageManager.OnLanguageChange += SetPauseLanguage;
     }
 
     void OnDisable()
     {
-        OnLanguageChange -= SetPauseLanguage;
+        GameLanguageManager.OnLanguageChange -= SetPauseLanguage;
     }
     #endregion
 
@@ -156,7 +154,7 @@ public class PauseController : MonoBehaviour
     public void ChangeGameLanguage()
     {
         SetLanguage();
-        OnLanguageChange?.Invoke();
+        GameLanguageManager.Instance.ChangeGameLanguage();
     }
 
     private void SetLanguage()

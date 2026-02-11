@@ -29,14 +29,16 @@ public class InventoryManager : MonoBehaviour
         ChangeSelectedSlot(0);
     }
 
-        void OnEnable()
+    void OnEnable()
     {
         InventoryItem.OnItemDrop += ReloadSlot;
+        GameLanguageManager.OnLanguageChange += ReloadSlot;
     }
 
     void OnDisable()
     {
         InventoryItem.OnItemDrop -= ReloadSlot;
+        GameLanguageManager.OnLanguageChange -= ReloadSlot;
     }
     #endregion
 

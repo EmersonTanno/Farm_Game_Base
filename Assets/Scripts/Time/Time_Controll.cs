@@ -52,6 +52,18 @@ public class Time_Controll : MonoBehaviour
             StartCoroutine(UpdateTime());
         }
     }
+
+    void OnEnable()
+    {
+        GameLanguageManager.OnLanguageChange += SetBedCanvas;
+        GameLanguageManager.OnLanguageChange += SetTimeCanvas;
+    }
+
+    void OnDisable()
+    {
+        GameLanguageManager.OnLanguageChange -= SetBedCanvas;
+        GameLanguageManager.OnLanguageChange -= SetTimeCanvas;
+    }
     #endregion
 
     #region Time Functions
