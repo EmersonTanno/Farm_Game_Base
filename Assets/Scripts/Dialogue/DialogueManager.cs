@@ -20,6 +20,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] List<GameObject> buttons;
 
 
+    private DialogueLine actualLine;
+
     public bool dialogueActive = false;
     private bool isTyping;
     private bool nextLine;
@@ -42,6 +44,11 @@ public class DialogueManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    void OnEnable()
+    {
+        GameLanguageManager.OnLanguageChange += ChangeLanguage;
     }
     #endregion
 
@@ -72,9 +79,12 @@ public class DialogueManager : MonoBehaviour
 
         foreach (char character in dialogueLine)
         {
-            rightText.text += character;
-            if(!completeLine)
-                yield return new WaitForSecondsRealtime(0.03f);
+            if(!PauseController.Instance.gamePaused)
+            {
+                rightText.text += character;
+                if(!completeLine)
+                    yield return new WaitForSecondsRealtime(0.03f);
+            }
         }
 
         yield return new WaitForSecondsRealtime(0.1f);
@@ -118,6 +128,8 @@ public class DialogueManager : MonoBehaviour
                 GameConfigurations.Instance.gameLanguage,
                 dialogueLine
             );
+
+            actualLine = dialogueLine;
 
             yield return StartCoroutine(DisplayDialogueLine(textLine));
 
@@ -184,7 +196,7 @@ public class DialogueManager : MonoBehaviour
 
     public void NextLine()
     {
-        if (!dialogueActive || !canAdvance) return;
+        if (!dialogueActive || !canAdvance || PauseController.Instance.gamePaused) return;
 
         if (isTyping)
         {
@@ -288,6 +300,20 @@ public class DialogueManager : MonoBehaviour
     {
         if(hearts == 0) return;
         NPCController.Instance.AddNPCHearts(npcId, hearts);
+    }
+    #endregion
+
+    #region change language
+    private void ChangeLanguage()
+    {
+        if (isTyping)
+        {
+            completeLine = true;
+        }
+        rightText.text = GetLanguageLine(
+            GameConfigurations.Instance.gameLanguage,
+            actualLine
+        );
     }
     #endregion
 }
