@@ -13,6 +13,9 @@ public class SaveSystem
     public static event System.Action OnLoadFinish;
 
 
+    //public ConfigurationSaveData ConfigurationSaveData = new ConfigurationSaveData();
+
+
     [System.Serializable]
     public struct SaveData
     {
@@ -43,6 +46,16 @@ public class SaveSystem
             Directory.CreateDirectory(dir);
 
         return Path.Combine(dir, saveName + ".meta");
+    }
+
+    public static string ConfigurationFileName()
+    {
+        string dir = Path.Combine(Application.persistentDataPath, "save");
+
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        return Path.Combine(dir, "configuration" + ".txt");
     }
     #endregion
 
@@ -170,6 +183,40 @@ public class SaveSystem
         SaveMetaData metaData = JsonUtility.FromJson<SaveMetaData>(saveContent);
 
         return metaData;
+    }
+    #endregion
+
+    #region Save Configuration
+    public static void SaveConfigurations(LanguageEnum language)
+    {
+        WriteConfigurationSave(language);
+    }
+
+
+    private static void WriteConfigurationSave(LanguageEnum language)
+    {
+        ConfigurationSaveData configurationSaveData = new ConfigurationSaveData
+        {
+            gameLanguage= language,
+        };
+
+        File.WriteAllText(
+            ConfigurationFileName(),
+            JsonUtility.ToJson(configurationSaveData, true)
+        );
+    }
+
+    public static LanguageEnum LoadGameConfiguration()
+    {
+        if (File.Exists(ConfigurationFileName()))
+        {
+            string json = File.ReadAllText(SaveSystem.ConfigurationFileName());
+            ConfigurationSaveData data =
+                JsonUtility.FromJson<ConfigurationSaveData>(json);
+
+            return data.gameLanguage;
+        }
+        return LanguageEnum.Ingles;
     }
     #endregion
 }
