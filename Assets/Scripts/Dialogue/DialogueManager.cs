@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping;
     private bool nextLine;
     private bool completeLine;
+    private bool jumpLine;
     private bool canAdvance;
     private bool optionSelected;
     private int selectedOption;
@@ -83,6 +84,10 @@ public class DialogueManager : MonoBehaviour
             {
                 yield return null;
             }
+            if(jumpLine)
+            {
+                break;
+            }
             rightText.text += character;
             if(!completeLine)
                 yield return new WaitForSecondsRealtime(0.03f);
@@ -90,6 +95,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         yield return new WaitForSecondsRealtime(0.1f);
+        jumpLine = false;
         completeLine = false;
         isTyping = false;
     }
@@ -308,10 +314,13 @@ public class DialogueManager : MonoBehaviour
     #region change language
     private void ChangeLanguage()
     {
+        if(!dialogueActive) return;
+
         if (isTyping)
         {
             completeLine = true;
         }
+        jumpLine = true;
         rightText.text = GetLanguageLine(
             GameConfigurations.Instance.gameLanguage,
             actualLine
