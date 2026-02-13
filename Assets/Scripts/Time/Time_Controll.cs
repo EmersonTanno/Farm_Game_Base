@@ -12,6 +12,7 @@ public class Time_Controll : MonoBehaviour
     public int minutes = 0;
     public int hours = 0;
     [SerializeField] TextMeshProUGUI dataText;
+    public bool timerPaused = false;
 
     //Controll Variable
     private bool canChangeTime = true;
@@ -51,6 +52,17 @@ public class Time_Controll : MonoBehaviour
         {
             StartCoroutine(UpdateTime());
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(timerPaused)
+            {
+                UnpauseTimer();
+            } else
+            {
+                PauseTimer();
+            }
+        }
     }
 
     void OnEnable()
@@ -70,7 +82,15 @@ public class Time_Controll : MonoBehaviour
     private IEnumerator UpdateTime()
     {
         canChangeTime = false;
-        yield return new WaitForSeconds(5f);
+
+        for(int i = 0; i < 5; i++)
+        {
+            while(timerPaused)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(1f);
+        }
 
         if (minutes < 50)
         {
@@ -179,6 +199,17 @@ public class Time_Controll : MonoBehaviour
     }
     #endregion
 
+    #region Timer Controller
+    public void PauseTimer()
+    {
+        timerPaused = true;
+    }
+
+    public void UnpauseTimer()
+    {
+        timerPaused = false;
+    }
+    #endregion
 
     #region TimeCanvas
     private void SetTimeCanvas()
