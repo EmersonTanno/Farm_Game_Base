@@ -135,6 +135,7 @@ public class NPCMovement : MonoBehaviour
     {  
         while(npc.npcData.location != finalTargetScene || npc.npcData.gridPosition != finalTargetPosition)
         {
+
             Vector2Int targetPos;
             if(finalTargetScene != npc.npcData.location)
             {
@@ -155,7 +156,8 @@ public class NPCMovement : MonoBehaviour
             }
 
             foreach(Vector2Int position in positions)
-            {
+            {    
+                yield return WaitIfPaused();
                 yield return new WaitForSeconds(1f / moveSpeed);
                 npc.npcData.gridPosition = position;
                 if(npc.npcData.location == SceneInfo.Instance.location)
@@ -299,6 +301,12 @@ public class NPCMovement : MonoBehaviour
     private IEnumerator WaitIfPaused()
     {
         while (!canWalk)
+        {
+            ResetNPCAnimation();
+            yield return null;
+        }
+
+        while (Time_Controll.Instance.timerPaused)
         {
             ResetNPCAnimation();
             yield return null;
