@@ -68,7 +68,7 @@ public class PauseController : MonoBehaviour
 
     public void PauseGame()
     {
-        Time_Controll.Instance.PauseTime();
+        Time_Controll.Instance.PauseTimer();
         pauseCanvasGroup.SetActive(true);
         pauseAnimator.SetTrigger("pause");
         gamePaused = true;
@@ -79,7 +79,7 @@ public class PauseController : MonoBehaviour
         if(!canSelect) return;
         SetBackGround(false);
         pauseCanvas.SetActive(false);
-        Time_Controll.Instance.UnpauseTime();
+        Time_Controll.Instance.UnpauseTimer();
         pauseCanvasGroup.SetActive(false);
         gamePaused = false;
     }
