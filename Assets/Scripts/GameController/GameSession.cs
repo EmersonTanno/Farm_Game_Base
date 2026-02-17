@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameSession : MonoBehaviour
 {
     public static GameSession Instance;
+    public GameState gameState = GameState.Playing;
     [SerializeField] Image backGround;
     [SerializeField] private float fadeSpeed = 1f;
     void Awake()
@@ -49,5 +50,9 @@ public class GameSession : MonoBehaviour
         Time_Controll.Instance.UnpauseTimer();
     }
 
+    public void SetGameState(GameState state)
+    {
+        gameState = state;
+    }
 
 }
