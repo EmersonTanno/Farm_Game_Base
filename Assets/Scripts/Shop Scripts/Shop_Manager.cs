@@ -67,9 +67,9 @@ public class Shop_Manager : MonoBehaviour
         shopActive = !shopActive;
 
         if (shopActive)
-            Time_Controll.Instance.PauseTime();
+            Time_Controll.Instance.PauseTimer();
         else
-            Time_Controll.Instance.UnpauseTime();
+            Time_Controll.Instance.UnpauseTimer();
 
         shopCanvas.SetActive(shopActive);
 
