@@ -189,6 +189,8 @@ public class Player_Controller : MonoBehaviour
             return;
         }
 
+        if(Time_Controll.Instance.timerPaused) return;
+
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
@@ -206,14 +208,14 @@ public class Player_Controller : MonoBehaviour
         {
             if (inputDirection != Vector2.zero)
             {
-                if (inputDirection == facingDirection && !justTurned)
+                if (inputDirection == facingDirection && !justTurned && !Time_Controll.Instance.timerPaused)
                 {
                     Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
 
                     if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && CheckPlayerMoveGrid(targetPos))
                     {
                         movePoint.position = targetPos;
-
+                        
                         if (inputDirection.x == 1) ActivateAnimation("walk_right");
                         if (inputDirection.x == -1) ActivateAnimation("walk_left");
                         if (inputDirection.y == 1) ActivateAnimation("walk_back");
@@ -432,7 +434,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckMove()
     {
-        if (Time_Controll.Instance.timerPaused || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
+        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }
