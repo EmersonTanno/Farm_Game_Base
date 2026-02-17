@@ -68,6 +68,7 @@ public class PauseController : MonoBehaviour
 
     public void PauseGame()
     {
+        if(Time_Controll.Instance.timerPaused) return;
         Time_Controll.Instance.PauseTimer();
         pauseCanvasGroup.SetActive(true);
         pauseAnimator.SetTrigger("pause");
