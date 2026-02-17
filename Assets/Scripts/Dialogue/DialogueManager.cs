@@ -113,6 +113,19 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(EnableAdvanceNextFrame());
         StartCoroutine(StartDialogue(npcId, dialogue));
     }
+
+    public IEnumerator SetDialogueToCutscene(int npcId, string dialogueId)
+    {
+        SetDialogueCanvas(true);
+        dialogueActive = true;
+        canAdvance = false;
+
+        List<DialogueLine> dialogue =
+            JsonManager.Instance.GetDialogue(npcId, dialogueId);
+
+        StartCoroutine(EnableAdvanceNextFrame());
+        yield return StartDialogue(npcId, dialogue);
+    }
     #endregion
 
 

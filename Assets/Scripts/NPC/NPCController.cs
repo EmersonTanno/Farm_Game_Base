@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -181,6 +182,46 @@ public class NPCController : MonoBehaviour
            NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
            npc.npcData.hearts = npcData.hearts;
         }
+    }
+    #endregion
+
+    #region Cutscene
+    public void SetNPCInCutscene(int npcId, Vector2Int pos, SceneLocationEnum scene)
+    {
+        NPC npc = GetNPC(npcId);
+        Debug.Log(npc.npcData.gridPosition);
+        npc.npcData.gridPosition = pos;
+        npc.npcData.location = scene;
+
+        NPCMovement movement = npc.GetComponent<NPCMovement>();
+        movement.ResetMovePointer();
+
+        SetDataInNPCMap(pos.x, pos.y, npc.npcData.id);
+
+        npc.transform.position = new Vector3(pos.x, pos.y, 0) + GetNPCOffset();
+    }
+
+    public IEnumerator SetNpcMovementInCutscene(int npcId, Vector2Int targetPosition, SceneLocationEnum targetLocation, NPCSide nPCSide)
+    {
+        NPC npc = GetNPC(npcId);
+
+        NPCMovement movement = npc.GetComponent<NPCMovement>();
+
+        yield return movement.SetupMoveToCutscene(
+            targetPosition,
+            targetLocation,
+            nPCSide
+        );
+    }
+
+    public IEnumerator ShowNPCReactionInCutscene(int id, ThoughtEmoteEnum reaction)
+    {
+        NPC npc = GetNPC(id);
+
+        if(npc == null) yield return null;
+
+        npc.ShowReaction(reaction);
+        yield return new WaitForSeconds(2f);
     }
     #endregion
 }
