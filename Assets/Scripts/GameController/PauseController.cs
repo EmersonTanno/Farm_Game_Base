@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,6 +28,7 @@ public class PauseController : MonoBehaviour
     private bool canSelect = false;
 
     public bool gamePaused = false;
+    public bool canPressEsc = true;
 
     #region Core
     void Awake()
@@ -56,6 +58,7 @@ public class PauseController : MonoBehaviour
 
     public void EscButtonPresses()
     {
+        if(!canPressEsc) return;
         if(gamePaused)
         {
             ContinueGame();
@@ -64,11 +67,29 @@ public class PauseController : MonoBehaviour
         {
             PauseGame();
         }
+        canPressEsc = false;
+        StartCoroutine(ResetEscTimer());
+    }
+
+    private IEnumerator ResetEscTimer()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        canPressEsc = true;
     }
 
     public void PauseGame()
     {
         if(Time_Controll.Instance.timerPaused) return;
+        if(GameSession.Instance.gameState == GameState.PausedCutscene || GameSession.Instance.gameState == GameState.Paused) return;
+
+        if(GameSession.Instance.gameState == GameState.Cutscene)
+        {
+            GameSession.Instance.SetGameState(GameState.PausedCutscene);
+        }
+        else
+        {
+            GameSession.Instance.SetGameState(GameState.Paused);
+        }
         Time_Controll.Instance.PauseTimer();
         pauseCanvasGroup.SetActive(true);
         pauseAnimator.SetTrigger("pause");
@@ -78,6 +99,16 @@ public class PauseController : MonoBehaviour
     public void ContinueGame()
     {
         if(!canSelect) return;
+        if(GameSession.Instance.gameState == GameState.Cutscene || GameSession.Instance.gameState == GameState.Playing) return;
+
+        if(GameSession.Instance.gameState == GameState.PausedCutscene)
+        {
+            GameSession.Instance.SetGameState(GameState.Cutscene);
+        }
+        else
+        {
+            GameSession.Instance.SetGameState(GameState.Playing);
+        }
         SetBackGround(false);
         pauseCanvas.SetActive(false);
         Time_Controll.Instance.UnpauseTimer();
