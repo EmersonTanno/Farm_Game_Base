@@ -36,13 +36,13 @@ public class CutsceneController : MonoBehaviour
 
         foreach(CutsceneStep step in data.steps)
         {
-            while(Time_Controll.Instance.timerPaused)
+            while(GameSession.Instance.gameState == GameState.Paused || GameSession.Instance.gameState == GameState.PausedCutscene)
             {
                 yield return null;
             }
             yield return ExecuteStep(step);
         }
-        
+
         GameSession.Instance.SetGameState(GameState.Playing);
     }
 
