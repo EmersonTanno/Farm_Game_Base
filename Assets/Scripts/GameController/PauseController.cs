@@ -73,7 +73,7 @@ public class PauseController : MonoBehaviour
 
     private IEnumerator ResetEscTimer()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(1f);
         canPressEsc = true;
     }
 
