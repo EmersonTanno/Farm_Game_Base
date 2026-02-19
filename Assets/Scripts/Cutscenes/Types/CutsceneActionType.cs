@@ -3,6 +3,9 @@ public enum CutsceneActionType
     MoveNPC,
     Dialogue,
     Wait,
-    ShowExpression,
+    ShowNPCExpression,
+    MovePlayer,
+    ShowPlayerExpression,
+    ParalelActions,
     CameraFocus
 }

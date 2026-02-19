@@ -4,7 +4,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class CutsceneData : ScriptableObject
 {
+    public int id;
+    public string cutsceneName;
     public List<CutsceneStep> steps;
-    public int npcId;
-    public Vector2Int initialNPCPos;
+    public List<CutsceneNPCData> npcs;
 }
