@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9017c32fe1df75c4fb789eac7e9f4a31, type: 3}
+  m_Name: 1 - Teste
+  m_EditorClassIdentifier: 
+  id: 1
+  cutsceneName: Teste
+  steps:
+  - actionType: 0
+    npcID: 1
+    targetScene: 1
+    targetPosition: {x: 32, y: 29}
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+  - actionType: 2
+    npcID: 1
+    targetScene: 1
+    targetPosition: {x: 32, y: 29}
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 1
+  - actionType: 3
+    npcID: 1
+    targetScene: 1
+    targetPosition: {x: 32, y: 29}
+    targetSide: 0
+    dialogueKey: 
+    emote: 1
+    waitTime: 1
+  - actionType: 1
+    npcID: 1
+    targetScene: 1
+    targetPosition: {x: 32, y: 29}
+    targetSide: 0
+    dialogueKey: 1
+    emote: 1
+    waitTime: 1
+  npcs:
+  - npcId: 1
+    initialPos: {x: 32, y: 23}

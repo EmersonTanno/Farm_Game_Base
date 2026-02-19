@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CutsceneController : MonoBehaviour
 {
     public static CutsceneController Instance;
+    [SerializeField] CutsceneDataBase cutsceneDB;
     [SerializeField] CutsceneData cutscene;
 
     void Awake()
@@ -13,26 +15,25 @@ public class CutsceneController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(WaitAndStart());
+        StartCutscene(1);
     }
 
-    private IEnumerator WaitAndStart()
+    public void StartCutscene(int cutsceneId)
     {
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(PlayCutscene(cutscene));
-    }
-
-    public void StartCutscene(string cutsceneId)
-    {
-        // buscar a data
-        // StartCoroutine(PlayCutscene())
+        CutsceneData selectedCutscene = cutsceneDB.GetCutscene(cutsceneId);
+        if(!selectedCutscene)
+        {
+            Debug.LogError($"Could not get cutscene for id - '{cutsceneId}' ");
+            return;
+        }
+        StartCoroutine(PlayCutscene(selectedCutscene));
     }
 
     private IEnumerator PlayCutscene(CutsceneData data)
     {
         GameSession.Instance.SetGameState(GameState.Cutscene);
 
-        NPCController.Instance.SetNPCInCutscene(data.npcId, data.initialNPCPos, SceneInfo.Instance.location);
+        SetNPCs(data.npcs);
 
         foreach(CutsceneStep step in data.steps)
         {
@@ -44,6 +45,14 @@ public class CutsceneController : MonoBehaviour
         }
 
         GameSession.Instance.SetGameState(GameState.Playing);
+    }
+
+    private void SetNPCs(List<CutsceneNPCData> npcs)
+    {
+        foreach(CutsceneNPCData npc in npcs)
+        {
+            NPCController.Instance.SetNPCInCutscene(npc.npcId, npc.initialPos, SceneInfo.Instance.location);
+        }
     }
 
     private IEnumerator ExecuteStep(CutsceneStep step)
@@ -65,7 +74,7 @@ public class CutsceneController : MonoBehaviour
                     yield return new WaitForSeconds(step.waitTime);
                     break;
                 }
-            case CutsceneActionType.ShowExpression:
+            case CutsceneActionType.ShowNPCExpression:
                 {
                     yield return InitiateCutsceneShowExpression(step.npcID, step.emote);
                     break;
