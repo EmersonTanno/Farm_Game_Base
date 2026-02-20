@@ -15,4 +15,60 @@ MonoBehaviour:
   id: 0
   cutsceneName: 
   npcs: []
-  steps: []
+  steps:
+  - actionType: 1
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+  - actionType: 0
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+  - actionType: 2
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+  - actionType: 6
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps:
+      - actionType: 0
+        npcID: 0
+        targetScene: 0
+        targetPosition: {x: 0, y: 0}
+        targetSide: 0
+        dialogueKey: 
+        emote: 0
+        waitTime: 0
+      - actionType: 2
+        npcID: 0
+        targetScene: 0
+        targetPosition: {x: 0, y: 0}
+        targetSide: 0
+        dialogueKey: 
+        emote: 0
+        waitTime: 0

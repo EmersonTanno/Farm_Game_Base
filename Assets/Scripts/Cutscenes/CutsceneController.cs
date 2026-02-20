@@ -5,6 +5,7 @@ using UnityEngine;
 public class CutsceneController : MonoBehaviour
 {
     public static CutsceneController Instance;
+    private CutsceneData playingCutscene = null;
     [SerializeField] CutsceneDataBase cutsceneDB;
     [SerializeField] CutsceneData cutscene;
 
@@ -20,17 +21,28 @@ public class CutsceneController : MonoBehaviour
 
     public void StartCutscene(int cutsceneId)
     {
-        CutsceneData selectedCutscene = cutsceneDB.GetCutscene(cutsceneId);
-        if(!selectedCutscene)
+        playingCutscene = cutsceneDB.GetCutscene(cutsceneId);
+        if(!playingCutscene)
         {
             Debug.LogError($"Could not get cutscene for id - '{cutsceneId}' ");
             return;
         }
-        StartCoroutine(PlayCutscene(selectedCutscene));
+        StartCoroutine(ProcessCutscene(playingCutscene));
+    }
+
+    private IEnumerator ProcessCutscene(CutsceneData data)
+    {
+        while(Time_Controll.Instance.timerPaused)
+        {
+            yield return null;
+        }
+
+        StartCoroutine(PlayCutscene(playingCutscene));
     }
 
     private IEnumerator PlayCutscene(CutsceneData data)
     {
+        Time_Controll.Instance.PauseTimer();
         GameSession.Instance.SetGameState(GameState.Cutscene);
 
         SetNPCs(data.npcs);
@@ -45,6 +57,7 @@ public class CutsceneController : MonoBehaviour
         }
 
         GameSession.Instance.SetGameState(GameState.Playing);
+        Time_Controll.Instance.UnpauseTimer();
     }
 
     private void SetNPCs(List<CutsceneNPCData> npcs)
@@ -120,4 +133,14 @@ public class CutsceneController : MonoBehaviour
             yield return c;
     }
 
+
+    public bool CheckNPCInCutscene(int npcID)
+    {
+        if(playingCutscene.npcs.Find(i => i.npcId == npcID) != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
