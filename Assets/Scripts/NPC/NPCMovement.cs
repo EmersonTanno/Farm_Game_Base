@@ -318,7 +318,7 @@ public class NPCMovement : MonoBehaviour
             yield return null;
         }
 
-        while (Time_Controll.Instance.timerPaused)
+        while ((Time_Controll.Instance.timerPaused && (GameSession.Instance.gameState == GameState.Paused || GameSession.Instance.gameState == GameState.PausedCutscene)) || (GameSession.Instance.gameState == GameState.Cutscene && !CutsceneController.Instance.CheckNPCInCutscene(npc.npcData.id)))
         {
             ResetNPCAnimation();
             yield return null;
