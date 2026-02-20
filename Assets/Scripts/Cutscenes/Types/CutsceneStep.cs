@@ -17,4 +17,6 @@ public class CutsceneStep
     public ThoughtEmoteEnum emote;
 
     public float waitTime;
+
+    public CutsceneParallelBlock parallelBlock;
 }

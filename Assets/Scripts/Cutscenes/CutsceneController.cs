@@ -84,6 +84,11 @@ public class CutsceneController : MonoBehaviour
                     Debug.Log("Camera Focus???");
                     break;
                 }
+            case CutsceneActionType.ParallelActions:
+                {
+                    yield return ExecuteParallel(step.parallelBlock);
+                    break;
+                }
         }
     }
 
@@ -101,4 +106,18 @@ public class CutsceneController : MonoBehaviour
     {
         yield return NPCController.Instance.ShowNPCReactionInCutscene(npcId, emote);
     }
+
+    private IEnumerator ExecuteParallel(CutsceneParallelBlock block)
+    {
+        List<Coroutine> coroutines = new List<Coroutine>();
+
+        foreach (CutsceneParallelBlockPiece piece in block.steps)
+        {
+            coroutines.Add(StartCoroutine(ExecuteStep(piece.ToStep())));
+        }
+
+        foreach (var c in coroutines)
+            yield return c;
+    }
+
 }

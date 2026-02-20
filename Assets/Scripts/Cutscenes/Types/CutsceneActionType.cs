@@ -6,6 +6,6 @@ public enum CutsceneActionType
     ShowNPCExpression,
     MovePlayer,
     ShowPlayerExpression,
-    ParalelActions,
+    ParallelActions,
     CameraFocus
 }
