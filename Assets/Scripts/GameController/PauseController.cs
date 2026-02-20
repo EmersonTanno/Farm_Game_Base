@@ -79,7 +79,7 @@ public class PauseController : MonoBehaviour
 
     public void PauseGame()
     {
-        if(Time_Controll.Instance.timerPaused) return;
+        if(Time_Controll.Instance.timerPaused && (GameSession.Instance.gameState == GameState.PausedCutscene || GameSession.Instance.gameState == GameState.Paused)) return;
         if(GameSession.Instance.gameState == GameState.PausedCutscene || GameSession.Instance.gameState == GameState.Paused) return;
 
         if(GameSession.Instance.gameState == GameState.Cutscene)
