@@ -6,6 +6,6 @@ public class CutsceneData : ScriptableObject
 {
     public int id;
     public string cutsceneName;
-    public List<CutsceneStep> steps;
     public List<CutsceneNPCData> npcs;
+    public List<CutsceneStep> steps;
 }
