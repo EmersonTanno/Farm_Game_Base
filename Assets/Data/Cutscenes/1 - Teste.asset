@@ -22,16 +22,40 @@ MonoBehaviour:
     npcID: 1
     targetScene: 1
     targetPosition: {x: 30, y: 28}
-    targetSide: 0
+    spd: 4
+    targetSide: 1
     dialogueKey: 1
     emote: 1
     waitTime: 1
+    parallelBlock:
+      steps: []
+  - actionType: 2
+    npcID: 0
+    targetScene: 1
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 1
+    parallelBlock:
+      steps: []
+  - actionType: 4
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 30, y: 28}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
     parallelBlock:
       steps: []
   - actionType: 0
     npcID: 1
     targetScene: 1
     targetPosition: {x: 32, y: 29}
+    spd: 10
     targetSide: 1
     dialogueKey: 1
     emote: 1
@@ -42,6 +66,7 @@ MonoBehaviour:
     npcID: 1
     targetScene: 1
     targetPosition: {x: 32, y: 29}
+    spd: 2.5
     targetSide: 0
     dialogueKey: 1
     emote: 1
@@ -52,6 +77,7 @@ MonoBehaviour:
     npcID: 1
     targetScene: 1
     targetPosition: {x: 32, y: 29}
+    spd: 2.5
     targetSide: 0
     dialogueKey: 
     emote: 1
@@ -62,6 +88,7 @@ MonoBehaviour:
     npcID: 1
     targetScene: 1
     targetPosition: {x: 30, y: 29}
+    spd: 2.5
     targetSide: 1
     dialogueKey: 1
     emote: 1
@@ -72,6 +99,7 @@ MonoBehaviour:
         npcID: 1
         targetScene: 1
         targetPosition: {x: 32, y: 27}
+        spd: 2.5
         targetSide: 1
         dialogueKey: 
         emote: 0
@@ -80,6 +108,7 @@ MonoBehaviour:
         npcID: 1
         targetScene: 0
         targetPosition: {x: 32, y: 27}
+        spd: 2.5
         targetSide: 1
         dialogueKey: 
         emote: 1
@@ -88,6 +117,7 @@ MonoBehaviour:
     npcID: 1
     targetScene: 1
     targetPosition: {x: 32, y: 29}
+    spd: 2.5
     targetSide: 0
     dialogueKey: 1
     emote: 1

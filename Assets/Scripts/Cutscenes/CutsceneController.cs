@@ -7,18 +7,12 @@ public class CutsceneController : MonoBehaviour
     public static CutsceneController Instance;
     private CutsceneData playingCutscene = null;
     [SerializeField] CutsceneDataBase cutsceneDB;
-    [SerializeField] CutsceneData cutscene;
 
     void Awake()
     {
         Instance = this;
     }
-
-    void Start()
-    {
-        StartCutscene(1);
-    }
-
+    
     public void StartCutscene(int cutsceneId)
     {
         playingCutscene = cutsceneDB.GetCutscene(cutsceneId);
@@ -27,10 +21,10 @@ public class CutsceneController : MonoBehaviour
             Debug.LogError($"Could not get cutscene for id - '{cutsceneId}' ");
             return;
         }
-        StartCoroutine(ProcessCutscene(playingCutscene));
+        StartCoroutine(ProcessCutscene());
     }
 
-    private IEnumerator ProcessCutscene(CutsceneData data)
+    private IEnumerator ProcessCutscene()
     {
         while(Time_Controll.Instance.timerPaused)
         {
@@ -53,11 +47,13 @@ public class CutsceneController : MonoBehaviour
             {
                 yield return null;
             }
+            Debug.Log("exec");
             yield return ExecuteStep(step);
         }
 
         GameSession.Instance.SetGameState(GameState.Playing);
         Time_Controll.Instance.UnpauseTimer();
+        playingCutscene = null;
     }
 
     private void SetNPCs(List<CutsceneNPCData> npcs)
