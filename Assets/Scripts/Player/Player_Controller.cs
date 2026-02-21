@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -147,6 +148,7 @@ public class Player_Controller : MonoBehaviour
 
     private void IdleAnimation()
     {
+        if(GameSession.Instance.gameState == GameState.Cutscene || GameSession.Instance.gameState == GameState.PausedCutscene) return;
         if (Vector3.Distance(transform.position, movePoint.position) <= .0f)
         {
             myAnimator.SetBool("walk_front", false);
@@ -196,6 +198,7 @@ public class Player_Controller : MonoBehaviour
 
     private void MovePointer()
     {
+        if(GameSession.Instance.gameState == GameState.Cutscene) return;
         if (CheckMove())
         {
             if (Vector3.Distance(transform.position, movePoint.position) >= .05f)
@@ -424,7 +427,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckAction()
     {
-        if (Time_Controll.Instance.timerPaused || isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active || DialogueManager.Instance.dialogueActive)
+        if (GameSession.Instance.gameState == GameState.Cutscene || Time_Controll.Instance.timerPaused || isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active || DialogueManager.Instance.dialogueActive)
         {
             return true;
         }
@@ -434,7 +437,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckMove()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
+        if (GameSession.Instance.gameState == GameState.Cutscene || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }
@@ -488,6 +491,12 @@ public class Player_Controller : MonoBehaviour
     {
         reactions.ShowBalloon(reaction);
     }
+
+    public IEnumerator ShowReactionInCutscene(ThoughtEmoteEnum reaction)
+    {
+        reactions.ShowBalloon(reaction);
+        yield return new WaitForSeconds(2f);
+    }
     #endregion
 
     #region NPC Interaction
@@ -506,5 +515,124 @@ public class Player_Controller : MonoBehaviour
 
         return 0;
     }
+    #endregion
+
+    #region Cutscene
+    public IEnumerator MovePlayerInCutscene(Vector2Int targetPos, float spd, NPCSide finalSide)
+    {
+        //ResetMovePointer();
+        int currentStepIndex = 0;
+        List<SceneLocationEnum> sceneList = new List<SceneLocationEnum>
+        {
+            SceneInfo.Instance.location
+        };
+        List<Vector2Int> movementPath = TileMapController.Instance.FindPath(new Vector2Int((int)movePoint.position.x, (int)movePoint.position.y), targetPos, SceneInfo.Instance.location, SceneInfo.Instance.location, sceneList);
+
+
+        while (currentStepIndex < movementPath.Count)
+        {
+            yield return WaitIfPaused();
+
+            Vector2Int nextPosition = movementPath[currentStepIndex];
+
+            SetMovePointer(nextPosition);
+
+            SetPlayerAnimationCutscene();
+            while (transform.position != movePoint.position)
+            {
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    movePoint.transform.position,
+                    spd * Time.deltaTime
+                );
+                yield return null;
+            }
+
+            currentStepIndex++;
+        }
+
+        SetPlayerIdleCutscene(finalSide);
+    }
+
+    private void SetMovePointer(Vector2Int nextPos)
+    {
+        movePoint.position = new Vector3(nextPos.x + 0.5f, nextPos.y + 0.7f, 0);
+    }
+
+    private IEnumerator WaitIfPaused()
+    {
+        while(GameSession.Instance.gameState == GameState.Paused || GameSession.Instance.gameState == GameState.PausedCutscene)
+        {
+            yield return null;
+        }
+    }
+
+    private void SetPlayerAnimationCutscene()
+    {
+        //ResetPlayerAnimation();
+        
+        if(movePoint.position.x > transform.position.x)
+        {
+            ActivateAnimation("walk_right");
+            return;
+        }
+        if(movePoint.position.x < transform.position.x)
+        {
+            ActivateAnimation("walk_left");
+            return;
+        }
+        if(movePoint.transform.position.y < transform.position.y)
+        {
+            ActivateAnimation("walk_front");
+            return;
+        }
+        if(movePoint.transform.position.y > transform.position.y)
+        {
+            ActivateAnimation("walk_back");
+            return;
+        }
+    }
+
+    private void SetPlayerIdleCutscene(NPCSide side)
+    {
+        Debug.Log($"Setting {side}");
+        //ResetPlayerAnimation();
+        switch(side)
+        {
+            case NPCSide.FRONT:
+            {
+                ActivateAnimation("idle_f");
+                break;
+            }
+            case NPCSide.BACK:
+            {
+                ActivateAnimation("idle_b");
+                break;
+            }
+            case NPCSide.LEFT:
+            {
+                ActivateAnimation("idle_l");
+                break;
+            }
+            case NPCSide.RIGHT:
+            {
+                ActivateAnimation("idle_r");
+                break;
+            }
+        }
+    }
+
+
+    // private void ResetPlayerAnimation()
+    // {
+    //     myAnimator.SetBool("walk_front", false);
+    //     myAnimator.SetBool("walk_back", false);
+    //     myAnimator.SetBool("walk_left", false);
+    //     myAnimator.SetBool("walk_right", false);
+    //     myAnimator.SetBool("idle_f", false);
+    //     myAnimator.SetBool("idle_b", false);
+    //     myAnimator.SetBool("idle_l", false);
+    //     myAnimator.SetBool("idle_r", false);
+    // }
     #endregion
 }

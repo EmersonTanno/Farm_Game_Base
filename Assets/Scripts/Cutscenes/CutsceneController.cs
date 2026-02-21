@@ -89,7 +89,17 @@ public class CutsceneController : MonoBehaviour
                 }
             case CutsceneActionType.ShowNPCExpression:
                 {
-                    yield return InitiateCutsceneShowExpression(step.npcID, step.emote);
+                    yield return InitiateCutsceneNPCShowExpression(step.npcID, step.emote);
+                    break;
+                }
+            case CutsceneActionType.ShowPlayerExpression:
+                {
+                    yield return InitiateCutscenePlayerShowExpression(step.emote);
+                    break;
+                }
+            case CutsceneActionType.MovePlayer:
+                {
+                    yield return InitiateCutscenePlayerMovement(step.targetPosition, 4, step.targetSide);
                     break;
                 }
             case CutsceneActionType.CameraFocus:
@@ -115,7 +125,7 @@ public class CutsceneController : MonoBehaviour
         yield return DialogueManager.Instance.SetDialogueToCutscene(npcId, dialogueId);
     }
 
-    private IEnumerator InitiateCutsceneShowExpression(int npcId, ThoughtEmoteEnum emote)
+    private IEnumerator InitiateCutsceneNPCShowExpression(int npcId, ThoughtEmoteEnum emote)
     {
         yield return NPCController.Instance.ShowNPCReactionInCutscene(npcId, emote);
     }
@@ -131,6 +141,16 @@ public class CutsceneController : MonoBehaviour
 
         foreach (var c in coroutines)
             yield return c;
+    }
+
+    private IEnumerator InitiateCutscenePlayerShowExpression(ThoughtEmoteEnum emote)
+    {
+        yield return Player_Controller.Instance.ShowReactionInCutscene(emote);
+    }
+
+    private IEnumerator InitiateCutscenePlayerMovement(Vector2Int targetPos, float moveSpeed, NPCSide finalSide)
+    {
+        yield return Player_Controller.Instance.MovePlayerInCutscene(targetPos, moveSpeed, finalSide);
     }
 
 

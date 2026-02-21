@@ -18,6 +18,16 @@ MonoBehaviour:
   - npcId: 1
     initialPos: {x: 32, y: 23}
   steps:
+  - actionType: 4
+    npcID: 1
+    targetScene: 1
+    targetPosition: {x: 30, y: 28}
+    targetSide: 0
+    dialogueKey: 1
+    emote: 1
+    waitTime: 1
+    parallelBlock:
+      steps: []
   - actionType: 0
     npcID: 1
     targetScene: 1
