@@ -40,9 +40,11 @@ public class NPCMovement : MonoBehaviour
         SetUpPath();
     }
 
-    public IEnumerator SetupMoveToCutscene(Vector2Int targetGridPos, SceneLocationEnum targetScene, NPCSide finalSide)
+    public IEnumerator SetupMoveToCutscene(Vector2Int targetGridPos, SceneLocationEnum targetScene, NPCSide finalSide, float speed)
     {
         StopAllCoroutines();
+        float originalSpeed = moveSpeed;
+        moveSpeed = speed;
         finalTargetPosition = targetGridPos;
         finalTargetScene = targetScene;
         this.finalSide = finalSide;
@@ -50,6 +52,7 @@ public class NPCMovement : MonoBehaviour
         SetNewPath();
 
         yield return MoveOnScreen();
+        moveSpeed = originalSpeed;
     }
 
     private void SetUpPath()

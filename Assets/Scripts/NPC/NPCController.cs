@@ -201,7 +201,7 @@ public class NPCController : MonoBehaviour
         npc.transform.position = new Vector3(pos.x, pos.y, 0) + GetNPCOffset();
     }
 
-    public IEnumerator SetNpcMovementInCutscene(int npcId, Vector2Int targetPosition, SceneLocationEnum targetLocation, NPCSide nPCSide)
+    public IEnumerator SetNpcMovementInCutscene(int npcId, Vector2Int targetPosition, SceneLocationEnum targetLocation, NPCSide nPCSide, float speed)
     {
         NPC npc = GetNPC(npcId);
 
@@ -210,7 +210,8 @@ public class NPCController : MonoBehaviour
         yield return movement.SetupMoveToCutscene(
             targetPosition,
             targetLocation,
-            nPCSide
+            nPCSide,
+            speed
         );
     }
 

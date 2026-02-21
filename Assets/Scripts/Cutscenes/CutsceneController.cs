@@ -74,7 +74,7 @@ public class CutsceneController : MonoBehaviour
         {
             case CutsceneActionType.MoveNPC:
                 {
-                    yield return InitiateCutsceneMovement(step.npcID, step.targetPosition, step.targetScene, step.targetSide);
+                    yield return InitiateCutsceneMovement(step.npcID, step.targetPosition, step.targetScene, step.targetSide, step.spd);
                     break;
                 }
             case CutsceneActionType.Dialogue:
@@ -115,9 +115,9 @@ public class CutsceneController : MonoBehaviour
         }
     }
 
-    private IEnumerator InitiateCutsceneMovement(int npcID, Vector2Int targetPos, SceneLocationEnum targetScene, NPCSide side)
+    private IEnumerator InitiateCutsceneMovement(int npcID, Vector2Int targetPos, SceneLocationEnum targetScene, NPCSide side, float speed)
     {
-        yield return NPCController.Instance.SetNpcMovementInCutscene(npcID, targetPos, targetScene, side);
+        yield return NPCController.Instance.SetNpcMovementInCutscene(npcID, targetPos, targetScene, side, speed);
     }
 
     private IEnumerator InitiateCutsceneDialogue(int npcId, string dialogueId)
