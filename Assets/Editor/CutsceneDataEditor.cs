@@ -92,16 +92,26 @@ public class CutsceneDataEditor : Editor
             {
                 stepsProp.MoveArrayElement(i, i + 1);
             }
-            
+
+            if (GUILayout.Button("+ Below"))
+            {
+                stepsProp.InsertArrayElementAtIndex(i + 1);
+
+                SerializedProperty newStep = stepsProp.GetArrayElementAtIndex(i + 1);
+                ClearStep(newStep);
+            }
+
             if (GUILayout.Button("Remove Step"))
             {
                 stepsProp.DeleteArrayElementAtIndex(i);
+                break;
             }
+
             EditorGUILayout.EndHorizontal();
 
 
             EditorGUILayout.EndVertical();
-            EditorGUILayout.Space();
+            EditorGUILayout.Space(); //a
         }
 
         if (GUILayout.Button("Add Step"))
@@ -110,6 +120,19 @@ public class CutsceneDataEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    void ClearStep(SerializedProperty step)
+    {
+        step.FindPropertyRelative("actionType").enumValueIndex = 0;
+        step.FindPropertyRelative("npcID").intValue = 0;
+        step.FindPropertyRelative("dialogueKey").stringValue = "";
+        step.FindPropertyRelative("waitTime").floatValue = 0f;
+
+        step.FindPropertyRelative("targetPosition").vector2IntValue = Vector2Int.zero;
+        step.FindPropertyRelative("targetScene").enumValueIndex = 0;
+        step.FindPropertyRelative("targetSide").enumValueIndex = 0;
+        step.FindPropertyRelative("emote").enumValueIndex = 0;
     }
 
 }
