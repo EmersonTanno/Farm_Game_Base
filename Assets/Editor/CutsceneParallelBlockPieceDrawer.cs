@@ -30,6 +30,9 @@ public class CutsceneParallelBlockPieceDrawer : PropertyDrawer
                 EditorGUI.PropertyField(rect, property.FindPropertyRelative("targetPosition"));
                 rect.y += lineHeight + spacing;
 
+                EditorGUI.PropertyField(rect, property.FindPropertyRelative("spd"));
+                rect.y += lineHeight + spacing;
+
                 EditorGUI.PropertyField(rect, property.FindPropertyRelative("targetSide"));
                 break;
 
@@ -57,6 +60,9 @@ public class CutsceneParallelBlockPieceDrawer : PropertyDrawer
                 EditorGUI.PropertyField(rect, property.FindPropertyRelative("targetPosition"));
                 rect.y += lineHeight + spacing;
 
+                EditorGUI.PropertyField(rect, property.FindPropertyRelative("spd"));
+                rect.y += lineHeight + spacing;
+
                 EditorGUI.PropertyField(rect, property.FindPropertyRelative("targetSide"));
                 break;
             
@@ -77,14 +83,14 @@ public class CutsceneParallelBlockPieceDrawer : PropertyDrawer
         float lineHeight = EditorGUIUtility.singleLineHeight;
         float spacing = 7f;
 
-        int lines = 1; // actionType sempre aparece
+        int lines = 1;
 
         SerializedProperty actionType = property.FindPropertyRelative("actionType");
 
         switch ((CutsceneActionType)actionType.enumValueIndex)
         {
             case CutsceneActionType.MoveNPC:
-                lines += 4;
+                lines += 5;
                 break;
 
             case CutsceneActionType.Dialogue:
@@ -100,7 +106,7 @@ public class CutsceneParallelBlockPieceDrawer : PropertyDrawer
                 break;
             
             case CutsceneActionType.MovePlayer:
-                lines += 3;
+                lines += 4;
                 break;
             
             case CutsceneActionType.ShowPlayerExpression:

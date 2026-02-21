@@ -45,6 +45,7 @@ public class CutsceneDataEditor : Editor
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("npcID"));
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("targetScene"));
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("targetPosition"));
+                    EditorGUILayout.PropertyField(step.FindPropertyRelative("spd"));
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("targetSide"));
                     break;
 
@@ -65,6 +66,7 @@ public class CutsceneDataEditor : Editor
                 case CutsceneActionType.MovePlayer:
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("targetScene"));
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("targetPosition"));
+                    EditorGUILayout.PropertyField(step.FindPropertyRelative("spd"));
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("targetSide"));
                     break;
 

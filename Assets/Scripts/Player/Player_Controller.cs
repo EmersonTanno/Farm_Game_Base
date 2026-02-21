@@ -520,7 +520,6 @@ public class Player_Controller : MonoBehaviour
     #region Cutscene
     public IEnumerator MovePlayerInCutscene(Vector2Int targetPos, float spd, NPCSide finalSide)
     {
-        //ResetMovePointer();
         int currentStepIndex = 0;
         List<SceneLocationEnum> sceneList = new List<SceneLocationEnum>
         {
@@ -569,8 +568,6 @@ public class Player_Controller : MonoBehaviour
 
     private void SetPlayerAnimationCutscene()
     {
-        //ResetPlayerAnimation();
-        
         if(movePoint.position.x > transform.position.x)
         {
             ActivateAnimation("walk_right");
@@ -595,8 +592,6 @@ public class Player_Controller : MonoBehaviour
 
     private void SetPlayerIdleCutscene(NPCSide side)
     {
-        Debug.Log($"Setting {side}");
-        //ResetPlayerAnimation();
         switch(side)
         {
             case NPCSide.FRONT:
@@ -621,18 +616,5 @@ public class Player_Controller : MonoBehaviour
             }
         }
     }
-
-
-    // private void ResetPlayerAnimation()
-    // {
-    //     myAnimator.SetBool("walk_front", false);
-    //     myAnimator.SetBool("walk_back", false);
-    //     myAnimator.SetBool("walk_left", false);
-    //     myAnimator.SetBool("walk_right", false);
-    //     myAnimator.SetBool("idle_f", false);
-    //     myAnimator.SetBool("idle_b", false);
-    //     myAnimator.SetBool("idle_l", false);
-    //     myAnimator.SetBool("idle_r", false);
-    // }
     #endregion
 }

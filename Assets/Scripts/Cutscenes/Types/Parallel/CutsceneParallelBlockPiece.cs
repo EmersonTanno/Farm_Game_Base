@@ -7,6 +7,7 @@ public class CutsceneParallelBlockPiece
     public int npcID;
     public SceneLocationEnum targetScene;
     public Vector2Int targetPosition;
+    public float spd = 2.5f;
     public NPCSide targetSide;
     public string dialogueKey;
     public ThoughtEmoteEnum emote;
@@ -20,6 +21,7 @@ public class CutsceneParallelBlockPiece
             npcID = npcID,
             targetScene = targetScene,
             targetPosition = targetPosition,
+            spd = spd,
             targetSide = targetSide,
             dialogueKey = dialogueKey,
             emote = emote,

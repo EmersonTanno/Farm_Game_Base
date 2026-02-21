@@ -99,7 +99,7 @@ public class CutsceneController : MonoBehaviour
                 }
             case CutsceneActionType.MovePlayer:
                 {
-                    yield return InitiateCutscenePlayerMovement(step.targetPosition, 4, step.targetSide);
+                    yield return InitiateCutscenePlayerMovement(step.targetPosition, step.spd, step.targetSide);
                     break;
                 }
             case CutsceneActionType.CameraFocus:
