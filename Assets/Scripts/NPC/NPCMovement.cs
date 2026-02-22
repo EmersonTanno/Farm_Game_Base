@@ -64,6 +64,7 @@ public class NPCMovement : MonoBehaviour
             SetNewPath();
 
             if(movementPath == null || movementPath.Count == 0) return;
+            
 
             StartCoroutine(MoveOnScreen());
         } else

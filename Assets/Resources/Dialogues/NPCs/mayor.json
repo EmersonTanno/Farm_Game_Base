@@ -1,0 +1,93 @@
+{
+  "npcId": 1,
+  "npcDialogueList": [
+    {
+      "dialogueId": "1",
+      "dialogue": [
+        {
+          "portrait": 1,
+          "textLinePt": "Você chegou.",
+          "textLineEn": "You have arrived."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Isso é suficiente.",
+          "textLineEn": "That will suffice."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "A cidade precisa continuar funcionando.",
+          "textLineEn": "The city needs to keep functioning."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Impostos serão coletados.",
+          "textLineEn": "Taxes will be collected."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Serviços serão mantidos.",
+          "textLineEn": "Services will be maintained."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "...",
+          "textLineEn": "..."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Você irá administrar esta fazenda.",
+          "textLineEn": "You will manage this farm."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Evite prejuízos.",
+          "textLineEn": "Avoid losses."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "A cidade não deve nada a ninguém.",
+          "textLineEn": "The city owes nothing to anyone."
+        }
+      ]
+    },
+    {
+      "dialogueId": "2",
+      "dialogue": [
+        {
+          "portrait": 1,
+          "reaction": "Sweat",
+          "textLinePt": "Cuidado ao sair da fazenda.",
+          "textLineEn": "Be careful when leaving the farm."
+        },
+        {
+          "portrait": 1,
+          "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
+          "textLineEn": "You never know what kind of taxes you might encounter.",
+          "options": [
+            {
+              "answerOptionPt": "Quem é você?",
+              "answerOptionEn": "Who are you?",
+              "toDialogueId": "3"
+            },
+            {
+              "answerOptionPt": "Tenho que ir",
+              "answerOptionEn": "I need to go",
+              "toDialogueId": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dialogueId": "3",
+      "dialogue": [
+        {
+          "portrait": 1,
+          "textLinePt": "Fim",
+          "textLineEn": "End"
+        }
+      ]
+    }
+  ]
+}

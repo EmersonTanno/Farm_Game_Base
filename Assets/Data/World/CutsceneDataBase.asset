@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: CutsceneDataBase
   m_EditorClassIdentifier: 
   cutscenes:
+  - {fileID: 11400000, guid: 39c575203334b684583f8d230a8caebd, type: 2}
   - {fileID: 11400000, guid: 1e73e54316525414da441138c291c996, type: 2}

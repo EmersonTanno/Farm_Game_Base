@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9017c32fe1df75c4fb789eac7e9f4a31, type: 3}
-  m_Name: 1 - Teste
+  m_Name: 1 - Teste 1
   m_EditorClassIdentifier: 
   id: 1
   cutsceneName: Teste
@@ -18,56 +18,12 @@ MonoBehaviour:
   - npcId: 1
     initialPos: {x: 32, y: 23}
   steps:
-  - actionType: 4
-    npcID: 1
-    targetScene: 1
-    targetPosition: {x: 30, y: 28}
-    spd: 4
-    targetSide: 1
-    dialogueKey: 1
-    emote: 1
-    waitTime: 1
-    parallelBlock:
-      steps: []
-  - actionType: 2
-    npcID: 0
-    targetScene: 1
-    targetPosition: {x: 0, y: 0}
-    spd: 2.5
-    targetSide: 0
-    dialogueKey: 
-    emote: 0
-    waitTime: 1
-    parallelBlock:
-      steps: []
-  - actionType: 4
-    npcID: 0
-    targetScene: 0
-    targetPosition: {x: 30, y: 28}
-    spd: 2.5
-    targetSide: 0
-    dialogueKey: 
-    emote: 0
-    waitTime: 0
-    parallelBlock:
-      steps: []
-  - actionType: 0
-    npcID: 1
-    targetScene: 1
-    targetPosition: {x: 32, y: 29}
-    spd: 10
-    targetSide: 1
-    dialogueKey: 1
-    emote: 1
-    waitTime: 1
-    parallelBlock:
-      steps: []
   - actionType: 0
     npcID: 1
     targetScene: 1
     targetPosition: {x: 32, y: 29}
     spd: 2.5
-    targetSide: 0
+    targetSide: 1
     dialogueKey: 1
     emote: 1
     waitTime: 1

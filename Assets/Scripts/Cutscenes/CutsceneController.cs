@@ -12,7 +12,7 @@ public class CutsceneController : MonoBehaviour
     {
         Instance = this;
     }
-    
+
     public void StartCutscene(int cutsceneId)
     {
         playingCutscene = cutsceneDB.GetCutscene(cutsceneId);
@@ -47,7 +47,6 @@ public class CutsceneController : MonoBehaviour
             {
                 yield return null;
             }
-            Debug.Log("exec");
             yield return ExecuteStep(step);
         }
 

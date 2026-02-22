@@ -11698,7 +11698,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutsceneDB: {fileID: 11400000, guid: 3c48b88afbbc47645989f54511825690, type: 2}
-  cutscene: {fileID: 0}
 --- !u!1 &5640261034593841672
 GameObject:
   m_ObjectHideFlags: 0
@@ -13697,6 +13696,14 @@ PrefabInstance:
       propertyPath: npcs.Array.data[1]
       value: 
       objectReference: {fileID: 4924957106639830464}
+    - target: {fileID: 1831400642, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: dialogueJsonFiles.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831400642, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: dialogueJsonFiles.Array.data[2]
+      value: 
+      objectReference: {fileID: 4900000, guid: 38cb5ac9741368d4c9b43b597607b6b1, type: 3}
     - target: {fileID: 1831400644, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: leftText
       value: 
