@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     private bool canAdvance;
     private bool optionSelected;
     private int selectedOption;
+    private bool canPassLine = true;
 
 
     //triggers
@@ -217,7 +218,7 @@ public class DialogueManager : MonoBehaviour
 
     public void NextLine()
     {
-        if (!dialogueActive || !canAdvance || PauseController.Instance.gamePaused) return;
+        if (!dialogueActive || !canAdvance || PauseController.Instance.gamePaused || !canPassLine) return;
 
         if (isTyping)
         {
@@ -225,7 +226,15 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        canPassLine = false;
         nextLine = true;
+        StartCoroutine(EnableNextLine());
+    }
+
+    private IEnumerator EnableNextLine()
+    {
+        yield return new WaitForSeconds(.5f);
+        canPassLine = true;
     }
 
     private IEnumerator EnableAdvanceNextFrame()
@@ -291,6 +300,7 @@ public class DialogueManager : MonoBehaviour
     private void ContinueDialogue(int npcId, string dialogueId)
     {
         StopAllCoroutines();
+        canPassLine = true;
         SetDialogue(npcId, dialogueId);
     }
     #endregion
