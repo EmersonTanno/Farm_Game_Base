@@ -176,11 +176,7 @@ public class DialogueManager : MonoBehaviour
         if(optionSelected)
         {
             ContinueDialogue(1, dialogue[dialogue.Count - 1].options[selectedOption].toDialogueId);
-        }
-
-        while (!nextLine)
-        {
-            yield return null;
+            yield break;
         }
 
         nextLine = false;
@@ -233,7 +229,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator EnableNextLine()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         canPassLine = true;
     }
 
