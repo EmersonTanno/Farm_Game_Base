@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -11,8 +10,6 @@ public class DialogueManager : MonoBehaviour
 
     #region Variables
     [SerializeField] GameObject dialogueGroup;
-    [SerializeField] GameObject dialogueLeftSide;
-    [SerializeField] TextMeshProUGUI leftText;
     [SerializeField] GameObject dialogueRightSide;
     [SerializeField] TextMeshProUGUI rightText;
 
@@ -58,20 +55,6 @@ public class DialogueManager : MonoBehaviour
     private void SetDialogueCanvas(bool active)
     {
         dialogueGroup.SetActive(active);
-    }
-
-    private void SetDialogueSide(int portrait)
-    {
-        if(portrait == 0)
-        {
-            dialogueRightSide.SetActive(false);
-            dialogueLeftSide.SetActive(true);
-        }
-        else
-        {
-            dialogueLeftSide.SetActive(false);
-            dialogueRightSide.SetActive(true);
-        }
     }
 
     private IEnumerator DisplayDialogueLine(string dialogueLine)
@@ -138,7 +121,7 @@ public class DialogueManager : MonoBehaviour
         selectedOption = 0;
         foreach (DialogueLine dialogueLine in dialogue)
         {
-            SetDialogueSide(dialogueLine.portrait);
+            dialogueRightSide.SetActive(true);
 
             if(dialogueLine.reaction != null)
             {
