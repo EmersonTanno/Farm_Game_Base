@@ -29,9 +29,12 @@ public class DialogueManager : MonoBehaviour
     private int selectedOption;
     private bool canPassLine = true;
 
+    //controll
+    private bool shopActive = false;
 
     //triggers
     public static event Action<int> OnDialogueFinish;
+    public static event Action OnDialogueShopRequest;
     #endregion
 
     #region Core
@@ -48,6 +51,13 @@ public class DialogueManager : MonoBehaviour
     void OnEnable()
     {
         GameLanguageManager.OnLanguageChange += ChangeLanguage;
+        Shop_Manager.OnShopClose += DeactivateShop;
+    }
+
+    void OnDisable()
+    {
+        GameLanguageManager.OnLanguageChange -= ChangeLanguage;
+        Shop_Manager.OnShopClose -= DeactivateShop;
     }
     #endregion
 
@@ -61,6 +71,11 @@ public class DialogueManager : MonoBehaviour
     {
         isTyping = true;
         rightText.text = "";
+
+        while(shopActive)
+        {
+            yield return null;
+        }
 
         foreach (char character in dialogueLine)
         {
@@ -135,6 +150,11 @@ public class DialogueManager : MonoBehaviour
             );
 
             actualLine = dialogueLine;
+
+            if (dialogueLine.shop)
+            {
+                RequestShop();
+            }
 
             yield return StartCoroutine(DisplayDialogueLine(textLine));
 
@@ -310,6 +330,37 @@ public class DialogueManager : MonoBehaviour
     {
         if(hearts == 0) return;
         NPCController.Instance.AddNPCHearts(npcId, hearts);
+    }
+    #endregion
+
+    #region Shop
+    private void RequestShop()
+    {
+        OnDialogueShopRequest?.Invoke();
+        shopActive = true;
+        PauseDialogueUI();
+    }
+
+    private void DeactivateShop()
+    {
+        if(!shopActive) return;
+        
+        shopActive = false;
+        ResumeDialogueUI();
+    }
+    #endregion
+
+    #region PauseDialogue
+    public void PauseDialogueUI()
+    {
+        dialogueGroup.SetActive(false);
+        canAdvance = false;
+    }
+
+    public void ResumeDialogueUI()
+    {
+        dialogueGroup.SetActive(true);
+        canAdvance = true;
     }
     #endregion
 

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Shop_Manager : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class Shop_Manager : MonoBehaviour
     private List<ShopSlot> activeSlots = new List<ShopSlot>();
     public bool shopActive = false;
     public int totalPrice = 0;
+
+
+    public static Action OnShopClose;
     #endregion
 
     #region Core
@@ -44,6 +48,7 @@ public class Shop_Manager : MonoBehaviour
         ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
         GameLanguageManager.OnLanguageChange += SetCanvaLanguage;
         GameLanguageManager.OnLanguageChange += SetShopItens;
+        DialogueManager.OnDialogueShopRequest += ActivateDeactivateShop;
     }
 
     void OnDisable()
@@ -53,6 +58,7 @@ public class Shop_Manager : MonoBehaviour
         ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
         GameLanguageManager.OnLanguageChange -= SetCanvaLanguage;
         GameLanguageManager.OnLanguageChange -= SetShopItens;
+        DialogueManager.OnDialogueShopRequest -= ActivateDeactivateShop;
     }
     #endregion
 
@@ -72,6 +78,11 @@ public class Shop_Manager : MonoBehaviour
             Time_Controll.Instance.UnpauseTimer();
 
         shopCanvas.SetActive(shopActive);
+
+        if(!shopActive)
+        {
+            OnShopClose?.Invoke();
+        }
 
         ReloadTotalPrice();
     }

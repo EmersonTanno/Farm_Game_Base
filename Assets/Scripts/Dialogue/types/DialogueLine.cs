@@ -8,5 +8,6 @@ public class DialogueLine
     public string textLineEn;
     public string reaction;
     public int addHearts;
+    public bool shop;
     public List<DialogueOptions> options;
 }
