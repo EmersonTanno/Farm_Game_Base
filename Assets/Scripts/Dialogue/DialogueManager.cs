@@ -255,7 +255,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"Searching for: {dialogue.portrait}");
         Sprite sprite = portraitDB.GetPortrait(dialogue.portrait);
         portrait.sprite = sprite;
     }

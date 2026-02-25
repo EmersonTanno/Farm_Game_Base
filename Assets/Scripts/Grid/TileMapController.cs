@@ -14,6 +14,7 @@ public class TileMapController : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private GameObject constructionsMap;
     [SerializeField] private GameObject objectsMap;
+    [SerializeField] private GameObject shopHolder;
     [SerializeField] private GameObject warpHolder;
 
     public static event Action OnTileMapReady;
@@ -271,9 +272,21 @@ public class TileMapController : MonoBehaviour
         return objects;
     }
 
-    private void SetObjectsInScene()
+    private ShopObject[] GetShopsInScene()
+    {
+        if(shopHolder == null)
+        { 
+            return null;
+        }
+
+        ShopObject[] shops = shopHolder.GetComponentsInChildren<ShopObject>();
+        return shops;
+    }
+
+    private void SetObjectsAndShopsInScene()
     {
         WorldObject[] objects = GetObjectsInScene();
+        ShopObject[] shops = GetShopsInScene();
 
         foreach(WorldObject worldObject in objects)
         {
@@ -284,6 +297,14 @@ public class TileMapController : MonoBehaviour
 
                 SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
                 tileMap.GetGrid().SetValue(position, tileMap.GetGrid().GetGridObject(position).WithObjectId(worldObject.GetWorldObjectType()));
+            }
+        }
+
+        if(shops != null && shops.Length > 0)
+        {
+            foreach(ShopObject shopObject in shops)
+            {
+                tileMap.GetGrid().SetValue(shopObject.transform.position, tileMap.GetGrid().GetGridObject(shopObject.transform.position).WithShopObject(shopObject));
             }
         }
     }
@@ -331,7 +352,7 @@ public class TileMapController : MonoBehaviour
     private void SetAllGrids()
     {
         SetConstructionsInSceneAndConstructionsWarps();
-        SetObjectsInScene();
+        SetObjectsAndShopsInScene();
     }
 
     private void SetGridTileData(int x, int y, WorldTileData tileData)

@@ -6,19 +6,8 @@
       "dialogue": [
         {
           "portrait": "2",
-          "textLinePt": "Shop",
-          "textLineEn": "Shop"
-        },
-        {
-          "portrait": "2",
-          "textLinePt": "Volte Sempre",
-          "textLineEn": "Return",
-          "shop": true
-        },
-        {
-          "portrait": "2",
-          "textLinePt": "Espero que você pague as taxas direitinho.",
-          "textLineEn": "Hello, I am the mayor of the city."
+          "textLinePt": "Olá, esse é o teste de Shop",
+          "textLineEn": "Hello, this is the Shop test"
         }
       ]
     },
@@ -34,6 +23,22 @@
           "portrait": "2",
           "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
           "textLineEn": "Hello, I am the mayor of the city."
+        }
+      ]
+    },
+    {
+      "dialogueId": "NormalShop",
+      "dialogue": [
+        {
+          "portrait": "2",
+          "textLinePt": "Shop",
+          "textLineEn": "Shop"
+        },
+        {
+          "portrait": "2",
+          "textLinePt": "Volte Sempre",
+          "textLineEn": "Return",
+          "shop": true
         }
       ]
     }

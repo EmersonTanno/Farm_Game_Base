@@ -8,6 +8,7 @@ public struct WorldTileData
     public WarpTile warp;
     public WorldObjectID objectID;
     public ConstructionsType constructionID;
+    public ShopObject shopObject;
 
     public WorldTileData WithBaseTileId(int value)
     {
@@ -51,10 +52,17 @@ public struct WorldTileData
         return copy;
     }
 
-        public WorldTileData WithConstructionId(ConstructionsType value)
+    public WorldTileData WithConstructionId(ConstructionsType value)
     {
         WorldTileData copy = this;
         copy.constructionID = value;
+        return copy;
+    }
+
+    public WorldTileData WithShopObject(ShopObject value)
+    {
+        WorldTileData copy = this;
+        copy.shopObject = value;
         return copy;
     }
 }

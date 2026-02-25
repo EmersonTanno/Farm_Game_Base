@@ -95,7 +95,14 @@ public class Player_Controller : MonoBehaviour
 
         WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
         WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos + GetSide()).objectID;
+        ShopObject shop = CheckShop(pos);
         int nPCId = CheckNPC(pos);
+
+        if(shop != null)
+        {
+            shop.OpenNPCShop();
+            return;
+        }
 
         if(nPCId != 0 && nPCId != -1)
         {
@@ -514,6 +521,20 @@ public class Player_Controller : MonoBehaviour
             return secondTile;
 
         return 0;
+    }
+    #endregion
+
+    #region Shop Interaction
+    private ShopObject CheckShop(Vector2 currentPosition)
+    {
+        Vector2 side = GetSide();
+        Grid<WorldTileData> shopGrid = TileMapController.Instance.GetGrid().GetGrid();
+        ShopObject shop = shopGrid.GetGridObject(currentPosition + side).shopObject;
+        if(shop != null)
+        {
+            return shop.CheckShopAvalible(currentPosition);
+        }
+        return null;
     }
     #endregion
 
