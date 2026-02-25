@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
     #region Variables
+    [SerializeField] PortraitDataBase portraitDB;
+
     [SerializeField] GameObject dialogueGroup;
     [SerializeField] GameObject dialogueRightSide;
     [SerializeField] TextMeshProUGUI rightText;
+    [SerializeField] Image portrait;
 
     [SerializeField] GameObject buttonGroup;
     [SerializeField] List<GameObject> buttons;
@@ -156,6 +160,7 @@ public class DialogueManager : MonoBehaviour
                 RequestShop();
             }
 
+            SetPortrait(dialogueLine);
             yield return StartCoroutine(DisplayDialogueLine(textLine));
 
             if (dialogueLine.options != null && dialogueLine.options.Count > 0 && !isTyping)
@@ -240,6 +245,19 @@ public class DialogueManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.1f);
         canAdvance = true;
+    }
+
+    private void SetPortrait(DialogueLine dialogue)
+    {
+        if (portraitDB == null)
+        {
+            Debug.LogError("PortraitDataBase não atribuído no DialogueManager!");
+            return;
+        }
+
+        Debug.Log($"Searching for: {dialogue.portrait}");
+        Sprite sprite = portraitDB.GetPortrait(dialogue.portrait);
+        portrait.sprite = sprite;
     }
     #endregion
 
