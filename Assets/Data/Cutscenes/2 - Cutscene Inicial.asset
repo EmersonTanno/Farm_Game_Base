@@ -36,7 +36,7 @@ MonoBehaviour:
     spd: 2.5
     targetSide: 0
     dialogueKey: 
-    emote: 1
+    emote: 6
     waitTime: 1
     parallelBlock:
       steps: []
@@ -118,7 +118,7 @@ MonoBehaviour:
     spd: 2.5
     targetSide: 2
     dialogueKey: 1
-    emote: 1
+    emote: 6
     waitTime: 1
     parallelBlock:
       steps: []
