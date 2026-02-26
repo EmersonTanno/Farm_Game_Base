@@ -14,6 +14,7 @@ public class Shop_Manager : MonoBehaviour
     [SerializeField] Transform slotContainer;
     [SerializeField] GameObject slotPrefab;
     [SerializeField] TextMeshProUGUI buyButtonText;
+    [SerializeField] TextMeshProUGUI exitButtonText;
 
     [Header("Itens por Estação")]
     [SerializeField] Item[] itemVerao;
@@ -48,7 +49,7 @@ public class Shop_Manager : MonoBehaviour
         ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
         GameLanguageManager.OnLanguageChange += SetCanvaLanguage;
         GameLanguageManager.OnLanguageChange += SetShopItens;
-        DialogueManager.OnDialogueShopRequest += ActivateDeactivateShop;
+        DialogueManager.OnDialogueShopRequest += ActivateShop;
     }
 
     void OnDisable()
@@ -58,7 +59,7 @@ public class Shop_Manager : MonoBehaviour
         ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
         GameLanguageManager.OnLanguageChange -= SetCanvaLanguage;
         GameLanguageManager.OnLanguageChange -= SetShopItens;
-        DialogueManager.OnDialogueShopRequest -= ActivateDeactivateShop;
+        DialogueManager.OnDialogueShopRequest -= ActivateShop;
     }
     #endregion
 
@@ -84,6 +85,33 @@ public class Shop_Manager : MonoBehaviour
             OnShopClose?.Invoke();
         }
 
+        ReloadTotalPrice();
+    }
+
+    public void ActivateShop()
+    {
+        if (Time_Controll.Instance.bedActive ||
+            Player_Controller.Instance.CheckPlayerActions() ||
+            InventoryManager.Instance.inventoryActive)
+            return;
+        
+        shopActive = true;
+        shopCanvas.SetActive(shopActive);
+        Time_Controll.Instance.PauseTimer();
+        ReloadTotalPrice();
+    }
+
+    public void DeactivateShop()
+    {
+        if (Time_Controll.Instance.bedActive ||
+            Player_Controller.Instance.CheckPlayerActions() ||
+            InventoryManager.Instance.inventoryActive)
+            return;
+        
+        shopActive = false;
+        Time_Controll.Instance.UnpauseTimer();
+        shopCanvas.SetActive(shopActive);
+        OnShopClose?.Invoke();
         ReloadTotalPrice();
     }
     #endregion
@@ -144,7 +172,7 @@ public class Shop_Manager : MonoBehaviour
         }
 
         ResetQuantity();
-        ActivateDeactivateShop();
+        DeactivateShop();
     }
     #endregion
 
@@ -177,6 +205,7 @@ public class Shop_Manager : MonoBehaviour
     private void SetCanvaLanguage()
     {
         buyButtonText.text = GameLanguageManager.Instance.GetShopMenuItemName("buy");
+        exitButtonText.text = GameLanguageManager.Instance.GetShopMenuItemName("exit");
     }
     #endregion
 }
