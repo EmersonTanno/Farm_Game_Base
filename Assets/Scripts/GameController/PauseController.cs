@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -85,6 +84,10 @@ public class PauseController : MonoBehaviour
         if(GameSession.Instance.gameState == GameState.Cutscene)
         {
             GameSession.Instance.SetGameState(GameState.PausedCutscene);
+        } 
+        else if(GameSession.Instance.gameState == GameState.Dialogue)
+        {
+            GameSession.Instance.SetGameState(GameState.PausedDialogue);
         }
         else
         {
@@ -105,13 +108,20 @@ public class PauseController : MonoBehaviour
         {
             GameSession.Instance.SetGameState(GameState.Cutscene);
         }
+        else if(GameSession.Instance.gameState == GameState.PausedDialogue)
+        {
+            GameSession.Instance.SetGameState(GameState.Dialogue);
+        }
         else
         {
             GameSession.Instance.SetGameState(GameState.Playing);
         }
         SetBackGround(false);
         pauseCanvas.SetActive(false);
-        Time_Controll.Instance.UnpauseTimer();
+        if(GameSession.Instance.gameState != GameState.Cutscene && GameSession.Instance.gameState != GameState.Dialogue && GameSession.Instance.gameState != GameState.PausedCutscene && GameSession.Instance.gameState != GameState.PausedDialogue)
+        {
+            Time_Controll.Instance.UnpauseTimer();
+        }
         pauseCanvasGroup.SetActive(false);
         gamePaused = false;
     }

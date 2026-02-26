@@ -202,11 +202,13 @@ public class Time_Controll : MonoBehaviour
     #region Timer Controller
     public void PauseTimer()
     {
+        if(timerPaused) return;
         timerPaused = true;
     }
 
     public void UnpauseTimer()
     {
+        if(!timerPaused) return;
         timerPaused = false;
     }
     #endregion

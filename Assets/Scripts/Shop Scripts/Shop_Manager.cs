@@ -64,30 +64,6 @@ public class Shop_Manager : MonoBehaviour
     #endregion
 
     #region Open / Close Shop
-    public void ActivateDeactivateShop()
-    {
-        if (Time_Controll.Instance.bedActive ||
-            Player_Controller.Instance.CheckPlayerActions() ||
-            InventoryManager.Instance.inventoryActive)
-            return;
-
-        shopActive = !shopActive;
-
-        if (shopActive)
-            Time_Controll.Instance.PauseTimer();
-        else
-            Time_Controll.Instance.UnpauseTimer();
-
-        shopCanvas.SetActive(shopActive);
-
-        if(!shopActive)
-        {
-            OnShopClose?.Invoke();
-        }
-
-        ReloadTotalPrice();
-    }
-
     public void ActivateShop()
     {
         if (Time_Controll.Instance.bedActive ||
@@ -109,7 +85,10 @@ public class Shop_Manager : MonoBehaviour
             return;
         
         shopActive = false;
-        Time_Controll.Instance.UnpauseTimer();
+        if(GameSession.Instance.gameState != GameState.Cutscene && GameSession.Instance.gameState != GameState.PausedCutscene && GameSession.Instance.gameState != GameState.Dialogue && GameSession.Instance.gameState != GameState.PausedDialogue)
+        {
+            Time_Controll.Instance.UnpauseTimer();
+        }
         shopCanvas.SetActive(shopActive);
         OnShopClose?.Invoke();
         ReloadTotalPrice();

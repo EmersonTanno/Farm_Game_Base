@@ -3,5 +3,7 @@ public enum GameState
     Playing,
     Paused,
     Cutscene,
-    PausedCutscene
+    PausedCutscene,
+    Dialogue,
+    PausedDialogue
 }

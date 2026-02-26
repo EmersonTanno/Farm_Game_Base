@@ -135,6 +135,11 @@ public class DialogueManager : MonoBehaviour
     #region Dialogue
     private IEnumerator StartDialogue(int npcId,List<DialogueLine> dialogue)
     {
+        if(GameSession.Instance.gameState != GameState.Cutscene && GameSession.Instance.gameState != GameState.PausedCutscene)
+        {
+            GameSession.Instance.SetGameState(GameState.Dialogue);
+        }
+        Time_Controll.Instance.PauseTimer();
         completeLine = false;
         optionSelected = false;
         selectedOption = 0;
@@ -198,6 +203,12 @@ public class DialogueManager : MonoBehaviour
         dialogueActive = false;
         SetDialogueCanvas(false);
         OnDialogueFinish?.Invoke(npcId);
+
+        if(GameSession.Instance.gameState != GameState.Cutscene && GameSession.Instance.gameState != GameState.PausedCutscene)
+        {
+            GameSession.Instance.SetGameState(GameState.Playing);
+            Time_Controll.Instance.UnpauseTimer();
+        }
     }
 
     private string GetLanguageLine(LanguageEnum language, DialogueLine line)
