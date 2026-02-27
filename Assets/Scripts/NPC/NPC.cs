@@ -75,10 +75,18 @@ public class NPC : MonoBehaviour
         }
     }
 
-
     private IEnumerator ResetStates()
     {
         yield return new WaitForSeconds(1f);
         npcMovement.SetNPCCanWalk(true);
+    }
+
+    public void StartRoutine(NPCRoutine routine)
+    {
+        npcMovement.SetupMoveTo(
+            routine.targetPosition,
+            routine.targetLocation,
+            routine.finalSide
+        );
     }
 }

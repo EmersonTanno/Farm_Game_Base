@@ -9626,9 +9626,9 @@ MonoBehaviour:
     state: 0
     routineIndex: 0
     routine:
-    - startHour: 9
-      startMinute: 0
-      validDays: 01000000
+    - startHour: 8
+      startMinute: 30
+      validDays: 
       validWeather: 
       minHearts: 0
       targetLocation: 4

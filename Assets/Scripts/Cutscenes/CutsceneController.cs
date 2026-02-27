@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class CutsceneController : MonoBehaviour
     public static CutsceneController Instance;
     private CutsceneData playingCutscene = null;
     [SerializeField] CutsceneDataBase cutsceneDB;
+    public static event Action<List<CutsceneNPCData>> OnCutsceneEnd;
 
     void Awake()
     {
@@ -50,6 +52,7 @@ public class CutsceneController : MonoBehaviour
             yield return ExecuteStep(step);
         }
 
+        OnCutsceneEnd?.Invoke(data.npcs);
         GameSession.Instance.SetGameState(GameState.Playing);
         Time_Controll.Instance.UnpauseTimer();
         playingCutscene = null;

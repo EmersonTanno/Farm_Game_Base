@@ -20,11 +20,13 @@ public class NPCController : MonoBehaviour
     void OnEnable()
     {
         Time_Controll.OnMinuteChange += NPCActivateRoutine;
+        CutsceneController.OnCutsceneEnd += CharaterInCutscene;
     }
 
     void OnDisable()
     {
         Time_Controll.OnMinuteChange -= NPCActivateRoutine;
+        CutsceneController.OnCutsceneEnd -= CharaterInCutscene;
     }
 
     public void SetNPCsInScene()
@@ -76,12 +78,7 @@ public class NPCController : MonoBehaviour
 
             if (selectedRoutine != null)
             {
-                NPCMovement movement = npc.GetComponent<NPCMovement>();
-                movement.SetupMoveTo(
-                    selectedRoutine.targetPosition,
-                    selectedRoutine.targetLocation,
-                    selectedRoutine.finalSide
-                );
+                npc.StartRoutine(selectedRoutine);
             }
         }
     }
@@ -115,6 +112,64 @@ public class NPCController : MonoBehaviour
             return false;
 
         return true;
+    }
+
+    private int ConvertToMinutes(int hour, int minute)
+    {
+        return hour * 60 + minute;
+    }
+
+    private NPCRoutine GetCurrentValidRoutine(NPC npc)
+    {
+        int currentTime = ConvertToMinutes(
+            Time_Controll.Instance.hours,
+            Time_Controll.Instance.minutes);
+
+        NPCRoutine bestRoutine = null;
+        int bestTime = -1;
+
+        foreach (NPCRoutine routine in npc.npcData.routine)
+        {
+            if (!IsRoutineValid(npc, routine))
+                continue;
+
+            int routineTime = ConvertToMinutes(
+                routine.startHour,
+                routine.startMinute);
+
+            if (routineTime <= currentTime)
+            {
+                if (routineTime > bestTime)
+                {
+                    bestTime = routineTime;
+                    bestRoutine = routine;
+                }
+                else if (routineTime == bestTime &&
+                        bestRoutine != null &&
+                        routine.priority > bestRoutine.priority)
+                {
+                    bestRoutine = routine;
+                }
+            }
+        }
+
+        return bestRoutine;
+    }
+
+    private void CharaterInCutscene(List<CutsceneNPCData> npcsInCutscene)
+    {
+        foreach (CutsceneNPCData npcData in npcsInCutscene)
+        {
+            NPC npc = GetNPC(npcData.npcId);
+
+            NPCRoutine routine = GetCurrentValidRoutine(npc);
+
+            if (routine != null)
+            {
+                npc.StartRoutine(routine);
+                Debug.Log("Initiating");
+            }
+        }
     }
     #endregion
 
