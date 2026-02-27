@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Mayor
   m_EditorClassIdentifier: 
   id: 1
-  portrait: {fileID: 21300000, guid: 64e55e2c1ba457f41b7c7f129379e156, type: 3}
+  portrait: {fileID: 21300000, guid: b21bd1ed95a47cd4a8ccbe654a9e72bc, type: 3}
