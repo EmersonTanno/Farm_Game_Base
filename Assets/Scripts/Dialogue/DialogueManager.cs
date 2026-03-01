@@ -160,9 +160,9 @@ public class DialogueManager : MonoBehaviour
 
             actualLine = dialogueLine;
 
-            if (dialogueLine.shop)
+            if (dialogueLine.request != null)
             {
-                RequestShop();
+                CheckRequest(dialogueLine.request);
             }
 
             SetPortrait(dialogueLine);
@@ -361,7 +361,23 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion
 
-    #region Shop
+    #region Request / SHop
+    private void CheckRequest(string request)
+    {
+        switch(request)
+        {
+            case "default_shop":
+                {
+                    RequestShop();
+                    break;
+                }
+            default:
+                {
+                    return;
+                }
+        }
+    }
+
     private void RequestShop()
     {
         OnDialogueShopRequest?.Invoke();

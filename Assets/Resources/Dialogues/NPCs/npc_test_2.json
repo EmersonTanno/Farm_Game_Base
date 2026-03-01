@@ -38,7 +38,7 @@
           "portrait": "2",
           "textLinePt": "Volte Sempre",
           "textLineEn": "Return",
-          "shop": true
+          "request": "default_shop"
         }
       ]
     }
