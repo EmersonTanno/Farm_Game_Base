@@ -4,6 +4,7 @@ public class DebtData
     public string id;
     public DebtTypeEnum debtType;
     public DebtStateEnum state = DebtStateEnum.Active;
+    public int creditorNpcId;
     public int extraPercentageToPay;
 
     //valor pego e valor a pagar

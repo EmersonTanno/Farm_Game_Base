@@ -8,12 +8,13 @@ public class DebtController : MonoBehaviour
     private List<DebtData> historyDebtList = new List<DebtData>();
 
     #region Create Debt
-    private void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int finalDay, int finalMonth, int finalYear, int interestPercentage, int maxDaysOver)
+    private void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int finalDay, int finalMonth, int finalYear, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
     {
         DebtData newDebt = new DebtData
         {
             id =  $"DEBT_{type}_{Guid.NewGuid():N}",
             debtType = type,
+            creditorNpcId = creditorNpcId,
             extraPercentageToPay = extraPercentageToPay,
 
             quantityMarksTaken = quantityMarksTaken,
