@@ -3,8 +3,8 @@ public class DebtData
 {
     public string id;
     public DebtTypeEnum debtType;
-    public bool paid = false;
-    public float extraPercentageToPay;
+    public DebtStateEnum state = DebtStateEnum.Active;
+    public int extraPercentageToPay;
 
     //valor pego e valor a pagar
     public int quantityMarksTaken;
@@ -12,17 +12,18 @@ public class DebtData
 
     //adquirida em
     public int startDay;
-    public Season startSeason;
+    public int startMonth;
     public int startYear;
 
     //data final para pagar
     public int finalDay;
-    public Season finalSeason;
+    public int finalMonth;
     public int finalYear;
 
     //porcentagem de juros por dia passado
-    public float interestPercentage;
+    public int interestPercentage;
     
     //quantidade máxima de dias que pode passar do dia máximo
     public int maxDaysOver;
+    public int daysOverdue = 0;
 }
