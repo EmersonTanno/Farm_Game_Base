@@ -361,7 +361,7 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion
 
-    #region Request / SHop
+    #region Request / Shop / Debt
     private void CheckRequest(string request)
     {
         switch(request)
@@ -369,6 +369,21 @@ public class DialogueManager : MonoBehaviour
             case "default_shop":
                 {
                     RequestShop();
+                    break;
+                }
+            case "shark_debt":
+                {
+                    //request shark debt
+                    break;
+                }
+            case "bank_debt":
+                {
+                    //request bank debt
+                    break;
+                }
+            case "city_debt":
+                {
+                    //request city debt
                     break;
                 }
             default:

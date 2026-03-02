@@ -4,11 +4,30 @@ using UnityEngine;
 
 public class DebtController : MonoBehaviour
 {
+    public static DebtController Instance;
     private List<DebtData> actualDebtList = new List<DebtData>();
     private List<DebtData> historyDebtList = new List<DebtData>();
 
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    #region Actions
+    void OnEnable()
+    {
+        Calendar_Controller.OnDayChange += PassDay;
+    }
+
+    void OnDisable()
+    {
+         Calendar_Controller.OnDayChange -= PassDay;
+    }
+    #endregion
+
+
     #region Create Debt
-    private void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int finalDay, int finalMonth, int finalYear, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
+    public void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
     {
         DebtData newDebt = new DebtData
         {
@@ -24,9 +43,7 @@ public class DebtController : MonoBehaviour
             startMonth = Calendar_Controller.Instance.month,
             startYear = Calendar_Controller.Instance.year,
 
-            finalDay = finalDay,
-            finalMonth = finalMonth,
-            finalYear = finalYear,
+            daysQuantityToPay = daysQuantityToPay,
 
             interestPercentage = interestPercentage,
             
@@ -98,6 +115,7 @@ public class DebtController : MonoBehaviour
         for (int i = actualDebtList.Count - 1; i >= 0; i--)
         {
             DebtData debt = actualDebtList[i];
+            debt.passedDays++;
 
             if (IsPastDue(debt) && debt.state == DebtStateEnum.Active)
             {
@@ -117,21 +135,9 @@ public class DebtController : MonoBehaviour
 
     private bool IsPastDue(DebtData debt)
     {
-        var calendar = Calendar_Controller.Instance;
-
-        if (calendar.year > debt.finalYear)
-            return true;
-
-        if (calendar.year == debt.finalYear)
+        if(debt.passedDays > debt.daysQuantityToPay)
         {
-            if (calendar.month > debt.finalMonth)
-                return true;
-
-            if (calendar.month == debt.finalMonth)
-            {
-                if (calendar.day > debt.finalDay)
-                    return true;
-            }
+            return true;
         }
 
         return false;

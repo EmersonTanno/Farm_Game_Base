@@ -73,22 +73,7 @@ public class Calendar_Controller : MonoBehaviour
 
     private void UpdateCanvas()
     {
-        string monthName = "";
-        switch (month)
-        {
-            case 1:
-                monthName = "Ver";
-                break;
-            case 2:
-                monthName = "Out";
-                break;
-            case 3:
-                monthName = "Inv";
-                break;
-            case 4:
-                monthName = "Pri";
-                break;
-        }
+        string monthName = GetSeason(month);
         if (daysText != null)
         {
             daysText.text = $"{day:D2}/{monthName}";
@@ -125,6 +110,55 @@ public class Calendar_Controller : MonoBehaviour
     public void ControllTimeGroup(bool setActive)
     {
         timeGroup.SetActive(setActive);
+    }
+    #endregion
+
+    #region Get Info
+    public string GetSeason(int month)
+    {
+        if(month <= 0)
+        {
+            return "";
+        }
+        if(month > 4)
+        {
+            month %= 4;
+        }
+        switch (month)
+        {
+            case 1:
+                return "Ver";
+            case 2:
+                return "Out";
+            case 3:
+                return "Inv";
+            case 4:
+                return "Pri";
+            default:
+                return "";
+        }
+    }
+
+    public string GetDate(int overDays = 0)
+    {
+        int returnDay = day + overDays;
+        int returnMonth = month;
+        int returnYear = year;
+
+        // Ajusta dias que passam de 30
+        while (returnDay > 30)
+        {
+            returnDay -= 30;
+            returnMonth++;
+
+            if (returnMonth > 4) // passou o último mês
+            {
+                returnMonth = 1;
+                returnYear++;
+            }
+        }
+
+        return $"{returnDay} / {GetSeason(returnMonth)} / {returnYear}";
     }
     #endregion
 

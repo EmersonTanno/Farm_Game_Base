@@ -12,6 +12,7 @@ class GameLanguageManager : MonoBehaviour
     private Dictionary<string, FieldLanguage> sleepMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> timeMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> pauseMenuLanguageMap = new Dictionary<string, FieldLanguage>();
+    private Dictionary<string, FieldLanguage> debtShopMenuLanguageMap = new Dictionary<string, FieldLanguage>();
 
 
     public static event Action OnLanguageChange;
@@ -31,6 +32,7 @@ class GameLanguageManager : MonoBehaviour
         sleepMenuLanguageMap = LoadFile("Languages/sleep_menu");
         timeMenuLanguageMap = LoadFile("Languages/time_menu");
         pauseMenuLanguageMap = LoadFile("Languages/pause_menu");
+        debtShopMenuLanguageMap = LoadFile("Languages/debtShop_menu");
     }
 
     private Dictionary<string, FieldLanguage> LoadFile(string filePath)
@@ -157,6 +159,24 @@ class GameLanguageManager : MonoBehaviour
                 break;
             default:
                 itemName = pauseMenuLanguageMap[item].pt;
+                break;
+        }
+        return itemName;
+    }
+
+    public string GetDebtShopMenuItemName(string item)
+    {
+        string itemName;
+        switch(GameConfigurations.Instance.gameLanguage)
+        {
+            case LanguageEnum.Potugues:
+                itemName = debtShopMenuLanguageMap[item].pt;
+                break;
+            case LanguageEnum.Ingles:
+                itemName = debtShopMenuLanguageMap[item].en;
+                break;
+            default:
+                itemName = debtShopMenuLanguageMap[item].pt;
                 break;
         }
         return itemName;

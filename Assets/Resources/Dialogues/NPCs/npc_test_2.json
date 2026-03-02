@@ -11,6 +11,7 @@
         }
       ]
     },
+
     {
       "dialogueId": "2",
       "dialogue": [
@@ -26,6 +27,7 @@
         }
       ]
     },
+
     {
       "dialogueId": "NormalShop",
       "dialogue": [

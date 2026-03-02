@@ -17,9 +17,8 @@ public class DebtData
     public int startYear;
 
     //data final para pagar
-    public int finalDay;
-    public int finalMonth;
-    public int finalYear;
+    public int daysQuantityToPay;
+    public int passedDays = 0;
 
     //porcentagem de juros por dia passado
     public int interestPercentage;
