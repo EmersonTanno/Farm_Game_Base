@@ -56,130 +56,73 @@ class GameLanguageManager : MonoBehaviour
         return map;
     }
 
-    public string GetItemName(Item item)
-    {   
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
+    private string GetLangageFromDictionary(string item, Dictionary<string, FieldLanguage> dictionary)
+    {
+        if (string.IsNullOrEmpty(item))
+        {
+            Debug.LogWarning("Language key is null or empty.");
+            return "INVALID_KEY";
+        }
+
+        if (dictionary == null)
+        {
+            Debug.LogError("Language dictionary is null.");
+            return "DICT_NULL";
+        }
+
+        if (!dictionary.TryGetValue(item, out FieldLanguage field))
+        {
+            Debug.LogWarning($"Language key '{item}' not found.");
+            return $"MISSING_{item}";
+        }
+
+        switch (GameConfigurations.Instance.gameLanguage)
         {
             case LanguageEnum.Potugues:
-                itemName = itemsLanguageMap[$"item_{item.id}"].pt;
-                break;
+                return field.pt;
+
             case LanguageEnum.Ingles:
-                itemName = itemsLanguageMap[$"item_{item.id}"].en;
-                break;
+                return field.en;
+
             default:
-                itemName = itemsLanguageMap[$"item_{item.id}"].pt;
-                break;
+                Debug.LogWarning("Language not mapped. Falling back to Portuguese.");
+                return field.pt;
         }
-        return itemName;
+    }
+
+    public string GetItemName(Item item)
+    {
+        return GetLangageFromDictionary($"item_{item.id}", itemsLanguageMap);
     }
 
     public string GetSellMenuItemName(string item)
     {
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
-        {
-            case LanguageEnum.Potugues:
-                itemName = sellMenuLanguageMap[item].pt;
-                break;
-            case LanguageEnum.Ingles:
-                itemName = sellMenuLanguageMap[item].en;
-                break;
-            default:
-                itemName = sellMenuLanguageMap[item].pt;
-                break;
-        }
-        return itemName;
+        return GetLangageFromDictionary(item, sellMenuLanguageMap);
     }
 
     public string GetShopMenuItemName(string item)
     {
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
-        {
-            case LanguageEnum.Potugues:
-                itemName = shopMenuLanguageMap[item].pt;
-                break;
-            case LanguageEnum.Ingles:
-                itemName = shopMenuLanguageMap[item].en;
-                break;
-            default:
-                itemName = shopMenuLanguageMap[item].pt;
-                break;
-        }
-        return itemName;
+        return GetLangageFromDictionary(item, shopMenuLanguageMap);
     }
 
     public string GetSleepMenuItemName(string item)
     {
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
-        {
-            case LanguageEnum.Potugues:
-                itemName = sleepMenuLanguageMap[item].pt;
-                break;
-            case LanguageEnum.Ingles:
-                itemName = sleepMenuLanguageMap[item].en;
-                break;
-            default:
-                itemName = sleepMenuLanguageMap[item].pt;
-                break;
-        }
-        return itemName;
+        return GetLangageFromDictionary(item, sleepMenuLanguageMap);
     }
 
     public string GetTimeMenuItemName(string item)
     {
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
-        {
-            case LanguageEnum.Potugues:
-                itemName = timeMenuLanguageMap[item].pt;
-                break;
-            case LanguageEnum.Ingles:
-                itemName = timeMenuLanguageMap[item].en;
-                break;
-            default:
-                itemName = timeMenuLanguageMap[item].pt;
-                break;
-        }
-        return itemName;
+        return GetLangageFromDictionary(item, timeMenuLanguageMap);
     }
 
     public string GetPauseMenuItemName(string item)
     {
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
-        {
-            case LanguageEnum.Potugues:
-                itemName = pauseMenuLanguageMap[item].pt;
-                break;
-            case LanguageEnum.Ingles:
-                itemName = pauseMenuLanguageMap[item].en;
-                break;
-            default:
-                itemName = pauseMenuLanguageMap[item].pt;
-                break;
-        }
-        return itemName;
+        return GetLangageFromDictionary(item, pauseMenuLanguageMap);
     }
 
     public string GetDebtShopMenuItemName(string item)
-    {
-        string itemName;
-        switch(GameConfigurations.Instance.gameLanguage)
-        {
-            case LanguageEnum.Potugues:
-                itemName = debtShopMenuLanguageMap[item].pt;
-                break;
-            case LanguageEnum.Ingles:
-                itemName = debtShopMenuLanguageMap[item].en;
-                break;
-            default:
-                itemName = debtShopMenuLanguageMap[item].pt;
-                break;
-        }
-        return itemName;
+    {  
+        return GetLangageFromDictionary(item, debtShopMenuLanguageMap);
     }
 
     public void ChangeGameLanguage()
