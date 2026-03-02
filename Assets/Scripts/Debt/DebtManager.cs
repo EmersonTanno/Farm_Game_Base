@@ -5,7 +5,7 @@ using UnityEngine;
 public class DebtManager : MonoBehaviour
 {
     private bool isActive = false;
-    private string languageKey = "";
+    private string languageKey = "shark";
     [SerializeField] DebtController controller;
     [SerializeField] List<DebtTypeData> bankDebts;
     [SerializeField] List<DebtTypeData> sharkDebts;
