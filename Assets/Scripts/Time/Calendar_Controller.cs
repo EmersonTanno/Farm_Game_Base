@@ -55,7 +55,6 @@ public class Calendar_Controller : MonoBehaviour
     private void ChangeDay()
     {
         day++;
-        OnDayChange?.Invoke();
         if (day > 30)
         {
             month++;
@@ -63,11 +62,13 @@ public class Calendar_Controller : MonoBehaviour
             if (month > 4)
             {
                 month = 1;
+                year++;
                 OnYearChange?.Invoke();
             }
             SetSeason();
             OnMonthChange?.Invoke();
         }
+        OnDayChange?.Invoke();
         UpdateCanvas();
     }
 
