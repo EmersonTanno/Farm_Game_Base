@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DebtController : MonoBehaviour
 {
@@ -74,6 +75,11 @@ public class DebtController : MonoBehaviour
     {
         return actualDebtList.Find(i => i.id == debtId);
     }
+    
+    public bool HasActiveDebtOfType(DebtTypeEnum type)
+    {
+        return actualDebtList.Any(i => i.debtType == type);
+    }
     #endregion
 
     #region Move Debt
@@ -128,6 +134,11 @@ public class DebtController : MonoBehaviour
                 if (debt.daysOverdue == 1 || debt.daysOverdue % 7 == 0)
                 {
                     debt.debtMarksToPay += Mathf.RoundToInt(debt.debtMarksToPay * (debt.interestPercentage/100f));
+                }
+
+                if(debt.daysOverdue > debt.maxDaysOver)
+                {
+                    Debug.Log("Game Over");
                 }
             }
         }

@@ -28,12 +28,13 @@ public class Tax_System : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnMonthChange += SetSellTaxes;
-        //Calendar_Controller.OnDayChange += SetSellTaxes;
+        Calendar_Controller.OnYearChange += SetAnualTaxDebt;
     }
 
     void OnDisable()
     {
-        Calendar_Controller.OnMonthChange += SetSellTaxes;
+        Calendar_Controller.OnMonthChange -= SetSellTaxes;
+        Calendar_Controller.OnYearChange -= SetAnualTaxDebt;
     }
     #endregion
 
@@ -88,6 +89,15 @@ public class Tax_System : MonoBehaviour
     public void AddSellItemsValueToAnualSells(int value)
     {
         anualSells += value;
+    }
+
+    private void SetAnualTaxDebt()
+    {
+        if (DebtController.Instance.HasActiveDebtOfType(DebtTypeEnum.CITY))
+            return;
+            
+        DebtController.Instance.CreateNewDebt(DebtTypeEnum.CITY, 0, CalculateAnualTax(), 30, 5, 7);
+        anualSells = 0;
     }
     #endregion
 
