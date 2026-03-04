@@ -65,9 +65,9 @@ public class Calendar_Controller : MonoBehaviour
                 year++;
                 OnYearChange?.Invoke();
             }
-            SetSeason();
             OnMonthChange?.Invoke();
         }
+        SetSeason();
         OnDayChange?.Invoke();
         UpdateCanvas();
     }
