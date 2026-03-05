@@ -189,11 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a65d421a2ac96048bf3601bec566534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portraitDB: {fileID: 0}
   dialogueGroup: {fileID: 0}
-  dialogueLeftSide: {fileID: 0}
-  leftText: {fileID: 0}
   dialogueRightSide: {fileID: 0}
   rightText: {fileID: 0}
+  portrait: {fileID: 0}
   buttonGroup: {fileID: 0}
   buttons:
   - {fileID: 0}
@@ -322,7 +322,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b492833dc0e8fcc4c993af9d72c60df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSession: {fileID: 0}
+  pauseCanvasGroup: {fileID: 0}
   pauseCanvas: {fileID: 0}
+  settingsCanvas: {fileID: 0}
+  backGroundCanvas: {fileID: 0}
+  pauseAnimator: {fileID: 0}
+  languageSelector: {fileID: 0}
+  pauseText: {fileID: 0}
+  resumeText: {fileID: 0}
+  settingsText: {fileID: 0}
+  titleText: {fileID: 0}
+  exitText: {fileID: 0}
+  languageText: {fileID: 0}
+  applyText: {fileID: 0}
+  returnText: {fileID: 0}
+  gamePaused: 0
+  canPressEsc: 1
 --- !u!1 &4868641703342699365
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +507,7 @@ MonoBehaviour:
   minutes: 50
   hours: 8
   dataText: {fileID: 0}
+  timerPaused: 0
   timerText: {fileID: 0}
   bedCanva: {fileID: 0}
   questionText: {fileID: 0}
@@ -564,6 +581,7 @@ MonoBehaviour:
   slotContainer: {fileID: 0}
   slotPrefab: {fileID: 3694058400320502989, guid: cb0be3cffc234424e9e712020a6a673a, type: 3}
   buyButtonText: {fileID: 0}
+  exitButtonText: {fileID: 0}
   itemVerao:
   - {fileID: 11400000, guid: 4b6b4dc864da1fc46929815596c37dd0, type: 2}
   - {fileID: 11400000, guid: 9cde7149f6dbdcf43a8d65430fcb0897, type: 2}
@@ -1069,24 +1087,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1177114416891016974, guid: b1d4a8415f37ecc45a385282a96ca828, type: 3}
   m_PrefabInstance: {fileID: 6036249047560094858}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4868641703996404615 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1177114416891016973, guid: b1d4a8415f37ecc45a385282a96ca828, type: 3}
-  m_PrefabInstance: {fileID: 6036249047560094858}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1736473850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4868641703996404615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a23af3f1cae1b4198ce5b199b0ddc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedWeather: 2
 --- !u!1001 &6128994510244699631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1233,24 +1233,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4042705106787936511, guid: de41c06f773b56444847e5c1be15d512, type: 3}
   m_PrefabInstance: {fileID: 6353972922151168262}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6933091880905589242 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4042705106787936508, guid: de41c06f773b56444847e5c1be15d512, type: 3}
-  m_PrefabInstance: {fileID: 6353972922151168262}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3743154106258802046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6933091880905589242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3a23af3f1cae1b4198ce5b199b0ddc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedWeather: 3
 --- !u!1001 &6917201185780094179
 PrefabInstance:
   m_ObjectHideFlags: 0
