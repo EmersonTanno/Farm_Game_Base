@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeatherController : MonoBehaviour
@@ -8,7 +9,7 @@ public class WeatherController : MonoBehaviour
     public static event Action<WeatherEnum> OnWeatherChanged;
 
     private WeatherEnum weather = WeatherEnum.SUN;
-    private DayWeather dayWeather;
+    private List<DayWeather> dayWeather;
 
     void Awake()
     {
@@ -19,7 +20,6 @@ public class WeatherController : MonoBehaviour
         }
 
         Instance = this;
-        //DontDestroyOnLoad(gameObject);
     }
 
     void OnEnable()
@@ -38,29 +38,45 @@ public class WeatherController : MonoBehaviour
     {
         dayWeather = GenerateDayWeather();
 
-        SetWeather(
-            dayWeather.baseWeather == WeatherEnum.SUN
-            ? WeatherEnum.SUN
-            : WeatherEnum.SUN
-        );
-        Debug.Log($"Clima do dia: {dayWeather.baseWeather} | {dayWeather.rainStartHour} - {dayWeather.rainEndHour}");
+        if(dayWeather.Count == 0)
+        {
+            SetWeather(WeatherEnum.SUN);
+        }
+        LogDayWeatherPrevision();
+    }
+
+    private void LogDayWeatherPrevision()
+    {
+        foreach(DayWeather d in dayWeather)
+        {
+            Debug.Log($"Clima do dia: {d.baseWeather} | {d.rainStartHour} - {d.rainEndHour}");
+        }
     }
 
     private void CheckHourWeather()
     {
-        if (dayWeather.baseWeather == WeatherEnum.SUN)
-            return;
-
         int hour = Time_Controll.Instance.hours;
+        WeatherEnum newWeather = GetWeatherForHour(hour);
 
-        if (hour == dayWeather.rainStartHour)
+        SetWeather(newWeather);
+    }
+
+    private WeatherEnum GetWeatherForHour(int hour)
+    {
+        foreach (var weatherEvent in dayWeather)
         {
-            SetWeather(dayWeather.baseWeather);
-            StartCoroutine(WaterSoilWithRain());
+            if (hour == weatherEvent.rainStartHour)
+            {
+                StartCoroutine(WaterSoilWithRain());
+            }
+
+            if (hour >= weatherEvent.rainStartHour && hour < weatherEvent.rainEndHour)
+            {
+                return weatherEvent.baseWeather;
+            }
         }
 
-        if (hour == dayWeather.rainEndHour)
-            SetWeather(WeatherEnum.SUN);
+        return WeatherEnum.SUN;
     }
 
     public void SetWeather(WeatherEnum newWeather)
@@ -73,30 +89,61 @@ public class WeatherController : MonoBehaviour
 
     public WeatherEnum GetWeather() => weather;
 
-    private DayWeather GenerateDayWeather()
+    private List<DayWeather> GenerateDayWeather()
     {
-        DayWeather dw = new DayWeather();
+        List<DayWeather> events = new List<DayWeather>();
 
-        float roll = UnityEngine.Random.value;
+        // 35% chance de sol total - talvez setar probabilidades diferentes para cada estação
+        if (UnityEngine.Random.value < 0.35f)
+            return events;
 
-        if (roll < 0.05f)
-            dw.baseWeather = WeatherEnum.TEMPEST;
-        else if (roll < 0.30f)
-            dw.baseWeather = WeatherEnum.RAIN;
-        else
-            dw.baseWeather = WeatherEnum.SUN;
-
-        if (dw.baseWeather == WeatherEnum.SUN)
+        // Quantidade de blocos de chuva (1 a 5)
+        int rainQuantity = 1;
+        while (UnityEngine.Random.value > 0.80f && rainQuantity < 5)
         {
-            dw.rainStartHour = -1;
-            dw.rainEndHour = -1;
-            return dw;
+            rainQuantity++;
         }
 
-        dw.rainStartHour = UnityEngine.Random.Range(8, 16);
-        dw.rainEndHour = UnityEngine.Random.Range(dw.rainStartHour + 2, 22);
+        // Se chegou no máximo → chuva longa ou tempestade
+        if (rainQuantity >= 5)
+        {
+            WeatherEnum type = UnityEngine.Random.value > 0.7f 
+                ? WeatherEnum.TEMPEST 
+                : WeatherEnum.RAIN;
 
-        return dw;
+            events.Add(new DayWeather()
+            {
+                baseWeather = type,
+                rainStartHour = 8,
+                rainEndHour = 24
+            });
+
+            return events;
+        }
+
+        // Caso normal: múltiplos blocos distribuídos
+        int currentHour = 6;
+
+        for (int i = 0; i < rainQuantity; i++)
+        {
+            int start = UnityEngine.Random.Range(currentHour, 20);
+            int duration = UnityEngine.Random.Range(1, 4); // 1 a 3 horas
+            int end = Mathf.Min(start + duration, 24);
+
+            events.Add(new DayWeather()
+            {
+                baseWeather = WeatherEnum.RAIN,
+                rainStartHour = start,
+                rainEndHour = end
+            });
+
+            currentHour = end + UnityEngine.Random.Range(1, 3); // espaço entre chuvas
+
+            if (currentHour >= 23)
+                break;
+        }
+
+        return events;
     }
 
     private IEnumerator WaterSoilWithRain()
