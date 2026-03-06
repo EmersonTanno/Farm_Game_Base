@@ -165,7 +165,7 @@ public class WeatherController : MonoBehaviour
             if (UnityEngine.Random.value < rainProb.tempestProbability)
             {
                 WeatherEnum midType = GetWeatherType(
-                    rainProb.tempestProbability,
+                    rainProb.tempestProbability * 2,
                     Calendar_Controller.Instance.season
                 );
 
