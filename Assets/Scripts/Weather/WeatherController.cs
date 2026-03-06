@@ -8,8 +8,10 @@ public class WeatherController : MonoBehaviour
     public static WeatherController Instance;
     public static event Action<WeatherEnum> OnWeatherChanged;
 
+    [SerializeField] List<SeasonRainProb> seasonRainProb;
+
     private WeatherEnum weather = WeatherEnum.SUN;
-    private List<DayWeather> dayWeather;
+    private List<DayWeather> dayWeatherList;
 
     void Awake()
     {
@@ -20,6 +22,11 @@ public class WeatherController : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    void Start()
+    {
+        GenerateNewDay();
     }
 
     void OnEnable()
@@ -36,26 +43,28 @@ public class WeatherController : MonoBehaviour
 
     private void GenerateNewDay()
     {
-        dayWeather = GenerateDayWeather();
+        dayWeatherList = GenerateDayWeather();
 
-        if(dayWeather.Count == 0)
-        {
-            SetWeather(WeatherEnum.SUN);
-        }
+        CheckHourWeather();
+        
         LogDayWeatherPrevision();
     }
 
     private void LogDayWeatherPrevision()
     {
-        foreach(DayWeather d in dayWeather)
+        Calendar_Controller calendar = Calendar_Controller.Instance;
+        string dayWeather = $"PREVISÂO DO TEMPO {calendar.day}/{calendar.month}/{calendar.year} \n\n";
+        foreach(DayWeather d in dayWeatherList)
         {
-            Debug.Log($"Clima do dia: {d.baseWeather} | {d.rainStartHour} - {d.rainEndHour}");
+            dayWeather += $"Clima do dia: {d.weather} | {d.startHour} \n";
         }
+        Debug.Log(dayWeather);
     }
 
     private void CheckHourWeather()
     {
         int hour = Time_Controll.Instance.hours;
+
         WeatherEnum newWeather = GetWeatherForHour(hour);
 
         SetWeather(newWeather);
@@ -63,20 +72,26 @@ public class WeatherController : MonoBehaviour
 
     private WeatherEnum GetWeatherForHour(int hour)
     {
-        foreach (var weatherEvent in dayWeather)
-        {
-            if (hour == weatherEvent.rainStartHour)
-            {
-                StartCoroutine(WaterSoilWithRain());
-            }
+        WeatherEnum newWeather = WeatherEnum.SUN;
 
-            if (hour >= weatherEvent.rainStartHour && hour < weatherEvent.rainEndHour)
+        foreach (var weatherEvent in dayWeatherList)
+        {
+            if (hour >= weatherEvent.startHour)
             {
-                return weatherEvent.baseWeather;
+                newWeather = weatherEvent.weather;
+            }
+            else
+            {
+                break;
             }
         }
 
-        return WeatherEnum.SUN;
+        if (newWeather == WeatherEnum.RAIN || newWeather == WeatherEnum.TEMPEST)
+        {
+            StartCoroutine(WaterSoilWithRain());
+        }
+
+        return newWeather;
     }
 
     public void SetWeather(WeatherEnum newWeather)
@@ -92,54 +107,85 @@ public class WeatherController : MonoBehaviour
     private List<DayWeather> GenerateDayWeather()
     {
         List<DayWeather> events = new List<DayWeather>();
+        SeasonRainProb rainProb = GetSeasonRainProb(Calendar_Controller.Instance.season);
 
-        // 35% chance de sol total - talvez setar probabilidades diferentes para cada estação
-        if (UnityEngine.Random.value < 0.35f)
+        // Sempre começa o dia com sol
+        events.Add(new DayWeather
+        {
+            weather = WeatherEnum.SUN,
+            startHour = 6
+        });
+
+        // chance de dia totalmente ensolarado
+        if (UnityEngine.Random.value < rainProb.sunnyDayChance)
             return events;
 
         // Quantidade de blocos de chuva (1 a 5)
         int rainQuantity = 1;
-        while (UnityEngine.Random.value > 0.80f && rainQuantity < 5)
+        while (UnityEngine.Random.value < rainProb.multipleRain && rainQuantity < 5)
         {
             rainQuantity++;
         }
 
-        // Se chegou no máximo → chuva longa ou tempestade
+        // Caso extremo: chuva o dia inteiro
         if (rainQuantity >= 5)
         {
-            WeatherEnum type = UnityEngine.Random.value > 0.7f 
-                ? WeatherEnum.TEMPEST 
-                : WeatherEnum.RAIN;
+            WeatherEnum type = GetWeatherType(rainProb.tempestProbability, Calendar_Controller.Instance.season);
 
-            events.Add(new DayWeather()
+            events.Add(new DayWeather
             {
-                baseWeather = type,
-                rainStartHour = 8,
-                rainEndHour = 24
+                weather = type,
+                startHour = 8
             });
 
             return events;
         }
 
-        // Caso normal: múltiplos blocos distribuídos
         int currentHour = 6;
 
         for (int i = 0; i < rainQuantity; i++)
         {
-            int start = UnityEngine.Random.Range(currentHour, 20);
-            int duration = UnityEngine.Random.Range(1, 4); // 1 a 3 horas
-            int end = Mathf.Min(start + duration, 24);
+            int start = UnityEngine.Random.Range(currentHour + 1, 20);
+            int duration = UnityEngine.Random.Range(1, 4);
+            int end = Mathf.Min(start + duration, 23);
 
-            events.Add(new DayWeather()
+            WeatherEnum type = GetWeatherType(
+                rainProb.tempestProbability,
+                Calendar_Controller.Instance.season
+            );
+
+            // começa chuva/neve
+            events.Add(new DayWeather
             {
-                baseWeather = WeatherEnum.RAIN,
-                rainStartHour = start,
-                rainEndHour = end
+                weather = type,
+                startHour = start
             });
 
-            currentHour = end + UnityEngine.Random.Range(1, 3); // espaço entre chuvas
+            // possível mudança de intensidade no meio
+            if (UnityEngine.Random.value < rainProb.tempestProbability)
+            {
+                WeatherEnum midType = GetWeatherType(
+                    rainProb.tempestProbability,
+                    Calendar_Controller.Instance.season
+                );
 
-            if (currentHour >= 23)
+                events.Add(new DayWeather
+                {
+                    weather = midType,
+                    startHour = start + duration / 2
+                });
+            }
+
+            // volta para sol
+            events.Add(new DayWeather
+            {
+                weather = WeatherEnum.SUN,
+                startHour = end
+            });
+
+            currentHour = end + UnityEngine.Random.Range(1, 3);
+
+            if (currentHour >= 24)
                 break;
         }
 
@@ -152,4 +198,29 @@ public class WeatherController : MonoBehaviour
         
         TileMapController.Instance.WaterSoilWithRain();
     }
+
+    private SeasonRainProb GetSeasonRainProb(Season season)
+    {
+        return seasonRainProb.Find(i => i.season == season);
+    }
+
+    private WeatherEnum GetWeatherType(float probability, Season season)
+    {
+        WeatherEnum type;
+        if(season == Season.Inverno)
+        {
+            type = UnityEngine.Random.value < probability
+                ? WeatherEnum.BLIZZARD
+                : WeatherEnum.SNOW;
+        }
+        else
+        {
+            type = UnityEngine.Random.value < probability
+                ? WeatherEnum.TEMPEST
+                : WeatherEnum.RAIN;
+        }
+
+        return type;
+    }
+    
 }

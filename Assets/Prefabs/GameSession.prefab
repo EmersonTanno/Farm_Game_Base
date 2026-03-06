@@ -14985,6 +14985,90 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4924957106501786187}
     m_Modifications:
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonProbabilities.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[1].season
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[2].season
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[3].season
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[0].normalRain
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[1].normalRain
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[2].normalRain
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[3].normalRain
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[0].multipleRain
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[1].multipleRain
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[2].multipleRain
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[3].multipleRain
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[0].sunnyDayChance
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[1].sunnyDayChance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[2].sunnyDayChance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[3].sunnyDayChance
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[0].tempestProbability
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[1].tempestProbability
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[2].tempestProbability
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 106489982, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: seasonRainProb.Array.data[3].tempestProbability
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 417645705, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: npcs.Array.size
       value: 3
