@@ -19293,50 +19293,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: autoRandomSeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.size3D
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: VelocityModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: VelocityModule.inWorldSpace
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSpeed.minScalar
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSize.minMaxState
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSizeY.minMaxState
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1054182611721396789, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
-      propertyPath: InitialModule.startSizeZ.minMaxState
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1054182611721396791, guid: 02266786fdf592a40b28162f8ff54255, type: 3}
       propertyPath: m_Name
       value: SnowEffect

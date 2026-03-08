@@ -11,7 +11,7 @@ public class WeatherController : MonoBehaviour
     [SerializeField] List<SeasonRainProb> seasonRainProb;
 
     private WeatherEnum weather = WeatherEnum.SUN;
-    private List<DayWeather> dayWeatherList;
+    private List<MonthWeather> weatherList = new List<MonthWeather>();
 
     void Awake()
     {
@@ -26,39 +26,81 @@ public class WeatherController : MonoBehaviour
 
     void Start()
     {
-        GenerateNewDay();
+        if(weatherList.Count == 0)
+        {
+            GenerateMonthWeather(1);
+            GenerateMonthWeather(2);
+        }
+
+        LogDayWeatherPrevision();
+    }
+
+    private void GenerateMonthWeather(int month)
+    {
+        MonthWeather newMonth = new MonthWeather
+        {
+            month = month
+        };
+
+        for (int i = 0; i < 30; i++)
+        {
+            newMonth.days.Add(GenerateDayWeather());
+        }
+
+        weatherList.Add(newMonth);
     }
 
     void OnEnable()
     {
-        Calendar_Controller.OnDayChange += GenerateNewDay;
+        //Calendar_Controller.OnDayChange += GenerateNewDay;
         Time_Controll.OnHourChange += CheckHourWeather;
     }
 
     void OnDisable()
     {
-        Calendar_Controller.OnDayChange -= GenerateNewDay;
+        //Calendar_Controller.OnDayChange -= GenerateNewDay;
         Time_Controll.OnHourChange -= CheckHourWeather;
     }
 
-    private void GenerateNewDay()
-    {
-        dayWeatherList = GenerateDayWeather();
+    // private void GenerateNewDay()
+    // {
+    //     weatherList = GenerateDayWeather();
 
-        CheckHourWeather();
+    //     CheckHourWeather();
         
-        LogDayWeatherPrevision();
-    }
+    //     LogDayWeatherPrevision();
+    // }
 
     private void LogDayWeatherPrevision()
     {
         Calendar_Controller calendar = Calendar_Controller.Instance;
-        string dayWeather = $"PREVISÂO DO TEMPO {calendar.day}/{calendar.month}/{calendar.year} \n\n";
-        foreach(DayWeather d in dayWeatherList)
+        string dayWeather = $"PREVISÂO DO TEMPO {weatherList[0].month}/{calendar.year} \n\n";
+        int count = 1;
+        foreach(List<DayWeather> d in weatherList[0].days)
         {
-            dayWeather += $"Clima do dia: {d.weather} | {d.startHour} \n";
+            dayWeather += $"Clima do dia {count} \n";
+            foreach(DayWeather day in d)
+            {
+                dayWeather += $"{day.weather} | {day.startHour} \n";
+            }
+            dayWeather += $"\n";
+            count++;
         }
         Debug.Log(dayWeather);
+
+        string dayWeather2 = $"PREVISÂO DO TEMPO {weatherList[1].month}/{calendar.year} \n\n";
+        count = 1;
+        foreach(List<DayWeather> d in weatherList[1].days)
+        {
+            dayWeather2 += $"Clima do dia {count} - \n";
+            foreach(DayWeather day in d)
+            {
+                dayWeather2 += $"{day.weather} | {day.startHour} \n";
+            }
+            dayWeather2 += $"\n";
+            count++;
+        }
+        Debug.Log(dayWeather2);
     }
 
     private void CheckHourWeather()
@@ -73,8 +115,11 @@ public class WeatherController : MonoBehaviour
     private WeatherEnum GetWeatherForHour(int hour)
     {
         WeatherEnum newWeather = WeatherEnum.SUN;
+        Calendar_Controller calendar = Calendar_Controller.Instance;
 
-        foreach (var weatherEvent in dayWeatherList)
+        List<DayWeather> dayWeather = weatherList.Find(i => i.month == calendar.month).days[calendar.day];
+
+        foreach (var weatherEvent in dayWeather)
         {
             if (hour >= weatherEvent.startHour)
             {
