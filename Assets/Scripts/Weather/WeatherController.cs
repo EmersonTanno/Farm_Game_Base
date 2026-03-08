@@ -44,7 +44,7 @@ public class WeatherController : MonoBehaviour
 
         for (int i = 0; i < 30; i++)
         {
-            newMonth.days.Add(GenerateDayWeather());
+            newMonth.days.Add(GenerateDayWeather(Calendar_Controller.Instance.GetSeasonType(month)));
         }
 
         weatherList.Add(newMonth);
@@ -61,15 +61,6 @@ public class WeatherController : MonoBehaviour
         //Calendar_Controller.OnDayChange -= GenerateNewDay;
         Time_Controll.OnHourChange -= CheckHourWeather;
     }
-
-    // private void GenerateNewDay()
-    // {
-    //     weatherList = GenerateDayWeather();
-
-    //     CheckHourWeather();
-        
-    //     LogDayWeatherPrevision();
-    // }
 
     private void LogDayWeatherPrevision()
     {
@@ -149,10 +140,10 @@ public class WeatherController : MonoBehaviour
 
     public WeatherEnum GetWeather() => weather;
 
-    private List<DayWeather> GenerateDayWeather()
+    private List<DayWeather> GenerateDayWeather(Season season)
     {
         List<DayWeather> events = new List<DayWeather>();
-        SeasonRainProb rainProb = GetSeasonRainProb(Calendar_Controller.Instance.season);
+        SeasonRainProb rainProb = GetSeasonRainProb(season);
 
         // Sempre começa o dia com sol
         events.Add(new DayWeather
@@ -175,7 +166,7 @@ public class WeatherController : MonoBehaviour
         // Caso extremo: chuva o dia inteiro
         if (rainQuantity >= 5)
         {
-            WeatherEnum type = GetWeatherType(rainProb.tempestProbability, Calendar_Controller.Instance.season);
+            WeatherEnum type = GetWeatherType(rainProb.tempestProbability, season);
 
             events.Add(new DayWeather
             {
@@ -196,7 +187,7 @@ public class WeatherController : MonoBehaviour
 
             WeatherEnum type = GetWeatherType(
                 rainProb.tempestProbability,
-                Calendar_Controller.Instance.season
+                season
             );
 
             // começa chuva/neve
@@ -211,7 +202,7 @@ public class WeatherController : MonoBehaviour
             {
                 WeatherEnum midType = GetWeatherType(
                     rainProb.tempestProbability * 2,
-                    Calendar_Controller.Instance.season
+                    season
                 );
 
                 events.Add(new DayWeather
@@ -234,7 +225,22 @@ public class WeatherController : MonoBehaviour
                 break;
         }
 
-        return events;
+        return RecycleDayWeather(events);
+    }
+
+    private List<DayWeather> RecycleDayWeather(List<DayWeather> dayWeather)
+    {
+        List<DayWeather> cleaned = new List<DayWeather>();
+
+        foreach (var weather in dayWeather)
+        {
+            if (cleaned.Count == 0 || cleaned[^1].weather != weather.weather)
+            {
+                cleaned.Add(weather);
+            }
+        }
+
+        return cleaned;
     }
 
     private IEnumerator WaterSoilWithRain()

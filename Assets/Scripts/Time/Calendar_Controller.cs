@@ -140,6 +140,31 @@ public class Calendar_Controller : MonoBehaviour
         }
     }
 
+    public Season GetSeasonType(int month)
+    {
+        if(month <= 0)
+        {
+            return Season.Verao;
+        }
+        if(month > 4)
+        {
+            month %= 4;
+        }
+        switch (month)
+        {
+            case 1:
+                return Season.Verao;
+            case 2:
+                return Season.Outono;
+            case 3:
+                return Season.Inverno;
+            case 4:
+                return Season.Primavera;
+            default:
+                return Season.Verao;
+        }
+    }
+
     public string GetDate(int overDays = 0)
     {
         int returnDay = day + overDays;
