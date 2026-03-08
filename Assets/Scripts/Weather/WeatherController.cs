@@ -26,6 +26,7 @@ public class WeatherController : MonoBehaviour
 
     void OnEnable()
     {
+        Calendar_Controller.OnDayChange += CheckGeneratedWeather;
         Calendar_Controller.OnMonthChange += GenerateWeatherForTwoMonths;
         SaveSystem.OnLoadFinish += CheckGeneratedWeather;
         Time_Controll.OnHourChange += CheckHourWeather;
@@ -33,6 +34,7 @@ public class WeatherController : MonoBehaviour
 
     void OnDisable()
     {
+        Calendar_Controller.OnDayChange -= CheckGeneratedWeather;
         Calendar_Controller.OnMonthChange -= GenerateWeatherForTwoMonths;
         SaveSystem.OnLoadFinish -= CheckGeneratedWeather;
         Time_Controll.OnHourChange -= CheckHourWeather;
@@ -82,6 +84,12 @@ public class WeatherController : MonoBehaviour
     private WeatherEnum GetWeatherForHour(int hour)
     {
         WeatherEnum newWeather = WeatherEnum.SUN;
+
+        if(weatherList.Count == 0)
+        {
+            return newWeather;
+        }
+
         Calendar_Controller calendar = Calendar_Controller.Instance;
 
         List<DayWeather> dayWeather = weatherList.Find(i => i.month == calendar.month).days[calendar.day];
@@ -119,21 +127,9 @@ public class WeatherController : MonoBehaviour
     #region Check and Generate Month Weathers Controllers
     private void CheckGeneratedWeather()
     {
-        if(weatherList.Count == 0)
+        if(weatherList.Count == 0 || (!BootContext.IsLoadingGame && weatherList.Count == 0))
         {
-            Debug.Log("NotLoaded");
             GenerateWeatherForTwoMonths();
-        }
-        else
-        {
-            Debug.Log("Loaded");
-            List<DayWeather> list = weatherList[0].days[Calendar_Controller.Instance.day];
-            string print = "";
-            foreach(DayWeather day in list)
-            {
-                print += $"{day.weather} - {day.startHour} \n";
-            }
-            Debug.Log(print);
         }
     }
 
