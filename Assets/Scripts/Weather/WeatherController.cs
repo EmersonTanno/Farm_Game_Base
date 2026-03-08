@@ -24,41 +24,17 @@ public class WeatherController : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        if(weatherList.Count == 0)
-        {
-            GenerateMonthWeather(1);
-            GenerateMonthWeather(2);
-        }
-
-        LogDayWeatherPrevision();
-    }
-
-    private void GenerateMonthWeather(int month)
-    {
-        MonthWeather newMonth = new MonthWeather
-        {
-            month = month
-        };
-
-        for (int i = 0; i < 30; i++)
-        {
-            newMonth.days.Add(GenerateDayWeather(Calendar_Controller.Instance.GetSeasonType(month)));
-        }
-
-        weatherList.Add(newMonth);
-    }
-
     void OnEnable()
     {
-        //Calendar_Controller.OnDayChange += GenerateNewDay;
+        Calendar_Controller.OnMonthChange += GenerateWeatherForTwoMonths;
+        SaveSystem.OnLoadFinish += CheckGeneratedWeather;
         Time_Controll.OnHourChange += CheckHourWeather;
     }
 
     void OnDisable()
     {
-        //Calendar_Controller.OnDayChange -= GenerateNewDay;
+        Calendar_Controller.OnMonthChange -= GenerateWeatherForTwoMonths;
+        SaveSystem.OnLoadFinish -= CheckGeneratedWeather;
         Time_Controll.OnHourChange -= CheckHourWeather;
     }
 
@@ -139,6 +115,64 @@ public class WeatherController : MonoBehaviour
     }
 
     public WeatherEnum GetWeather() => weather;
+
+    #region Check and Generate Month Weathers Controllers
+    private void CheckGeneratedWeather()
+    {
+        if(weatherList.Count == 0)
+        {
+            Debug.Log("NotLoaded");
+            GenerateWeatherForTwoMonths();
+        }
+        else
+        {
+            Debug.Log("Loaded");
+            List<DayWeather> list = weatherList[0].days[Calendar_Controller.Instance.day];
+            string print = "";
+            foreach(DayWeather day in list)
+            {
+                print += $"{day.weather} - {day.startHour} \n";
+            }
+            Debug.Log(print);
+        }
+    }
+
+    private void GenerateWeatherForTwoMonths()
+    {
+        Calendar_Controller calendar = Calendar_Controller.Instance;
+
+        if(weatherList.Count == 0 || weatherList.Count > 2)
+        {
+            weatherList.Clear();
+            GenerateMonthWeather(calendar.month);
+            GenerateMonthWeather(calendar.GetMonth(calendar.month + 1));
+        }
+        else
+        {
+            weatherList.RemoveAt(0);
+            GenerateMonthWeather(calendar.GetMonth(calendar.month + 1));
+        }
+        LogDayWeatherPrevision();
+    }
+
+
+    #endregion
+
+    #region Generate Weather Functions
+    private void GenerateMonthWeather(int month)
+    {
+        MonthWeather newMonth = new MonthWeather
+        {
+            month = month
+        };
+
+        for (int i = 0; i < 30; i++)
+        {
+            newMonth.days.Add(GenerateDayWeather(Calendar_Controller.Instance.GetSeasonType(month)));
+        }
+
+        weatherList.Add(newMonth);
+    }
 
     private List<DayWeather> GenerateDayWeather(Season season)
     {
@@ -243,13 +277,6 @@ public class WeatherController : MonoBehaviour
         return cleaned;
     }
 
-    private IEnumerator WaterSoilWithRain()
-    {
-        yield return new WaitForSeconds(2f);
-        
-        TileMapController.Instance.WaterSoilWithRain();
-    }
-
     private SeasonRainProb GetSeasonRainProb(Season season)
     {
         return seasonRainProb.Find(i => i.season == season);
@@ -273,5 +300,26 @@ public class WeatherController : MonoBehaviour
 
         return type;
     }
-    
+    #endregion
+
+    #region Support Functions
+    private IEnumerator WaterSoilWithRain()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        TileMapController.Instance.WaterSoilWithRain();
+    }
+    #endregion
+
+    #region Save / Load
+    public void Save(ref WeatherSaveData data)
+    {
+        data.weatherData = new WeatherSaveData().ConvertMonthWeatherDataToSave(weatherList) ;
+    }
+
+    public void Load(WeatherSaveData data)
+    {
+        weatherList = data.ConvertSaveToMonthWeatherData();
+    }
+    #endregion
 }

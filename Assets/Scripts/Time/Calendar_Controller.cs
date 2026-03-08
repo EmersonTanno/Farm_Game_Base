@@ -186,6 +186,18 @@ public class Calendar_Controller : MonoBehaviour
 
         return $"{returnDay} / {GetSeason(returnMonth)} / {returnYear}";
     }
+
+    public int GetMonth(int month)
+    {
+        if(month <= 0)
+        {
+            return month;
+        }
+        else
+        {
+            return month % 4;
+        }
+    }
     #endregion
 
     #region Save / Load

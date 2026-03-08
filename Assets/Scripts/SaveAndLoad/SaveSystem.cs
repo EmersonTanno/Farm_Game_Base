@@ -25,6 +25,7 @@ public class SaveSystem
         public FarmSaveData FarmSaveData;
         public NPCSaveData NPCSaveData;
         public TaxSaveData TaxSaveData;
+        public WeatherSaveData WeatherSaveData;
     }
 
     #region File Names
@@ -93,6 +94,8 @@ public class SaveSystem
             _saveData.NPCSaveData = new NPCSaveData();
         if (_saveData.TaxSaveData == null)
             _saveData.TaxSaveData = new TaxSaveData();
+        if(_saveData.WeatherSaveData == null)
+            _saveData.WeatherSaveData = new WeatherSaveData();
 
         Status_Controller.Instance.Save(ref _saveData.PlayerSaveData);
         InventoryManager.Instance.Save(ref _saveData.InventorySaveData);
@@ -100,6 +103,7 @@ public class SaveSystem
         PersistenceController.Instance.Save(ref _saveData.FarmSaveData);
         NPCController.Instance.Save(ref _saveData.NPCSaveData);
         Tax_System.Instance.Save(ref _saveData.TaxSaveData);
+        WeatherController.Instance.Save(ref _saveData.WeatherSaveData);
     }
 
     private static void WriteMainSave(string saveName)
@@ -161,6 +165,7 @@ public class SaveSystem
         PersistenceController.Instance.Load(_saveData.FarmSaveData);
         NPCController.Instance.Load(_saveData.NPCSaveData);
         Tax_System.Instance.Load(_saveData.TaxSaveData);
+        WeatherController.Instance.Load(_saveData.WeatherSaveData);
     }
     #endregion
 
