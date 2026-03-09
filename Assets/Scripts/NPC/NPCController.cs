@@ -167,7 +167,6 @@ public class NPCController : MonoBehaviour
             if (routine != null)
             {
                 npc.StartRoutine(routine);
-                Debug.Log("Initiating");
             }
         }
     }
@@ -244,7 +243,6 @@ public class NPCController : MonoBehaviour
     public void SetNPCInCutscene(int npcId, Vector2Int pos, SceneLocationEnum scene)
     {
         NPC npc = GetNPC(npcId);
-        Debug.Log(npc.npcData.gridPosition);
         npc.npcData.gridPosition = pos;
         npc.npcData.location = scene;
 
