@@ -15499,7 +15499,7 @@ PrefabInstance:
       objectReference: {fileID: 4924957106299042976}
     - target: {fileID: 7975833894379980945, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8160908078903560732, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: loadingListCanvas.Array.data[0]
