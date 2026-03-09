@@ -30,6 +30,8 @@ public class Rain : MonoBehaviour
             return;
         }
 
+        Debug.Log("Player Found");
+
         followTarget = player.transform;
 
         offset = transform.position - followTarget.position;
@@ -40,7 +42,11 @@ public class Rain : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!initialized || followTarget == null) return;
+        if (!initialized || followTarget == null)
+        {
+            Debug.Log("Player NOT FOUND");
+          return;  
+        } 
 
         transform.position = followTarget.position + offset;
     }
