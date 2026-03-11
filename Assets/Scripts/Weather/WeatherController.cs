@@ -40,37 +40,7 @@ public class WeatherController : MonoBehaviour
         Time_Controll.OnHourChange -= CheckHourWeather;
     }
 
-    private void LogDayWeatherPrevision()
-    {
-        Calendar_Controller calendar = Calendar_Controller.Instance;
-        string dayWeather = $"PREVISÂO DO TEMPO {weatherList[0].month}/{calendar.year} \n\n";
-        int count = 1;
-        foreach(List<DayWeather> d in weatherList[0].days)
-        {
-            dayWeather += $"Clima do dia {count} \n";
-            foreach(DayWeather day in d)
-            {
-                dayWeather += $"{day.weather} | {day.startHour} \n";
-            }
-            dayWeather += $"\n";
-            count++;
-        }
-        Debug.Log(dayWeather);
 
-        string dayWeather2 = $"PREVISÂO DO TEMPO {weatherList[1].month}/{calendar.year} \n\n";
-        count = 1;
-        foreach(List<DayWeather> d in weatherList[1].days)
-        {
-            dayWeather2 += $"Clima do dia {count} - \n";
-            foreach(DayWeather day in d)
-            {
-                dayWeather2 += $"{day.weather} | {day.startHour} \n";
-            }
-            dayWeather2 += $"\n";
-            count++;
-        }
-        Debug.Log(dayWeather2);
-    }
 
     private void CheckHourWeather()
     {
@@ -148,7 +118,6 @@ public class WeatherController : MonoBehaviour
             weatherList.RemoveAt(0);
             GenerateMonthWeather(calendar.GetMonth(calendar.month + 1));
         }
-        LogDayWeatherPrevision();
     }
 
 
@@ -304,6 +273,54 @@ public class WeatherController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         
         TileMapController.Instance.WaterSoilWithRain();
+    }
+    #endregion
+
+    #region Log
+    private void LogGeneratedWeather()
+    {
+        Calendar_Controller calendar = Calendar_Controller.Instance;
+        string dayWeather = $"PREVISÂO DO TEMPO {calendar.day} {weatherList[0].month} \n\n";
+
+            foreach(DayWeather day in weatherList[0].days[calendar.day])
+            {
+                dayWeather += $"{day.weather} | {day.startHour} \n";
+            }
+            dayWeather += $"\n";
+        
+        Debug.Log(dayWeather);
+    }
+
+    private void LogDayWeatherPrevision()
+    {
+        Calendar_Controller calendar = Calendar_Controller.Instance;
+        string dayWeather = $"PREVISÂO DO TEMPO {weatherList[0].month}/{calendar.year} \n\n";
+        int count = 1;
+        foreach(List<DayWeather> d in weatherList[0].days)
+        {
+            dayWeather += $"Clima do dia {count} \n";
+            foreach(DayWeather day in d)
+            {
+                dayWeather += $"{day.weather} | {day.startHour} \n";
+            }
+            dayWeather += $"\n";
+            count++;
+        }
+        Debug.Log(dayWeather);
+
+        string dayWeather2 = $"PREVISÂO DO TEMPO {weatherList[1].month}/{calendar.year} \n\n";
+        count = 1;
+        foreach(List<DayWeather> d in weatherList[1].days)
+        {
+            dayWeather2 += $"Clima do dia {count} - \n";
+            foreach(DayWeather day in d)
+            {
+                dayWeather2 += $"{day.weather} | {day.startHour} \n";
+            }
+            dayWeather2 += $"\n";
+            count++;
+        }
+        Debug.Log(dayWeather2);
     }
     #endregion
 
