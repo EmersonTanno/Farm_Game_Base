@@ -15205,6 +15205,10 @@ PrefabInstance:
       propertyPath: backGroundCanvasImage
       value: 
       objectReference: {fileID: 7325179374109827611}
+    - target: {fileID: 4575022725874807265, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4868641703342699364, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: itemNameText
       value: 
@@ -15497,6 +15501,10 @@ PrefabInstance:
       propertyPath: sellContentContainer
       value: 
       objectReference: {fileID: 4924957106299042976}
+    - target: {fileID: 6877045265563710889, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7975833894379980945, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: m_RootOrder
       value: 1
