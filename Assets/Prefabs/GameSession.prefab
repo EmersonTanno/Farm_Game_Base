@@ -15141,6 +15141,10 @@ PrefabInstance:
       propertyPath: buttons.Array.data[3]
       value: 
       objectReference: {fileID: 4924957106263400882}
+    - target: {fileID: 1027759183734633614, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af9b153476a088e409b7c591ec82a4ee, type: 2}
     - target: {fileID: 1604812859009268195, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: exitText
       value: 
@@ -15208,6 +15212,14 @@ PrefabInstance:
     - target: {fileID: 4575022725874807265, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: moveWithTransform
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4575022725874807265, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4575022725874807265, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4868641703342699364, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: itemNameText
@@ -15505,6 +15517,14 @@ PrefabInstance:
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6877045265563710889, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877045265563710889, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7975833894379980945, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -15517,6 +15537,10 @@ PrefabInstance:
       propertyPath: loadingListCanvas.Array.data[1]
       value: 
       objectReference: {fileID: 4924957107686940967}
+    - target: {fileID: 9086025543968971513, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af9b153476a088e409b7c591ec82a4ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
 --- !u!4 &332048775994760614 stripped
