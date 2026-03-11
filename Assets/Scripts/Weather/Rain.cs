@@ -6,7 +6,7 @@ public class Rain : MonoBehaviour
     private Transform followTarget;
     private ParticleSystem rainPS;
 
-    private Vector3 offset;
+    private Vector3 offset = new Vector3(0, 17);
     private bool initialized;
 
     void Awake()
@@ -22,25 +22,27 @@ public class Rain : MonoBehaviour
 
     void FindTargetAndCalculateOffset()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
 
-        if (player == null)
+        if (camera == null)
         {
-            Debug.LogWarning("Rain: Player não encontrado.");
+            Debug.LogWarning("Rain: MainCamera não encontrado.");
             return;
         }
 
-        followTarget = player.transform;
+        followTarget = camera.transform;
 
-        offset = transform.position - followTarget.position;
+        transform.position = followTarget.position + offset;
         initialized = true;
-
-        rainPS.Play();
     }
 
     void LateUpdate()
     {
-        if (!initialized || followTarget == null) return;  
+        if (!initialized || followTarget == null) 
+        {
+            FindTargetAndCalculateOffset();
+            return;
+        }  
         
         transform.position = followTarget.position + offset;
     }
