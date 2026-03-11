@@ -7,6 +7,7 @@ public class WeatherController : MonoBehaviour
 {
     public static WeatherController Instance;
     public static event Action<WeatherEnum> OnWeatherChanged;
+    public static event Action OnThunderFall;
 
     [SerializeField] List<SeasonRainProb> seasonRainProb;
 
@@ -26,6 +27,7 @@ public class WeatherController : MonoBehaviour
 
     void OnEnable()
     {
+        Calendar_Controller.OnDayChange += LogGeneratedWeather;
         Calendar_Controller.OnDayChange += CheckGeneratedWeather;
         Calendar_Controller.OnMonthChange += GenerateWeatherForTwoMonths;
         SaveSystem.OnLoadFinish += CheckGeneratedWeather;
@@ -89,6 +91,12 @@ public class WeatherController : MonoBehaviour
         if (weather == newWeather) return;
 
         weather = newWeather;
+
+        if(weather == WeatherEnum.TEMPEST)
+        {
+            StartCoroutine(CallThunder());
+        }
+
         OnWeatherChanged?.Invoke(weather);
     }
 
@@ -273,6 +281,22 @@ public class WeatherController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         
         TileMapController.Instance.WaterSoilWithRain();
+    }
+
+    private IEnumerator CallThunder()
+    {
+        if(GetWeather() != WeatherEnum.TEMPEST)
+        {
+            yield return null;
+        }
+
+        if(UnityEngine.Random.value > 0.6f)
+        {
+            OnThunderFall?.Invoke();
+        }
+        
+        yield return new WaitForSeconds(UnityEngine.Random.Range(10, 30));
+        StartCoroutine(CallThunder());
     }
     #endregion
 
