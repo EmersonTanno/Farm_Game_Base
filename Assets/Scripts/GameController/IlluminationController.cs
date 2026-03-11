@@ -33,6 +33,7 @@ public class IlluminationController : MonoBehaviour
         WarpController.OnWarpEnd += SetIllumination;
         Calendar_Controller.OnDayChange += ResetIlluminationIntensity;
         Calendar_Controller.OnMonthChange += SetIllumination;
+        Time_Controll.OnHourChange += UpdateDayLight;
     }
 
     void OnDisable()
@@ -40,6 +41,7 @@ public class IlluminationController : MonoBehaviour
         WarpController.OnWarpEnd -= SetIllumination;
         Calendar_Controller.OnDayChange -= ResetIlluminationIntensity;
         Calendar_Controller.OnMonthChange -= SetIllumination;
+        Time_Controll.OnHourChange -= UpdateDayLight;
     }
 
     #endregion
@@ -139,5 +141,18 @@ public class IlluminationController : MonoBehaviour
         illuminationRoutine = null;
     }
 
+
+    private void UpdateDayLight()
+    {
+        Time_Controll time = Time_Controll.Instance;
+        if(time.hours < 16) return;
+
+        float intensity = (24 - time.hours) / 10f;
+        if(intensity < 0.2f)
+        {
+            intensity = 0.15f;
+        }
+        ChangeIlluminationIntensitySmooth(intensity, 5);
+    }
 
 }
