@@ -6,7 +6,8 @@ public class Rain : MonoBehaviour
     private Transform followTarget;
     private ParticleSystem rainPS;
 
-    private Vector3 offset = new Vector3(0, 17);
+    private Vector3 offset = new Vector3(0, 17, 10);
+
     private bool initialized;
 
     void Awake()
@@ -43,7 +44,8 @@ public class Rain : MonoBehaviour
             FindTargetAndCalculateOffset();
             return;
         }  
-        
+
         transform.position = followTarget.position + offset;
     }
+
 }
