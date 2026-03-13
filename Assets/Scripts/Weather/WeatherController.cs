@@ -285,18 +285,15 @@ public class WeatherController : MonoBehaviour
 
     private IEnumerator CallThunder()
     {
-        if(GetWeather() != WeatherEnum.TEMPEST)
+        while(GetWeather() == WeatherEnum.TEMPEST)
         {
-            yield return null;
-        }
+            if(UnityEngine.Random.value > 0.6f)
+            {
+                OnThunderFall?.Invoke();
+            }
 
-        if(UnityEngine.Random.value > 0.6f)
-        {
-            OnThunderFall?.Invoke();
+            yield return new WaitForSeconds(UnityEngine.Random.Range(10, 30));
         }
-        
-        yield return new WaitForSeconds(UnityEngine.Random.Range(10, 30));
-        StartCoroutine(CallThunder());
     }
     #endregion
 
