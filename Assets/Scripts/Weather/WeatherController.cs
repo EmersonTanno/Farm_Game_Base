@@ -27,7 +27,6 @@ public class WeatherController : MonoBehaviour
 
     void OnEnable()
     {
-        Calendar_Controller.OnDayChange += LogGeneratedWeather;
         Calendar_Controller.OnDayChange += CheckGeneratedWeather;
         Calendar_Controller.OnMonthChange += GenerateWeatherForTwoMonths;
         SaveSystem.OnLoadFinish += CheckGeneratedWeather;
