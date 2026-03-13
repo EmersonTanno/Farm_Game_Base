@@ -26,7 +26,6 @@ public class DebtController : MonoBehaviour
     }
     #endregion
 
-
     #region Create Debt
     public void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
     {
@@ -155,4 +154,17 @@ public class DebtController : MonoBehaviour
     }
     #endregion
 
+    #region Save & Load
+    public void Save(ref DebtSaveData data)
+    {
+        data.actualDebtList = actualDebtList;
+        data.historyDebtList = historyDebtList;
+    }
+
+    public void Load(DebtSaveData data)
+    {
+        actualDebtList = data.actualDebtList;
+        historyDebtList = data.historyDebtList;
+    }
+    #endregion
 }

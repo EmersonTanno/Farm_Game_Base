@@ -26,6 +26,7 @@ public class SaveSystem
         public NPCSaveData NPCSaveData;
         public TaxSaveData TaxSaveData;
         public WeatherSaveData WeatherSaveData;
+        public DebtSaveData DebtSaveData;
     }
 
     #region File Names
@@ -65,7 +66,7 @@ public class SaveSystem
     {
         if (string.IsNullOrEmpty(saveName))
         {
-            Debug.LogError("Save failed: saveName is null or empty");
+            Debug.LogError($"Save failed: saveName:{saveName} is null or empty");
             return;
         }
 
@@ -96,6 +97,8 @@ public class SaveSystem
             _saveData.TaxSaveData = new TaxSaveData();
         if(_saveData.WeatherSaveData == null)
             _saveData.WeatherSaveData = new WeatherSaveData();
+        if(_saveData.DebtSaveData == null)
+            _saveData.DebtSaveData = new DebtSaveData();
 
         Status_Controller.Instance.Save(ref _saveData.PlayerSaveData);
         InventoryManager.Instance.Save(ref _saveData.InventorySaveData);
@@ -104,6 +107,7 @@ public class SaveSystem
         NPCController.Instance.Save(ref _saveData.NPCSaveData);
         Tax_System.Instance.Save(ref _saveData.TaxSaveData);
         WeatherController.Instance.Save(ref _saveData.WeatherSaveData);
+        DebtController.Instance.Save(ref _saveData.DebtSaveData);
     }
 
     private static void WriteMainSave(string saveName)
@@ -166,6 +170,7 @@ public class SaveSystem
         NPCController.Instance.Load(_saveData.NPCSaveData);
         Tax_System.Instance.Load(_saveData.TaxSaveData);
         WeatherController.Instance.Load(_saveData.WeatherSaveData);
+        DebtController.Instance.Load(_saveData.DebtSaveData);
     }
     #endregion
 
