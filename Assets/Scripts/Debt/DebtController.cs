@@ -52,6 +52,21 @@ public class DebtController : MonoBehaviour
 
         actualDebtList.Add(newDebt);
     }
+
+    public bool CheckExistingDebtType(DebtTypeEnum type)
+    {
+        if(type == DebtTypeEnum.CITY) 
+            return false;
+
+        DebtData debt = actualDebtList.Find(i => i.debtType == type);
+
+        if(debt != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
     #endregion
 
     #region Get Debts
