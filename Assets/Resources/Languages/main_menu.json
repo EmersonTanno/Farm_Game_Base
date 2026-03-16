@@ -10,6 +10,10 @@
     { "key": "day", "pt": "Dia: ", "en": "Day: " },
     { "key": "season", "pt": "Estação: ", "en": "Season: " },
     { "key": "year", "pt": "Ano: ", "en": "Year: " },
-    { "key": "last_played", "pt": "Jogou em: ", "en": "Last Played: " }
+    { "key": "last_played", "pt": "Jogou em: ", "en": "Last Played: " },
+    { "key": "verao", "pt": "Verão", "en": "Summer" },
+    { "key": "inverno", "pt": "Inverno", "en": "Winter" },
+    { "key": "outono", "pt": "Outono", "en": "Fall" },
+    { "key": "primavera", "pt": "Primavera", "en": "Spring" }
   ]
 }

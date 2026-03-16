@@ -40,12 +40,14 @@ public class Calendar_Controller : MonoBehaviour
     #region Events
     void OnEnable()
     {
+        GameLanguageManager.OnLanguageChange += UpdateCanvas;
         Time_Controll.OnMidNightChange += ChangeDay;
         Status_Controller.OnFaint += ChangeDay;
     }
 
     void OnDisable()
     {
+        GameLanguageManager.OnLanguageChange -= UpdateCanvas;
         Time_Controll.OnMidNightChange -= ChangeDay;
         Status_Controller.OnFaint -= ChangeDay;
     }
@@ -125,16 +127,17 @@ public class Calendar_Controller : MonoBehaviour
         {
             month %= 4;
         }
+        GameLanguageManager language = GameLanguageManager.Instance;
         switch (month)
         {
             case 1:
-                return "Ver";
+                return language.GetCallendarItemName("sum");
             case 2:
-                return "Out";
+                return language.GetCallendarItemName("fal");
             case 3:
-                return "Inv";
+                return language.GetCallendarItemName("win");
             case 4:
-                return "Pri";
+                return language.GetCallendarItemName("spr");
             default:
                 return "";
         }
