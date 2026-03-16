@@ -42,8 +42,8 @@ public class DebtNotification : MonoBehaviour
             SetNotificationData(debts[0]);
             myAnimator.SetTrigger("Active");
             debts.RemoveAt(0);
-            
-            while(!canChangeInfo)
+
+            while(!canChangeInfo || GameSession.Instance.gameState == GameState.Paused)
                 yield return null;
         }
 
