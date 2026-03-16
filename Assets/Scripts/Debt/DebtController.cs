@@ -9,6 +9,8 @@ public class DebtController : MonoBehaviour
     private List<DebtData> actualDebtList = new List<DebtData>();
     private List<DebtData> historyDebtList = new List<DebtData>();
 
+    public static event Action<DebtData> OnDebtCreation;
+
     void Awake()
     {
         Instance = this;
@@ -25,6 +27,13 @@ public class DebtController : MonoBehaviour
          Calendar_Controller.OnDayChange -= PassDay;
     }
     #endregion
+
+    void Start()
+    {
+        //Testing
+        CreateNewCityDebt(500, 30, 10, 5);
+        CreateNewCityDebt(10000, 60, 10, 5);
+    }
 
     #region Create Debt
     public void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
@@ -51,6 +60,31 @@ public class DebtController : MonoBehaviour
         };
 
         actualDebtList.Add(newDebt);
+        OnDebtCreation?.Invoke(newDebt);
+    }
+
+    public void CreateNewCityDebt(int debtMarksToPay, int daysQuantityToPay, int interestPercentage, int maxDaysOver)
+    {
+        DebtData newDebt = new DebtData
+        {
+            id =  $"DEBT_{DebtTypeEnum.CITY}_{Guid.NewGuid():N}",
+            debtType = DebtTypeEnum.CITY,
+
+            debtMarksToPay = debtMarksToPay,
+
+            startDay = Calendar_Controller.Instance.day,
+            startMonth = Calendar_Controller.Instance.month,
+            startYear = Calendar_Controller.Instance.year,
+
+            daysQuantityToPay = daysQuantityToPay,
+
+            interestPercentage = interestPercentage,
+            
+            maxDaysOver = maxDaysOver
+        };
+
+        actualDebtList.Add(newDebt);
+        OnDebtCreation?.Invoke(newDebt);
     }
 
     public bool CheckExistingDebtType(DebtTypeEnum type)

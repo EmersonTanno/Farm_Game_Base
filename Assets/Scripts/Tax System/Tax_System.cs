@@ -96,7 +96,8 @@ public class Tax_System : MonoBehaviour
         if (DebtController.Instance.HasActiveDebtOfType(DebtTypeEnum.CITY))
             return;
             
-        DebtController.Instance.CreateNewDebt(DebtTypeEnum.CITY, 0, CalculateAnualTax(), 30, 5, 7);
+        //DebtController.Instance.CreateNewDebt(DebtTypeEnum.CITY, 0, CalculateAnualTax(), 30, 5, 7);
+        DebtController.Instance.CreateNewCityDebt(CalculateAnualTax(), 30, 5, 7);
         anualSells = 0;
     }
     #endregion
