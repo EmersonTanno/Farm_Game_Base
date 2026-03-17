@@ -282,6 +282,32 @@ public class WeatherController : MonoBehaviour
         TileMapController.Instance.WaterSoilWithRain();
     }
 
+    private List<DayWeather> GetDayWeather(int day, int month)
+    {
+        MonthWeather monthWeather = weatherList.Find(i => i.month == month);
+
+        if(monthWeather != null)
+        {
+            return monthWeather.days[day];
+        }
+
+        return null;
+    }
+    
+    public bool WillRain()
+    {
+        Calendar_Controller calendar = Calendar_Controller.Instance;
+
+        List<DayWeather> dayWeather = GetDayWeather(calendar.day, calendar.month);
+
+        if (dayWeather == null) return false;
+
+        return dayWeather.Exists(i => 
+            i.weather == WeatherEnum.RAIN || 
+            i.weather == WeatherEnum.TEMPEST
+        );
+    }
+
     private IEnumerator CallThunder()
     {
         while(GetWeather() == WeatherEnum.TEMPEST)
