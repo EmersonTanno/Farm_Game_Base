@@ -73,7 +73,7 @@ public class SaveSlotMenu : MonoBehaviour
     {
         goldText.text += metaData.gold;
         dayText.text += metaData.day;
-        yearText.text += metaData.year;
+        yearText.text += $"{metaData.year:D2}";
         seasonText.text += MainMenuLanguageManager.Instance.GetText(metaData.season.ToString().ToLower());
         lastPlayedText.text += metaData.lastPlayed;
     }

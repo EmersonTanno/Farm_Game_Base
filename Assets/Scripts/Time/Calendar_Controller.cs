@@ -187,7 +187,7 @@ public class Calendar_Controller : MonoBehaviour
             }
         }
 
-        return $"{returnDay} / {GetSeason(returnMonth)} / {returnYear}";
+        return $"{returnDay} / {GetSeason(returnMonth)} / {returnYear:D2}";
     }
 
     public int GetMonth(int month)
