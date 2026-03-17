@@ -54,9 +54,10 @@ public class DebtNotification : MonoBehaviour
 
     private void SetNotificationData(DebtData debt)
     {
-        titleText.text = GameLanguageManager.Instance.GetDebtItemName(debt.debtType.ToString().ToLower());
+        GameLanguageManager gameLanguageManager = GameLanguageManager.Instance;
+        titleText.text = gameLanguageManager.GetDebtItemName(debt.debtType.ToString().ToLower());
         debtValueText.text = $"O - {debt.debtMarksToPay}";
-        finalDateText.text = Calendar_Controller.Instance.GetDate(debt.daysQuantityToPay);
+        finalDateText.text = $"{gameLanguageManager.GetDebtItemName("until")}{Calendar_Controller.Instance.GetDate(debt.daysQuantityToPay)}";
     }
 
     private void ReloadData()
