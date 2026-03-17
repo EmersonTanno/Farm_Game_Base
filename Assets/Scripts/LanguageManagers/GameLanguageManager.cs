@@ -14,7 +14,7 @@ class GameLanguageManager : MonoBehaviour
     private Dictionary<string, FieldLanguage> pauseMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> debtShopMenuLanguageMap = new Dictionary<string, FieldLanguage>();
     private Dictionary<string, FieldLanguage> callendarLanguageMap = new Dictionary<string, FieldLanguage>();
-
+    private Dictionary<string, FieldLanguage> debtLanguageMap = new Dictionary<string, FieldLanguage>();
 
     public static event Action OnLanguageChange;
 
@@ -35,6 +35,7 @@ class GameLanguageManager : MonoBehaviour
         pauseMenuLanguageMap = LoadFile("Languages/pause_menu");
         debtShopMenuLanguageMap = LoadFile("Languages/debtShop_menu");
         callendarLanguageMap = LoadFile("Languages/callendar");
+        debtLanguageMap = LoadFile("Languages/debt");
     }
 
     private Dictionary<string, FieldLanguage> LoadFile(string filePath)
@@ -130,6 +131,11 @@ class GameLanguageManager : MonoBehaviour
     public string GetCallendarItemName(string item)
     {  
         return GetLangageFromDictionary(item, callendarLanguageMap);
+    }
+
+    public string GetDebtItemName(string item)
+    {  
+        return GetLangageFromDictionary(item, debtLanguageMap);
     }
 
     public void ChangeGameLanguage()

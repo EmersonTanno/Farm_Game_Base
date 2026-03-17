@@ -18,11 +18,13 @@ public class DebtNotification : MonoBehaviour
     void OnEnable()
     {
         DebtController.OnDebtCreation += DebtCreationNotification;
+        GameLanguageManager.OnLanguageChange += ReloadData;
     }
 
     void OnDisable()
     {
         DebtController.OnDebtCreation -= DebtCreationNotification;
+        GameLanguageManager.OnLanguageChange -= ReloadData;
     }
 
     private void DebtCreationNotification(DebtData debt)
@@ -52,9 +54,17 @@ public class DebtNotification : MonoBehaviour
 
     private void SetNotificationData(DebtData debt)
     {
-        titleText.text = debt.debtType.ToString();
+        titleText.text = GameLanguageManager.Instance.GetDebtItemName(debt.debtType.ToString().ToLower());
         debtValueText.text = $"O - {debt.debtMarksToPay}";
         finalDateText.text = Calendar_Controller.Instance.GetDate(debt.daysQuantityToPay);
+    }
+
+    private void ReloadData()
+    {
+        if(debts.Count > 0)
+        {
+            SetNotificationData(debts[0]);
+        }
     }
 
     public void CanChangeInfo()
