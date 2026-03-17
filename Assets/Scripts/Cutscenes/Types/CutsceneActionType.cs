@@ -7,5 +7,6 @@ public enum CutsceneActionType
     MovePlayer,
     ShowPlayerExpression,
     ParallelActions,
+    AddCityDebt,
     CameraFocus
 }

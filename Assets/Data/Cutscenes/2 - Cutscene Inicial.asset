@@ -29,6 +29,10 @@ MonoBehaviour:
     waitTime: 1
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
   - actionType: 3
     npcID: 1
     targetScene: 1
@@ -40,6 +44,10 @@ MonoBehaviour:
     waitTime: 1
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
   - actionType: 1
     npcID: 1
     targetScene: 1
@@ -51,6 +59,40 @@ MonoBehaviour:
     waitTime: 1
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
+  - actionType: 2
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 1
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 7
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
   - actionType: 2
     npcID: 1
     targetScene: 1
@@ -59,9 +101,13 @@ MonoBehaviour:
     targetSide: 0
     dialogueKey: 1
     emote: 1
-    waitTime: 2
+    waitTime: 1
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
   - actionType: 0
     npcID: 1
     targetScene: 1
@@ -73,6 +119,10 @@ MonoBehaviour:
     waitTime: 2
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
   - actionType: 6
     npcID: 0
     targetScene: 0
@@ -111,6 +161,10 @@ MonoBehaviour:
         dialogueKey: 
         emote: 0
         waitTime: 1
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
   - actionType: 3
     npcID: 1
     targetScene: 1
@@ -122,6 +176,10 @@ MonoBehaviour:
     waitTime: 1
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0
   - actionType: 0
     npcID: 1
     targetScene: 1
@@ -133,3 +191,7 @@ MonoBehaviour:
     waitTime: 1
     parallelBlock:
       steps: []
+    debtValue: 0
+    quantityDaysToPay: 0
+    maxDaysOven: 0
+    interestPercentage: 0

@@ -81,6 +81,13 @@ public class CutsceneDataEditor : Editor
                 case CutsceneActionType.ParallelActions:
                     EditorGUILayout.PropertyField(step.FindPropertyRelative("parallelBlock"), true);
                     break;
+
+                case CutsceneActionType.AddCityDebt:
+                    EditorGUILayout.PropertyField(step.FindPropertyRelative("debtValue"), true);
+                    EditorGUILayout.PropertyField(step.FindPropertyRelative("quantityDaysToPay"), true);
+                    EditorGUILayout.PropertyField(step.FindPropertyRelative("maxDaysOven"), true);
+                    EditorGUILayout.PropertyField(step.FindPropertyRelative("interestPercentage"), true);
+                    break;
                 
             }
 

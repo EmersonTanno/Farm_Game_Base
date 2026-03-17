@@ -110,6 +110,11 @@ public class CutsceneController : MonoBehaviour
                     yield return ExecuteParallel(step.parallelBlock);
                     break;
                 }
+            case CutsceneActionType.AddCityDebt:
+                {
+                    yield return AddNewCityDebt(step.debtValue, step.quantityDaysToPay, step.maxDaysOven, step.interestPercentage);
+                    break;
+                }
         }
     }
 
@@ -149,6 +154,12 @@ public class CutsceneController : MonoBehaviour
     private IEnumerator InitiateCutscenePlayerMovement(Vector2Int targetPos, float moveSpeed, NPCSide finalSide)
     {
         yield return Player_Controller.Instance.MovePlayerInCutscene(targetPos, moveSpeed, finalSide);
+    }
+
+    private IEnumerator AddNewCityDebt(int debtValue, int quantityDaysToPay, int maxDaysOven, int interestPercentage)
+    {
+        DebtController.Instance.CreateNewCityDebt(debtValue, quantityDaysToPay, interestPercentage, maxDaysOven);
+        yield return null;
     }
 
 

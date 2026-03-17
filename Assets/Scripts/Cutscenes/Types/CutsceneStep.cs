@@ -18,4 +18,9 @@ public class CutsceneStep
     public float waitTime;
 
     public CutsceneParallelBlock parallelBlock;
+
+    public int debtValue;
+    public int quantityDaysToPay;
+    public int maxDaysOven;
+    public int interestPercentage;
 }
