@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class DebtController : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class DebtController : MonoBehaviour
 
     #region Create Debt
     public void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
-    {
+    {   
         DebtData newDebt = new DebtData
         {
             id =  $"DEBT_{type}_{Guid.NewGuid():N}",
@@ -58,6 +59,9 @@ public class DebtController : MonoBehaviour
             
             maxDaysOver = maxDaysOver
         };
+
+        if(!CheckIfCanCreateDebt(newDebt))
+            return;
 
         actualDebtList.Add(newDebt);
         OnDebtCreation?.Invoke(newDebt);
@@ -83,23 +87,35 @@ public class DebtController : MonoBehaviour
             maxDaysOver = maxDaysOver
         };
 
+        if(!CheckIfCanCreateDebt(newDebt))
+            return;
+
         actualDebtList.Add(newDebt);
         OnDebtCreation?.Invoke(newDebt);
     }
 
     public bool CheckExistingDebtType(DebtTypeEnum type)
     {
-        if(type == DebtTypeEnum.CITY) 
+        return actualDebtList.Exists(i => i.debtType == type);
+    }
+
+    public bool CheckExistingSharkDebtWithNPC(int npcId)
+    {
+        return actualDebtList.Exists(i => i.debtType == DebtTypeEnum.SHARK && i.creditorNpcId == npcId);
+    }
+
+    public bool CheckIfCanCreateDebt(DebtData newDebt) 
+    {
+        if(newDebt.debtType == DebtTypeEnum.CITY) 
+            return true;
+        
+        if(newDebt.debtType == DebtTypeEnum.BANK && CheckExistingDebtType(newDebt.debtType))
+            return false;
+        
+        if(newDebt.debtType == DebtTypeEnum.SHARK && newDebt.creditorNpcId != -1 && CheckExistingSharkDebtWithNPC(newDebt.creditorNpcId))
             return false;
 
-        DebtData debt = actualDebtList.Find(i => i.debtType == type);
-
-        if(debt != null)
-        {
-            return true;
-        }
-
-        return false;
+        return true;
     }
     #endregion
 
