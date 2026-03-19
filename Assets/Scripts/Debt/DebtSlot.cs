@@ -11,7 +11,7 @@ public class DebtSlot : MonoBehaviour
     [SerializeField] private Button getButton;
     private DebtTypeData debtData = null;
 
-    private event Action OnDebtGet;
+    public static event Action OnDebtGet;
 
     void OnEnable()
     {
@@ -23,11 +23,15 @@ public class DebtSlot : MonoBehaviour
         GameLanguageManager.OnLanguageChange -= ReloadInfo;
     }
 
-    public void SetSlotData(DebtTypeData newDebtData, bool buttonActive)
+    public void SetSlotData(DebtTypeData newDebtData, bool buttonActive, int npcId = -1)
     {
         ResetSlot();
 
         debtData = newDebtData;
+        if(npcId != -1)
+            debtData.creditorNpcId = npcId;
+        
+        Debug.Log(debtData.creditorNpcId);
 
         ReloadInfo();
         
@@ -44,8 +48,10 @@ public class DebtSlot : MonoBehaviour
 
     public void GetDebt()
     {
-        DebtController.Instance.CreateNewDebt(debtData.type, debtData.defaultInterest, debtData.amount, debtData.quantityDaysToPay, debtData.compoundInterest, debtData.maxDaysOver, debtData.creditorNpcId);
-    
+        bool canTakeDebt = DebtController.Instance.CreateNewDebt(debtData.type, debtData.defaultInterest, debtData.amount, debtData.quantityDaysToPay, debtData.compoundInterest, debtData.maxDaysOver, debtData.creditorNpcId);
+        if(canTakeDebt)
+            Status_Controller.Instance.AddGold(debtData.amount);
+            
         OnDebtGet?.Invoke();
     }
 
@@ -54,7 +60,7 @@ public class DebtSlot : MonoBehaviour
         GameLanguageManager gameLanguage = GameLanguageManager.Instance;
         Calendar_Controller calendar = Calendar_Controller.Instance;
 
-        marksQuantity.text = $"Marks: {debtData.amount}";
+        marksQuantity.text = $"O - {debtData.amount}";
         percentage.text = $"{gameLanguage.GetDebtShopMenuItemName("percentage")}: {debtData.defaultInterest}%";
         limitDay.text = $"{gameLanguage.GetDebtShopMenuItemName("dayLimit")}: {calendar.GetDate(debtData.quantityDaysToPay)}";   
 

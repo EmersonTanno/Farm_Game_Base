@@ -907,7 +907,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 4263226832648585488}
-  bankDebts: []
+  bankDebts:
+  - {fileID: 11400000, guid: 5aa10b58bcf09ec4299b2fb54536a9ba, type: 2}
+  - {fileID: 11400000, guid: 44cc100b5981e68499d5e36fb4388fd9, type: 2}
+  - {fileID: 11400000, guid: ca14bfb2b122ced4687f67d18947d9c3, type: 2}
   sharkDebts:
   - {fileID: 11400000, guid: 9ca011e6aa3d08b4f8fd9b0e0b62426c, type: 2}
   - {fileID: 11400000, guid: 23bece3ced72b5a45bdd220d2ad775c3, type: 2}
@@ -13044,8 +13047,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000008016825, y: -13.2}
-  m_SizeDelta: {x: 572.0405, y: 413.154}
+  m_AnchoredPosition: {x: 0.000008016825, y: -25.803696}
+  m_SizeDelta: {x: 572.0405, y: 387.9466}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1792016018813142930
 CanvasRenderer:
@@ -13164,8 +13167,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 192.5}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 8, y: 192}
+  m_SizeDelta: {x: 331.8419, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3221974069729502262
 CanvasRenderer:
@@ -13258,7 +13261,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -0.00000022935288, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -13581,7 +13584,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.816986, y: -206.57704}
+  m_AnchoredPosition: {x: -11.816986, y: -193.97382}
   m_SizeDelta: {x: 23.6348, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3613232518648129041

@@ -1,5 +1,5 @@
 {
-  "npcId": -1,
+  "npcId": 3,
   "npcDialogueList": [
     {
       "dialogueId": "1",
@@ -66,6 +66,40 @@
           "portrait": 1,
           "textLinePt": "Fim",
           "textLineEn": "End"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "Shark",
+      "dialogue": [
+        {
+          "portrait": "2",
+          "textLinePt": "Shark",
+          "textLineEn": "Shark"
+        },
+        {
+          "portrait": "2",
+          "textLinePt": "Hehehe",
+          "textLineEn": "Hehehe",
+          "request": "shark_debt"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "Bank",
+      "dialogue": [
+        {
+          "portrait": "2",
+          "textLinePt": "Bank",
+          "textLineEn": "Bank"
+        },
+        {
+          "portrait": "2",
+          "textLinePt": "Volte sempre",
+          "textLineEn": "Volte sempre",
+          "request": "bank_debt"
         }
       ]
     }

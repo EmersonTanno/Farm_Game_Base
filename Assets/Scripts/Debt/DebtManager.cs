@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -15,38 +16,66 @@ public class DebtManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI debtTitle;
     [SerializeField] List<DebtSlot> slots;
 
+    public static event Action OnDebtWindowClose;
+
     void OnEnable()
     {
         GameLanguageManager.OnLanguageChange += ReloadLangauge;
+        DebtSlot.OnDebtGet += DeactivateDebtWindow;
+        DialogueManager.OnDialogueDebtRequest += ActivateDebtShop;
     }
 
     void OnDisable()
     {
         GameLanguageManager.OnLanguageChange -= ReloadLangauge;
+        DebtSlot.OnDebtGet -= DeactivateDebtWindow;
+        DialogueManager.OnDialogueDebtRequest -= ActivateDebtShop;
     }
 
-    void Update()
+    private void ActivateDebtShop(DebtTypeEnum debtType, int npcId)
     {
-        if(Input.GetKeyDown(KeyCode.L))
+        switch(debtType)
         {
-            if(!isActive)
-                SetSharkDebts();
-            else 
-                DeactivateDebtWindow();
+            case DebtTypeEnum.SHARK:
+                SetSharkDebts(npcId);
+                break;
+
+            case DebtTypeEnum.BANK:
+                SetBankDebts();
+                break;
+            
+            case DebtTypeEnum.CITY:
+
+                break;
+            
+            default:
+                OnDebtWindowClose?.Invoke();
+                break;
         }
     }
 
-    private void SetSharkDebts()
+    private void SetDebts(List<DebtTypeData> debts, string debtType,int npcId = -1)
     {
         if(isActive) return;
         isActive = true;
         debtCanvas.SetActive(isActive);
-        languageKey = "shark";
-        debtTitle.text = GameLanguageManager.Instance.GetDebtShopMenuItemName(languageKey);
-        for(int i = 0; i < sharkDebts.Count; i++)
+        languageKey = debtType;
+        debtTitle.text = GameLanguageManager.Instance.GetDebtShopMenuItemName(debtType);
+
+        for(int i = 0; i < debts.Count; i++)
         {
-            slots[i].SetSlotData(sharkDebts[i], true);
+            slots[i].SetSlotData(debts[i], DebtController.Instance.CheckIfCanCreateDebt(debts[i].ToDebtData()), npcId);
         }
+    }
+
+    private void SetSharkDebts(int npcId)
+    {
+        SetDebts(sharkDebts, "shark", npcId);
+    }
+
+    private void SetBankDebts()
+    {
+        SetDebts(bankDebts, "bank");
     }
 
     public void DeactivateDebtWindow()
@@ -55,6 +84,7 @@ public class DebtManager : MonoBehaviour
 
         isActive = false;
         debtCanvas.SetActive(isActive);
+        OnDebtWindowClose?.Invoke();
     }
 
     private void ReloadLangauge()

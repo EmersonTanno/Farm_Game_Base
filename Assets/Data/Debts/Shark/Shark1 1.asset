@@ -15,9 +15,8 @@ MonoBehaviour:
   type: 0
   displayName: SarkTest1
   defaultInterest: 10
-  defaultDuration: 30
-  amount: 600
+  amount: 500
   compoundInterest: 20
-  maxDaysOver: 30
+  maxDaysOver: 15
   quantityDaysToPay: 30
-  creditorNpcId: 2
+  creditorNpcId: -1

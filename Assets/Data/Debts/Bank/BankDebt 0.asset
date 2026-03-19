@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e12eddda4876e01498b1a037ff5d1a7d, type: 3}
-  m_Name: Shark1
+  m_Name: BankDebt 0
   m_EditorClassIdentifier: 
-  type: 0
-  displayName: SarkTest1
-  defaultInterest: 10
+  type: 1
+  displayName: Bank 1
+  defaultInterest: 5
   amount: 500
-  compoundInterest: 20
-  maxDaysOver: 30
+  compoundInterest: 10
+  maxDaysOver: 15
   quantityDaysToPay: 30
-  creditorNpcId: 3
+  creditorNpcId: -1

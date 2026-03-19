@@ -34,10 +34,12 @@ public class DebtController : MonoBehaviour
         //Testing
         CreateNewCityDebt(500, 30, 10, 5);
         CreateNewCityDebt(10000, 60, 10, 5);
+        CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
+        CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
     }
 
     #region Create Debt
-    public void CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
+    public bool CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
     {   
         DebtData newDebt = new DebtData
         {
@@ -61,10 +63,13 @@ public class DebtController : MonoBehaviour
         };
 
         if(!CheckIfCanCreateDebt(newDebt))
-            return;
-
+        {
+            Debug.LogWarning($"Cannot Create Debt: Debt of Type {newDebt.debtType} / NPC {newDebt.creditorNpcId}");
+            return false;
+        }
         actualDebtList.Add(newDebt);
         OnDebtCreation?.Invoke(newDebt);
+        return true;
     }
 
     public void CreateNewCityDebt(int debtMarksToPay, int daysQuantityToPay, int interestPercentage, int maxDaysOver)

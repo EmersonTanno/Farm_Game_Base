@@ -34,11 +34,12 @@ public class DialogueManager : MonoBehaviour
     private bool canPassLine = true;
 
     //controll
-    private bool shopActive = false;
+    private bool shopOrDebtActive = false;
 
     //triggers
     public static event Action<int> OnDialogueFinish;
     public static event Action OnDialogueShopRequest;
+    public static event Action<DebtTypeEnum, int> OnDialogueDebtRequest;
     #endregion
 
     #region Core
@@ -56,12 +57,14 @@ public class DialogueManager : MonoBehaviour
     {
         GameLanguageManager.OnLanguageChange += ChangeLanguage;
         Shop_Manager.OnShopClose += DeactivateShop;
+        DebtManager.OnDebtWindowClose += DeactivateShop;
     }
 
     void OnDisable()
     {
         GameLanguageManager.OnLanguageChange -= ChangeLanguage;
         Shop_Manager.OnShopClose -= DeactivateShop;
+        DebtManager.OnDebtWindowClose -= DeactivateShop;
     }
     #endregion
 
@@ -76,7 +79,7 @@ public class DialogueManager : MonoBehaviour
         isTyping = true;
         rightText.text = "";
 
-        while(shopActive)
+        while(shopOrDebtActive)
         {
             yield return null;
         }
@@ -162,7 +165,7 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogueLine.request != null)
             {
-                CheckRequest(dialogueLine.request);
+                CheckRequest(dialogueLine.request, npcId);
             }
 
             SetPortrait(dialogueLine);
@@ -362,7 +365,7 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region Request / Shop / Debt
-    private void CheckRequest(string request)
+    private void CheckRequest(string request, int npcId)
     {
         switch(request)
         {
@@ -373,17 +376,17 @@ public class DialogueManager : MonoBehaviour
                 }
             case "shark_debt":
                 {
-                    //request shark debt
+                    RequestDebt(DebtTypeEnum.SHARK, npcId);
                     break;
                 }
             case "bank_debt":
                 {
-                    //request bank debt
+                    RequestDebt(DebtTypeEnum.BANK);
                     break;
                 }
             case "city_debt":
                 {
-                    //request city debt
+                    RequestDebt(DebtTypeEnum.CITY);
                     break;
                 }
             default:
@@ -396,15 +399,22 @@ public class DialogueManager : MonoBehaviour
     private void RequestShop()
     {
         OnDialogueShopRequest?.Invoke();
-        shopActive = true;
+        shopOrDebtActive = true;
+        PauseDialogueUI();
+    }
+
+    private void RequestDebt(DebtTypeEnum debtType, int npcId = -1)
+    {
+        OnDialogueDebtRequest?.Invoke(debtType, npcId);
+        shopOrDebtActive = true;
         PauseDialogueUI();
     }
 
     private void DeactivateShop()
     {
-        if(!shopActive) return;
+        if(!shopOrDebtActive) return;
         
-        shopActive = false;
+        shopOrDebtActive = false;
         ResumeDialogueUI();
     }
     #endregion
