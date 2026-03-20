@@ -240,4 +240,11 @@ public class MainMenuController : MonoBehaviour
         OnConfigChange?.Invoke();
     }
     #endregion
+
+    #region Exit
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    #endregion
 }

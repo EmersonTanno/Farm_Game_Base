@@ -3,6 +3,7 @@
     { "key": "new_game", "pt": "Novo Jogo", "en": "New Game" },
     { "key": "load_game", "pt": "Carregar Jogo", "en": "Load Game" },
     { "key": "settings", "pt": "Configurações", "en": "Settings" },
+    { "key": "exit", "pt": "Sair", "en": "Exit" },
     { "key": "language", "pt": "Idioma", "en": "Language" },
     { "key": "return", "pt": "Voltar", "en": "Return" },
     { "key": "apply", "pt": "Aplicar", "en": "Apply" },
