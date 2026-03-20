@@ -5311,6 +5311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData:
     id: 2
+    name: Seller
     hearts: 0
     location: 3
     gridPosition: {x: 11, y: 3}
@@ -10391,6 +10392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData:
     id: 1
+    name: Mayor
     hearts: 0
     location: 1
     gridPosition: {x: 45, y: 26}
@@ -19865,6 +19867,10 @@ PrefabInstance:
     - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: npcData.id
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: npcData.name
+      value: Shark
       objectReference: {fileID: 0}
     - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: npcData.location

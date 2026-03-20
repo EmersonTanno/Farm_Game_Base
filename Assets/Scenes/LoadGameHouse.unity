@@ -1699,7 +1699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5511070439066158189, guid: 719517d08baf4f24092d441d49a8bd39, type: 3}
       propertyPath: shopID
-      value: Bank
+      value: Shark
       objectReference: {fileID: 0}
     - target: {fileID: 5511070439066158189, guid: 719517d08baf4f24092d441d49a8bd39, type: 3}
       propertyPath: ownerNpcID

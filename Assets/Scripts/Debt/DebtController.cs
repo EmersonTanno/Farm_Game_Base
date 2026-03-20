@@ -32,10 +32,10 @@ public class DebtController : MonoBehaviour
     void Start()
     {
         //Testing
-        CreateNewCityDebt(500, 30, 10, 5);
-        CreateNewCityDebt(10000, 60, 10, 5);
-        CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
-        CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
+        // CreateNewCityDebt(500, 30, 10, 5);
+        // CreateNewCityDebt(10000, 60, 10, 5);
+        // CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
+        // CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
     }
 
     #region Create Debt

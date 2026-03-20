@@ -30,8 +30,6 @@ public class DebtSlot : MonoBehaviour
         debtData = newDebtData;
         if(npcId != -1)
             debtData.creditorNpcId = npcId;
-        
-        Debug.Log(debtData.creditorNpcId);
 
         ReloadInfo();
         

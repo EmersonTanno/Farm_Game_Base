@@ -2,7 +2,7 @@
   "items": [
     { "key": "city", "pt": "Dívida para a Cidade", "en": "Debt for City" },
     { "key": "bank", "pt": "Dívida para o Banco", "en": "Debt for Bank" },
-    { "key": "shark", "pt": "Dívida para NPC", "en": "Debt for NPC" },
+    { "key": "shark", "pt": "Dívida para {0}", "en": "Debt for {0}" },
     { "key": "until", "pt": "Até: ", "en": "Until: " }
   ]
 }
