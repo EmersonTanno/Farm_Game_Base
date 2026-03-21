@@ -140,9 +140,15 @@ public class Time_Controll : MonoBehaviour
     #region Bed
     public void ActivateBedCanvas()
     {
+        GameSession gameSession = GameSession.Instance;
+        if(gameSession.gameState == GameState.Paused || gameSession.gameState == GameState.PausedCutscene || gameSession.gameState == GameState.Dialogue || gameSession.gameState == GameState.PausedDialogue || gameSession.gameState == GameState.Cutscene)
+        {
+            return;
+        }
+        
         bedActive = true;
         bedCanva.SetActive(bedActive);
-        PauseTime();
+        PauseTimer();
         StartCoroutine(SetCanSelect());
     }
 
@@ -153,7 +159,7 @@ public class Time_Controll : MonoBehaviour
             bedActive = false;
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
-            UnpauseTime();
+            UnpauseTimer();
         }
     }
 

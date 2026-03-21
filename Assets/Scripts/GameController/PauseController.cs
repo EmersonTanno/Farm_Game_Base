@@ -165,7 +165,7 @@ public class PauseController : MonoBehaviour
     #region to title page
     public void ChangeToTitlePage()
     {
-        Time_Controll.Instance.UnpauseTime();
+        Time_Controll.Instance.UnpauseTimer();
         SceneManager.LoadScene("HomeScreen");
         GameSession.Instance.KillSession();
     }
