@@ -2701,7 +2701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1838234041981907491
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14139,6 +14139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 6179765356437240420}
+  debtNotification: {fileID: 3679051697194104205}
   titleText: {fileID: 1913538128395194584}
   debtValueText: {fileID: 3065436421773414004}
   finalDateText: {fileID: 3680040278732704227}

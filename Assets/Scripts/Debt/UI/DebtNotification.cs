@@ -6,6 +6,7 @@ using UnityEngine;
 public class DebtNotification : MonoBehaviour
 {
     [SerializeField] private Animator myAnimator;
+    [SerializeField] private GameObject debtNotification;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI debtValueText;
     [SerializeField] private TextMeshProUGUI finalDateText;
@@ -39,6 +40,7 @@ public class DebtNotification : MonoBehaviour
     {
         while(debts.Count > 0)
         {
+            debtNotification.SetActive(true);
             canChangeInfo = false;
 
             SetNotificationData(debts[0]);
@@ -49,6 +51,7 @@ public class DebtNotification : MonoBehaviour
                 yield return null;
         }
 
+        debtNotification.SetActive(false);
         actualRoutine = null;
     }
 
