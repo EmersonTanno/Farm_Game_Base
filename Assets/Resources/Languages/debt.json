@@ -1,9 +1,9 @@
 {
   "items": [
     { "key": "debt", "pt": "Dívidas", "en": "Debts" },
-    { "key": "city", "pt": "Dívida para a Cidade", "en": "Debt for City" },
+    { "key": "city", "pt": "Taxa para a Cidade", "en": "Debt for City" },
     { "key": "bank", "pt": "Dívida para o Banco", "en": "Debt for Bank" },
-    { "key": "shark", "pt": "Dívida para {0}", "en": "Debt for {0}" },
+    { "key": "shark", "pt": "Acordo com {0}", "en": "Debt for {0}" },
     { "key": "until", "pt": "Até: ", "en": "Until: " },
 
     {

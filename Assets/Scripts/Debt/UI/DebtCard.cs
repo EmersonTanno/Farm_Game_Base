@@ -13,19 +13,25 @@ public class DebtCard : MonoBehaviour
     [SerializeField] TextMeshProUGUI debtFinalValue;
     [SerializeField] Button payButton;
     [SerializeField] Image timeImage;
+    [SerializeField] GameObject lockImage;
+    [SerializeField] GameObject noMarksImage;
     [SerializeField] Sprite timeSpritesFull;
     [SerializeField] Sprite timeSpritesMoreHalf;
     [SerializeField] Sprite timeSpritesMinusHalf;
     [SerializeField] Sprite timeSpritesEmpty;
+    
 
     private DebtData debtData;
 
+    #region Set Data
     public void SetDebtCard(DebtData debtData)
     {
         this.debtData = debtData;
         LoadDebtInfo();
     }
+    #endregion
 
+    #region UI
     private void LoadDebtInfo()
     {
         GameLanguageManager languageManager = GameLanguageManager.Instance;
@@ -62,13 +68,17 @@ public class DebtCard : MonoBehaviour
         debtFinalValue.text = string.Format(languageManager.GetDebtItemName("finalDebt"), debtData.debtMarksToPay);
 
         payButton.GetComponentInChildren<TextMeshProUGUI>().text = languageManager.GetDebtItemName("payButton");
-        if(Status_Controller.Instance.gold < debtData.debtMarksToPay || debtData.debtType == DebtTypeEnum.SHARK)
+        bool isShark = debtData.debtType == DebtTypeEnum.SHARK;
+        bool hasMoney = Status_Controller.Instance.gold >= debtData.debtMarksToPay;
+
+        lockImage.SetActive(isShark);
+        noMarksImage.SetActive(!hasMoney);
+
+        payButton.interactable = !isShark && hasMoney;
+
+        if(isShark || !hasMoney)
         {
-            payButton.interactable = false;
-        }
-        else
-        {
-            payButton.interactable = true;
+            payButton.GetComponentInChildren<TextMeshProUGUI>().text = "";
         }
 
 
@@ -90,10 +100,12 @@ public class DebtCard : MonoBehaviour
             timeImage.sprite = timeSpritesFull;
         }  
     }
+    #endregion
 
+    #region Pay Debt
     public void PayDebt()
     {
-        Debug.Log("Paying Debt");
         DebtController.Instance.PayDebt(debtData.id);
     }
+    #endregion
 }
