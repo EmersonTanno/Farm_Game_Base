@@ -141,7 +141,7 @@ public class Time_Controll : MonoBehaviour
     public void ActivateBedCanvas()
     {
         GameSession gameSession = GameSession.Instance;
-        if(gameSession.gameState == GameState.Paused || gameSession.gameState == GameState.PausedCutscene || gameSession.gameState == GameState.Dialogue || gameSession.gameState == GameState.PausedDialogue || gameSession.gameState == GameState.Cutscene)
+        if(gameSession.gameState == GameState.Paused || gameSession.gameState == GameState.PausedCutscene || gameSession.gameState == GameState.Dialogue || gameSession.gameState == GameState.PausedDialogue || gameSession.gameState == GameState.Cutscene || timerPaused)
         {
             return;
         }

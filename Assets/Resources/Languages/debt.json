@@ -1,8 +1,34 @@
 {
   "items": [
+    { "key": "debt", "pt": "Dívidas", "en": "Debts" },
     { "key": "city", "pt": "Dívida para a Cidade", "en": "Debt for City" },
     { "key": "bank", "pt": "Dívida para o Banco", "en": "Debt for Bank" },
     { "key": "shark", "pt": "Dívida para {0}", "en": "Debt for {0}" },
-    { "key": "until", "pt": "Até: ", "en": "Until: " }
+    { "key": "until", "pt": "Até: ", "en": "Until: " },
+
+    {
+      "key": "marksTaken",
+      "pt": "Valor Recebido: {0} -> {1}",
+      "en": "Marks Taken: {0} -> {1}"
+    },
+    {
+      "key": "marksTaken0",
+      "pt": "Valor Recebido: -",
+      "en": "Marks Taken: -"
+    },
+    { "key": "fees", "pt": "Taxas: {0}%", "en": "Fees: {0}%" },
+    {
+      "key": "debtAcquired",
+      "pt": "Débito Adquirido Em: {0}/{1}/{2}",
+      "en": "Debt Acquired In: {0}/{1}/{2}"
+    },
+    {
+      "key": "daysRemaining",
+      "pt": "Dias Restantes: {0}",
+      "en": "Days Remaining: {0}"
+    },
+    { "key": "daysLate", "pt": "Dias Atrasados: {0}", "en": "Days Late: {0}" },
+    { "key": "finalDebt", "pt": "Débito: O - {0}", "en": "Debt: O - {0}" },
+    { "key": "payButton", "pt": "Pagar", "en": "Pay" }
   ]
 }

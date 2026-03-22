@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.UI;
+using TMPro;
 
 public class DebtController : MonoBehaviour
 {
     public static DebtController Instance;
     private List<DebtData> actualDebtList = new List<DebtData>();
     private List<DebtData> historyDebtList = new List<DebtData>();
+
+
+    private bool debtListActive = false;
+    [SerializeField] private GameObject debtListGroup;
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private List<GameObject> debtCards = new List<GameObject>();
+    [SerializeField] private GameObject debtCardArea;
+    [SerializeField] private GameObject debtCardPrefab;
+    [SerializeField] private TextMeshProUGUI debtCardCanvaTitle;
 
     public static event Action<DebtData> OnDebtCreation;
 
@@ -21,21 +32,21 @@ public class DebtController : MonoBehaviour
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += PassDay;
+        GameLanguageManager.OnLanguageChange += SetDebtCards;
     }
 
     void OnDisable()
     {
-         Calendar_Controller.OnDayChange -= PassDay;
+        Calendar_Controller.OnDayChange -= PassDay;
+        GameLanguageManager.OnLanguageChange -= SetDebtCards;
     }
     #endregion
 
-    void Start()
-    {
-        //Testing
-        // CreateNewCityDebt(500, 30, 10, 5);
-        // CreateNewCityDebt(10000, 60, 10, 5);
-        // CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
-        // CreateNewDebt(DebtTypeEnum.BANK, 10, 1000, 15, 20, 5);
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            SetDebtList();
+        }
     }
 
     #region Create Debt
@@ -165,7 +176,7 @@ public class DebtController : MonoBehaviour
     #endregion
 
     #region Pay Debt
-    private void PayDebt(string debtId)
+    public void PayDebt(string debtId)
     {
         DebtData debt = actualDebtList.Find(i => i.id == debtId);
 
@@ -175,9 +186,20 @@ public class DebtController : MonoBehaviour
             return;
         }
 
+        Status_Controller status = Status_Controller.Instance;
+
+        if(status.gold < debt.debtMarksToPay)
+        {
+            Debug.LogWarning($"Marks insufficient to pay ID:{debtId} /// O - {debt.debtMarksToPay}.");
+            return;
+        }
+
+        status.RemoveGold(debt.debtMarksToPay);
+
         debt.state = DebtStateEnum.Paid;
 
         MoveDebt(debtId, historyDebtList);
+        SetDebtCards();
     }
     #endregion
 
@@ -221,6 +243,93 @@ public class DebtController : MonoBehaviour
         }
 
         return false;
+    }
+    #endregion
+
+    #region Debt Cards
+    public void SetDebtList()
+    {
+        GameSession gameSession = GameSession.Instance;
+        if(gameSession.gameState == GameState.Paused || gameSession.gameState == GameState.PausedCutscene || gameSession.gameState == GameState.Dialogue || gameSession.gameState == GameState.PausedDialogue || gameSession.gameState == GameState.Cutscene || (Time_Controll.Instance.timerPaused && !debtListActive))
+        {
+            return;
+        }
+        
+        if(!debtListActive)
+        {
+            ActivateDebtList();
+        }
+        else
+        {
+            DeactivateDebtList();
+        }
+    }
+
+    public void ActivateDebtList()
+    {
+        if(debtListActive)
+        {
+            return;
+        }
+        Time_Controll.Instance.PauseTimer();
+        debtListActive = true;
+        debtListGroup.SetActive(true);
+        SetDebtCards();
+    }
+
+    public void DeactivateDebtList()
+    {
+        if(!debtListActive)
+        {
+            return;
+        }
+        Time_Controll.Instance.UnpauseTimer();
+        debtListActive = false;
+        debtListGroup.SetActive(false);
+    }
+
+    private void ResetDebtCards()
+    {
+        for(int i = 0; i < debtCards.Count; i++)
+        {
+            debtCards[i].SetActive(false);
+        }
+    }
+
+    private void SetDebtCards()
+    {
+        debtCardCanvaTitle.text = GameLanguageManager.Instance.GetDebtItemName("debt");
+
+        ResetDebtCards();
+
+        for(int i = 0; i < actualDebtList.Count; i++)
+        {
+            DebtCard debtCard;
+
+            if(i >= debtCards.Count)
+            {
+                GameObject newCard = Instantiate(debtCardPrefab, debtCardArea.transform);
+                debtCards.Add(newCard);
+                debtCard = newCard.GetComponent<DebtCard>();
+            }
+            else
+            {
+                debtCard = debtCards[i].GetComponent<DebtCard>();
+            }
+
+            debtCards[i].SetActive(true);
+            debtCard.SetDebtCard(actualDebtList[i]);
+        }
+
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 1f;
+    }
+
+    private void ReloadDebtCards()
+    {
+        if(!debtListActive) return;
+
+        SetDebtCards();
     }
     #endregion
 
