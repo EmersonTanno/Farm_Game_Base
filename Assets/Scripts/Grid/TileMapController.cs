@@ -238,6 +238,8 @@ public class TileMapController : MonoBehaviour
     {
         var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
 
+        if(plantTile == null) return false;
+
         if(!plantTile.CanHarvest()) return false;
 
         return true;

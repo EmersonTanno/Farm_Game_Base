@@ -115,6 +115,9 @@ public class IlluminationController : MonoBehaviour
                 } 
         }
         ChangeIllumination(newColor);
+
+        weatherIntensity = 1f;
+        locationIntensity = 1f;
     }
 
     public void SetIlluminationIntensity(float intensity)
