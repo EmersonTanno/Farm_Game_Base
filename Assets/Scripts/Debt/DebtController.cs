@@ -33,12 +33,14 @@ public class DebtController : MonoBehaviour
     {
         Calendar_Controller.OnDayChange += PassDay;
         GameLanguageManager.OnLanguageChange += SetDebtCards;
+        DialogueManager.OnDebtPaymentRequest += PayDebt;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= PassDay;
         GameLanguageManager.OnLanguageChange -= SetDebtCards;
+        DialogueManager.OnDebtPaymentRequest -= PayDebt;
     }
     #endregion
 
@@ -154,6 +156,11 @@ public class DebtController : MonoBehaviour
     private DebtData GetDebt(string debtId)
     {
         return actualDebtList.Find(i => i.id == debtId);
+    }
+
+    public DebtData GetDebtByNpcId(int npcId)
+    {
+        return actualDebtList.Find(i => i.creditorNpcId == npcId);
     }
     
     public bool HasActiveDebtOfType(DebtTypeEnum type)

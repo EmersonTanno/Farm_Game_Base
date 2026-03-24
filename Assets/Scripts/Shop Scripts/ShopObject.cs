@@ -21,7 +21,7 @@ public class ShopObject : MonoBehaviour
         }
     }
 
-    public void OpenNPCShop()
+    public virtual void OpenNPCShop()
     {
         DialogueManager.Instance.SetDialogue(ownerNpcID, shopID);
     }

@@ -40,6 +40,7 @@ public class DialogueManager : MonoBehaviour
     public static event Action<int> OnDialogueFinish;
     public static event Action OnDialogueShopRequest;
     public static event Action<DebtTypeEnum, int> OnDialogueDebtRequest;
+    public static event Action<string> OnDebtPaymentRequest;
     #endregion
 
     #region Core
@@ -191,7 +192,7 @@ public class DialogueManager : MonoBehaviour
 
         if(optionSelected)
         {
-            ContinueDialogue(1, dialogue[dialogue.Count - 1].options[selectedOption].toDialogueId);
+            ContinueDialogue(npcId, dialogue[dialogue.Count - 1].options[selectedOption].toDialogueId);
             yield break;
         }
 
@@ -389,6 +390,11 @@ public class DialogueManager : MonoBehaviour
                     RequestDebt(DebtTypeEnum.CITY);
                     break;
                 }
+            case "pay_debt":
+                {
+                    RequestPayDebt(npcId);
+                    break;
+                }
             default:
                 {
                     return;
@@ -416,6 +422,16 @@ public class DialogueManager : MonoBehaviour
         
         shopOrDebtActive = false;
         ResumeDialogueUI();
+    }
+
+    private void RequestPayDebt(int npcId)
+    {
+        DebtController debtController = DebtController.Instance;
+        DebtData debt = debtController.GetDebtByNpcId(npcId);
+
+        if(debt == null) return;
+
+        OnDebtPaymentRequest?.Invoke(debt.id);
     }
     #endregion
 
