@@ -10,27 +10,43 @@ public class DebtNotification : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI debtValueText;
     [SerializeField] private TextMeshProUGUI finalDateText;
+    [SerializeField] private GameObject payedStamp;
 
     private bool canChangeInfo = true;
 
-    private List<DebtData> debts = new List<DebtData>();
+    private List<DebtNotificationData> debts = new List<DebtNotificationData>();
     private Coroutine actualRoutine = null;
 
     void OnEnable()
     {
         DebtController.OnDebtCreation += DebtCreationNotification;
+        DebtController.OnDebtPayment += DebtPayNotification;
         GameLanguageManager.OnLanguageChange += ReloadData;
     }
 
     void OnDisable()
     {
         DebtController.OnDebtCreation -= DebtCreationNotification;
+        DebtController.OnDebtPayment -= DebtPayNotification;
         GameLanguageManager.OnLanguageChange -= ReloadData;
     }
 
     private void DebtCreationNotification(DebtData debt)
     {
-        debts.Add(debt);
+        debts.Add(new DebtNotificationData(debt, false));
+
+        if(actualRoutine == null)
+            actualRoutine = StartCoroutine(ShowDebtNotification());
+    }
+
+    private void DebtPayNotification(DebtData debt)
+    {
+        if(DebtController.Instance.GetDebtListActive())
+        {
+            return;
+        }
+
+        debts.Add(new DebtNotificationData(debt, true));
 
         if(actualRoutine == null)
             actualRoutine = StartCoroutine(ShowDebtNotification());
@@ -55,22 +71,42 @@ public class DebtNotification : MonoBehaviour
         actualRoutine = null;
     }
 
-    private void SetNotificationData(DebtData debt)
+    private void SetNotificationData(DebtNotificationData debt)
     {
         GameLanguageManager gameLanguageManager = GameLanguageManager.Instance;
 
-        string baseText = gameLanguageManager.GetDebtItemName(debt.debtType.ToString().ToLower());
+        string baseText = gameLanguageManager.GetDebtItemName(debt.debt.debtType.ToString().ToLower());
 
         if (baseText.Contains("{0}"))
         {
-            titleText.text = string.Format(baseText, NPCController.Instance.GetNPC(debt.creditorNpcId).npcData.name);
+            NPC npc = NPCController.Instance.GetNPC(debt.debt.creditorNpcId);
+            if(npc == null)
+            {
+                titleText.text = string.Format(baseText, "???");
+            }
+            else
+            {
+                titleText.text = string.Format(baseText, npc.npcData.name);
+            }
         }
         else
         {
             titleText.text = baseText;
         }
-        debtValueText.text = $"O - {debt.debtMarksToPay}";
-        finalDateText.text = $"{gameLanguageManager.GetDebtItemName("until")}{Calendar_Controller.Instance.GetDate(debt.daysQuantityToPay)}";
+
+
+        debtValueText.text = $"O - {debt.debt.debtMarksToPay}";
+
+        if(debt.isPayment)
+        {
+            payedStamp.SetActive(true);
+            finalDateText.text = $"{gameLanguageManager.GetDebtItemName("until")}---";
+        }
+        else
+        {
+            payedStamp.SetActive(false);
+            finalDateText.text = $"{gameLanguageManager.GetDebtItemName("until")}{Calendar_Controller.Instance.GetDate(debt.debt.daysQuantityToPay)}";
+        }
     }
 
     private void ReloadData()

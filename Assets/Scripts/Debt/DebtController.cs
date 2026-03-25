@@ -22,6 +22,7 @@ public class DebtController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI debtCardCanvaTitle;
 
     public static event Action<DebtData> OnDebtCreation;
+    public static event Action<DebtData> OnDebtPayment;
 
     void Awake()
     {
@@ -207,6 +208,7 @@ public class DebtController : MonoBehaviour
 
         MoveDebt(debtId, historyDebtList);
         SetDebtCards();
+        OnDebtPayment?.Invoke(debt);
     }
     #endregion
 
@@ -254,6 +256,11 @@ public class DebtController : MonoBehaviour
     #endregion
 
     #region Debt Cards
+    public bool GetDebtListActive()
+    {
+        return debtListActive;
+    }
+
     public void SetDebtList()
     {
         GameSession gameSession = GameSession.Instance;
