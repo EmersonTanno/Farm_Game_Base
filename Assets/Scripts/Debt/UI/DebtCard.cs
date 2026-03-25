@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ public class DebtCard : MonoBehaviour
     [SerializeField] Sprite timeSpritesMoreHalf;
     [SerializeField] Sprite timeSpritesMinusHalf;
     [SerializeField] Sprite timeSpritesEmpty;
+    [SerializeField] Animator myAnimator;
+    private bool canPay = false;
     
 
     private DebtData debtData;
@@ -34,6 +37,7 @@ public class DebtCard : MonoBehaviour
     #region UI
     private void LoadDebtInfo()
     {
+        canPay = false;
         GameLanguageManager languageManager = GameLanguageManager.Instance;
 
         string baseText = languageManager.GetDebtItemName(debtData.debtType.ToString().ToLower());
@@ -105,7 +109,27 @@ public class DebtCard : MonoBehaviour
     #region Pay Debt
     public void PayDebt()
     {
-        DebtController.Instance.PayDebt(debtData.id);
+        if(Status_Controller.Instance.gold < debtData.debtMarksToPay) return;
+        StartCoroutine(WaitAndPay(debtData.id));
+    }
+
+    private IEnumerator WaitAndPay(string debtId)
+    {
+        myAnimator.SetTrigger("Pay");
+
+        while(!canPay)
+        {
+            yield return null;
+        }
+
+        DebtController.Instance.PayDebt(debtId);
+        yield return null;
+    }
+
+    public void FinishedAnimation()
+    {
+        myAnimator.SetTrigger("Reset");
+        canPay = true;
     }
     #endregion
 }
