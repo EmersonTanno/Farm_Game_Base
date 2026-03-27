@@ -15,3 +15,4 @@ MonoBehaviour:
   portraits:
   - {fileID: 11400000, guid: 37aa26faac6b74643a7cb5a9152982c0, type: 2}
   - {fileID: 11400000, guid: eeaa9ad697b520341a1f80e9f6414612, type: 2}
+  - {fileID: 11400000, guid: 2f9df0fc8a7ca1748b11210ecee6422b, type: 2}
