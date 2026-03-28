@@ -172,7 +172,7 @@ public class NPCController : MonoBehaviour
     }
     #endregion
 
-    public void SetDataInNPCMap(int x, int y, int data)
+    public void SetDataInNPCMap(int x, int y, string data)
     {
         TileMapController map = TileMapController.Instance;
         map.SetNPC(x, y, data);
@@ -183,12 +183,12 @@ public class NPCController : MonoBehaviour
         return npcOffSet;
     }
 
-    public NPC GetNPC(int id)
+    public NPC GetNPC(string id)
     {
         return npcs.Find(p => p.npcData.id == id);
     }
 
-    public void InteractWithNPC(int id, Vector2 side)
+    public void InteractWithNPC(string id, Vector2 side)
     {
         NPC npc = GetNPC(id);
 
@@ -197,7 +197,7 @@ public class NPCController : MonoBehaviour
         npc.Interact(side);
     }
 
-    public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
+    public void ShowNPCReaction(string id, ThoughtEmoteEnum reaction)
     {
         NPC npc = GetNPC(id);
 
@@ -206,7 +206,7 @@ public class NPCController : MonoBehaviour
         npc.ShowReaction(reaction);
     }
 
-    public void AddNPCHearts(int id, int hearts)
+    public void AddNPCHearts(string id, int hearts)
     {
         NPC npc = GetNPC(id);
 
@@ -240,7 +240,7 @@ public class NPCController : MonoBehaviour
     #endregion
 
     #region Cutscene
-    public void SetNPCInCutscene(int npcId, Vector2Int pos, SceneLocationEnum scene)
+    public void SetNPCInCutscene(string npcId, Vector2Int pos, SceneLocationEnum scene)
     {
         NPC npc = GetNPC(npcId);
         npc.npcData.gridPosition = pos;
@@ -254,7 +254,7 @@ public class NPCController : MonoBehaviour
         npc.transform.position = new Vector3(pos.x, pos.y, 0) + GetNPCOffset();
     }
 
-    public IEnumerator SetNpcMovementInCutscene(int npcId, Vector2Int targetPosition, SceneLocationEnum targetLocation, NPCSide nPCSide, float speed)
+    public IEnumerator SetNpcMovementInCutscene(string npcId, Vector2Int targetPosition, SceneLocationEnum targetLocation, NPCSide nPCSide, float speed)
     {
         NPC npc = GetNPC(npcId);
 
@@ -268,7 +268,7 @@ public class NPCController : MonoBehaviour
         );
     }
 
-    public IEnumerator ShowNPCReactionInCutscene(int id, ThoughtEmoteEnum reaction)
+    public IEnumerator ShowNPCReactionInCutscene(string id, ThoughtEmoteEnum reaction)
     {
         NPC npc = GetNPC(id);
 

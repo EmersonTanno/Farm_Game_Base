@@ -96,18 +96,11 @@ public class Player_Controller : MonoBehaviour
         WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
         WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos + GetSide()).objectID;
         ShopObject shop = CheckShop(pos);
-        int nPCId = CheckNPC(pos);
+        string nPCId = CheckNPC(pos);
 
         if(shop != null)
         {
             shop.OpenNPCShop();
-            return;
-        }
-
-        if(nPCId != 0 && nPCId != -1)
-        {
-            Vector2 side = GetSide();
-            NPCController.Instance.InteractWithNPC(nPCId, side);
             return;
         }
 
@@ -120,6 +113,13 @@ public class Player_Controller : MonoBehaviour
         if (obj2 == WorldObjectID.ShippingBox)
         {
             Sell_Box_Controller.Instance.AddItem(InventoryManager.Instance.SellSelectedItem());
+            return;
+        }
+
+        if(nPCId != "")
+        {
+            Vector2 side = GetSide();
+            NPCController.Instance.InteractWithNPC(nPCId, side);
             return;
         }
 
@@ -507,20 +507,20 @@ public class Player_Controller : MonoBehaviour
     #endregion
 
     #region NPC Interaction
-    private int CheckNPC(Vector2 currentPosition)
+    private string CheckNPC(Vector2 currentPosition)
     {
         Vector2 side = GetSide();
         Grid<WorldTileData> npcGrid = TileMapController.Instance.GetGrid().GetGrid();
 
-        int firstTile = npcGrid.GetGridObject(currentPosition + side).npcId;
-        if (firstTile != 0 && firstTile != -1)
+        string firstTile = npcGrid.GetGridObject(currentPosition + side).npcId;
+        if (firstTile != "")
             return firstTile;
 
-        int secondTile = npcGrid.GetGridObject(currentPosition + (side * 2)).npcId;
-        if (secondTile != 0 && secondTile != -1)
+        string secondTile = npcGrid.GetGridObject(currentPosition + (side * 2)).npcId;
+        if (secondTile != "")
             return secondTile;
 
-        return 0;
+        return "";
     }
     #endregion
 

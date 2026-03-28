@@ -11,6 +11,6 @@ public class NPCSaveData
 [System.Serializable]
 public class NPCSaveDataData
 {
-    public int id;
+    public string id;
     public int hearts = 0;
 }

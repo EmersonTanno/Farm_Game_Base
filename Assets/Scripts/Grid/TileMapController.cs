@@ -434,7 +434,7 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region NPC
-    public void SetNPC(int x, int y, int id)
+    public void SetNPC(int x, int y, string id)
     {
         tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithNPCId(id));
     }
@@ -510,14 +510,14 @@ public class TileMapController : MonoBehaviour
         return tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isWalkable;
     }
 
-    private bool IsNPCOnWay(Vector2Int pos)
-    {
-        if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    // private bool IsNPCOnWay(Vector2Int pos)
+    // {
+    //     if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     private Vector2Int GetWarpLocation(SceneLocationEnum currentScene, List<SceneLocationEnum> scenesList)
     {

@@ -23,12 +23,12 @@ public class DebtSlot : MonoBehaviour
         GameLanguageManager.OnLanguageChange -= ReloadInfo;
     }
 
-    public void SetSlotData(DebtTypeData newDebtData, bool buttonActive, int npcId = -1)
+    public void SetSlotData(DebtTypeData newDebtData, bool buttonActive, string npcId = "")
     {
         ResetSlot();
 
         debtData = newDebtData;
-        if(npcId != -1)
+        if(npcId != "")
             debtData.creditorNpcId = npcId;
 
         ReloadInfo();

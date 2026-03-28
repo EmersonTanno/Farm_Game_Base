@@ -3,6 +3,6 @@ using UnityEngine;
 [System.Serializable]
 public class CutsceneNPCData
 {
-    public int npcId;
+    public string npcId;
     public Vector2Int initialPos;
 }

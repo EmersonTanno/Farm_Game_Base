@@ -53,7 +53,7 @@ public class DebtController : MonoBehaviour
     }
 
     #region Create Debt
-    public bool CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, int creditorNpcId = -1)
+    public bool CreateNewDebt(DebtTypeEnum type, int extraPercentageToPay, int quantityMarksTaken, int daysQuantityToPay, int interestPercentage, int maxDaysOver, string creditorNpcId = "")
     {   
         DebtData newDebt = new DebtData
         {
@@ -118,7 +118,7 @@ public class DebtController : MonoBehaviour
         return actualDebtList.Exists(i => i.debtType == type);
     }
 
-    public bool CheckExistingSharkDebtWithNPC(int npcId)
+    public bool CheckExistingSharkDebtWithNPC(string npcId)
     {
         return actualDebtList.Exists(i => i.debtType == DebtTypeEnum.SHARK && i.creditorNpcId == npcId);
     }
@@ -131,7 +131,7 @@ public class DebtController : MonoBehaviour
         if(newDebt.debtType == DebtTypeEnum.BANK && CheckExistingDebtType(newDebt.debtType))
             return false;
         
-        if(newDebt.debtType == DebtTypeEnum.SHARK && newDebt.creditorNpcId != -1 && CheckExistingSharkDebtWithNPC(newDebt.creditorNpcId))
+        if(newDebt.debtType == DebtTypeEnum.SHARK && newDebt.creditorNpcId != "" && CheckExistingSharkDebtWithNPC(newDebt.creditorNpcId))
             return false;
 
         return true;
@@ -159,7 +159,7 @@ public class DebtController : MonoBehaviour
         return actualDebtList.Find(i => i.id == debtId);
     }
 
-    public DebtData GetDebtByNpcId(int npcId)
+    public DebtData GetDebtByNpcId(string npcId)
     {
         return actualDebtList.Find(i => i.creditorNpcId == npcId);
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CutsceneParallelBlockPiece
 {
     public CutsceneActionType actionType;
-    public int npcID;
+    public string npcID;
     public SceneLocationEnum targetScene;
     public Vector2Int targetPosition;
     public float spd = 2.5f;

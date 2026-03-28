@@ -32,7 +32,7 @@ public class DebtManager : MonoBehaviour
         DialogueManager.OnDialogueDebtRequest -= ActivateDebtShop;
     }
 
-    private void ActivateDebtShop(DebtTypeEnum debtType, int npcId)
+    private void ActivateDebtShop(DebtTypeEnum debtType, string npcId)
     {
         switch(debtType)
         {
@@ -54,7 +54,7 @@ public class DebtManager : MonoBehaviour
         }
     }
 
-    private void SetDebts(List<DebtTypeData> debts, string debtType,int npcId = -1)
+    private void SetDebts(List<DebtTypeData> debts, string debtType, string npcId = "")
     {
         if(isActive) return;
         isActive = true;
@@ -68,7 +68,7 @@ public class DebtManager : MonoBehaviour
         }
     }
 
-    private void SetSharkDebts(int npcId)
+    private void SetSharkDebts(string npcId)
     {
         SetDebts(sharkDebts, "shark", npcId);
     }

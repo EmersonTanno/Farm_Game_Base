@@ -8,7 +8,7 @@ public static class WorldTileFactory
             isWalkable = tile.isWalkable,
             canBePlanted = tile.canBePlanted,
             isPath = tile.isPath,
-            npcId = -1,
+            npcId = "",
         };
     }
 }

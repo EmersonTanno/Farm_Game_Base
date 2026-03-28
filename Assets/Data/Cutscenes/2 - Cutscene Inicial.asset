@@ -15,11 +15,11 @@ MonoBehaviour:
   id: 2
   cutsceneName: Cutscene Inicial
   npcs:
-  - npcId: 1
+  - npcId: mayor
     initialPos: {x: 45, y: 28}
   steps:
   - actionType: 0
-    npcID: 1
+    npcID: mayor
     targetScene: 1
     targetPosition: {x: 32, y: 29}
     spd: 2.5
@@ -34,7 +34,7 @@ MonoBehaviour:
     maxDaysOven: 0
     interestPercentage: 0
   - actionType: 3
-    npcID: 1
+    npcID: mayor
     targetScene: 1
     targetPosition: {x: 32, y: 29}
     spd: 2.5
@@ -49,7 +49,7 @@ MonoBehaviour:
     maxDaysOven: 0
     interestPercentage: 0
   - actionType: 1
-    npcID: 1
+    npcID: mayor
     targetScene: 1
     targetPosition: {x: 32, y: 29}
     spd: 2.5
@@ -109,7 +109,7 @@ MonoBehaviour:
     maxDaysOven: 0
     interestPercentage: 0
   - actionType: 0
-    npcID: 1
+    npcID: mayor
     targetScene: 1
     targetPosition: {x: 36, y: 29}
     spd: 2.5
@@ -144,7 +144,7 @@ MonoBehaviour:
         emote: 0
         waitTime: 0
       - actionType: 0
-        npcID: 1
+        npcID: mayor
         targetScene: 1
         targetPosition: {x: 36, y: 29}
         spd: 2.5
@@ -166,7 +166,7 @@ MonoBehaviour:
     maxDaysOven: 0
     interestPercentage: 0
   - actionType: 3
-    npcID: 1
+    npcID: mayor
     targetScene: 1
     targetPosition: {x: 36, y: 29}
     spd: 2.5
@@ -181,7 +181,7 @@ MonoBehaviour:
     maxDaysOven: 0
     interestPercentage: 0
   - actionType: 0
-    npcID: 1
+    npcID: mayor
     targetScene: 1
     targetPosition: {x: 49, y: 28}
     spd: 2.5

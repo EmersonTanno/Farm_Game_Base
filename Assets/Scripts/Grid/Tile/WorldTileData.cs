@@ -4,7 +4,7 @@ public struct WorldTileData
     public bool isWalkable;
     public bool canBePlanted;
     public bool isPath;
-    public int npcId;
+    public string npcId;
     public WarpTile warp;
     public WorldObjectID objectID;
     public ConstructionsType constructionID;
@@ -31,7 +31,7 @@ public struct WorldTileData
         return copy;
     }
 
-    public WorldTileData WithNPCId(int value)
+    public WorldTileData WithNPCId(string value)
     {
         WorldTileData copy = this;
         copy.npcId = value;

@@ -10735,7 +10735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcData:
-    id: 1
+    id: mayor
     name: Mayor
     hearts: 0
     location: 1
@@ -20834,7 +20834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: npcData.id
-      value: 4
+      value: accountant
       objectReference: {fileID: 0}
     - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: npcData.name

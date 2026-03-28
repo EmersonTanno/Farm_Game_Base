@@ -8,7 +8,7 @@ public class JsonManager : MonoBehaviour
     [Header("Dialogue JSON Files")]
     [SerializeField] private List<TextAsset> dialogueJsonFiles;
 
-    private Dictionary<int, Dictionary<string, Dialogue>> dialogueDatabase;
+    private Dictionary<string, Dictionary<string, Dialogue>> dialogueDatabase;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class JsonManager : MonoBehaviour
 
     private void LoadAllDialogues()
     {
-        dialogueDatabase = new Dictionary<int, Dictionary<string, Dialogue>>();
+        dialogueDatabase = new Dictionary<string, Dictionary<string, Dialogue>>();
 
         foreach (TextAsset json in dialogueJsonFiles)
         {
@@ -52,7 +52,7 @@ public class JsonManager : MonoBehaviour
         }
     }
 
-    public List<DialogueLine> GetDialogue(int npcId, string dialogueId)
+    public List<DialogueLine> GetDialogue(string npcId, string dialogueId)
     {
         if (!dialogueDatabase.ContainsKey(npcId))
         {

@@ -3,7 +3,7 @@ using UnityEngine;
 public class ShopObject : MonoBehaviour
 {
     [SerializeField] public string shopID;
-    [SerializeField] public int ownerNpcID;
+    [SerializeField] public string ownerNpcID;
     [SerializeField] public Vector2Int relativeNPCPosition;
     [SerializeField] public Vector2Int relativePlayerPosition;
 

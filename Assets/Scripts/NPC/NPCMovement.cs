@@ -125,7 +125,7 @@ public class NPCMovement : MonoBehaviour
             {
                 yield return null;
             }
-            NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0);
+            NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, "");
             if(npc.npcData.gridPosition == movementPath[movementPath.Count - 1])
             {
                 SetNPCNextScene();
@@ -276,7 +276,7 @@ public class NPCMovement : MonoBehaviour
     #region Remove NPC from Scene
     private void RemoveNPCFromScene(Vector2 position)
     {
-        NPCController.Instance.SetDataInNPCMap((int)position.x, (int)position.y, 0);
+        NPCController.Instance.SetDataInNPCMap((int)position.x, (int)position.y, "");
         transform.position = new Vector2(-10, -10);
         movePointer.transform.position = transform.position;
         npc.SetNPC(false);
@@ -286,7 +286,7 @@ public class NPCMovement : MonoBehaviour
     #region Update NPC Grid
     private void UpdateNPCGridPosition(Vector2 newPosition)
     {
-        NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0);
+        NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, "");
         npc.npcData.gridPosition = new Vector2Int((int)newPosition.x, (int)newPosition.y);
         NPCController.Instance.SetDataInNPCMap((int)newPosition.x, (int)newPosition.y, npc.npcData.id);
     }

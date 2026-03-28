@@ -1,51 +1,51 @@
 {
-  "npcId": 1,
+  "npcId": "mayor",
   "npcDialogueList": [
     {
       "dialogueId": "1",
       "dialogue": [
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Você chegou.",
           "textLineEn": "You have arrived."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Isso é suficiente.",
           "textLineEn": "That will suffice."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "A cidade precisa continuar funcionando.",
           "textLineEn": "The city needs to keep functioning."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Impostos serão coletados.",
           "textLineEn": "Taxes will be collected."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Serviços serão mantidos.",
           "textLineEn": "Services will be maintained."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "...",
           "textLineEn": "..."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Você irá administrar esta fazenda.",
           "textLineEn": "You will manage this farm."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Evite prejuízos.",
           "textLineEn": "Avoid losses."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "A cidade não deve nada a ninguém.",
           "textLineEn": "The city owes nothing to anyone."
         }
@@ -55,13 +55,13 @@
       "dialogueId": "2",
       "dialogue": [
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "reaction": "Sweat",
           "textLinePt": "Cuidado ao sair da fazenda.",
           "textLineEn": "Be careful when leaving the farm."
         },
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
           "textLineEn": "You never know what kind of taxes you might encounter.",
           "options": [
@@ -83,7 +83,7 @@
       "dialogueId": "3",
       "dialogue": [
         {
-          "portrait": "1",
+          "portrait": "mayor",
           "textLinePt": "Fim",
           "textLineEn": "End"
         }

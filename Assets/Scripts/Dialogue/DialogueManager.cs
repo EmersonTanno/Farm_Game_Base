@@ -37,9 +37,9 @@ public class DialogueManager : MonoBehaviour
     private bool shopOrDebtActive = false;
 
     //triggers
-    public static event Action<int> OnDialogueFinish;
+    public static event Action<string> OnDialogueFinish;
     public static event Action OnDialogueShopRequest;
-    public static event Action<DebtTypeEnum, int> OnDialogueDebtRequest;
+    public static event Action<DebtTypeEnum, string> OnDialogueDebtRequest;
     public static event Action<string> OnDebtPaymentRequest;
     #endregion
 
@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    public void SetDialogue(int npcId, string dialogueId)
+    public void SetDialogue(string npcId, string dialogueId)
     {
         SetDialogueCanvas(true);
         dialogueActive = true;
@@ -121,7 +121,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(StartDialogue(npcId, dialogue));
     }
 
-    public IEnumerator SetDialogueToCutscene(int npcId, string dialogueId)
+    public IEnumerator SetDialogueToCutscene(string npcId, string dialogueId)
     {
         SetDialogueCanvas(true);
         dialogueActive = true;
@@ -137,7 +137,7 @@ public class DialogueManager : MonoBehaviour
 
 
     #region Dialogue
-    private IEnumerator StartDialogue(int npcId,List<DialogueLine> dialogue)
+    private IEnumerator StartDialogue(string npcId,List<DialogueLine> dialogue)
     {
         if(GameSession.Instance.gameState != GameState.Cutscene && GameSession.Instance.gameState != GameState.PausedCutscene)
         {
@@ -202,7 +202,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    private void EndDialogue(int npcId)
+    private void EndDialogue(string npcId)
     {
         dialogueActive = false;
         SetDialogueCanvas(false);
@@ -328,7 +328,7 @@ public class DialogueManager : MonoBehaviour
         DeactivateButtons();
     }
 
-    private void ContinueDialogue(int npcId, string dialogueId)
+    private void ContinueDialogue(string npcId, string dialogueId)
     {
         StopAllCoroutines();
         canPassLine = true;
@@ -358,7 +358,7 @@ public class DialogueManager : MonoBehaviour
 
 
     #region Hearts
-    private void AddHearts(int npcId, int hearts)
+    private void AddHearts(string npcId, int hearts)
     {
         if(hearts == 0) return;
         NPCController.Instance.AddNPCHearts(npcId, hearts);
@@ -366,7 +366,7 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region Request / Shop / Debt
-    private void CheckRequest(string request, int npcId)
+    private void CheckRequest(string request, string npcId)
     {
         switch(request)
         {
@@ -409,7 +409,7 @@ public class DialogueManager : MonoBehaviour
         PauseDialogueUI();
     }
 
-    private void RequestDebt(DebtTypeEnum debtType, int npcId = -1)
+    private void RequestDebt(DebtTypeEnum debtType, string npcId = "-1")
     {
         OnDialogueDebtRequest?.Invoke(debtType, npcId);
         shopOrDebtActive = true;
@@ -424,7 +424,7 @@ public class DialogueManager : MonoBehaviour
         ResumeDialogueUI();
     }
 
-    private void RequestPayDebt(int npcId)
+    private void RequestPayDebt(string npcId)
     {
         DebtController debtController = DebtController.Instance;
         DebtData debt = debtController.GetDebtByNpcId(npcId);

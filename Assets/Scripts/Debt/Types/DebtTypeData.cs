@@ -10,7 +10,7 @@ public class DebtTypeData : ScriptableObject
     public int compoundInterest;
     public int maxDaysOver;
     public int quantityDaysToPay;
-    public int creditorNpcId = -1;
+    public string creditorNpcId = "";
 
     public DebtData ToDebtData()
     {

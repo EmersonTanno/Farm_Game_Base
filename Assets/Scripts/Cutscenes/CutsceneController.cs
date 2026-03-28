@@ -118,17 +118,17 @@ public class CutsceneController : MonoBehaviour
         }
     }
 
-    private IEnumerator InitiateCutsceneMovement(int npcID, Vector2Int targetPos, SceneLocationEnum targetScene, NPCSide side, float speed)
+    private IEnumerator InitiateCutsceneMovement(string npcID, Vector2Int targetPos, SceneLocationEnum targetScene, NPCSide side, float speed)
     {
         yield return NPCController.Instance.SetNpcMovementInCutscene(npcID, targetPos, targetScene, side, speed);
     }
 
-    private IEnumerator InitiateCutsceneDialogue(int npcId, string dialogueId)
+    private IEnumerator InitiateCutsceneDialogue(string npcId, string dialogueId)
     {
         yield return DialogueManager.Instance.SetDialogueToCutscene(npcId, dialogueId);
     }
 
-    private IEnumerator InitiateCutsceneNPCShowExpression(int npcId, ThoughtEmoteEnum emote)
+    private IEnumerator InitiateCutsceneNPCShowExpression(string npcId, ThoughtEmoteEnum emote)
     {
         yield return NPCController.Instance.ShowNPCReactionInCutscene(npcId, emote);
     }
@@ -163,7 +163,7 @@ public class CutsceneController : MonoBehaviour
     }
 
 
-    public bool CheckNPCInCutscene(int npcID)
+    public bool CheckNPCInCutscene(string npcID)
     {
         if(playingCutscene.npcs.Find(i => i.npcId == npcID) != null)
         {

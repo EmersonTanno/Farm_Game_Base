@@ -67,7 +67,7 @@ public class NPC : MonoBehaviour
         bubble.ShowBalloon(reaction);
     }
 
-    private void EndInteraction(int npcId)
+    private void EndInteraction(string npcId)
     {
         if(npcId == npcData.id)
         {
