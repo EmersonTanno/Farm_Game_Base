@@ -6,7 +6,10 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     public static NPCController Instance;
-    public List<NPC> npcs;
+
+    private List<NPC> npcs = new List<NPC>();
+
+    [SerializeField] GameObject npcsGrappler;
 
     private Vector3 npcOffSet = new Vector3(0.5f, 0.7f, 0);
 
@@ -15,6 +18,7 @@ public class NPCController : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        SerializeAllNPCs();
     }
 
     void OnEnable()
@@ -29,6 +33,20 @@ public class NPCController : MonoBehaviour
         CutsceneController.OnCutsceneEnd -= CharaterInCutscene;
     }
 
+    public void SerializeAllNPCs()
+    {
+        if(npcsGrappler == null)
+        {
+            Debug.LogWarning("NPC GRAPPLER NOR SET");
+            return;
+        }
+        NPC[] npcList = npcsGrappler.GetComponentsInChildren<NPC>();
+
+        foreach(NPC npc in npcList)
+        {
+            npcs.Add(npc);
+        }
+    }
     public void SetNPCsInScene()
     {
         TileMapController map = TileMapController.Instance;
@@ -222,9 +240,11 @@ public class NPCController : MonoBehaviour
         data.npcs.Clear();
         foreach(NPC npc in npcs)
         {
-            NPCSaveDataData saveData = new NPCSaveDataData();
-            saveData.id = npc.npcData.id;
-            saveData.hearts = npc.npcData.hearts;
+            NPCSaveDataData saveData = new NPCSaveDataData
+            {
+                id = npc.npcData.id,
+                hearts = npc.npcData.hearts
+            };
             data.npcs.Add(saveData);
         }
     }
@@ -234,6 +254,8 @@ public class NPCController : MonoBehaviour
         foreach(NPCSaveDataData npcData in data.npcs)
         {
            NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
+           if(!npc) continue;
+           Debug.Log(npc.npcData.name);
            npc.npcData.hearts = npcData.hearts;
         }
     }

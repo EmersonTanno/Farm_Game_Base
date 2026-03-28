@@ -16639,8 +16639,12 @@ PrefabInstance:
       value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 417645705, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: npcsGrappler
+      value: 
+      objectReference: {fileID: 4924957107014611230}
+    - target: {fileID: 417645705, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: npcs.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 417645705, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: npcs.Array.data[0]
