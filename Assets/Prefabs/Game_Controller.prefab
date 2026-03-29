@@ -44,9 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183354d07df47dc478a32b2ca2dce64d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcs:
-  - {fileID: 0}
-  - {fileID: 0}
+  npcsGrappler: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,9 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65e5f488eb2ae5489d8a5d9f5adfe53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueJsonFiles:
-  - {fileID: 4900000, guid: c4e6e48f4ed7876488bb0f1e4d2533ce, type: 3}
-  - {fileID: 4900000, guid: 192005316dacd9e4c8cf81900937ed49, type: 3}
+  dialogueDB: {fileID: 11400000, guid: 9d124ca75f33cb84693fd7b8b2806981, type: 2}
 --- !u!114 &1831400644
 MonoBehaviour:
   m_ObjectHideFlags: 0

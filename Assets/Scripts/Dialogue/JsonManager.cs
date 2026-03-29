@@ -6,7 +6,7 @@ public class JsonManager : MonoBehaviour
     public static JsonManager Instance;
 
     [Header("Dialogue JSON Files")]
-    [SerializeField] private List<TextAsset> dialogueJsonFiles;
+    [SerializeField] DialoguesDataBase dialogueDB;
 
     private Dictionary<string, Dictionary<string, Dialogue>> dialogueDatabase;
 
@@ -25,7 +25,7 @@ public class JsonManager : MonoBehaviour
     {
         dialogueDatabase = new Dictionary<string, Dictionary<string, Dialogue>>();
 
-        foreach (TextAsset json in dialogueJsonFiles)
+        foreach (TextAsset json in dialogueDB.dialogues)
         {
             if (json == null) continue;
 

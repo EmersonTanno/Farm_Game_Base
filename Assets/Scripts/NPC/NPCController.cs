@@ -254,8 +254,9 @@ public class NPCController : MonoBehaviour
         foreach(NPCSaveDataData npcData in data.npcs)
         {
            NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
+           
            if(!npc) continue;
-           Debug.Log(npc.npcData.name);
+
            npc.npcData.hearts = npcData.hearts;
         }
     }
