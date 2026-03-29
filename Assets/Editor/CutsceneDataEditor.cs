@@ -134,7 +134,7 @@ public class CutsceneDataEditor : Editor
     void ClearStep(SerializedProperty step)
     {
         step.FindPropertyRelative("actionType").enumValueIndex = 0;
-        step.FindPropertyRelative("npcID").intValue = 0;
+        step.FindPropertyRelative("npcID").stringValue = "";
         step.FindPropertyRelative("dialogueKey").stringValue = "";
         step.FindPropertyRelative("waitTime").floatValue = 0f;
 

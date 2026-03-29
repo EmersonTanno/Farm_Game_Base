@@ -17,18 +17,38 @@ MonoBehaviour:
   npcs:
   - npcId: mayor
     initialPos: {x: 45, y: 28}
+  - npcId: accountant
+    initialPos: {x: 46, y: 28}
   steps:
-  - actionType: 0
+  - actionType: 6
     npcID: mayor
-    targetScene: 1
-    targetPosition: {x: 32, y: 29}
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
     spd: 2.5
-    targetSide: 1
-    dialogueKey: 1
-    emote: 1
-    waitTime: 1
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
     parallelBlock:
-      steps: []
+      steps:
+      - actionType: 0
+        npcID: mayor
+        targetScene: 1
+        targetPosition: {x: 32, y: 29}
+        spd: 2.5
+        targetSide: 1
+        dialogueKey: 
+        emote: 0
+        waitTime: 0
+      - actionType: 0
+        npcID: accountant
+        targetScene: 1
+        targetPosition: {x: 36, y: 28}
+        spd: 2
+        targetSide: 1
+        dialogueKey: 
+        emote: 0
+        waitTime: 0
     debtValue: 0
     quantityDaysToPay: 0
     maxDaysOven: 0
@@ -49,12 +69,12 @@ MonoBehaviour:
     maxDaysOven: 0
     interestPercentage: 0
   - actionType: 1
-    npcID: mayor
+    npcID: cutscenes
     targetScene: 1
     targetPosition: {x: 32, y: 29}
     spd: 2.5
     targetSide: 0
-    dialogueKey: 1
+    dialogueKey: initial_cutscene_part1
     emote: 1
     waitTime: 1
     parallelBlock:
@@ -72,21 +92,6 @@ MonoBehaviour:
     dialogueKey: 
     emote: 0
     waitTime: 1
-    parallelBlock:
-      steps: []
-    debtValue: 500
-    quantityDaysToPay: 30
-    maxDaysOven: 7
-    interestPercentage: 10
-  - actionType: 7
-    npcID: 0
-    targetScene: 0
-    targetPosition: {x: 0, y: 0}
-    spd: 2.5
-    targetSide: 0
-    dialogueKey: 
-    emote: 0
-    waitTime: 0
     parallelBlock:
       steps: []
     debtValue: 500
@@ -183,7 +188,7 @@ MonoBehaviour:
   - actionType: 0
     npcID: mayor
     targetScene: 1
-    targetPosition: {x: 49, y: 28}
+    targetPosition: {x: 45, y: 29}
     spd: 2.5
     targetSide: 3
     dialogueKey: 1
@@ -195,3 +200,108 @@ MonoBehaviour:
     quantityDaysToPay: 0
     maxDaysOven: 0
     interestPercentage: 0
+  - actionType: 0
+    npcID: accountant
+    targetScene: 1
+    targetPosition: {x: 36, y: 29}
+    spd: 2.5
+    targetSide: 2
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 1
+    npcID: cutscenes
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: initial_cutscene_part2
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 7
+    npcID: 0
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 2
+    npcID: 
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: 
+    emote: 0
+    waitTime: 1
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 1
+    npcID: cutscenes
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: initial_cutscene_part3
+    emote: 0
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 3
+    npcID: accountant
+    targetScene: 0
+    targetPosition: {x: 0, y: 0}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: initial_cutscene_part3
+    emote: 6
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10
+  - actionType: 0
+    npcID: accountant
+    targetScene: 0
+    targetPosition: {x: 45, y: 29}
+    spd: 2.5
+    targetSide: 0
+    dialogueKey: initial_cutscene_part3
+    emote: 6
+    waitTime: 0
+    parallelBlock:
+      steps: []
+    debtValue: 500
+    quantityDaysToPay: 30
+    maxDaysOven: 7
+    interestPercentage: 10

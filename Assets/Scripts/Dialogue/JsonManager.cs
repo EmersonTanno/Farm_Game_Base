@@ -52,22 +52,22 @@ public class JsonManager : MonoBehaviour
         }
     }
 
-    public List<DialogueLine> GetDialogue(string npcId, string dialogueId)
+    public List<DialogueLine> GetDialogue(string dialogueKey, string dialogueId)
     {
-        if (!dialogueDatabase.ContainsKey(npcId))
+        if (!dialogueDatabase.ContainsKey(dialogueKey))
         {
-            Debug.LogWarning($"NPC {npcId} não encontrado");
+            Debug.LogWarning($"DIALOGUE {dialogueKey} não encontrado");
             return null;
         }
 
-        if (!dialogueDatabase[npcId].ContainsKey(dialogueId))
+        if (!dialogueDatabase[dialogueKey].ContainsKey(dialogueId))
         {
             Debug.LogWarning(
-                $"Diálogo {dialogueId} não encontrado para NPC {npcId}"
+                $"Diálogo {dialogueId} não encontrado para NPC {dialogueKey}"
             );
             return null;
         }
 
-        return dialogueDatabase[npcId][dialogueId].dialogue;
+        return dialogueDatabase[dialogueKey][dialogueId].dialogue;
     }
 }

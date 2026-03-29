@@ -281,7 +281,7 @@ public class NPCController : MonoBehaviour
     {
         NPC npc = GetNPC(npcId);
 
-        NPCMovement movement = npc.GetComponent<NPCMovement>();
+        NPCMovement movement = npc.GetNPCMovement();
 
         yield return movement.SetupMoveToCutscene(
             targetPosition,

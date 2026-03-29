@@ -89,4 +89,9 @@ public class NPC : MonoBehaviour
             routine.finalSide
         );
     }
+
+    public NPCMovement GetNPCMovement()
+    {
+        return npcMovement;
+    }
 }
