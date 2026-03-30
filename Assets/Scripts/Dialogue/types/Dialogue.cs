@@ -4,5 +4,10 @@ using System.Collections.Generic;
 public class Dialogue
 {
     public string dialogueId;
-    public List<DialogueLine> dialogue;
+    public List<DialogueLine> dialogueLines;
+
+    public int minHearts;
+    public int maxHearts;
+
+    public int startHour;
 }

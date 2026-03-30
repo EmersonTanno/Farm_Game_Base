@@ -3,7 +3,7 @@
   "npcDialogueList": [
     {
       "dialogueId": "initial_cutscene_part1",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "mayor",
           "textLinePt": "Você chegou.",
@@ -54,7 +54,7 @@
 
     {
       "dialogueId": "initial_cutscene_part2",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "accountant",
           "textLinePt": "Certo. Vamos aos detalhes.",
@@ -90,7 +90,7 @@
 
     {
       "dialogueId": "initial_cutscene_part3",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "accountant",
           "textLinePt": "Considere isso sua primeira pendência.",

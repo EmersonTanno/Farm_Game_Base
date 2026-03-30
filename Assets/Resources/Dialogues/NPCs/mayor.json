@@ -3,7 +3,7 @@
   "npcDialogueList": [
     {
       "dialogueId": "1",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "mayor",
           "textLinePt": "Você chegou.",
@@ -53,7 +53,7 @@
     },
     {
       "dialogueId": "2",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "mayor",
           "reaction": "Sweat",
@@ -81,7 +81,7 @@
     },
     {
       "dialogueId": "3",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "mayor",
           "textLinePt": "Fim",

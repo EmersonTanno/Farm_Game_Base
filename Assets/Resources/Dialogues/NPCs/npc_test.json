@@ -3,7 +3,7 @@
   "npcDialogueList": [
     {
       "dialogueId": "Shark",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Shark",
@@ -20,7 +20,7 @@
 
     {
       "dialogueId": "Bank",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Bank",
@@ -37,7 +37,7 @@
 
     {
       "dialogueId": "PayDebt",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Pague",
@@ -60,7 +60,7 @@
 
     {
       "dialogueId": "PayDebt1",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Dívida finalizada",
@@ -72,7 +72,7 @@
 
     {
       "dialogueId": "PayDebt2",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Você ainda pagará",
@@ -83,7 +83,7 @@
 
     {
       "dialogueId": "CantPayDebt",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Sem dinheiro de novo né?",

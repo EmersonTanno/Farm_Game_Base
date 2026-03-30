@@ -68,6 +68,6 @@ public class JsonManager : MonoBehaviour
             return null;
         }
 
-        return dialogueDatabase[dialogueKey][dialogueId].dialogue;
+        return dialogueDatabase[dialogueKey][dialogueId].dialogueLines;
     }
 }

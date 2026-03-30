@@ -3,7 +3,7 @@
   "npcDialogueList": [
     {
       "dialogueId": "1",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Olá, esse é o teste de Shop",
@@ -14,7 +14,7 @@
 
     {
       "dialogueId": "2",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Cuidado ao sair da fazenda.",
@@ -30,7 +30,7 @@
 
     {
       "dialogueId": "NormalShop",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Shop",
@@ -47,7 +47,7 @@
 
     {
       "dialogueId": "Shark",
-      "dialogue": [
+      "dialogueLines": [
         {
           "portrait": "2",
           "textLinePt": "Shark",
