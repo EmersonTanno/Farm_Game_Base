@@ -1,0 +1,112 @@
+{
+  "npcId": "cutscenes",
+  "npcDialogueList": [
+    {
+      "dialogueId": "initial_cutscene_part1",
+      "dialogueLines": [
+        {
+          "portrait": "mayor",
+          "textLinePt": "Você chegou.",
+          "textLineEn": "You have arrived."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Isso é suficiente.",
+          "textLineEn": "That will suffice."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "A cidade precisa continuar funcionando.",
+          "textLineEn": "The city needs to keep functioning."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Impostos serão coletados.",
+          "textLineEn": "Taxes will be collected."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Serviços serão mantidos.",
+          "textLineEn": "Services will be maintained."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "...",
+          "textLineEn": "..."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Você irá administrar esta fazenda.",
+          "textLineEn": "You will manage this farm."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Evite prejuízos.",
+          "textLineEn": "Avoid losses."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "A cidade não deve nada a ninguém.",
+          "textLineEn": "The city owes nothing to anyone."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "initial_cutscene_part2",
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "Certo. Vamos aos detalhes.",
+          "textLineEn": "Alright. Let's go over the details."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "A propriedade estava... em condições inadequadas.",
+          "textLineEn": "The property was... in inadequate condition."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Foram necessários alguns ajustes antes da sua chegada.",
+          "textLineEn": "Some adjustments were required before your arrival."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Limpeza. Reparos básicos. Estrutura mínima.",
+          "textLineEn": "Cleaning. Basic repairs. Minimal structure."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "...",
+          "textLineEn": "..."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Esses custos foram registrados em seu nome.",
+          "textLineEn": "These costs have been registered under your name."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "initial_cutscene_part3",
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "Considere isso sua primeira pendência.",
+          "textLineEn": "Consider this your first outstanding debt."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "O prazo já está em andamento.",
+          "textLineEn": "The deadline is already in progress."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Evite atrasos.",
+          "textLineEn": "Avoid delays."
+        }
+      ]
+    }
+  ]
+}

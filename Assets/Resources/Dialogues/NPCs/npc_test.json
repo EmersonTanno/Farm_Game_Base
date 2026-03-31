@@ -1,71 +1,93 @@
 {
-  "npcId": 1,
+  "npcId": 3,
   "npcDialogueList": [
     {
-      "dialogueId": "1",
-      "dialogue": [
+      "dialogueId": "Shark",
+      "dialogueLines": [
         {
-          "portrait": 1,
-          "reaction": "Sweat",
-          "addHearts": 2,
-          "textLinePt": "Olá, eu sou o prefeito da cidade.",
-          "textLineEn": "Hello, I am the mayor of the city."
+          "portrait": "2",
+          "textLinePt": "Shark",
+          "textLineEn": "Shark"
         },
         {
-          "portrait": 1,
-          "addHearts": -1,
-          "textLinePt": "Espero que você pague as taxas direitinho.",
-          "textLineEn": "I hope you pay your taxes properly.",
+          "portrait": "2",
+          "textLinePt": "Hehehe",
+          "textLineEn": "Hehehe",
+          "request": "shark_debt"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "Bank",
+      "dialogueLines": [
+        {
+          "portrait": "2",
+          "textLinePt": "Bank",
+          "textLineEn": "Bank"
+        },
+        {
+          "portrait": "2",
+          "textLinePt": "Volte sempre",
+          "textLineEn": "Volte sempre",
+          "request": "bank_debt"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "PayDebt",
+      "dialogueLines": [
+        {
+          "portrait": "2",
+          "textLinePt": "Pague",
+          "textLineEn": "Pay",
           "options": [
             {
-              "answerOptionPt": "Quem é você?",
-              "answerOptionEn": "Who are you?",
-              "toDialogueId": "2"
+              "answerOptionPt": "Pagar",
+              "answerOptionEn": "Pay",
+              "toDialogueId": "PayDebt1"
             },
             {
-              "answerOptionPt": "Tenho que ir",
-              "answerOptionEn": "I need to go",
-              "toDialogueId": "2"
+              "answerOptionPt": "Não Pagar",
+              "answerOptionEn": "Don't pay",
+              "toDialogueId": "PayDebt2"
             }
           ]
         }
       ]
     },
+
     {
-      "dialogueId": "2",
-      "dialogue": [
+      "dialogueId": "PayDebt1",
+      "dialogueLines": [
         {
-          "portrait": 1,
-          "reaction": "Sweat",
-          "textLinePt": "Cuidado ao sair da fazenda.",
-          "textLineEn": "Be careful when leaving the farm."
-        },
-        {
-          "portrait": 1,
-          "textLinePt": "Nunca se sabe que tipo de taxas você poderá encontrar.",
-          "textLineEn": "You never know what kind of taxes you might encounter.",
-          "options": [
-            {
-              "answerOptionPt": "Quem é você?",
-              "answerOptionEn": "Who are you?",
-              "toDialogueId": "3"
-            },
-            {
-              "answerOptionPt": "Tenho que ir",
-              "answerOptionEn": "I need to go",
-              "toDialogueId": "3"
-            }
-          ]
+          "portrait": "2",
+          "textLinePt": "Dívida finalizada",
+          "textLineEn": "Payiment accepted",
+          "request": "pay_debt"
         }
       ]
     },
+
     {
-      "dialogueId": "3",
-      "dialogue": [
+      "dialogueId": "PayDebt2",
+      "dialogueLines": [
         {
-          "portrait": 1,
-          "textLinePt": "Fim",
-          "textLineEn": "End"
+          "portrait": "2",
+          "textLinePt": "Você ainda pagará",
+          "textLineEn": "You will pay in time..."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "CantPayDebt",
+      "dialogueLines": [
+        {
+          "portrait": "2",
+          "textLinePt": "Sem dinheiro de novo né?",
+          "textLineEn": "Whithout money again?"
         }
       ]
     }

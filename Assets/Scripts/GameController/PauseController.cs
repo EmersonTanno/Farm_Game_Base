@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,6 +27,7 @@ public class PauseController : MonoBehaviour
     private bool canSelect = false;
 
     public bool gamePaused = false;
+    public bool canPressEsc = true;
 
     #region Core
     void Awake()
@@ -56,6 +57,7 @@ public class PauseController : MonoBehaviour
 
     public void EscButtonPresses()
     {
+        if(!canPressEsc) return;
         if(gamePaused)
         {
             ContinueGame();
@@ -64,11 +66,34 @@ public class PauseController : MonoBehaviour
         {
             PauseGame();
         }
+        canPressEsc = false;
+        StartCoroutine(ResetEscTimer());
+    }
+
+    private IEnumerator ResetEscTimer()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        canPressEsc = true;
     }
 
     public void PauseGame()
     {
-        Time_Controll.Instance.PauseTime();
+        if(Time_Controll.Instance.timerPaused && (GameSession.Instance.gameState == GameState.PausedCutscene || GameSession.Instance.gameState == GameState.Paused)) return;
+        if(GameSession.Instance.gameState == GameState.PausedCutscene || GameSession.Instance.gameState == GameState.Paused) return;
+
+        if(GameSession.Instance.gameState == GameState.Cutscene)
+        {
+            GameSession.Instance.SetGameState(GameState.PausedCutscene);
+        } 
+        else if(GameSession.Instance.gameState == GameState.Dialogue)
+        {
+            GameSession.Instance.SetGameState(GameState.PausedDialogue);
+        }
+        else
+        {
+            GameSession.Instance.SetGameState(GameState.Paused);
+        }
+        Time_Controll.Instance.PauseTimer();
         pauseCanvasGroup.SetActive(true);
         pauseAnimator.SetTrigger("pause");
         gamePaused = true;
@@ -77,9 +102,26 @@ public class PauseController : MonoBehaviour
     public void ContinueGame()
     {
         if(!canSelect) return;
+        if(GameSession.Instance.gameState == GameState.Cutscene || GameSession.Instance.gameState == GameState.Playing) return;
+
+        if(GameSession.Instance.gameState == GameState.PausedCutscene)
+        {
+            GameSession.Instance.SetGameState(GameState.Cutscene);
+        }
+        else if(GameSession.Instance.gameState == GameState.PausedDialogue)
+        {
+            GameSession.Instance.SetGameState(GameState.Dialogue);
+        }
+        else
+        {
+            GameSession.Instance.SetGameState(GameState.Playing);
+        }
         SetBackGround(false);
         pauseCanvas.SetActive(false);
-        Time_Controll.Instance.UnpauseTime();
+        if(GameSession.Instance.gameState != GameState.Cutscene && GameSession.Instance.gameState != GameState.Dialogue && GameSession.Instance.gameState != GameState.PausedCutscene && GameSession.Instance.gameState != GameState.PausedDialogue)
+        {
+            Time_Controll.Instance.UnpauseTimer();
+        }
         pauseCanvasGroup.SetActive(false);
         gamePaused = false;
     }
@@ -123,7 +165,7 @@ public class PauseController : MonoBehaviour
     #region to title page
     public void ChangeToTitlePage()
     {
-        Time_Controll.Instance.UnpauseTime();
+        Time_Controll.Instance.UnpauseTimer();
         SceneManager.LoadScene("HomeScreen");
         GameSession.Instance.KillSession();
     }

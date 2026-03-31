@@ -1,3 +1,6 @@
 {
-  "items": [{ "key": "buy", "pt": "Comprar", "en": "Buy" }]
+  "items": [
+    { "key": "buy", "pt": "Comprar", "en": "Buy" },
+    { "key": "exit", "pt": "Sair", "en": "Exit" }
+  ]
 }

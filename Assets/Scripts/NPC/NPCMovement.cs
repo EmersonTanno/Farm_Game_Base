@@ -40,6 +40,21 @@ public class NPCMovement : MonoBehaviour
         SetUpPath();
     }
 
+    public IEnumerator SetupMoveToCutscene(Vector2Int targetGridPos, SceneLocationEnum targetScene, NPCSide finalSide, float speed)
+    {
+        StopAllCoroutines();
+        float originalSpeed = moveSpeed;
+        moveSpeed = speed;
+        finalTargetPosition = targetGridPos;
+        finalTargetScene = targetScene;
+        this.finalSide = finalSide;
+        SetSceneList();
+        SetNewPath();
+
+        yield return MoveOnScreen();
+        moveSpeed = originalSpeed;
+    }
+
     private void SetUpPath()
     {
         SetSceneList();
@@ -49,6 +64,7 @@ public class NPCMovement : MonoBehaviour
             SetNewPath();
 
             if(movementPath == null || movementPath.Count == 0) return;
+            
 
             StartCoroutine(MoveOnScreen());
         } else
@@ -109,7 +125,7 @@ public class NPCMovement : MonoBehaviour
             {
                 yield return null;
             }
-            NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0);
+            NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, "");
             if(npc.npcData.gridPosition == movementPath[movementPath.Count - 1])
             {
                 SetNPCNextScene();
@@ -135,6 +151,7 @@ public class NPCMovement : MonoBehaviour
     {  
         while(npc.npcData.location != finalTargetScene || npc.npcData.gridPosition != finalTargetPosition)
         {
+
             Vector2Int targetPos;
             if(finalTargetScene != npc.npcData.location)
             {
@@ -155,7 +172,8 @@ public class NPCMovement : MonoBehaviour
             }
 
             foreach(Vector2Int position in positions)
-            {
+            {    
+                yield return WaitIfPaused();
                 yield return new WaitForSeconds(1f / moveSpeed);
                 npc.npcData.gridPosition = position;
                 if(npc.npcData.location == SceneInfo.Instance.location)
@@ -258,7 +276,7 @@ public class NPCMovement : MonoBehaviour
     #region Remove NPC from Scene
     private void RemoveNPCFromScene(Vector2 position)
     {
-        NPCController.Instance.SetDataInNPCMap((int)position.x, (int)position.y, 0);
+        NPCController.Instance.SetDataInNPCMap((int)position.x, (int)position.y, "");
         transform.position = new Vector2(-10, -10);
         movePointer.transform.position = transform.position;
         npc.SetNPC(false);
@@ -268,7 +286,7 @@ public class NPCMovement : MonoBehaviour
     #region Update NPC Grid
     private void UpdateNPCGridPosition(Vector2 newPosition)
     {
-        NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, 0);
+        NPCController.Instance.SetDataInNPCMap(npc.npcData.gridPosition.x, npc.npcData.gridPosition.y, "");
         npc.npcData.gridPosition = new Vector2Int((int)newPosition.x, (int)newPosition.y);
         NPCController.Instance.SetDataInNPCMap((int)newPosition.x, (int)newPosition.y, npc.npcData.id);
     }
@@ -299,6 +317,12 @@ public class NPCMovement : MonoBehaviour
     private IEnumerator WaitIfPaused()
     {
         while (!canWalk)
+        {
+            ResetNPCAnimation();
+            yield return null;
+        }
+
+        while ((Time_Controll.Instance.timerPaused && (GameSession.Instance.gameState == GameState.Paused || GameSession.Instance.gameState == GameState.PausedCutscene)) || (GameSession.Instance.gameState == GameState.Cutscene && !CutsceneController.Instance.CheckNPCInCutscene(npc.npcData.id)))
         {
             ResetNPCAnimation();
             yield return null;

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
@@ -46,20 +47,19 @@ public class WeatherParticleSystemController : MonoBehaviour
 
         var main = ps.main;
 
-        if(scene == true)
-        {
-            main.prewarm = true;
-        } 
-        else
-        {
-            main.prewarm = false;
-        }
+        main.prewarm = scene;
 
         if (canRain && !ps.isPlaying)
-            ps.Play();
+            StartCoroutine(DelayRainStart());
         else if (!canRain && ps.isPlaying && scene == true)
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         else if (!canRain && ps.isPlaying && scene == false)
             ps.Stop();
+    }
+
+    private IEnumerator DelayRainStart()
+    {
+        yield return new WaitForSeconds(3f);
+        ps.Play();
     }
 }

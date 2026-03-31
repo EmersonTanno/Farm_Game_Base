@@ -179,10 +179,11 @@ public class Sell_Controller : MonoBehaviour
         if(active == true)
         {
             active = false;
-            Time_Controll.Instance.UnpauseTime();
+            Time_Controll.Instance.UnpauseTimer();
         } else
         {
             active = true;
+            Time_Controll.Instance.PauseTimer();
         }
         
         darkBackground.SetActive(active);

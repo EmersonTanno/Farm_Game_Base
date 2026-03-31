@@ -68,7 +68,7 @@ public class SceneController : MonoBehaviour
         OnWarpStart?.Invoke();
         hasPendingTeleport = true;
         targetPlayerPosition = spawnPosition;
-        Time_Controll.Instance.PauseTime();
+        Time_Controll.Instance.PauseTimer();
         StartCoroutine(LoadLevelAsync(warp));
     }
 
@@ -129,7 +129,7 @@ public class SceneController : MonoBehaviour
         }
 
         yield return new WaitForSecondsRealtime(0.2f);
-        Time_Controll.Instance.UnpauseTime();
+        Time_Controll.Instance.UnpauseTimer();
 
         npcLoaded = false;
     }

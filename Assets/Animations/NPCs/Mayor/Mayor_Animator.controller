@@ -1464,7 +1464,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: WalkLeft
+    m_ConditionEvent: IdleLeft
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6030305141497299927}
@@ -2194,19 +2194,19 @@ AnimatorStateMachine:
     m_Position: {x: 250, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6030305141497299927}
-    m_Position: {x: -90, y: -340, z: 0}
+    m_Position: {x: 10, y: -340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7933781095267065677}
-    m_Position: {x: 530, y: -100, z: 0}
+    m_Position: {x: 580, y: -190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 927462191869625623}
-    m_Position: {x: 530, y: -180, z: 0}
+    m_Position: {x: 570, y: -300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7925645260131377060}
-    m_Position: {x: 510, y: -10, z: 0}
+    m_Position: {x: 570, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4252329329482912985}
-    m_Position: {x: 520, y: 50, z: 0}
+    m_Position: {x: 570, y: -50, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

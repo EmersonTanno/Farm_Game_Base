@@ -45,7 +45,7 @@ public class InventoryManager : MonoBehaviour
     #region InputSystem
     public void SetSlot(InputAction.CallbackContext value)
     {
-        if (!value.performed) return;
+        if (!value.performed || Time_Controll.Instance.timerPaused) return;
 
         float input = value.ReadValue<float>();
 

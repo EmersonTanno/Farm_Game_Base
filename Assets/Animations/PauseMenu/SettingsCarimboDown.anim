@@ -285,8 +285,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.55
-    functionName: OnStampHit
+  - time: 0.53333336
+    functionName: OnSetNewSettings
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

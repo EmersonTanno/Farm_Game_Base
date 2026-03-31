@@ -6,9 +6,9 @@ public class JsonManager : MonoBehaviour
     public static JsonManager Instance;
 
     [Header("Dialogue JSON Files")]
-    [SerializeField] private List<TextAsset> dialogueJsonFiles;
+    [SerializeField] DialoguesDataBase dialogueDB;
 
-    private Dictionary<int, Dictionary<string, Dialogue>> dialogueDatabase;
+    private Dictionary<string, Dictionary<string, Dialogue>> dialogueDatabase;
 
     private void Awake()
     {
@@ -23,9 +23,9 @@ public class JsonManager : MonoBehaviour
 
     private void LoadAllDialogues()
     {
-        dialogueDatabase = new Dictionary<int, Dictionary<string, Dialogue>>();
+        dialogueDatabase = new Dictionary<string, Dictionary<string, Dialogue>>();
 
-        foreach (TextAsset json in dialogueJsonFiles)
+        foreach (TextAsset json in dialogueDB.dialogues)
         {
             if (json == null) continue;
 
@@ -52,22 +52,85 @@ public class JsonManager : MonoBehaviour
         }
     }
 
-    public List<DialogueLine> GetDialogue(int npcId, string dialogueId)
+    public List<DialogueLine> GetDialogue(string dialogueKey, string dialogueId)
     {
-        if (!dialogueDatabase.ContainsKey(npcId))
+        if (!dialogueDatabase.ContainsKey(dialogueKey))
         {
-            Debug.LogWarning($"NPC {npcId} não encontrado");
+            Debug.LogWarning($"DIALOGUE {dialogueKey} não encontrado");
             return null;
         }
 
-        if (!dialogueDatabase[npcId].ContainsKey(dialogueId))
+        if (!dialogueDatabase[dialogueKey].ContainsKey(dialogueId))
         {
             Debug.LogWarning(
-                $"Diálogo {dialogueId} não encontrado para NPC {npcId}"
+                $"Diálogo {dialogueId} não encontrado para NPC {dialogueKey}"
             );
             return null;
         }
 
-        return dialogueDatabase[npcId][dialogueId].dialogue;
+        return dialogueDatabase[dialogueKey][dialogueId].dialogueLines;
+    }
+
+    public string GetBestDialogueId(string npcId, int hearts, int currentHour, bool hasAlreadyInteractToday)
+    {
+        if (!dialogueDatabase.ContainsKey(npcId))
+            return null;
+
+        var dialogues = dialogueDatabase[npcId].Values;
+
+        Dialogue best = null;
+
+        foreach (var dialogue in dialogues)
+        {
+            // Hearts
+            if (hearts < dialogue.minHearts || hearts > dialogue.maxHearts)
+                continue;
+
+            // Hora
+            if (dialogue.startHour != -1 && dialogue.startHour != currentHour)
+                continue;
+
+            // Interação
+            if (dialogue.hasAlreadyInteracted && !hasAlreadyInteractToday)
+                continue;
+
+            if (best == null)
+            {
+                best = dialogue;
+                continue;
+            }
+
+            bool currentHasHour = dialogue.startHour != -1;
+            bool bestHasHour = best.startHour != -1;
+
+            bool currentIsRepeat = dialogue.hasAlreadyInteracted;
+            bool bestIsRepeat = best.hasAlreadyInteracted;
+
+            // Prioridade 1: diálogo de repetição (mais específico)
+            if (currentIsRepeat && !bestIsRepeat)
+            {
+                best = dialogue;
+                continue;
+            }
+
+            // Prioridade 2: horário específico
+            if (currentIsRepeat == bestIsRepeat)
+            {
+                if (currentHasHour && !bestHasHour)
+                {
+                    best = dialogue;
+                    continue;
+                }
+
+                // Prioridade 3: maior minHearts
+                if (currentHasHour == bestHasHour &&
+                    dialogue.minHearts > best.minHearts)
+                {
+                    best = dialogue;
+                }
+            }
+        }
+
+        return best?.dialogueId;
     }
 }

@@ -13,6 +13,9 @@ public class SaveSystem
     public static event System.Action OnLoadFinish;
 
 
+    //public ConfigurationSaveData ConfigurationSaveData = new ConfigurationSaveData();
+
+
     [System.Serializable]
     public struct SaveData
     {
@@ -22,6 +25,8 @@ public class SaveSystem
         public FarmSaveData FarmSaveData;
         public NPCSaveData NPCSaveData;
         public TaxSaveData TaxSaveData;
+        public WeatherSaveData WeatherSaveData;
+        public DebtSaveData DebtSaveData;
     }
 
     #region File Names
@@ -44,6 +49,16 @@ public class SaveSystem
 
         return Path.Combine(dir, saveName + ".meta");
     }
+
+    public static string ConfigurationFileName()
+    {
+        string dir = Path.Combine(Application.persistentDataPath, "save");
+
+        if (!Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
+
+        return Path.Combine(dir, "configuration" + ".txt");
+    }
     #endregion
 
     #region Save Game
@@ -51,7 +66,7 @@ public class SaveSystem
     {
         if (string.IsNullOrEmpty(saveName))
         {
-            Debug.LogError("Save failed: saveName is null or empty");
+            Debug.LogError($"Save failed: saveName:{saveName} is null or empty");
             return;
         }
 
@@ -80,6 +95,10 @@ public class SaveSystem
             _saveData.NPCSaveData = new NPCSaveData();
         if (_saveData.TaxSaveData == null)
             _saveData.TaxSaveData = new TaxSaveData();
+        if(_saveData.WeatherSaveData == null)
+            _saveData.WeatherSaveData = new WeatherSaveData();
+        if(_saveData.DebtSaveData == null)
+            _saveData.DebtSaveData = new DebtSaveData();
 
         Status_Controller.Instance.Save(ref _saveData.PlayerSaveData);
         InventoryManager.Instance.Save(ref _saveData.InventorySaveData);
@@ -87,6 +106,8 @@ public class SaveSystem
         PersistenceController.Instance.Save(ref _saveData.FarmSaveData);
         NPCController.Instance.Save(ref _saveData.NPCSaveData);
         Tax_System.Instance.Save(ref _saveData.TaxSaveData);
+        WeatherController.Instance.Save(ref _saveData.WeatherSaveData);
+        DebtController.Instance.Save(ref _saveData.DebtSaveData);
     }
 
     private static void WriteMainSave(string saveName)
@@ -148,6 +169,8 @@ public class SaveSystem
         PersistenceController.Instance.Load(_saveData.FarmSaveData);
         NPCController.Instance.Load(_saveData.NPCSaveData);
         Tax_System.Instance.Load(_saveData.TaxSaveData);
+        WeatherController.Instance.Load(_saveData.WeatherSaveData);
+        DebtController.Instance.Load(_saveData.DebtSaveData);
     }
     #endregion
 
@@ -170,6 +193,40 @@ public class SaveSystem
         SaveMetaData metaData = JsonUtility.FromJson<SaveMetaData>(saveContent);
 
         return metaData;
+    }
+    #endregion
+
+    #region Save Configuration
+    public static void SaveConfigurations(LanguageEnum language)
+    {
+        WriteConfigurationSave(language);
+    }
+
+
+    private static void WriteConfigurationSave(LanguageEnum language)
+    {
+        ConfigurationSaveData configurationSaveData = new ConfigurationSaveData
+        {
+            gameLanguage= language,
+        };
+
+        File.WriteAllText(
+            ConfigurationFileName(),
+            JsonUtility.ToJson(configurationSaveData, true)
+        );
+    }
+
+    public static LanguageEnum LoadGameConfiguration()
+    {
+        if (File.Exists(ConfigurationFileName()))
+        {
+            string json = File.ReadAllText(SaveSystem.ConfigurationFileName());
+            ConfigurationSaveData data =
+                JsonUtility.FromJson<ConfigurationSaveData>(json);
+
+            return data.gameLanguage;
+        }
+        return LanguageEnum.Ingles;
     }
     #endregion
 }

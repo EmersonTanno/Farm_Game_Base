@@ -1,0 +1,18 @@
+{
+  "items": [
+    { "key": "summer", "pt": "Verão", "en": "Summer" },
+    { "key": "winter", "pt": "inverno", "en": "Winter" },
+    { "key": "fall", "pt": "Outono", "en": "Fall" },
+    { "key": "spring", "pt": "Primavera", "en": "Spring" },
+
+    { "key": "sum", "pt": "Ver", "en": "Sum" },
+    { "key": "win", "pt": "Inv", "en": "Win" },
+    { "key": "fal", "pt": "Out", "en": "Fal" },
+    { "key": "spr", "pt": "Pri", "en": "Spr" },
+
+    { "key": "verao", "pt": "Verão", "en": "Summer" },
+    { "key": "inverno", "pt": "Inverno", "en": "Winter" },
+    { "key": "outono", "pt": "Outono", "en": "Fall" },
+    { "key": "primavera", "pt": "Primavera", "en": "Spring" }
+  ]
+}

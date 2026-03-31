@@ -6,4 +6,5 @@ public enum ThoughtEmoteEnum
     Angry,
     Confused,
     Sleep,
+    WaveHand,
 }

@@ -1,0 +1,14 @@
+{
+  "items": [
+    { "key": "bank", "pt": "Banco", "en": "Bank" },
+    {
+      "key": "shark",
+      "pt": "Empréstimo Particular",
+      "en": "Alternative Financing"
+    },
+    { "key": "city", "pt": "Cidade", "en": "City" },
+    { "key": "percentage", "pt": "Porcentagem", "en": "Percentage" },
+    { "key": "dayLimit", "pt": "Dia Limite", "en": "Day Limit" },
+    { "key": "getButton", "pt": "Selecionar", "en": "Get" }
+  ]
+}

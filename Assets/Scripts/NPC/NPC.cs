@@ -7,6 +7,7 @@ public class NPC : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private NPCMovement npcMovement;
     private ThoughtBubbleController bubble;
+    private bool hasInteractToday = false;
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -17,6 +18,13 @@ public class NPC : MonoBehaviour
     void OnEnable()
     {
         DialogueManager.OnDialogueFinish += EndInteraction;
+        Calendar_Controller.OnDayChange += ResetInteraction;
+    }
+
+    void OnDisable()
+    {
+        DialogueManager.OnDialogueFinish -= EndInteraction;
+        Calendar_Controller.OnDayChange -= ResetInteraction;
     }
 
     public void SetNPC(bool active)
@@ -44,7 +52,17 @@ public class NPC : MonoBehaviour
         }
 
         npcMovement.SetIdle(npcSide);
-        DialogueManager.Instance.SetDialogue(npcData.id, "1");
+        
+        string dialogueId = JsonManager.Instance.GetBestDialogueId(npcData.id, npcData.hearts, Time_Controll.Instance.hours, hasInteractToday);
+
+        hasInteractToday = true;
+
+        DialogueManager.Instance.SetDialogue(npcData.id, dialogueId);
+    }
+
+    private void ResetInteraction()
+    {
+        hasInteractToday = false;
     }
 
     public void AddHeart(int num)
@@ -67,7 +85,7 @@ public class NPC : MonoBehaviour
         bubble.ShowBalloon(reaction);
     }
 
-    private void EndInteraction(int npcId)
+    private void EndInteraction(string npcId)
     {
         if(npcId == npcData.id)
         {
@@ -75,10 +93,23 @@ public class NPC : MonoBehaviour
         }
     }
 
-
     private IEnumerator ResetStates()
     {
         yield return new WaitForSeconds(1f);
         npcMovement.SetNPCCanWalk(true);
+    }
+
+    public void StartRoutine(NPCRoutine routine)
+    {
+        npcMovement.SetupMoveTo(
+            routine.targetPosition,
+            routine.targetLocation,
+            routine.finalSide
+        );
+    }
+
+    public NPCMovement GetNPCMovement()
+    {
+        return npcMovement;
     }
 }

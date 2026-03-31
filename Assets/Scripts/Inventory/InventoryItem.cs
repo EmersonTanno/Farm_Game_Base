@@ -12,6 +12,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public UnityEngine.UI.Image image;
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
+
+    private bool isDragging;
+
     public static event Action OnItemDrop;
 
     void Awake()
@@ -42,6 +45,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(Time_Controll.Instance.timerPaused) return;
+        isDragging = true;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.parent.parent.parent.parent);
         transform.SetAsLastSibling();
@@ -50,11 +55,16 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(!isDragging) return;
+
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!isDragging) return;
+        
+        isDragging = false;
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
         image.raycastTarget = true;

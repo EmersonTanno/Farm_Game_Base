@@ -8,6 +8,10 @@ public class IlluminationController : MonoBehaviour
     [SerializeField] Light2D globalLight;
     private Coroutine illuminationRoutine;
 
+    private float timeIntensity = 1f;
+    private float weatherIntensity = 1f;
+    private float locationIntensity = 1f;
+
 
     #region Core
     private void Awake()
@@ -33,6 +37,9 @@ public class IlluminationController : MonoBehaviour
         WarpController.OnWarpEnd += SetIllumination;
         Calendar_Controller.OnDayChange += ResetIlluminationIntensity;
         Calendar_Controller.OnMonthChange += SetIllumination;
+        Time_Controll.OnHourChange += UpdateDayLight;
+        WeatherController.OnWeatherChanged += SetIlluminationToWeather;
+        WeatherController.OnThunderFall += FlashIllumination;
     }
 
     void OnDisable()
@@ -40,6 +47,9 @@ public class IlluminationController : MonoBehaviour
         WarpController.OnWarpEnd -= SetIllumination;
         Calendar_Controller.OnDayChange -= ResetIlluminationIntensity;
         Calendar_Controller.OnMonthChange -= SetIllumination;
+        Time_Controll.OnHourChange -= UpdateDayLight;
+        WeatherController.OnWeatherChanged -= SetIlluminationToWeather;
+        WeatherController.OnThunderFall -= FlashIllumination;
     }
 
     #endregion
@@ -62,6 +72,7 @@ public class IlluminationController : MonoBehaviour
                     break;
                 }
         }
+        ApplyFinalIntensity();
     }
 
     public void ChangeIllumination(Color newColor)
@@ -72,6 +83,9 @@ public class IlluminationController : MonoBehaviour
     public void InnerIllumination()
     {
         ChangeIllumination(Color.white);
+
+        locationIntensity = 1.2f;
+        weatherIntensity = 1f;
     }
 
     public void OutsideIllumination(Season season)
@@ -101,6 +115,9 @@ public class IlluminationController : MonoBehaviour
                 } 
         }
         ChangeIllumination(newColor);
+
+        weatherIntensity = 1f;
+        locationIntensity = 1f;
     }
 
     public void SetIlluminationIntensity(float intensity)
@@ -110,7 +127,11 @@ public class IlluminationController : MonoBehaviour
 
     private void ResetIlluminationIntensity()
     {
-        SetIlluminationIntensity(1);
+        timeIntensity = 1f;
+        weatherIntensity = 1f;
+        locationIntensity = 1f;
+
+        ApplyFinalIntensity();
     }
 
     public void ChangeIlluminationIntensitySmooth(float targetIntensity, float duration = 1f)
@@ -139,5 +160,102 @@ public class IlluminationController : MonoBehaviour
         illuminationRoutine = null;
     }
 
+
+    #region Update Day Light to Hour
+    private void UpdateDayLight()
+    {
+        Time_Controll time = Time_Controll.Instance;
+
+        if (time.hours < 16)
+        {
+            timeIntensity = 1f;
+        }
+        else
+        {
+            float intensity = (24 - time.hours) / 10f;
+
+            if (intensity < 0.2f)
+            {
+                intensity = 0.15f;
+            }
+
+            timeIntensity = intensity;
+        }
+
+        ApplyFinalIntensitySmooth();
+    }
+    #endregion
+
+    #region Update Day Light to Weather
+    private void SetIlluminationToWeather(WeatherEnum weather)
+    {
+        switch(weather)
+        {
+            case WeatherEnum.SUN:
+                weatherIntensity = 1f;
+                break;
+
+            case WeatherEnum.RAIN:
+            case WeatherEnum.SNOW:
+                weatherIntensity = 0.85f;
+                break;
+
+            case WeatherEnum.TEMPEST:
+            case WeatherEnum.BLIZZARD:
+                weatherIntensity = 0.65f;
+                break;
+        }
+
+        ApplyFinalIntensitySmooth();
+    }
+
+    private void FlashIllumination()
+    {
+        StartCoroutine(Flash());
+    }
+
+    private IEnumerator Flash()
+    {
+        if (illuminationRoutine != null)
+        {
+            StopCoroutine(illuminationRoutine);
+        }
+
+        float baseIntensity = GetFinalIntensity();
+
+        int flashes = Random.Range(2, 4);
+
+        for (int i = 0; i < flashes; i++)
+        {
+            globalLight.intensity = baseIntensity + Random.Range(0.6f, 1.0f);
+            yield return new WaitForSeconds(Random.Range(0.03f, 0.08f));
+
+            globalLight.intensity = baseIntensity;
+            yield return new WaitForSeconds(Random.Range(0.04f, 0.1f));
+        }
+
+        ApplyFinalIntensity();
+    }
+    #endregion
+
+    #region Apply Final Intensity
+    private void ApplyFinalIntensity()
+    {
+        globalLight.intensity = GetFinalIntensity();
+    }
+
+    private void ApplyFinalIntensitySmooth()
+    {
+        if (illuminationRoutine != null)
+            StopCoroutine(illuminationRoutine);
+
+        illuminationRoutine = StartCoroutine(ChangeIlluminationIntensityRoutine(GetFinalIntensity(), 5));
+    }
+
+    private float GetFinalIntensity()
+    {
+        return timeIntensity * weatherIntensity * locationIntensity;
+    }
+    #endregion
 
 }

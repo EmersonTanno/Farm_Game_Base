@@ -1,0 +1,111 @@
+{
+  "npcId": "mayor",
+  "npcDialogueList": [
+    {
+      "dialogueId": "mayor_cold",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "dialogueLines": [
+        {
+          "portrait": "mayor",
+          "textLinePt": "Você ainda está aqui.",
+          "textLineEn": "You are still here."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Espero que isso signifique que não houve prejuízo.",
+          "textLineEn": "I assume that means no losses were incurred."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Continue assim.",
+          "textLineEn": "Keep it that way."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "mayor_neutral",
+      "minHearts": 3,
+      "maxHearts": 5,
+      "dialogueLines": [
+        {
+          "portrait": "mayor",
+          "textLinePt": "Os relatórios estão... aceitáveis.",
+          "textLineEn": "The reports are... acceptable."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "A produção está estável.",
+          "textLineEn": "Production is stable."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Isso é suficiente. Por enquanto.",
+          "textLineEn": "That is sufficient. For now."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "mayor_respect",
+      "minHearts": 6,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "mayor",
+          "textLinePt": "Você está se mostrando... eficiente.",
+          "textLineEn": "You are proving... efficient."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "A cidade valoriza resultados.",
+          "textLineEn": "The city values results."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Continue, e haverá menos interferência.",
+          "textLineEn": "Continue, and there will be less interference."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "mayor_morning",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "startHour": 6,
+      "dialogueLines": [
+        {
+          "portrait": "mayor",
+          "textLinePt": "Você começou cedo.",
+          "textLineEn": "You started early."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Produtividade costuma acompanhar disciplina.",
+          "textLineEn": "Productivity tends to follow discipline."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "mayor_already_interacted",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "hasAlreadyInteracted": true,
+      "dialogueLines": [
+        {
+          "portrait": "mayor",
+          "textLinePt": "Aparentemente possui bastante tempo livre",
+          "textLineEn": "Apparently has a lot of free time."
+        },
+        {
+          "portrait": "mayor",
+          "textLinePt": "Espero que isso não implique em prejuízos.",
+          "textLineEn": "I hope this doesn't lead to any losses."
+        }
+      ]
+    }
+  ]
+}

@@ -53,13 +53,17 @@ public class TileMapPlantData
     #region Day Controll
     public void PassDay()
     {
+        bool willRain = WeatherController.Instance.WillRain();
         if (plant != null)
         {
-            if (isWater)
+            if (isWater || willRain)
             {
                 growthDays += 1;
                 dryDays = 0;
-                RemoveWater();
+
+                if (isWater)
+                    RemoveWater();
+
                 return;
             }
             else
@@ -78,13 +82,13 @@ public class TileMapPlantData
         }
         else
         {
-            if (isPlown && isWater)
+            if (isPlown && (isWater || willRain))
             {
+                Debug.Log("Choveu");
                 isWater = false;
-
                 return;
             }
-            else if(isPlown)
+            else if (isPlown)
             {
                 if (Random.value < 0.5f)
                 {

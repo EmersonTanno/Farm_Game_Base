@@ -12,6 +12,7 @@ public class Time_Controll : MonoBehaviour
     public int minutes = 0;
     public int hours = 0;
     [SerializeField] TextMeshProUGUI dataText;
+    public bool timerPaused = false;
 
     //Controll Variable
     private bool canChangeTime = true;
@@ -51,6 +52,17 @@ public class Time_Controll : MonoBehaviour
         {
             StartCoroutine(UpdateTime());
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(timerPaused)
+            {
+                UnpauseTimer();
+            } else
+            {
+                PauseTimer();
+            }
+        }
     }
 
     void OnEnable()
@@ -70,7 +82,15 @@ public class Time_Controll : MonoBehaviour
     private IEnumerator UpdateTime()
     {
         canChangeTime = false;
-        yield return new WaitForSeconds(5f);
+
+        for(int i = 0; i < 5; i++)
+        {
+            while(timerPaused)
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(1f);
+        }
 
         if (minutes < 50)
         {
@@ -89,25 +109,11 @@ public class Time_Controll : MonoBehaviour
                 OnMidNightChange?.Invoke();
                 hours = 0;
             }
-
-            UpdateDayLight();
         }
 
         UpdateCanvas();
 
         canChangeTime = true;
-    }
-
-    private void UpdateDayLight()
-    {
-        if(hours < 16) return;
-
-        float intensity = (24 - hours) / 10f;
-        if(intensity < 0.2f)
-        {
-            intensity = 0.15f;
-        }
-        IlluminationController.Instance.ChangeIlluminationIntensitySmooth(intensity, 5);
     }
 
     public void ChangeDay()
@@ -134,9 +140,15 @@ public class Time_Controll : MonoBehaviour
     #region Bed
     public void ActivateBedCanvas()
     {
+        GameSession gameSession = GameSession.Instance;
+        if(gameSession.gameState == GameState.Paused || gameSession.gameState == GameState.PausedCutscene || gameSession.gameState == GameState.Dialogue || gameSession.gameState == GameState.PausedDialogue || gameSession.gameState == GameState.Cutscene || timerPaused)
+        {
+            return;
+        }
+        
         bedActive = true;
         bedCanva.SetActive(bedActive);
-        PauseTime();
+        PauseTimer();
         StartCoroutine(SetCanSelect());
     }
 
@@ -147,7 +159,7 @@ public class Time_Controll : MonoBehaviour
             bedActive = false;
             bedCanva.SetActive(bedActive);
             canSelectOption = false;
-            UnpauseTime();
+            UnpauseTimer();
         }
     }
 
@@ -179,6 +191,19 @@ public class Time_Controll : MonoBehaviour
     }
     #endregion
 
+    #region Timer Controller
+    public void PauseTimer()
+    {
+        if(timerPaused) return;
+        timerPaused = true;
+    }
+
+    public void UnpauseTimer()
+    {
+        if(!timerPaused) return;
+        timerPaused = false;
+    }
+    #endregion
 
     #region TimeCanvas
     private void SetTimeCanvas()

@@ -40,12 +40,14 @@ public class Calendar_Controller : MonoBehaviour
     #region Events
     void OnEnable()
     {
+        GameLanguageManager.OnLanguageChange += UpdateCanvas;
         Time_Controll.OnMidNightChange += ChangeDay;
         Status_Controller.OnFaint += ChangeDay;
     }
 
     void OnDisable()
     {
+        GameLanguageManager.OnLanguageChange -= UpdateCanvas;
         Time_Controll.OnMidNightChange -= ChangeDay;
         Status_Controller.OnFaint -= ChangeDay;
     }
@@ -55,7 +57,6 @@ public class Calendar_Controller : MonoBehaviour
     private void ChangeDay()
     {
         day++;
-        OnDayChange?.Invoke();
         if (day > 30)
         {
             month++;
@@ -63,32 +64,19 @@ public class Calendar_Controller : MonoBehaviour
             if (month > 4)
             {
                 month = 1;
+                year++;
                 OnYearChange?.Invoke();
             }
-            SetSeason();
             OnMonthChange?.Invoke();
         }
+        SetSeason();
+        OnDayChange?.Invoke();
         UpdateCanvas();
     }
 
     private void UpdateCanvas()
     {
-        string monthName = "";
-        switch (month)
-        {
-            case 1:
-                monthName = "Ver";
-                break;
-            case 2:
-                monthName = "Out";
-                break;
-            case 3:
-                monthName = "Inv";
-                break;
-            case 4:
-                monthName = "Pri";
-                break;
-        }
+        string monthName = GetSeason(month);
         if (daysText != null)
         {
             daysText.text = $"{day:D2}/{monthName}";
@@ -125,6 +113,93 @@ public class Calendar_Controller : MonoBehaviour
     public void ControllTimeGroup(bool setActive)
     {
         timeGroup.SetActive(setActive);
+    }
+    #endregion
+
+    #region Get Info
+    public string GetSeason(int month)
+    {
+        if(month <= 0)
+        {
+            return "";
+        }
+        if(month > 4)
+        {
+            month %= 4;
+        }
+        GameLanguageManager language = GameLanguageManager.Instance;
+        switch (month)
+        {
+            case 1:
+                return language.GetCallendarItemName("sum");
+            case 2:
+                return language.GetCallendarItemName("fal");
+            case 3:
+                return language.GetCallendarItemName("win");
+            case 4:
+                return language.GetCallendarItemName("spr");
+            default:
+                return "";
+        }
+    }
+
+    public Season GetSeasonType(int month)
+    {
+        if(month <= 0)
+        {
+            return Season.Verao;
+        }
+        if(month > 4)
+        {
+            month %= 4;
+        }
+        switch (month)
+        {
+            case 1:
+                return Season.Verao;
+            case 2:
+                return Season.Outono;
+            case 3:
+                return Season.Inverno;
+            case 4:
+                return Season.Primavera;
+            default:
+                return Season.Verao;
+        }
+    }
+
+    public string GetDate(int overDays = 0)
+    {
+        int returnDay = day + overDays;
+        int returnMonth = month;
+        int returnYear = year;
+
+        // Ajusta dias que passam de 30
+        while (returnDay > 30)
+        {
+            returnDay -= 30;
+            returnMonth++;
+
+            if (returnMonth > 4) // passou o último mês
+            {
+                returnMonth = 1;
+                returnYear++;
+            }
+        }
+
+        return $"{returnDay} / {GetSeason(returnMonth)} / {returnYear:D2}";
+    }
+
+    public int GetMonth(int month)
+    {
+        if(month <= 0)
+        {
+            return month;
+        }
+        else
+        {
+            return month % 4;
+        }
     }
     #endregion
 

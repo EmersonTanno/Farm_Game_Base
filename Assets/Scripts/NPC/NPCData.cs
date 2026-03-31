@@ -4,7 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class NPCData
 {
-    public int id;
+    public string id;
+    public string name;
 
     public int hearts = 0;
 

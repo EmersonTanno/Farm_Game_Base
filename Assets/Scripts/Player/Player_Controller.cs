@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -94,12 +95,12 @@ public class Player_Controller : MonoBehaviour
 
         WorldObjectID obj1 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos).objectID;
         WorldObjectID obj2 = TileMapController.Instance.GetGrid().GetGrid().GetGridObject(pos + GetSide()).objectID;
-        int nPCId = CheckNPC(pos);
+        ShopObject shop = CheckShop(pos);
+        string nPCId = CheckNPC(pos);
 
-        if(nPCId != 0 && nPCId != -1)
+        if(shop != null)
         {
-            Vector2 side = GetSide();
-            NPCController.Instance.InteractWithNPC(nPCId, side);
+            shop.OpenNPCShop();
             return;
         }
 
@@ -112,6 +113,13 @@ public class Player_Controller : MonoBehaviour
         if (obj2 == WorldObjectID.ShippingBox)
         {
             Sell_Box_Controller.Instance.AddItem(InventoryManager.Instance.SellSelectedItem());
+            return;
+        }
+
+        if(nPCId != "")
+        {
+            Vector2 side = GetSide();
+            NPCController.Instance.InteractWithNPC(nPCId, side);
             return;
         }
 
@@ -147,6 +155,7 @@ public class Player_Controller : MonoBehaviour
 
     private void IdleAnimation()
     {
+        if(GameSession.Instance.gameState == GameState.Cutscene || GameSession.Instance.gameState == GameState.PausedCutscene) return;
         if (Vector3.Distance(transform.position, movePoint.position) <= .0f)
         {
             myAnimator.SetBool("walk_front", false);
@@ -189,11 +198,14 @@ public class Player_Controller : MonoBehaviour
             return;
         }
 
+        if(Time_Controll.Instance.timerPaused) return;
+
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
     }
 
     private void MovePointer()
     {
+        if(GameSession.Instance.gameState == GameState.Cutscene) return;
         if (CheckMove())
         {
             if (Vector3.Distance(transform.position, movePoint.position) >= .05f)
@@ -206,14 +218,14 @@ public class Player_Controller : MonoBehaviour
         {
             if (inputDirection != Vector2.zero)
             {
-                if (inputDirection == facingDirection && !justTurned)
+                if (inputDirection == facingDirection && !justTurned && !Time_Controll.Instance.timerPaused)
                 {
                     Vector3 targetPos = movePoint.position + new Vector3(inputDirection.x, inputDirection.y, 0f);
 
                     if (!Physics2D.OverlapCircle(targetPos, .2f, collision) && CheckPlayerMoveGrid(targetPos))
                     {
                         movePoint.position = targetPos;
-
+                        
                         if (inputDirection.x == 1) ActivateAnimation("walk_right");
                         if (inputDirection.x == -1) ActivateAnimation("walk_left");
                         if (inputDirection.y == 1) ActivateAnimation("walk_back");
@@ -422,7 +434,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckAction()
     {
-        if (isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active || DialogueManager.Instance.dialogueActive)
+        if (GameSession.Instance.gameState == GameState.Cutscene || Time_Controll.Instance.timerPaused || isMoving || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active || DialogueManager.Instance.dialogueActive)
         {
             return true;
         }
@@ -432,7 +444,7 @@ public class Player_Controller : MonoBehaviour
 
     private bool CheckMove()
     {
-        if (isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
+        if (GameSession.Instance.gameState == GameState.Cutscene || isWatering || isPlanting || isHarvesting || isPlowing || InventoryManager.Instance.inventoryActive || Time_Controll.Instance.bedActive || Shop_Manager.Instance.shopActive || Sell_Controller.Instance.active)
         {
             return true;
         }
@@ -486,23 +498,144 @@ public class Player_Controller : MonoBehaviour
     {
         reactions.ShowBalloon(reaction);
     }
+
+    public IEnumerator ShowReactionInCutscene(ThoughtEmoteEnum reaction)
+    {
+        reactions.ShowBalloon(reaction);
+        yield return new WaitForSeconds(2f);
+    }
     #endregion
 
     #region NPC Interaction
-    private int CheckNPC(Vector2 currentPosition)
+    private string CheckNPC(Vector2 currentPosition)
     {
         Vector2 side = GetSide();
         Grid<WorldTileData> npcGrid = TileMapController.Instance.GetGrid().GetGrid();
 
-        int firstTile = npcGrid.GetGridObject(currentPosition + side).npcId;
-        if (firstTile != 0 && firstTile != -1)
+        string firstTile = npcGrid.GetGridObject(currentPosition + side).npcId;
+        if (firstTile != "")
             return firstTile;
 
-        int secondTile = npcGrid.GetGridObject(currentPosition + (side * 2)).npcId;
-        if (secondTile != 0 && secondTile != -1)
+        string secondTile = npcGrid.GetGridObject(currentPosition + (side * 2)).npcId;
+        if (secondTile != "")
             return secondTile;
 
-        return 0;
+        return "";
+    }
+    #endregion
+
+    #region Shop Interaction
+    private ShopObject CheckShop(Vector2 currentPosition)
+    {
+        Vector2 side = GetSide();
+        Grid<WorldTileData> shopGrid = TileMapController.Instance.GetGrid().GetGrid();
+        ShopObject shop = shopGrid.GetGridObject(currentPosition + side).shopObject;
+        if(shop != null)
+        {
+            return shop.CheckShopAvalible(currentPosition);
+        }
+        return null;
+    }
+    #endregion
+
+    #region Cutscene
+    public IEnumerator MovePlayerInCutscene(Vector2Int targetPos, float spd, NPCSide finalSide)
+    {
+        int currentStepIndex = 0;
+        List<SceneLocationEnum> sceneList = new List<SceneLocationEnum>
+        {
+            SceneInfo.Instance.location
+        };
+        List<Vector2Int> movementPath = TileMapController.Instance.FindPath(new Vector2Int((int)movePoint.position.x, (int)movePoint.position.y), targetPos, SceneInfo.Instance.location, SceneInfo.Instance.location, sceneList);
+
+
+        while (currentStepIndex < movementPath.Count)
+        {
+            yield return WaitIfPaused();
+
+            Vector2Int nextPosition = movementPath[currentStepIndex];
+
+            SetMovePointer(nextPosition);
+
+            SetPlayerAnimationCutscene();
+            while (transform.position != movePoint.position)
+            {
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    movePoint.transform.position,
+                    spd * Time.deltaTime
+                );
+                yield return null;
+            }
+
+            currentStepIndex++;
+        }
+
+        SetPlayerIdleCutscene(finalSide);
+    }
+
+    private void SetMovePointer(Vector2Int nextPos)
+    {
+        movePoint.position = new Vector3(nextPos.x + 0.5f, nextPos.y + 0.7f, 0);
+    }
+
+    private IEnumerator WaitIfPaused()
+    {
+        while(GameSession.Instance.gameState == GameState.Paused || GameSession.Instance.gameState == GameState.PausedCutscene)
+        {
+            yield return null;
+        }
+    }
+
+    private void SetPlayerAnimationCutscene()
+    {
+        if(movePoint.position.x > transform.position.x)
+        {
+            ActivateAnimation("walk_right");
+            return;
+        }
+        if(movePoint.position.x < transform.position.x)
+        {
+            ActivateAnimation("walk_left");
+            return;
+        }
+        if(movePoint.transform.position.y < transform.position.y)
+        {
+            ActivateAnimation("walk_front");
+            return;
+        }
+        if(movePoint.transform.position.y > transform.position.y)
+        {
+            ActivateAnimation("walk_back");
+            return;
+        }
+    }
+
+    private void SetPlayerIdleCutscene(NPCSide side)
+    {
+        switch(side)
+        {
+            case NPCSide.FRONT:
+            {
+                ActivateAnimation("idle_f");
+                break;
+            }
+            case NPCSide.BACK:
+            {
+                ActivateAnimation("idle_b");
+                break;
+            }
+            case NPCSide.LEFT:
+            {
+                ActivateAnimation("idle_l");
+                break;
+            }
+            case NPCSide.RIGHT:
+            {
+                ActivateAnimation("idle_r");
+                break;
+            }
+        }
     }
     #endregion
 }

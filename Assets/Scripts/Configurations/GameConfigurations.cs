@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public class GameConfigurations : MonoBehaviour
@@ -16,14 +17,18 @@ public class GameConfigurations : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        //implementação futura
-        //LoadConfig();
+        LoadConfiguration();
     }
 
     public void SetLanguage(LanguageEnum lang)
     {
         gameLanguage = lang;
-        //implementação futura
-        //SaveConfig();
+        SaveSystem.SaveConfigurations(gameLanguage);
+    }
+
+
+    private void LoadConfiguration()
+    {
+        gameLanguage = SaveSystem.LoadGameConfiguration();
     }
 }

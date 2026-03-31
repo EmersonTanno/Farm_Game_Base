@@ -40,8 +40,6 @@ public class SaveSlotMenu : MonoBehaviour
             nullField.SetActive(false);
 
             button.enabled = true;
-
-            //SetData();
         }
     }
 
@@ -75,8 +73,8 @@ public class SaveSlotMenu : MonoBehaviour
     {
         goldText.text += metaData.gold;
         dayText.text += metaData.day;
-        yearText.text += metaData.year;
-        seasonText.text += metaData.season;
+        yearText.text += $"{metaData.year:D2}";
+        seasonText.text += MainMenuLanguageManager.Instance.GetText(metaData.season.ToString().ToLower());
         lastPlayedText.text += metaData.lastPlayed;
     }
 

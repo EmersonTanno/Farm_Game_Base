@@ -1,11 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
     public static NPCController Instance;
-    public List<NPC> npcs;
+
+    private List<NPC> npcs = new List<NPC>();
+
+    [SerializeField] GameObject npcsGrappler;
 
     private Vector3 npcOffSet = new Vector3(0.5f, 0.7f, 0);
 
@@ -14,18 +18,35 @@ public class NPCController : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        SerializeAllNPCs();
     }
 
     void OnEnable()
     {
         Time_Controll.OnMinuteChange += NPCActivateRoutine;
+        CutsceneController.OnCutsceneEnd += CharaterInCutscene;
     }
 
     void OnDisable()
     {
         Time_Controll.OnMinuteChange -= NPCActivateRoutine;
+        CutsceneController.OnCutsceneEnd -= CharaterInCutscene;
     }
 
+    public void SerializeAllNPCs()
+    {
+        if(npcsGrappler == null)
+        {
+            Debug.LogWarning("NPC GRAPPLER NOR SET");
+            return;
+        }
+        NPC[] npcList = npcsGrappler.GetComponentsInChildren<NPC>();
+
+        foreach(NPC npc in npcList)
+        {
+            npcs.Add(npc);
+        }
+    }
     public void SetNPCsInScene()
     {
         TileMapController map = TileMapController.Instance;
@@ -75,12 +96,7 @@ public class NPCController : MonoBehaviour
 
             if (selectedRoutine != null)
             {
-                NPCMovement movement = npc.GetComponent<NPCMovement>();
-                movement.SetupMoveTo(
-                    selectedRoutine.targetPosition,
-                    selectedRoutine.targetLocation,
-                    selectedRoutine.finalSide
-                );
+                npc.StartRoutine(selectedRoutine);
             }
         }
     }
@@ -115,9 +131,66 @@ public class NPCController : MonoBehaviour
 
         return true;
     }
+
+    private int ConvertToMinutes(int hour, int minute)
+    {
+        return hour * 60 + minute;
+    }
+
+    private NPCRoutine GetCurrentValidRoutine(NPC npc)
+    {
+        int currentTime = ConvertToMinutes(
+            Time_Controll.Instance.hours,
+            Time_Controll.Instance.minutes);
+
+        NPCRoutine bestRoutine = null;
+        int bestTime = -1;
+
+        foreach (NPCRoutine routine in npc.npcData.routine)
+        {
+            if (!IsRoutineValid(npc, routine))
+                continue;
+
+            int routineTime = ConvertToMinutes(
+                routine.startHour,
+                routine.startMinute);
+
+            if (routineTime <= currentTime)
+            {
+                if (routineTime > bestTime)
+                {
+                    bestTime = routineTime;
+                    bestRoutine = routine;
+                }
+                else if (routineTime == bestTime &&
+                        bestRoutine != null &&
+                        routine.priority > bestRoutine.priority)
+                {
+                    bestRoutine = routine;
+                }
+            }
+        }
+
+        return bestRoutine;
+    }
+
+    private void CharaterInCutscene(List<CutsceneNPCData> npcsInCutscene)
+    {
+        foreach (CutsceneNPCData npcData in npcsInCutscene)
+        {
+            NPC npc = GetNPC(npcData.npcId);
+
+            NPCRoutine routine = GetCurrentValidRoutine(npc);
+
+            if (routine != null)
+            {
+                npc.StartRoutine(routine);
+            }
+        }
+    }
     #endregion
 
-    public void SetDataInNPCMap(int x, int y, int data)
+    public void SetDataInNPCMap(int x, int y, string data)
     {
         TileMapController map = TileMapController.Instance;
         map.SetNPC(x, y, data);
@@ -128,12 +201,12 @@ public class NPCController : MonoBehaviour
         return npcOffSet;
     }
 
-    public NPC GetNPC(int id)
+    public NPC GetNPC(string id)
     {
         return npcs.Find(p => p.npcData.id == id);
     }
 
-    public void InteractWithNPC(int id, Vector2 side)
+    public void InteractWithNPC(string id, Vector2 side)
     {
         NPC npc = GetNPC(id);
 
@@ -142,7 +215,7 @@ public class NPCController : MonoBehaviour
         npc.Interact(side);
     }
 
-    public void ShowNPCReaction(int id, ThoughtEmoteEnum reaction)
+    public void ShowNPCReaction(string id, ThoughtEmoteEnum reaction)
     {
         NPC npc = GetNPC(id);
 
@@ -151,7 +224,7 @@ public class NPCController : MonoBehaviour
         npc.ShowReaction(reaction);
     }
 
-    public void AddNPCHearts(int id, int hearts)
+    public void AddNPCHearts(string id, int hearts)
     {
         NPC npc = GetNPC(id);
 
@@ -167,9 +240,11 @@ public class NPCController : MonoBehaviour
         data.npcs.Clear();
         foreach(NPC npc in npcs)
         {
-            NPCSaveDataData saveData = new NPCSaveDataData();
-            saveData.id = npc.npcData.id;
-            saveData.hearts = npc.npcData.hearts;
+            NPCSaveDataData saveData = new NPCSaveDataData
+            {
+                id = npc.npcData.id,
+                hearts = npc.npcData.hearts
+            };
             data.npcs.Add(saveData);
         }
     }
@@ -179,8 +254,51 @@ public class NPCController : MonoBehaviour
         foreach(NPCSaveDataData npcData in data.npcs)
         {
            NPC npc = npcs.Find(n => n.npcData.id == npcData.id);
+           
+           if(!npc) continue;
+
            npc.npcData.hearts = npcData.hearts;
         }
+    }
+    #endregion
+
+    #region Cutscene
+    public void SetNPCInCutscene(string npcId, Vector2Int pos, SceneLocationEnum scene)
+    {
+        NPC npc = GetNPC(npcId);
+        npc.npcData.gridPosition = pos;
+        npc.npcData.location = scene;
+
+        NPCMovement movement = npc.GetComponent<NPCMovement>();
+        movement.ResetMovePointer();
+
+        SetDataInNPCMap(pos.x, pos.y, npc.npcData.id);
+
+        npc.transform.position = new Vector3(pos.x, pos.y, 0) + GetNPCOffset();
+    }
+
+    public IEnumerator SetNpcMovementInCutscene(string npcId, Vector2Int targetPosition, SceneLocationEnum targetLocation, NPCSide nPCSide, float speed)
+    {
+        NPC npc = GetNPC(npcId);
+
+        NPCMovement movement = npc.GetNPCMovement();
+
+        yield return movement.SetupMoveToCutscene(
+            targetPosition,
+            targetLocation,
+            nPCSide,
+            speed
+        );
+    }
+
+    public IEnumerator ShowNPCReactionInCutscene(string id, ThoughtEmoteEnum reaction)
+    {
+        NPC npc = GetNPC(id);
+
+        if(npc == null) yield return null;
+
+        npc.ShowReaction(reaction);
+        yield return new WaitForSeconds(2f);
     }
     #endregion
 }

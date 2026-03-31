@@ -14,6 +14,7 @@ public class TileMapController : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField] private GameObject constructionsMap;
     [SerializeField] private GameObject objectsMap;
+    [SerializeField] private GameObject shopHolder;
     [SerializeField] private GameObject warpHolder;
 
     public static event Action OnTileMapReady;
@@ -237,6 +238,8 @@ public class TileMapController : MonoBehaviour
     {
         var plantTile = tileMap.GetPlantGrid().GetGridObject(position);
 
+        if(plantTile == null) return false;
+
         if(!plantTile.CanHarvest()) return false;
 
         return true;
@@ -271,9 +274,21 @@ public class TileMapController : MonoBehaviour
         return objects;
     }
 
-    private void SetObjectsInScene()
+    private ShopObject[] GetShopsInScene()
+    {
+        if(shopHolder == null)
+        { 
+            return null;
+        }
+
+        ShopObject[] shops = shopHolder.GetComponentsInChildren<ShopObject>();
+        return shops;
+    }
+
+    private void SetObjectsAndShopsInScene()
     {
         WorldObject[] objects = GetObjectsInScene();
+        ShopObject[] shops = GetShopsInScene();
 
         foreach(WorldObject worldObject in objects)
         {
@@ -284,6 +299,14 @@ public class TileMapController : MonoBehaviour
 
                 SetMoveGrid((int)position.x, (int)position.y, !tile.blocksMovement);
                 tileMap.GetGrid().SetValue(position, tileMap.GetGrid().GetGridObject(position).WithObjectId(worldObject.GetWorldObjectType()));
+            }
+        }
+
+        if(shops != null && shops.Length > 0)
+        {
+            foreach(ShopObject shopObject in shops)
+            {
+                tileMap.GetGrid().SetValue(shopObject.transform.position, tileMap.GetGrid().GetGridObject(shopObject.transform.position).WithShopObject(shopObject));
             }
         }
     }
@@ -331,7 +354,7 @@ public class TileMapController : MonoBehaviour
     private void SetAllGrids()
     {
         SetConstructionsInSceneAndConstructionsWarps();
-        SetObjectsInScene();
+        SetObjectsAndShopsInScene();
     }
 
     private void SetGridTileData(int x, int y, WorldTileData tileData)
@@ -411,7 +434,7 @@ public class TileMapController : MonoBehaviour
     #endregion
 
     #region NPC
-    public void SetNPC(int x, int y, int id)
+    public void SetNPC(int x, int y, string id)
     {
         tileMap.GetGrid().SetValue(x, y, tileMap.GetGrid().GetGridObject(x, y).WithNPCId(id));
     }
@@ -487,14 +510,14 @@ public class TileMapController : MonoBehaviour
         return tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isWalkable;
     }
 
-    private bool IsNPCOnWay(Vector2Int pos)
-    {
-        if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
-        {
-            return true;
-        }
-        return false;
-    }
+    // private bool IsNPCOnWay(Vector2Int pos)
+    // {
+    //     if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     private Vector2Int GetWarpLocation(SceneLocationEnum currentScene, List<SceneLocationEnum> scenesList)
     {
