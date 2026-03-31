@@ -9,5 +9,7 @@ public class Dialogue
     public int minHearts;
     public int maxHearts;
 
-    public int startHour;
+    public int startHour = -1;
+
+    public bool hasAlreadyInteracted = false;
 }

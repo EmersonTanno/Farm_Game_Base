@@ -1,0 +1,111 @@
+{
+  "npcId": "accountant",
+  "npcDialogueList": [
+    {
+      "dialogueId": "accountant_cold",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "As contas não fecham sozinhas, sabia?",
+          "textLineEn": "Accounts don't balance themselves, you know?"
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Cada erro custa dinheiro.",
+          "textLineEn": "Every mistake costs money."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "E dinheiro... não gosta de desaparecer.",
+          "textLineEn": "And money... doesn't like to disappear."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "accountant_neutral",
+      "minHearts": 3,
+      "maxHearts": 5,
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "Os números estão... aceitáveis.",
+          "textLineEn": "The numbers are... acceptable."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Alguns desvios, mas nada crítico.",
+          "textLineEn": "Some deviations, but nothing critical."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Só não transforme isso em rotina.",
+          "textLineEn": "Just don't make it a habit."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "accountant_respect",
+      "minHearts": 6,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "Interessante... tudo está fechando corretamente.",
+          "textLineEn": "Interesting... everything is balancing correctly."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Lucro consistente. Raro.",
+          "textLineEn": "Consistent profit. Rare."
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Continue assim, facilita muito o meu trabalho.",
+          "textLineEn": "Keep it that way, makes my job much easier."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "accountant_morning",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "startHour": 6,
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "Já revisou os relatórios de hoje?",
+          "textLineEn": "Have you reviewed today's reports yet?"
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Começar cedo evita surpresas desagradáveis.",
+          "textLineEn": "Starting early avoids unpleasant surprises."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "accountant_already_interacted",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "hasAlreadyInteracted": true,
+      "dialogueLines": [
+        {
+          "portrait": "accountant",
+          "textLinePt": "Voltou?",
+          "textLineEn": "Back again?"
+        },
+        {
+          "portrait": "accountant",
+          "textLinePt": "Espero que tenha vindo com números melhores.",
+          "textLineEn": "I hope you came back with better numbers."
+        }
+      ]
+    }
+  ]
+}

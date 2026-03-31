@@ -7,6 +7,7 @@ public class NPC : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private NPCMovement npcMovement;
     private ThoughtBubbleController bubble;
+    private bool hasInteractToday = false;
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -17,6 +18,13 @@ public class NPC : MonoBehaviour
     void OnEnable()
     {
         DialogueManager.OnDialogueFinish += EndInteraction;
+        Calendar_Controller.OnDayChange += ResetInteraction;
+    }
+
+    void OnDisable()
+    {
+        DialogueManager.OnDialogueFinish -= EndInteraction;
+        Calendar_Controller.OnDayChange -= ResetInteraction;
     }
 
     public void SetNPC(bool active)
@@ -44,7 +52,17 @@ public class NPC : MonoBehaviour
         }
 
         npcMovement.SetIdle(npcSide);
-        DialogueManager.Instance.SetDialogue(npcData.id, "1");
+        
+        string dialogueId = JsonManager.Instance.GetBestDialogueId(npcData.id, npcData.hearts, Time_Controll.Instance.hours, hasInteractToday);
+
+        hasInteractToday = true;
+
+        DialogueManager.Instance.SetDialogue(npcData.id, dialogueId);
+    }
+
+    private void ResetInteraction()
+    {
+        hasInteractToday = false;
     }
 
     public void AddHeart(int num)

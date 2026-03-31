@@ -70,4 +70,67 @@ public class JsonManager : MonoBehaviour
 
         return dialogueDatabase[dialogueKey][dialogueId].dialogueLines;
     }
+
+    public string GetBestDialogueId(string npcId, int hearts, int currentHour, bool hasAlreadyInteractToday)
+    {
+        if (!dialogueDatabase.ContainsKey(npcId))
+            return null;
+
+        var dialogues = dialogueDatabase[npcId].Values;
+
+        Dialogue best = null;
+
+        foreach (var dialogue in dialogues)
+        {
+            // Hearts
+            if (hearts < dialogue.minHearts || hearts > dialogue.maxHearts)
+                continue;
+
+            // Hora
+            if (dialogue.startHour != -1 && dialogue.startHour != currentHour)
+                continue;
+
+            // Interação
+            if (dialogue.hasAlreadyInteracted && !hasAlreadyInteractToday)
+                continue;
+
+            if (best == null)
+            {
+                best = dialogue;
+                continue;
+            }
+
+            bool currentHasHour = dialogue.startHour != -1;
+            bool bestHasHour = best.startHour != -1;
+
+            bool currentIsRepeat = dialogue.hasAlreadyInteracted;
+            bool bestIsRepeat = best.hasAlreadyInteracted;
+
+            // Prioridade 1: diálogo de repetição (mais específico)
+            if (currentIsRepeat && !bestIsRepeat)
+            {
+                best = dialogue;
+                continue;
+            }
+
+            // Prioridade 2: horário específico
+            if (currentIsRepeat == bestIsRepeat)
+            {
+                if (currentHasHour && !bestHasHour)
+                {
+                    best = dialogue;
+                    continue;
+                }
+
+                // Prioridade 3: maior minHearts
+                if (currentHasHour == bestHasHour &&
+                    dialogue.minHearts > best.minHearts)
+                {
+                    best = dialogue;
+                }
+            }
+        }
+
+        return best?.dialogueId;
+    }
 }
