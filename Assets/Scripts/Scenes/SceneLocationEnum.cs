@@ -5,4 +5,5 @@ public enum SceneLocationEnum
     HOUSE,
     CITY,
     FARMBRIDGE,
+    SHOP
 }

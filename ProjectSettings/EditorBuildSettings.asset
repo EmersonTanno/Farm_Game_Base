@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoadGameHouse.unity
     guid: 9f570159d82d57b47854e4d2e51a2e61
+  - enabled: 1
+    path: Assets/Scenes/Shop.unity
+    guid: aa438d7fc65c68f48a0055583b328ab4
   m_configObjects: {}
