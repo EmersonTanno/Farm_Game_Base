@@ -5652,11 +5652,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcData:
-    id: 2
+    id: shop
     name: Seller
     hearts: 0
-    location: 3
-    gridPosition: {x: 11, y: 3}
+    location: 5
+    gridPosition: {x: 5, y: 5}
     state: 0
     routineIndex: 0
     routine:
@@ -5665,9 +5665,9 @@ MonoBehaviour:
       validDays: 
       validWeather: 
       minHearts: 0
-      targetLocation: 2
-      targetPosition: {x: 2, y: 2}
-      finalSide: 1
+      targetLocation: 5
+      targetPosition: {x: 2, y: 6}
+      finalSide: 0
       priority: 0
 --- !u!114 &4924957106639830465
 MonoBehaviour:

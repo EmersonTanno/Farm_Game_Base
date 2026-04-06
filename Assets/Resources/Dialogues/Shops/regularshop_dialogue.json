@@ -1,0 +1,21 @@
+{
+  "npcId": "RegularShop",
+  "npcDialogueList": [
+    {
+      "dialogueId": "Shop",
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Shop",
+          "textLineEn": "Shop"
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Volte Sempre",
+          "textLineEn": "Return",
+          "request": "default_shop"
+        }
+      ]
+    }
+  ]
+}
