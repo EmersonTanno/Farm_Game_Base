@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class ShopObject : MonoBehaviour
 {
-    [SerializeField] public string shopID;
+    [SerializeField] public string dialogueShopID;
+    [SerializeField] public string dialogueID;
     [SerializeField] public string ownerNpcID;
     [SerializeField] public Vector2Int relativeNPCPosition;
     [SerializeField] public Vector2Int relativePlayerPosition;
@@ -23,6 +24,6 @@ public class ShopObject : MonoBehaviour
 
     public virtual void OpenNPCShop()
     {
-        DialogueManager.Instance.SetDialogue(ownerNpcID, shopID);
+        DialogueManager.Instance.SetDialogue(dialogueShopID, dialogueID);
     }
 }
