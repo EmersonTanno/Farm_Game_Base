@@ -1290,21 +1290,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8934000387549028368, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8934000387580789056, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.6390085
+      value: 10.004688
       objectReference: {fileID: 0}
     - target: {fileID: 8934000387580789056, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2497354
+      value: 5.249735
       objectReference: {fileID: 0}
     - target: {fileID: 8934000387580789183, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
       propertyPath: orthographic size
-      value: 4.72
+      value: 4.7
       objectReference: {fileID: 0}
     - target: {fileID: 8934000388300057696, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
       propertyPath: m_Lens.OrthographicSize
-      value: 4.72
+      value: 4.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b4593c9727c0e54dad5f3bee9866fa8, type: 3}
