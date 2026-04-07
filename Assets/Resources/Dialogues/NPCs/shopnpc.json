@@ -1,0 +1,111 @@
+{
+  "npcId": "shop",
+  "npcDialogueList": [
+    {
+      "dialogueId": "shop_cold",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Ah, cliente novo?",
+          "textLineEn": "Ah, a new customer?"
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Dê uma olhada... talvez encontre algo útil.",
+          "textLineEn": "Take a look... you might find something useful."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Tudo tem seu preço.",
+          "textLineEn": "Everything has its price."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shop_neutral",
+      "minHearts": 3,
+      "maxHearts": 5,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Bom te ver de novo.",
+          "textLineEn": "Good to see you again."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Separei algumas coisas que podem te ajudar.",
+          "textLineEn": "I set aside a few things that might help you."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Dá uma olhada.",
+          "textLineEn": "Take a look."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shop_respect",
+      "minHearts": 6,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Você tem feito bons negócios por aqui.",
+          "textLineEn": "You've been doing good business around here."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Gosto de clientes que sabem o que estão fazendo.",
+          "textLineEn": "I like customers who know what they're doing."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Se precisar de algo específico, me avise.",
+          "textLineEn": "If you need something specific, let me know."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shop_morning",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "startHour": 6,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Começando cedo, hein?",
+          "textLineEn": "Starting early, huh?"
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Os melhores negócios acontecem de manhã.",
+          "textLineEn": "The best deals happen in the morning."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shop_already_interacted",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "hasAlreadyInteracted": true,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Voltou rápido.",
+          "textLineEn": "Back so soon."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Esqueceu algo... ou só gosta daqui?",
+          "textLineEn": "Forgot something... or just like it here?"
+        }
+      ]
+    }
+  ]
+}

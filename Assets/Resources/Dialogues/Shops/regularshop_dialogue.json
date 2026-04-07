@@ -6,13 +6,13 @@
       "dialogueLines": [
         {
           "portrait": "shop",
-          "textLinePt": "Shop",
-          "textLineEn": "Shop"
+          "textLinePt": "Fique à vontade.",
+          "textLineEn": "Take your time."
         },
         {
           "portrait": "shop",
-          "textLinePt": "Volte Sempre",
-          "textLineEn": "Return",
+          "textLinePt": "Volte sempre.",
+          "textLineEn": "Come again.",
           "request": "default_shop"
         }
       ]

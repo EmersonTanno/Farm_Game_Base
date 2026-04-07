@@ -1917,6 +1917,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1904349575}
     m_Modifications:
+    - target: {fileID: 1123559555744328831, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
+      propertyPath: constructionPositions.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123559555744328831, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
+      propertyPath: constructionPositions.Array.data[8].offset.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123559555744328831, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
+      propertyPath: constructionPositions.Array.data[8].offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123559555744328831, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
+      propertyPath: constructionPositions.Array.data[9].offset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4340058001518646111, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1963,7 +1979,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754755330321959266, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
       propertyPath: m_Name
-      value: Construction
+      value: Market
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754755330321959266, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8207552344074781778, guid: d65e159c0eced704aa6d5f452dadcfcc, type: 3}
       propertyPath: m_LocalPosition.x
