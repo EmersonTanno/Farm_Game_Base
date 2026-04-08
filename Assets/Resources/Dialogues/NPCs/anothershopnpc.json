@@ -1,0 +1,106 @@
+{
+  "npcId": "anothershop",
+  "npcDialogueList": [
+    {
+      "dialogueId": "anothershop_cold",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "dialogueLines": [
+        {
+          "portrait": "anothershop",
+          "textLinePt": "Olá, minha loja ainda não está pronta.",
+          "textLineEn": "Hi, my store isn't ready yet."
+        },
+        {
+          "portrait": "anothershop",
+          "textLinePt": "A loja do meu irmão é logo ali. Se precisar comprar de algo, passe lá",
+          "textLineEn": "My brother's shop is right over there. If you need to buy anything, stop by."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "anothershop_neutral",
+      "minHearts": 3,
+      "maxHearts": 5,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Bom te ver de novo.",
+          "textLineEn": "Good to see you again."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Separei algumas coisas que podem te ajudar.",
+          "textLineEn": "I set aside a few things that might help you."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Dá uma olhada.",
+          "textLineEn": "Take a look."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "anothershop_respect",
+      "minHearts": 6,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Você tem feito bons negócios por aqui.",
+          "textLineEn": "You've been doing good business around here."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Gosto de clientes que sabem o que estão fazendo.",
+          "textLineEn": "I like customers who know what they're doing."
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Se precisar de algo específico, me avise.",
+          "textLineEn": "If you need something specific, let me know."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "anothershop_morning",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "startHour": 6,
+      "dialogueLines": [
+        {
+          "portrait": "shop",
+          "textLinePt": "Começando cedo, hein?",
+          "textLineEn": "Starting early, huh?"
+        },
+        {
+          "portrait": "shop",
+          "textLinePt": "Os melhores negócios acontecem de manhã.",
+          "textLineEn": "The best deals happen in the morning."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "anothershop_already_interacted",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "hasAlreadyInteracted": true,
+      "dialogueLines": [
+        {
+          "portrait": "anothershop",
+          "textLinePt": "Logo eu venderei itens diferentes do meu irmão.",
+          "textLineEn": "Soon I will be selling different items than my brother."
+        },
+        {
+          "portrait": "anothershop",
+          "textLinePt": "Isso é, se você quiser oportunidades novas, é claro.",
+          "textLineEn": "That is, if you want new opportunities, of course."
+        }
+      ]
+    }
+  ]
+}
