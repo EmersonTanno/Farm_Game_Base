@@ -1,16 +1,16 @@
 {
-  "npcId": 3,
+  "npcId": "shark",
   "npcDialogueList": [
     {
       "dialogueId": "Shark",
       "dialogueLines": [
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Shark",
           "textLineEn": "Shark"
         },
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Hehehe",
           "textLineEn": "Hehehe",
           "request": "shark_debt"
@@ -22,12 +22,12 @@
       "dialogueId": "Bank",
       "dialogueLines": [
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Bank",
           "textLineEn": "Bank"
         },
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Volte sempre",
           "textLineEn": "Volte sempre",
           "request": "bank_debt"
@@ -39,7 +39,7 @@
       "dialogueId": "PayDebt",
       "dialogueLines": [
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Pague",
           "textLineEn": "Pay",
           "options": [
@@ -62,7 +62,7 @@
       "dialogueId": "PayDebt1",
       "dialogueLines": [
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Dívida finalizada",
           "textLineEn": "Payiment accepted",
           "request": "pay_debt"
@@ -74,7 +74,7 @@
       "dialogueId": "PayDebt2",
       "dialogueLines": [
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Você ainda pagará",
           "textLineEn": "You will pay in time..."
         }
@@ -85,7 +85,7 @@
       "dialogueId": "CantPayDebt",
       "dialogueLines": [
         {
-          "portrait": "2",
+          "portrait": "shark",
           "textLinePt": "Sem dinheiro de novo né?",
           "textLineEn": "Whithout money again?"
         }

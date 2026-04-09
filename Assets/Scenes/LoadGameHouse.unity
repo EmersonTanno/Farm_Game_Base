@@ -1733,9 +1733,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bae5f050bb1274d9b574ddb3f4c308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueShopID: 3
+  dialogueShopID: shark
   dialogueID: Shark
-  ownerNpcID: 3
+  ownerNpcID: shark
   relativeNPCPosition: {x: 0, y: 1}
   relativePlayerPosition: {x: 0, y: -1}
   debtDialogueIdIfHaveMoney: PayDebt

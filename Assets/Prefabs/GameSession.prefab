@@ -21042,7 +21042,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3237714741655496502, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: m_Name
-      value: NPC3
+      value: Shark
+      objectReference: {fileID: 0}
+    - target: {fileID: 3237714741655496502, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3766368926487710524, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: m_Name
@@ -21050,7 +21054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: npcData.id
-      value: 3
+      value: shark
       objectReference: {fileID: 0}
     - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: npcData.name
@@ -21112,6 +21116,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7303896827620248966, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 01cb26fdd354c384196da6bcdb48b5fd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
 --- !u!4 &1360796308611063816 stripped
