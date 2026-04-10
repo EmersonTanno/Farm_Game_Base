@@ -35,6 +35,7 @@ public class DialogueManager : MonoBehaviour
 
     //controll
     private bool shopOrDebtActive = false;
+    private string npcShopId = "";
 
     //triggers
     public static event Action<string> OnDialogueFinish;
@@ -59,6 +60,7 @@ public class DialogueManager : MonoBehaviour
         GameLanguageManager.OnLanguageChange += ChangeLanguage;
         Shop_Manager.OnShopClose += DeactivateShop;
         DebtManager.OnDebtWindowClose += DeactivateShop;
+        ShopObject.OnShopDialogueRequest += ShopObjectSetDialogue;
     }
 
     void OnDisable()
@@ -66,6 +68,7 @@ public class DialogueManager : MonoBehaviour
         GameLanguageManager.OnLanguageChange -= ChangeLanguage;
         Shop_Manager.OnShopClose -= DeactivateShop;
         DebtManager.OnDebtWindowClose -= DeactivateShop;
+        ShopObject.OnShopDialogueRequest -= ShopObjectSetDialogue;
     }
     #endregion
 
@@ -121,6 +124,12 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(StartDialogue(npcId, dialogue));
     }
 
+    public void ShopObjectSetDialogue(string dialogueID, string dialogueSecondaryID, string ownerNpcID)
+    {
+        npcShopId = ownerNpcID;
+        SetDialogue(dialogueID, dialogueSecondaryID);
+    }
+
     public IEnumerator SetDialogueToCutscene(string npcId, string dialogueId)
     {
         SetDialogueCanvas(true);
@@ -166,7 +175,7 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogueLine.request != null)
             {
-                CheckRequest(dialogueLine.request, npcId);
+                CheckRequest(dialogueLine.request, npcShopId);
             }
 
             SetPortrait(dialogueLine);
@@ -368,6 +377,7 @@ public class DialogueManager : MonoBehaviour
     #region Request / Shop / Debt
     private void CheckRequest(string request, string npcId)
     {
+        npcShopId = "";
         switch(request)
         {
             case "default_shop":

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ShopObject : MonoBehaviour
@@ -7,6 +8,8 @@ public class ShopObject : MonoBehaviour
     [SerializeField] public string ownerNpcID;
     [SerializeField] public Vector2Int relativeNPCPosition;
     [SerializeField] public Vector2Int relativePlayerPosition;
+
+    public static event Action<string, string, string> OnShopDialogueRequest;
 
     public ShopObject CheckShopAvalible(Vector3 playerPos)
     {
@@ -24,6 +27,11 @@ public class ShopObject : MonoBehaviour
 
     public virtual void OpenNPCShop()
     {
-        DialogueManager.Instance.SetDialogue(dialogueShopID, dialogueID);
+        OnShopDialogueRequest?.Invoke(dialogueShopID, dialogueID, ownerNpcID);
+    }
+
+    protected void TriggerShopDialogue(string shopID, string dialogueID, string npcID)
+    {
+        OnShopDialogueRequest?.Invoke(shopID, dialogueID, npcID);
     }
 }
