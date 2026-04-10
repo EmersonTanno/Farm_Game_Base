@@ -1,0 +1,231 @@
+{
+  "npcId": "shark",
+  "npcDialogueList": [
+    {
+      "dialogueId": "shark_first_meet",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Então... você é o novo responsável pela fazenda.",
+          "textLineEn": "So... you're the one running the farm now."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Interessante.",
+          "textLineEn": "Interesting."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Se precisar de ajuda... eu sempre estou por perto.",
+          "textLineEn": "If you ever need help... I'm always around."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_offer",
+      "minHearts": 0,
+      "maxHearts": 4,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Dias difíceis?",
+          "textLineEn": "Hard days?"
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Acontece com todo mundo.",
+          "textLineEn": "Happens to everyone."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Posso aliviar um pouco isso... por um pequeno custo.",
+          "textLineEn": "I can ease that... for a small cost."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_neutral",
+      "minHearts": 5,
+      "maxHearts": 7,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Você tem se mantido de pé.",
+          "textLineEn": "You've been staying afloat."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Nem todos conseguem.",
+          "textLineEn": "Not everyone does."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Mas vamos ver por quanto tempo.",
+          "textLineEn": "But let's see for how long."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_friendly",
+      "minHearts": 8,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Você é diferente dos outros.",
+          "textLineEn": "You're different from the others."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Quase me faz torcer por você.",
+          "textLineEn": "Almost makes me root for you."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Quase.",
+          "textLineEn": "Almost."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_has_debt",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Ah... eu estava esperando por você.",
+          "textLineEn": "Ah... I was expecting you."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Dívidas não desaparecem sozinhas.",
+          "textLineEn": "Debts don't disappear on their own."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Mas elas... crescem bem.",
+          "textLineEn": "But they... grow quite well."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_late_payment",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Você está atrasado.",
+          "textLineEn": "You're late."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Eu gosto disso.",
+          "textLineEn": "I like that."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Significa que nossa relação vai durar mais tempo.",
+          "textLineEn": "Means our relationship will last longer."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_pay_available",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Veio pagar?",
+          "textLineEn": "Here to pay?"
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Uma pena.",
+          "textLineEn": "What a shame."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Eu estava começando a gostar de você devendo.",
+          "textLineEn": "I was starting to like you owing me."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Mas tudo bem... negócios são negócios.",
+          "textLineEn": "But that's fine... business is business."
+        },
+        {
+          "portrait": "shark",
+          "request": "pay_debt"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_no_money",
+      "minHearts": 0,
+      "maxHearts": 10,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Sem dinheiro?",
+          "textLineEn": "No money?"
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Não tem problema.",
+          "textLineEn": "Not a problem."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Eu sei esperar.",
+          "textLineEn": "I can wait."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "E enquanto isso... os números cuidam do resto.",
+          "textLineEn": "And meanwhile... the numbers take care of the rest."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "shark_already_interacted_alt",
+      "minHearts": 0,
+      "maxHearts": 2,
+      "hasAlreadyInteracted": true,
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Você volta rápido.",
+          "textLineEn": "You come back quickly."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Geralmente isso significa duas coisas.",
+          "textLineEn": "That usually means one of two things."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Problemas... ou dívidas.",
+          "textLineEn": "Problems... or debts."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "E às vezes... os dois.",
+          "textLineEn": "And sometimes... both."
+        }
+      ]
+    }
+  ]
+}

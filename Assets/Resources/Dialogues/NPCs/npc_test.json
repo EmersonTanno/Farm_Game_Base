@@ -1,5 +1,5 @@
 {
-  "npcId": "shark",
+  "npcId": "100",
   "npcDialogueList": [
     {
       "dialogueId": "Shark",

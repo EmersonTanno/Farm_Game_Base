@@ -1,0 +1,108 @@
+{
+  "npcId": "sharkshop",
+  "npcDialogueList": [
+    {
+      "dialogueId": "Shark",
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Está precisando de dinheiro?",
+          "textLineEn": "Need some money?"
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Heh... eu imaginei.",
+          "textLineEn": "Heh... I thought so.",
+          "request": "shark_debt"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "PayDebt",
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Veio acertar sua dívida?",
+          "textLineEn": "Here to settle your debt?",
+          "options": [
+            {
+              "answerOptionPt": "Pagar",
+              "answerOptionEn": "Pay",
+              "toDialogueId": "PayDebt1"
+            },
+            {
+              "answerOptionPt": "Não pagar",
+              "answerOptionEn": "Don't pay",
+              "toDialogueId": "PayDebt2"
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "PayDebt1",
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Hmm... que pena.",
+          "textLineEn": "Hmm... what a shame."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Eu estava começando a gostar de você devendo.",
+          "textLineEn": "I was starting to like you owing me."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Mas tudo bem... negócios são negócios.",
+          "textLineEn": "But that's fine... business is business.",
+          "request": "pay_debt"
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "PayDebt2",
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Sem pressa.",
+          "textLineEn": "No rush."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Dívidas costumam crescer melhor com o tempo.",
+          "textLineEn": "Debts tend to grow better with time."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "E eu sou paciente.",
+          "textLineEn": "And I'm patient."
+        }
+      ]
+    },
+
+    {
+      "dialogueId": "CantPayDebt",
+      "dialogueLines": [
+        {
+          "portrait": "shark",
+          "textLinePt": "Sem dinheiro... de novo?",
+          "textLineEn": "No money... again?"
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Não tem problema.",
+          "textLineEn": "Not a problem."
+        },
+        {
+          "portrait": "shark",
+          "textLinePt": "Isso só torna tudo mais interessante.",
+          "textLineEn": "That just makes things more interesting."
+        }
+      ]
+    }
+  ]
+}
