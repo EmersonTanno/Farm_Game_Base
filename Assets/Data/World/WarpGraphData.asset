@@ -48,6 +48,11 @@ MonoBehaviour:
       toGridPosition: {x: 17, y: 8}
       transitionType: 0
     - scene: 3
+      fromGridPosition: {x: 10, y: 4}
+      toScene: 6
+      toGridPosition: {x: 3, y: 1}
+      transitionType: 1
+    - scene: 3
       fromGridPosition: {x: 0, y: 5}
       toScene: 4
       toGridPosition: {x: 17, y: 7}
@@ -112,4 +117,11 @@ MonoBehaviour:
       fromGridPosition: {x: 5, y: 0}
       toScene: 3
       toGridPosition: {x: 7, y: 6}
+      transitionType: 1
+  - scene: 6
+    warps:
+    - scene: 6
+      fromGridPosition: {x: 3, y: 0}
+      toScene: 3
+      toGridPosition: {x: 10, y: 3}
       transitionType: 1

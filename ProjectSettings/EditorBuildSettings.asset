@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/City/Shop.unity
     guid: aa438d7fc65c68f48a0055583b328ab4
+  - enabled: 1
+    path: Assets/Scenes/City/SharkShop.unity
+    guid: c18b5ccfa995be54c9e7e62476653fe0
   m_configObjects: {}

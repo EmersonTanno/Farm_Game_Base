@@ -21072,6 +21072,26 @@ PrefabInstance:
       propertyPath: npcData.gridPosition.y
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: npcData.routine.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: npcData.routine.Array.data[0].startHour
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: npcData.routine.Array.data[0].targetLocation
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: npcData.routine.Array.data[0].targetPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574593852268107255, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
+      propertyPath: npcData.routine.Array.data[0].targetPosition.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7095819085245927483, guid: ad1296f5d5cba654f900e07c4c588a49, type: 3}
       propertyPath: m_RootOrder
       value: 2
