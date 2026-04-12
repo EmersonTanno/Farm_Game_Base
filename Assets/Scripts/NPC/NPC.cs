@@ -7,6 +7,7 @@ public class NPC : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private NPCMovement npcMovement;
     private ThoughtBubbleController bubble;
+    private NPCInitialStateData nPCInitialStateData = new NPCInitialStateData();
     private bool hasInteractToday = false;
     void Awake()
     {
@@ -15,16 +16,25 @@ public class NPC : MonoBehaviour
         bubble = GetComponentInChildren<ThoughtBubbleController>();
     }
 
+    void Start()
+    {
+        nPCInitialStateData.gridPosition = npcData.gridPosition;
+        nPCInitialStateData.location = npcData.location;
+        nPCInitialStateData.state = npcData.state;
+    }
+
     void OnEnable()
     {
         DialogueManager.OnDialogueFinish += EndInteraction;
         Calendar_Controller.OnDayChange += ResetInteraction;
+        Calendar_Controller.OnDayChange += ResetNPCState;
     }
 
     void OnDisable()
     {
         DialogueManager.OnDialogueFinish -= EndInteraction;
         Calendar_Controller.OnDayChange -= ResetInteraction;
+        Calendar_Controller.OnDayChange -= ResetNPCState;
     }
 
     public void SetNPC(bool active)
@@ -111,5 +121,17 @@ public class NPC : MonoBehaviour
     public NPCMovement GetNPCMovement()
     {
         return npcMovement;
+    }
+
+    private void ResetNPCState()
+    {
+        npcMovement.StopAllCoroutines();
+        
+        npcData.gridPosition = nPCInitialStateData.gridPosition;
+        npcData.location = nPCInitialStateData.location;
+        npcData.state = nPCInitialStateData.state;
+
+        npcMovement.SetIdle(NPCSide.FRONT);
+
     }
 }
