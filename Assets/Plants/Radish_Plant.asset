@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
+  m_Name: Radish_Plant
+  m_EditorClassIdentifier: 
+  id: 4
+  plantName: Radish
+  growthTimeInDays: 3
+  maxDaysWithoutWater: 1
+  season: 3
+  harvest: {fileID: 11400000, guid: 694a88dbfac2ed8459d42f650f49f399, type: 2}
+  harvestMin: 1
+  harvestMax: 2
+  growthStages:
+  - {fileID: -1853735768, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
+  - {fileID: 534199662, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
+  - {fileID: 1310533463, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
+  - {fileID: 109727533, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
+  - {fileID: -1204843786, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
+  - {fileID: -390421622, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
+  plantStages:
+  - {fileID: 11400000, guid: 005c018fa2aa56c4797ce5b6154996f6, type: 2}
+  - {fileID: 11400000, guid: 5c145b63968dd144288c071146aa426a, type: 2}
+  - {fileID: 11400000, guid: 04832697bfdc885498063242288243ab, type: 2}
+  - {fileID: 11400000, guid: 543cfd61cadeb664fb6af4a6218ee10e, type: 2}
+  - {fileID: 11400000, guid: 599629efea40ada49ab58c8878da9ebf, type: 2}

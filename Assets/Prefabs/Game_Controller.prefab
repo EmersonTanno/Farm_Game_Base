@@ -19981,6 +19981,7 @@ MonoBehaviour:
   itemVerao:
   - {fileID: 11400000, guid: 4b6b4dc864da1fc46929815596c37dd0, type: 2}
   - {fileID: 11400000, guid: 9cde7149f6dbdcf43a8d65430fcb0897, type: 2}
+  - {fileID: 11400000, guid: 5f06c7f63f259be48b620a43626bdb25, type: 2}
   itemOutono: []
   itemPrimavera: []
   itemInverno: []

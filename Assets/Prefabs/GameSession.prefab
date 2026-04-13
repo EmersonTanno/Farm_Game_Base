@@ -17045,6 +17045,14 @@ PrefabInstance:
       propertyPath: totalPriceText
       value: 
       objectReference: {fileID: 4924957107621989240}
+    - target: {fileID: 4868641704449660284, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: itemVerao.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4868641704449660284, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
+      propertyPath: itemVerao.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5f06c7f63f259be48b620a43626bdb25, type: 2}
     - target: {fileID: 4868641704576069523, guid: e8abc48a8f57f6a4c848a55b622cc329, type: 3}
       propertyPath: npcs
       value: 

@@ -9,6 +9,8 @@
     { "key": "item_7", "pt": "Semente de Batata", "en": "Potato Seed" },
     { "key": "item_8", "pt": "Batata", "en": "Semente de Batata" },
     { "key": "item_9", "pt": "Semente de Abóbora", "en": "Pumpkin Seed" },
-    { "key": "item_10", "pt": "Abóbora", "en": "Pumpkin" }
+    { "key": "item_10", "pt": "Abóbora", "en": "Pumpkin" },
+    { "key": "item_11", "pt": "Semente de Rabanete", "en": "Radish Seed" },
+    { "key": "item_12", "pt": "Rabanete", "en": "Radish" }
   ]
 }
