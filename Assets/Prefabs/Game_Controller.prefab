@@ -19900,7 +19900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8361fabd24b4e46877520d219b072d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minutes: 50
+  minutes: 0
   hours: 8
   dataText: {fileID: 0}
   timerPaused: 0

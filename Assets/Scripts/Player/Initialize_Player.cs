@@ -14,14 +14,14 @@ public class Initialize_Player : MonoBehaviour
     {
         InventoryManager.Instance.AddItem(item1);
         InventoryManager.Instance.AddItem(item2);
-        InventoryManager.Instance.AddItem(item3);
-        InventoryManager.Instance.AddItem(item3);
-        InventoryManager.Instance.AddItem(item3);
-        InventoryManager.Instance.AddItem(item4);
-        InventoryManager.Instance.AddItem(item4);
-        InventoryManager.Instance.AddItem(item4);
-        InventoryManager.Instance.AddItem(item5);
-        InventoryManager.Instance.AddItem(item5);
-        InventoryManager.Instance.AddItem(item5);
+        // InventoryManager.Instance.AddItem(item3);
+        // InventoryManager.Instance.AddItem(item3);
+        // InventoryManager.Instance.AddItem(item3);
+        // InventoryManager.Instance.AddItem(item4);
+        // InventoryManager.Instance.AddItem(item4);
+        // InventoryManager.Instance.AddItem(item4);
+        // InventoryManager.Instance.AddItem(item5);
+        // InventoryManager.Instance.AddItem(item5);
+        // InventoryManager.Instance.AddItem(item5);
     }
 }
