@@ -56,6 +56,12 @@ public class TileMapPlantData
         bool willRain = WeatherController.Instance.WillRain();
         if (plant != null)
         {
+            if (plant.season != Calendar_Controller.Instance.season)
+            {
+                Die();
+                return;
+            }
+
             if (isWater || willRain)
             {
                 growthDays += 1;
@@ -73,18 +79,12 @@ public class TileMapPlantData
                 {
                     Die();
                 }
-            }
-
-            if (plant.season != Calendar_Controller.Instance.season)
-            {
-                Die();
-            }
+            }            
         }
         else
         {
             if (isPlown && (isWater || willRain))
             {
-                Debug.Log("Choveu");
                 isWater = false;
                 return;
             }
@@ -92,7 +92,6 @@ public class TileMapPlantData
             {
                 if (Random.value < 0.5f)
                 {
-                    Debug.Log("Resetou");
                     isPlown = false;
                 }
             }
