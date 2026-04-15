@@ -10,6 +10,7 @@ public class TileMapPlantData
     public int growthDays;
     public int dryDays;
     public bool isDead;
+    public bool hasBeenHarvested = false;
     #endregion
 
     #region Constructor
@@ -108,7 +109,7 @@ public class TileMapPlantData
     }
     #endregion
 
-    #region
+    #region Get Tile
     public TileBase GetStageTile()
     {
         int stageIndex = -1;
@@ -135,7 +136,29 @@ public class TileMapPlantData
         }
         else
         {
-            stageIndex = 5;
+            if(plant.multipleHarvests)
+            {
+                if(hasBeenHarvested)
+                {
+                    int growthTimesAfterHarvest = growthDays - plant.growthTimeInDays;
+                    if (!isWater && growthTimesAfterHarvest % plant.growthTimeAfterFirstHarvest >= 1)
+                    {
+                        stageIndex = 2;
+                    }
+                    else if (isWater && growthTimesAfterHarvest % plant.growthTimeAfterFirstHarvest >= 1)
+                    {
+                        stageIndex = 3;
+                    }
+                }
+                else
+                {
+                    stageIndex = 5;
+                }
+            }
+            else
+            {
+                stageIndex = 5;
+            }
         }
         
         if(stageIndex != -1)
@@ -157,12 +180,27 @@ public class TileMapPlantData
     public bool CanHarvest()
     {
         if(plant == null) return false;
+
         if(growthDays >= plant.growthTimeInDays)
         {
             return true;
         }
 
         return false;
+    }
+
+    public void HarvestTile()
+    {
+        hasBeenHarvested = true;
+
+        if(plant.multipleHarvests)
+        {
+            
+        }
+        else
+        {
+            ResetTile();
+        }
     }
     #endregion
 
@@ -174,6 +212,7 @@ public class TileMapPlantData
         growthDays = 0;
         dryDays = 0;
         isDead = false;
+        hasBeenHarvested = false;
     }
     #endregion
 }

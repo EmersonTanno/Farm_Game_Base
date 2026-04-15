@@ -229,7 +229,7 @@ public class TileMapController : MonoBehaviour
         
         Harvest_Controller.Instance.SpawnHarvest(plantTile.plant, position);
 
-        plantTile.ResetTile();
+        plantTile.HarvestTile();
 
         renderer.RenderTile((int)position.x, (int)position.y);
     }

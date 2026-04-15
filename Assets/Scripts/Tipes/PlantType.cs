@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,6 +9,8 @@ public class PlantType : ScriptableObject
     public int growthTimeInDays;
     public int maxDaysWithoutWater;
     public Season season;
+    public bool multipleHarvests = false;
+    public int growthTimeAfterFirstHarvest = -1;
     public Item harvest;
     public int harvestMin;
     public int harvestMax;
