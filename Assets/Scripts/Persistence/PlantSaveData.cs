@@ -2,7 +2,7 @@
 public class PlantSaveData
 {
     [System.NonSerialized]
-    public TileMapPlantData plantData; // Runtime-only (reconstructed on Load, not serialized)
+    public TileMapPlantData plantData;
 
     public int x;
     public int y;
@@ -14,4 +14,5 @@ public class PlantSaveData
     public int growthDays;
     public int dryDays;
     public bool isDead;
+    public bool hasBeenHarvested;
 }

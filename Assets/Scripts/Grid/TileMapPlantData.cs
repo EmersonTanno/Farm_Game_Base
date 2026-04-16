@@ -23,7 +23,7 @@ public class TileMapPlantData
         dryDays = 0;
         isDead = false;
     }
-    public TileMapPlantData(PlantType plant, bool isWater, bool isPlown, int growthDays, int dryDays, bool isDead)
+    public TileMapPlantData(PlantType plant, bool isWater, bool isPlown, int growthDays, int dryDays, bool isDead, bool hasBeenHarvested)
     {
         this.plant = plant;
         this.isWater = isWater;
@@ -31,6 +31,7 @@ public class TileMapPlantData
         this.growthDays = growthDays;
         this.dryDays = dryDays;
         this.isDead = isDead;
+        this.hasBeenHarvested = hasBeenHarvested;
     }
 
     public override string ToString()
@@ -110,61 +111,49 @@ public class TileMapPlantData
     #endregion
 
     #region Get Tile
-    public TileBase GetStageTile()
+    public TileBase GetStageTile() //ainda em testes
     {
-        int stageIndex = -1;
+        if (plant == null) return null;
 
-        if (growthDays >= plant.growthTimeInDays)
+        int stageIndex;
+
+        // primeiro crescimento
+        if (!hasBeenHarvested)
         {
-            stageIndex = 4;
-        }
-        else if (!isWater && growthDays < plant.growthTimeInDays / 2)
-        {
-            stageIndex = 0;
-        }
-        else if (isWater && growthDays < plant.growthTimeInDays / 2)
-        {
-            stageIndex = 1;
-        }
-        else if (!isWater && growthDays >= plant.growthTimeInDays / 2)
-        {
-            stageIndex = 2;
-        }
-        else if (isWater && growthDays >= plant.growthTimeInDays / 2)
-        {
-            stageIndex = 3;
-        }
-        else
-        {
-            if(plant.multipleHarvests)
+            if (growthDays >= plant.growthTimeInDays)
             {
-                if(hasBeenHarvested)
-                {
-                    int growthTimesAfterHarvest = growthDays - plant.growthTimeInDays;
-                    if (!isWater && growthTimesAfterHarvest % plant.growthTimeAfterFirstHarvest >= 1)
-                    {
-                        stageIndex = 2;
-                    }
-                    else if (isWater && growthTimesAfterHarvest % plant.growthTimeAfterFirstHarvest >= 1)
-                    {
-                        stageIndex = 3;
-                    }
-                }
-                else
-                {
-                    stageIndex = 5;
-                }
+                stageIndex = 4;
+            }
+            else if (growthDays < plant.growthTimeInDays / 2)
+            {
+                stageIndex = isWater ? 1 : 0;
             }
             else
             {
-                stageIndex = 5;
+                stageIndex = isWater ? 3 : 2;
             }
         }
-        
-        if(stageIndex != -1)
-            return plant.plantStages[stageIndex];
+        // regrowth (multi harvest)
+        else if (plant.multipleHarvests)
+        {
+            int regrowDays = growthDays - plant.growthTimeInDays;
 
-        return null;
+            if (regrowDays >= plant.growthTimeAfterFirstHarvest)
+            {
+                stageIndex = 4;
+            }
+            else
+            {
+                stageIndex = isWater ? 3 : 2;
+            }
+        }
+        else
+        {
+            // fallback de segurança
+            stageIndex = 4;
+        }
+
+        return plant.plantStages[stageIndex];
     }
     #endregion
 
@@ -195,7 +184,8 @@ public class TileMapPlantData
 
         if(plant.multipleHarvests)
         {
-            
+            hasBeenHarvested = true;
+            growthDays = plant.growthTimeInDays;
         }
         else
         {

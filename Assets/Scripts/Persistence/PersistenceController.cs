@@ -106,6 +106,7 @@ public class PersistenceController : MonoBehaviour
             newPlantData.dryDays = plant.plantData.dryDays;
             newPlantData.isPlown = plant.plantData.isPlown;
             newPlantData.isWater = plant.plantData.isWater;
+            newPlantData.hasBeenHarvested = plant.plantData.hasBeenHarvested;
             newPlantData.plantData = plant.plantData;
             newPlantData.plantId = plant.plantId;
             newPlantData.x = plant.x;
@@ -125,11 +126,11 @@ public class PersistenceController : MonoBehaviour
             TileMapPlantData plantData;
             if(plant.plantId == -1)
             {
-                plantData = new TileMapPlantData(null, plant.isWater, plant.isPlown, plant.growthDays, plant.dryDays, plant.isDead);
+                plantData = new TileMapPlantData(null, plant.isWater, plant.isPlown, plant.growthDays, plant.dryDays, plant.isDead, plant.hasBeenHarvested);
             }
             else
             {
-                plantData = new TileMapPlantData(PlantsDataBaseController.Instance.GetPlantType(plant.plantId), plant.isWater, plant.isPlown, plant.growthDays, plant.dryDays, plant.isDead);
+                plantData = new TileMapPlantData(PlantsDataBaseController.Instance.GetPlantType(plant.plantId), plant.isWater, plant.isPlown, plant.growthDays, plant.dryDays, plant.isDead, plant.hasBeenHarvested);
             }
             plant.plantData = plantData;
         }
