@@ -11,6 +11,8 @@
     { "key": "item_9", "pt": "Semente de Abóbora", "en": "Pumpkin Seed" },
     { "key": "item_10", "pt": "Abóbora", "en": "Pumpkin" },
     { "key": "item_11", "pt": "Semente de Rabanete", "en": "Radish Seed" },
-    { "key": "item_12", "pt": "Rabanete", "en": "Radish" }
+    { "key": "item_12", "pt": "Rabanete", "en": "Radish" },
+    { "key": "item_13", "pt": "Semente de Tomate", "en": "Tomato Seed" },
+    { "key": "item_14", "pt": "Tomate", "en": "Tomato" }
   ]
 }

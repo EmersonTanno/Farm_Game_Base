@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18ec7508afe03a45b8097a0997e5154, type: 3}
+  m_Name: Tomato_Seed
+  m_EditorClassIdentifier: 
+  id: 13
+  itemName: Tomato Seed
+  type: 0
+  image: {fileID: 21300000, guid: e79900565bc12c7459eb0d22c7f1d816, type: 3}
+  stackable: 1
+  maxStack: 24
+  action: 0
+  consume: 1
+  plant: {fileID: 11400000, guid: 7abaa758fb0b76141a1a173b0d22347f, type: 2}
+  sell: 1
+  buyValue: 150
+  sellValue: 80

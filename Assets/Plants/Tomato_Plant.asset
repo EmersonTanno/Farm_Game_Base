@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d27b36ded43bd418857eb2dcfb0b9a, type: 3}
+  m_Name: Tomato_Plant
+  m_EditorClassIdentifier: 
+  id: 5
+  plantName: Tomato
+  growthTimeInDays: 7
+  maxDaysWithoutWater: 2
+  season: 0
+  multipleHarvests: 1
+  growthTimeAfterFirstHarvest: 3
+  harvest: {fileID: 11400000, guid: 3b3f3d6c96d93e84d94cc913d9af9310, type: 2}
+  harvestMin: 1
+  harvestMax: 3
+  growthStages: []
+  plantStages:
+  - {fileID: 11400000, guid: a876ff12293fd5447a147b545a27e6ff, type: 2}
+  - {fileID: 11400000, guid: 93081102078c3244f945aca48ead4fa2, type: 2}
+  - {fileID: 11400000, guid: d625cd7296e4bea428bff219082f60c7, type: 2}
+  - {fileID: 11400000, guid: ce243bb4964055a4a9cb80654e3e4dfc, type: 2}
+  - {fileID: 11400000, guid: fc964e310f52ada45a3ae9def5b9d71f, type: 2}
