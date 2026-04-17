@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -33,12 +34,16 @@ public class InventoryManager : MonoBehaviour
     {
         InventoryItem.OnItemDrop += ReloadSlot;
         GameLanguageManager.OnLanguageChange += ReloadSlot;
+        Shop_Manager.OnBuyItems += AddItemList;
+        Item_Dropped.OnItemPick += AddItem;
     }
 
     void OnDisable()
     {
         InventoryItem.OnItemDrop -= ReloadSlot;
         GameLanguageManager.OnLanguageChange -= ReloadSlot;
+        Shop_Manager.OnBuyItems -= AddItemList;
+        Item_Dropped.OnItemPick -= AddItem;
     }
     #endregion
 
@@ -116,9 +121,34 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public bool AddItem(Item item)
+    private void AddItemList(Item[] items)
     {
+        Dictionary<Item, int> itemCounts = new Dictionary<Item, int>();
 
+        foreach (Item item in items)
+        {
+            if (!itemCounts.ContainsKey(item))
+                itemCounts[item] = 0;
+
+            itemCounts[item]++;
+        }
+
+        foreach (var pair in itemCounts)
+        {
+            AddItemMultiple(pair.Key, pair.Value);
+        }
+    }
+
+    public void AddItemMultiple(Item item, int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            AddItem(item);
+        }
+    }
+
+    public void AddItem(Item item)
+    {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             InventorySlot slot = inventorySlots[i];
@@ -130,7 +160,7 @@ public class InventoryManager : MonoBehaviour
             {
                 itemInSlot.count++;
                 itemInSlot.RefreshCount();
-                return true;
+                return;
             }
         }
 
@@ -141,10 +171,10 @@ public class InventoryManager : MonoBehaviour
             if (itemInSlot.item == null)
             {
                 SpawnNewItem(item, slot);
-                return true;
+                return;
             }
         }
-        return false;
+        return;
     }
 
     private void SpawnNewItem(Item item, InventorySlot slot)

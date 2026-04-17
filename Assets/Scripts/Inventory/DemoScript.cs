@@ -9,7 +9,7 @@ public class DemoScript : MonoBehaviour
 
     public void PickupItem(int id)
     {
-        bool result = InventoryManager.Instance.AddItem(itemsToPick[id]);
+       // bool result = InventoryManager.Instance.AddItem(itemsToPick[id]);
     }
 
     public void GetSelectedItem()

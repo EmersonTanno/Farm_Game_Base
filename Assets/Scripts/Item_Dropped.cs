@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Dustopia.RewardSystem;
 using UnityEngine;
 
@@ -8,6 +7,8 @@ public class Item_Dropped : MonoBehaviour
     private SpriteRenderer mySprite;
 
     [HideInInspector] public Item itemDrop;
+
+    public static event Action<Item> OnItemPick;
 
     void Awake()
     {
@@ -22,8 +23,7 @@ public class Item_Dropped : MonoBehaviour
 
     public void CollectItem()
     {
-        InventoryManager.Instance.AddItem(itemDrop);
-        //Destroy(gameObject);
+        OnItemPick?.Invoke(itemDrop);
         ObjectPool.Instance.ReturnObject(gameObject);
     }
 

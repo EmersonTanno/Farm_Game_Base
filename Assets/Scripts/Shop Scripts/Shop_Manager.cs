@@ -28,6 +28,7 @@ public class Shop_Manager : MonoBehaviour
 
 
     public static Action OnShopClose;
+    public static event Action<Item[]> OnBuyItems;
     #endregion
 
     #region Core
@@ -140,15 +141,27 @@ public class Shop_Manager : MonoBehaviour
     #region Buy
     public void BuyItems()
     {
-        Status_Controller.Instance.RemoveGold(totalPrice);
+        if (Status_Controller.Instance.gold < totalPrice)
+        {
+            return;
+        }
+
+        List<Item> items = new List<Item>();
 
         foreach (var slot in activeSlots)
         {
-            if (slot.GetSellItem() == null) continue;
+            Item item = slot.GetSellItem();
+            if (item == null) continue;
 
             for (int i = 0; i < slot.GetQuantity(); i++)
-                InventoryManager.Instance.AddItem(slot.GetSellItem());
+            {
+                items.Add(item);
+            }
         }
+
+        Status_Controller.Instance.RemoveGold(totalPrice);
+
+        OnBuyItems?.Invoke(items.ToArray());
 
         ResetQuantity();
         DeactivateShop();
