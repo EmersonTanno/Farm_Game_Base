@@ -22,6 +22,7 @@ public class TileMapPlantData
         growthDays = 0;
         dryDays = 0;
         isDead = false;
+        hasBeenHarvested = false;
     }
     public TileMapPlantData(PlantType plant, bool isWater, bool isPlown, int growthDays, int dryDays, bool isDead, bool hasBeenHarvested)
     {
@@ -99,8 +100,6 @@ public class TileMapPlantData
             }
         }
     }
-
-
     #endregion
 
     #region Die
