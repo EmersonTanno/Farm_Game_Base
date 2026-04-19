@@ -31,15 +31,15 @@ public class WeatherParticleSystemController : MonoBehaviour
 
     void OnWeatherChanged(WeatherEnum weather)
     {
-        UpdateTempest(weather, false);
+        UpdateWeatherParticleSystem(weather, false);
     }
 
     void OnSceneChanged()
     {
-        UpdateTempest(WeatherController.Instance.GetWeather(), true);
+        UpdateWeatherParticleSystem(WeatherController.Instance.GetWeather(), true);
     }
 
-    void UpdateTempest(WeatherEnum weather, bool scene)
+    void UpdateWeatherParticleSystem(WeatherEnum weather, bool prewarm)
     {
         bool canRain =
             weather == selectedWeather &&
@@ -47,19 +47,25 @@ public class WeatherParticleSystemController : MonoBehaviour
 
         var main = ps.main;
 
-        main.prewarm = scene;
+        main.prewarm = prewarm;
 
         if (canRain && !ps.isPlaying)
+        {
             StartCoroutine(DelayRainStart());
-        else if (!canRain && ps.isPlaying && scene == true)
+        }
+        else if (!canRain && ps.isPlaying && prewarm == true)
+        {
             ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        else if (!canRain && ps.isPlaying && scene == false)
+        }
+        else if (!canRain && ps.isPlaying && prewarm == false)
+        {
             ps.Stop();
+        }
     }
 
     private IEnumerator DelayRainStart()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         ps.Play();
     }
 }

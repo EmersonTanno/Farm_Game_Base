@@ -173,7 +173,6 @@ public class TileMapController : MonoBehaviour
                 TileMapPlantData plantTile = plantGrid.GetGridObject(x, y);
 
                 if (plantTile == null) continue;
-                if (plantTile.isWater) continue;
 
                 StartCoroutine(SoilRain(plantTile, x, y));
             }
