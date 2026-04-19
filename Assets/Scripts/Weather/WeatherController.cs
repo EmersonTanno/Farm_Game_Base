@@ -8,6 +8,7 @@ public class WeatherController : MonoBehaviour
     public static WeatherController Instance;
     public static event Action<WeatherEnum> OnWeatherChanged;
     public static event Action OnThunderFall;
+    public static event Action OnRainFall;
 
     [SerializeField] List<SeasonRainProb> seasonRainProb;
 
@@ -25,12 +26,19 @@ public class WeatherController : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        LogGeneratedWeather();
+    }
+
     void OnEnable()
     {
         Calendar_Controller.OnDayChange += CheckGeneratedWeather;
         Calendar_Controller.OnMonthChange += GenerateWeatherForTwoMonths;
         SaveSystem.OnLoadFinish += CheckGeneratedWeather;
         Time_Controll.OnHourChange += CheckHourWeather;
+
+        Calendar_Controller.OnDayChange += LogGeneratedWeather;
     }
 
     void OnDisable()
@@ -278,8 +286,8 @@ public class WeatherController : MonoBehaviour
     private IEnumerator WaterSoilWithRain()
     {
         yield return new WaitForSeconds(2f);
-        
-        TileMapController.Instance.WaterSoilWithRain();
+
+        OnRainFall?.Invoke();
     }
 
     private List<DayWeather> GetDayWeather(int day, int month)

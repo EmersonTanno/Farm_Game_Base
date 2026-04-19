@@ -24,12 +24,14 @@ public class PersistenceController : MonoBehaviour
     {
         SceneController.OnWarpStart += SaveFarm;
         Calendar_Controller.OnDayChange += PassDay;
+        WeatherController.OnRainFall += WaterSoilWithRain;
     }
 
     void OnDisable()
     {
         SceneController.OnWarpStart -= SaveFarm;
         Calendar_Controller.OnDayChange -= PassDay;
+        WeatherController.OnRainFall -= WaterSoilWithRain;
     }
 
     public void SaveFarm()
@@ -71,6 +73,17 @@ public class PersistenceController : MonoBehaviour
         }
 
         hasData = gridSaveData.plants.Count > 0;
+    }
+
+    public void WaterSoilWithRain()
+    {
+        foreach (PlantSaveData plant in gridSaveData.plants)
+        {
+            if (plant.plantData != null)
+            {
+                plant.plantData.PutWater();
+            }
+        }
     }
 
     public GridSaveData LoadGridSaveData()

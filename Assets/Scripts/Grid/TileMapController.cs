@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -71,12 +72,14 @@ public class TileMapController : MonoBehaviour
     {
         Calendar_Controller.OnDayChange += GrowPlant;
         OnTileMapReady += SetNPCsInScene;
+        WeatherController.OnRainFall += WaterSoilWithRain;
     }
 
     void OnDisable()
     {
         Calendar_Controller.OnDayChange -= GrowPlant;
         OnTileMapReady -= SetNPCsInScene;
+        WeatherController.OnRainFall -= WaterSoilWithRain;
     }
 
     #endregion
@@ -126,7 +129,9 @@ public class TileMapController : MonoBehaviour
             if(plant.isDead)
             {
                 plant.ResetTile();
+                renderer.RenderTile((int)position.x, (int)position.y);
             }
+            return;
         }
 
         plantGrid.SetValue(position, new TileMapPlantData(null, false, true));
@@ -156,11 +161,6 @@ public class TileMapController : MonoBehaviour
 
     public void WaterSoilWithRain()
     {
-        WeatherEnum weather = WeatherController.Instance.GetWeather();
-
-        if (weather != WeatherEnum.RAIN && weather != WeatherEnum.TEMPEST)
-            return;
-
         Grid<TileMapPlantData> plantGrid = tileMap.GetPlantGrid();
 
         int width = plantGrid.GetWidth();
@@ -175,10 +175,17 @@ public class TileMapController : MonoBehaviour
                 if (plantTile == null) continue;
                 if (plantTile.isWater) continue;
 
-                plantTile.PutWater();
-                renderer.RenderTile(x, y);
+                StartCoroutine(SoilRain(plantTile, x, y));
             }
         }
+    }
+
+    private IEnumerator SoilRain(TileMapPlantData plantTile, int x, int y)
+    {
+        int time = UnityEngine.Random.Range(5, 10);
+        yield return new WaitForSeconds(time);
+            plantTile.PutWater();
+            renderer.RenderTile(x, y);
     }
 
     #endregion
@@ -509,15 +516,6 @@ public class TileMapController : MonoBehaviour
     {
         return tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).isWalkable;
     }
-
-    // private bool IsNPCOnWay(Vector2Int pos)
-    // {
-    //     if(tileMap.GetGrid().GetGridObject(new Vector3(pos.x, pos.y, 0)).npcId != 0)
-    //     {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 
     private Vector2Int GetWarpLocation(SceneLocationEnum currentScene, List<SceneLocationEnum> scenesList)
     {
