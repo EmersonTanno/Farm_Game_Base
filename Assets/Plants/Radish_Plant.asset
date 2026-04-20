@@ -17,9 +17,11 @@ MonoBehaviour:
   growthTimeInDays: 3
   maxDaysWithoutWater: 1
   season: 3
+  multipleHarvests: 0
+  growthTimeAfterFirstHarvest: -1
   harvest: {fileID: 11400000, guid: 694a88dbfac2ed8459d42f650f49f399, type: 2}
   harvestMin: 1
-  harvestMax: 2
+  harvestMax: 5
   growthStages:
   - {fileID: -1853735768, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
   - {fileID: 534199662, guid: 0f1f9e07956a93a4bb323c29c1086a43, type: 3}
