@@ -121,6 +121,8 @@ public class Shop_Manager : MonoBehaviour
 
     private void SetShopItens()
     {
+        //Adicionar aqui uma nova variável, provavelmente uma acessível pelo Shop_Manager inteiro para salvar o tipo de shop que está sendo acessado
+        //com isso define o tipo de shop e qual será aberto dependendo de qual foi selecionado
         switch (Calendar_Controller.Instance.season)
         {
             case Season.Verao:
