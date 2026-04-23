@@ -4,5 +4,5 @@ using UnityEngine;
 public class ShopData : ScriptableObject
 {
     public string id;
-    [SerializeField] Item[] shopItems;
+    [SerializeField] public Item[] shopItems;
 }

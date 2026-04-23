@@ -21,6 +21,7 @@ public class Shop_Manager : MonoBehaviour
     [SerializeField] Item[] itemOutono;
     [SerializeField] Item[] itemPrimavera;
     [SerializeField] Item[] itemInverno;
+    [SerializeField] ShopDataBase shopDB;
 
     private List<ShopSlot> activeSlots = new List<ShopSlot>();
     public bool shopActive = false;
@@ -123,15 +124,19 @@ public class Shop_Manager : MonoBehaviour
         switch (Calendar_Controller.Instance.season)
         {
             case Season.Verao:
+                CreateSlots(shopDB.GetShopData("defaultVerao").shopItems);
                 CreateSlots(itemVerao);
                 break;
             case Season.Outono:
+                CreateSlots(shopDB.GetShopData("defaultOutono").shopItems);
                 CreateSlots(itemOutono);
                 break;
             case Season.Primavera:
+                CreateSlots(shopDB.GetShopData("defaultPrimavera").shopItems);
                 CreateSlots(itemPrimavera);
                 break;
             case Season.Inverno:
+                CreateSlots(shopDB.GetShopData("defaultInverno").shopItems);
                 CreateSlots(itemInverno);
                 break;
         }
