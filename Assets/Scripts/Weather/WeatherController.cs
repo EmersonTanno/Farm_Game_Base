@@ -26,10 +26,10 @@ public class WeatherController : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        LogGeneratedWeather();
-    }
+    // void Start()
+    // {
+    //     LogGeneratedWeather();
+    // }
 
     void OnEnable()
     {
@@ -38,7 +38,7 @@ public class WeatherController : MonoBehaviour
         SaveSystem.OnLoadFinish += CheckGeneratedWeather;
         Time_Controll.OnHourChange += CheckHourWeather;
 
-        Calendar_Controller.OnDayChange += LogGeneratedWeather;
+        //Calendar_Controller.OnDayChange += LogGeneratedWeather;
     }
 
     void OnDisable()
