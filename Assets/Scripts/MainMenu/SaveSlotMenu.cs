@@ -71,6 +71,8 @@ public class SaveSlotMenu : MonoBehaviour
 
     private void SetData()
     {
+        if(metaData == null) return;
+        
         goldText.text += metaData.gold;
         dayText.text += metaData.day;
         yearText.text += $"{metaData.year:D2}";
