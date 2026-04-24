@@ -39,7 +39,7 @@ public class DialogueManager : MonoBehaviour
 
     //triggers
     public static event Action<string> OnDialogueFinish;
-    public static event Action OnDialogueShopRequest;
+    public static event Action<ShopTypeEnum> OnDialogueShopRequest;
     public static event Action<DebtTypeEnum, string> OnDialogueDebtRequest;
     public static event Action<string> OnDebtPaymentRequest;
     #endregion
@@ -382,7 +382,12 @@ public class DialogueManager : MonoBehaviour
         {
             case "default_shop":
                 {
-                    RequestShop();
+                    RequestShop(ShopTypeEnum.DefaultShop);
+                    break;
+                }
+            case "another_shop":
+                {
+                    RequestShop(ShopTypeEnum.AnotherShop);
                     break;
                 }
             case "shark_debt":
@@ -412,9 +417,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void RequestShop()
+    private void RequestShop(ShopTypeEnum shopType)
     {
-        OnDialogueShopRequest?.Invoke();
+        OnDialogueShopRequest?.Invoke(shopType);
         shopOrDebtActive = true;
         PauseDialogueUI();
     }
