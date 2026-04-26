@@ -42,14 +42,11 @@ public class Shop_Manager : MonoBehaviour
 
     void Start()
     {
-        //SetShopItens();
         SetCanvaLanguage();
     }
 
     void OnEnable()
     {
-        //Tax_System.OnTaxChange += SetShopItens;
-        //Calendar_Controller.OnMonthChange += SetShopItens;
         ShopSlot.OnAddRemoveItem += ReloadTotalPrice;
         GameLanguageManager.OnLanguageChange += SetCanvaLanguage;
         GameLanguageManager.OnLanguageChange += SetShopItens;
@@ -58,8 +55,6 @@ public class Shop_Manager : MonoBehaviour
 
     void OnDisable()
     {
-        //Tax_System.OnTaxChange -= SetShopItens;
-        //Calendar_Controller.OnMonthChange -= SetShopItens;
         ShopSlot.OnAddRemoveItem -= ReloadTotalPrice;
         GameLanguageManager.OnLanguageChange -= SetCanvaLanguage;
         GameLanguageManager.OnLanguageChange -= SetShopItens;
@@ -131,33 +126,28 @@ public class Shop_Manager : MonoBehaviour
 
     private void SetShopItens()
     {
-        //Adicionar aqui uma nova variável, provavelmente uma acessível pelo Shop_Manager inteiro para salvar o tipo de shop que está sendo acessado
-        //com isso define o tipo de shop e qual será aberto dependendo de qual foi selecionado
+
         if(shopType == ShopTypeEnum.DefaultShop)
         {
             switch (Calendar_Controller.Instance.season)
             {
                 case Season.Verao:
-                    //CreateSlots(shopDB.GetShopData("defaultVerao").shopItems);
-                    CreateSlots(itemVerao);
+                    CreateSlots(shopDB.GetShopData("defaultVerao").shopItems);
                     break;
                 case Season.Outono:
-                    //CreateSlots(shopDB.GetShopData("defaultOutono").shopItems);
-                    CreateSlots(itemOutono);
+                    CreateSlots(shopDB.GetShopData("defaultOutono").shopItems);
                     break;
                 case Season.Primavera:
-                    //CreateSlots(shopDB.GetShopData("defaultPrimavera").shopItems);
-                    CreateSlots(itemPrimavera);
+                    CreateSlots(shopDB.GetShopData("defaultPrimavera").shopItems);
                     break;
                 case Season.Inverno:
-                    //CreateSlots(shopDB.GetShopData("defaultInverno").shopItems);
-                    CreateSlots(itemInverno);
+                    CreateSlots(shopDB.GetShopData("defaultInverno").shopItems);
                     break;
             }
         }
         else
         {
-            
+            //Adicionar chamada para outros shops quando criar eles
         }
     }
     #endregion

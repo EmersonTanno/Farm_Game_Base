@@ -19985,6 +19985,7 @@ MonoBehaviour:
   itemOutono: []
   itemPrimavera: []
   itemInverno: []
+  shopDB: {fileID: 11400000, guid: 20a367ca47a53f548b8055c6c7c2dbe6, type: 2}
   shopActive: 0
   totalPrice: 0
 --- !u!1 &4868641704576069549
