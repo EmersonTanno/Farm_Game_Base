@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e6c2c19b900d5145bac61a39cc7306e, type: 3}
+  m_Name: SpringShop
+  m_EditorClassIdentifier: 
+  id: defaultPrimavera
+  shopItems:
+  - {fileID: 11400000, guid: 5f06c7f63f259be48b620a43626bdb25, type: 2}
+  - {fileID: 11400000, guid: ada67f805e7da5b4faf7c7a295d9441f, type: 2}
